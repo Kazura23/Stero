@@ -231,7 +231,7 @@ public class SearchObject : MonoBehaviour
 		return objTagList;
 	}
 
-	static GameObject[] GetComponentsInChildrenOfAsset( GameObject go  )
+	public static GameObject[] GetComponentsInChildrenOfAsset( GameObject go  )
 	{
 		List<GameObject> tfs = new List<GameObject>();
 
