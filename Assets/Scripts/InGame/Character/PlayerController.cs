@@ -644,7 +644,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if ( thisCam.fieldOfView > calCFov )
 			{
-				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 4;
+				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
 				if ( thisCam.fieldOfView < calCFov )
 				{
 					thisCam.fieldOfView = calCFov;
@@ -653,7 +653,22 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			thisCam.fieldOfView = Constants.DefFov;
+			if ( thisCam.fieldOfView < Constants.DefFov )
+			{
+				thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
+				if ( thisCam.fieldOfView > Constants.DefFov )
+				{
+					thisCam.fieldOfView = Constants.DefFov;
+				}
+			}
+			else if ( thisCam.fieldOfView > Constants.DefFov )
+			{
+				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
+				if ( thisCam.fieldOfView < Constants.DefFov )
+				{
+					thisCam.fieldOfView = Constants.DefFov;
+				}
+			}
 		}
 
 		if ( currentDir == Direction.North )
