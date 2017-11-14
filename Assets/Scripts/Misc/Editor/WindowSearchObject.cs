@@ -608,6 +608,7 @@ public class WindowSearchObject : EditorWindow
 						getNewObj.name = allComp [ c ].ThisObj.name;
 						getNewObj.transform.localPosition = getCurr;
 						getNewObj.transform.localRotation = getCurrRot;
+						listChild = SearchObject.GetComponentsInChildrenOfAsset ( listSearch [ a ] [ b ] );
 					}
 				}
 			}
