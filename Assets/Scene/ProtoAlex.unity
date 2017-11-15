@@ -1182,12 +1182,12 @@ Prefab:
     - target: {fileID: 114492754820279070, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
       propertyPath: _Y
-      value: -0.825
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 114492754820279070, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
       propertyPath: _U
-      value: 0.156
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114492754820279070, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
@@ -1213,6 +1213,51 @@ Prefab:
         type: 2}
       propertyPath: SmoothSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396453940007926, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: moves.Array.data[1]
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396453940007926, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: moves.Array.data[0]
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: TimeToDoublePunch
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114492754820279070, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114067175446396554, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114067175446396554, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: Distortion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114067175446396554, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: Speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: slowInBeginMadness
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: delayInBeginMadness
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
@@ -16762,7 +16807,7 @@ TextMesh:
   m_FontSize: 143
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 89e6c8bf8d147364397cd0cde64c68d1, type: 3}
+  m_Font: {fileID: 12800000, guid: bc24898cc7ae6a7428a468e3ddee8757, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190335
