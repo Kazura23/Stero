@@ -148,8 +148,15 @@ public class SearchObject : MonoBehaviour
 				return new List<GameObject> ( );
 			}
 
+			try 
+			{
 			getPref = ( GameObject ) objComp;
 			componentsPref = getPref.GetComponents<Component> ( );
+			}
+			catch
+			{
+				return new List<GameObject> ( );
+			}
 		}
 		else
 		{
@@ -217,22 +224,42 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
-			case ResearcheType.SearchRef :
-				components = objectList[a].GetComponents<Component> ( );
+			case ResearcheType.SearchRef:
+				components = objectList [ a ].GetComponents<Component> ( );
 
 				for ( b = 0; b < components.Length; b++ )
 				{
 					Debug.Log ( components [ b ].GetType ( ) + " / " + components [ b ].GetType ( ).GetFields ( ).Length );
-					foreach ( var field in components[b].GetType ( ).GetFields ( ) )
+
+					if ( components [ b ].GetType ( ).GetFields ( ).Length > 0 )
 					{
-						if ( field.GetValue ( components [ b ] ) == objComp )
+						foreach ( var field in components[b].GetType ( ).GetFields ( ) )
 						{
-							objTagList.Add ( objectList [ a ] );
-							break;
+							if ( field.GetValue ( components [ b ] ) == objComp )
+							{
+								objTagList.Add ( objectList [ a ] );
+								break;
+							}
+						}
+					}
+					else
+					{
+						foreach ( var field in components[b].GetType ( ).GetProperties ( ) )
+						{
+							try 
+							{
+								if ( field.GetValue ( components [ b ], null ) == objComp )
+								{
+									objTagList.Add ( objectList [ a ] );
+									break;
+								}
+							}
+							catch{
+								Debug.Log ( "Property value error" );
+							}
 						}
 					}
 				}
-
 				break;
 			case ResearcheType.SamePref:
 				components = objectList [ a ].GetComponents<Component> ( );
