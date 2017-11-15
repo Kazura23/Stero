@@ -217,6 +217,23 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
+			case ResearcheType.SearchRef :
+				components = objectList[a].GetComponents<Component> ( );
+
+				for ( b = 0; b < components.Length; b++ )
+				{
+					Debug.Log ( components [ b ].GetType ( ) + " / " + components [ b ].GetType ( ).GetFields ( ).Length );
+					foreach ( var field in components[b].GetType ( ).GetFields ( ) )
+					{
+						if ( field.GetValue ( components [ b ] ) == objComp )
+						{
+							objTagList.Add ( objectList [ a ] );
+							break;
+						}
+					}
+				}
+
+				break;
 			case ResearcheType.SamePref:
 				components = objectList [ a ].GetComponents<Component> ( );
 				if ( (componentsPref.Length - components.Length  <= diffComp ) && objectList [ a ].name.Length >= getPref.name.Length && objectList [ a ].name.Substring ( 0, getPref.name.Length ) == getPref.name )

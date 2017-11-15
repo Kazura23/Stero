@@ -31,7 +31,7 @@ public class WindowSearchObject : EditorWindow
 	bool foldListPref;
 	//bool foldComp;
 	bool apply;
-	bool replace;
+	//bool replace;
 
 	Object objComp;
 	List<GameObject> thispref;
@@ -60,7 +60,7 @@ public class WindowSearchObject : EditorWindow
 		foldListPref = true;
 		//foldComp = false;
 		apply = false;
-		replace = true;
+		//replace = true;
 
 		aPageProj = 0;
 		aPageScene = 0;
@@ -138,6 +138,9 @@ public class WindowSearchObject : EditorWindow
 		case ResearcheType.Component:
 			objComp = EditorGUILayout.ObjectField ( "This component", objComp, typeof( Object ), true );
 			break;
+		case ResearcheType.SearchRef:
+			objComp = EditorGUILayout.ObjectField ( "This Object ref", objComp, typeof( Object ), true );
+			break;
 		case ResearcheType.SamePref:
 			EditorGUILayout.BeginVertical ( );
 			EditorGUI.BeginChangeCheck ( );
@@ -203,7 +206,7 @@ public class WindowSearchObject : EditorWindow
 		}
 
 		EditorGUILayout.BeginHorizontal();
-		if ( GUILayout.Button ( "Object On Object" ) )
+		if ( GUILayout.Button ( "Object On Project" ) )
 		{
 			bPageProj = new List<int> ( );
 			foldoutProj = new List<bool> ( );
@@ -227,7 +230,7 @@ public class WindowSearchObject : EditorWindow
 		EditorGUILayout.EndHorizontal();
 
 		EditorGUILayout.BeginHorizontal();
-		if ( GUILayout.Button ( "Object On Prefabs" ) && thispref != null )
+		if ( GUILayout.Button ( "On Object(s)" ) && thispref != null )
 		{
 			aPagePref = 0;
 			bPagePref = new List<int> ( );
@@ -244,7 +247,8 @@ public class WindowSearchObject : EditorWindow
 				fPref.Add ( false );
 			}
 		}
-			
+
+
 		var list = thispref;
 		int newCount = Mathf.Max(0, EditorGUILayout.IntField("Number Ref", list.Count));
 		while ( newCount < list.Count )
@@ -312,7 +316,7 @@ public class WindowSearchObject : EditorWindow
 						EditorGUILayout.PrefixLabel ( "Not Safe on Projet" );
 					}
 
-					replace = EditorGUILayout.Toggle ( "Replace Object", replace ); 
+					//replace = EditorGUILayout.Toggle ( "Replace Object", replace ); 
 				}
 
 				/*EditorGUILayout.BeginVertical ( );
@@ -402,6 +406,7 @@ public class WindowSearchObject : EditorWindow
 		bool getParent = false;
 		int getindentLevel = 0;
 		Transform currParent;
+		Transform bigParent;
 
 		if ( listSearch.Count > 11 )
 		{
@@ -440,18 +445,22 @@ public class WindowSearchObject : EditorWindow
 			if ( ifChild && listSearch [ a ] [ 0 ].transform.parent == null )
 			{
 				isParent = 1;
+				EditorGUILayout.BeginHorizontal();
+
 				EditorGUILayout.ObjectField ( listSearch [ a ] [ 0 ], typeof ( GameObject ), true );
+
+				if ( thisType == ResearcheType.SamePref && GUILayout.Button ( "Remove this Liss", EditorStyles.miniButton ) )
+				{
+					listSearch.RemoveAt ( a );
+					continue;
+				}
+				EditorGUILayout.EndHorizontal ( );
 
 				getParent = true;
 				if ( listSearch [ a ].Count > 1 )
 				{
 					EditorGUI.indentLevel = 1;
 					fDout [ a ] = EditorGUILayout.Foldout ( fDout [ a ], "Display Children : " + ( listSearch [ a ].Count - 1 ).ToString ( ) );
-				}
-
-				if ( thisType == ResearcheType.SamePref && GUILayout.Button ( "Remove this Liss", EditorStyles.miniButton ) )
-				{
-					listSearch.RemoveAt ( a );
 				}
 
 				EditorGUI.indentLevel = 2;
@@ -483,8 +492,21 @@ public class WindowSearchObject : EditorWindow
 					currParent = currParent.parent;
 					getindentLevel = EditorGUI.indentLevel;
 					EditorGUI.indentLevel = getindentLevel + 2;
-
+					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.ObjectField ( "Parent", currParent.gameObject, typeof ( GameObject ), true );
+					bigParent = currParent;
+
+					while ( bigParent.parent != null )
+					{
+						bigParent = bigParent.parent;
+					}
+
+					if ( bigParent != currParent )
+					{
+						EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof ( GameObject ), true );
+					}
+
+					EditorGUILayout.EndHorizontal ( );
 					EditorGUI.indentLevel = getindentLevel;
 				}
 
@@ -516,6 +538,7 @@ public class WindowSearchObject : EditorWindow
 					if ( thisType == ResearcheType.SamePref && GUILayout.Button ( "Remove From List", EditorStyles.miniButton ) )
 					{
 						listSearch [ a ].RemoveAt ( b );
+						continue;
 					}
 
 					EditorGUILayout.EndHorizontal ( );
@@ -547,7 +570,6 @@ public class WindowSearchObject : EditorWindow
 		return aPage;
 	}
 
-
 	void modifPref ( List<List<GameObject>> listSearch )
 	{
 		List<objectInfo> allComp;
@@ -558,6 +580,8 @@ public class WindowSearchObject : EditorWindow
 		Transform listChildTrans;
 		Vector3 getCurr;
 		GameObject getNewObj;
+		GameObject getInsParent;
+		Transform getBasePart;
 
 		int a;
 		int b;
@@ -568,6 +592,8 @@ public class WindowSearchObject : EditorWindow
 		bool checkChild;
 		bool checkParent;
 
+		string getAssetPath;
+
 		allComp = CompInfo;
 
 		GameObject thisObj = ( GameObject ) objComp;
@@ -576,23 +602,81 @@ public class WindowSearchObject : EditorWindow
 		{
 			for ( b = 0; b < listSearch [ a ].Count; b++ )
 			{
-				if ( replace )
+				if ( !listSearch [ a ] [ b ].Equals ( thisObj ) )
 				{
-					if ( !listSearch [ a ].Equals ( allComp ) )
+					if ( listSearch [ a ] [ b ] == null )
 					{
-						getCurr = listSearch [ a ] [ b ].transform.localPosition;
-						getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
+						listSearch [ a ].RemoveAt ( b );
+						b--;
+						continue;
+					}
+					getBasePart = listSearch [ a ] [ b ].transform;
 
+					while ( getBasePart.parent != null )
+					{
+						getBasePart = getBasePart.parent;
+					}
+
+					getAssetPath = AssetDatabase.GetAssetPath ( getBasePart.gameObject );
+
+					getCurr = listSearch [ a ] [ b ].transform.localPosition;
+					getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
+
+					if ( getAssetPath != null && getAssetPath != string.Empty )
+					{
+						getInsParent = ( GameObject ) Instantiate ( getBasePart.gameObject );
+
+						foreach ( Transform currT in getInsParent.GetComponentsInChildren<Transform>( true) )
+						{
+							if ( currT.name == listSearch [ a ] [ b ].name )
+							{
+								getNewObj = ( GameObject ) Instantiate ( thisObj, currT.parent );
+								getNewObj.name = thisObj.name;
+								getNewObj.transform.localPosition = getCurr;
+								getNewObj.transform.localRotation = getCurrRot;
+
+								DestroyImmediate ( currT.gameObject, true );
+								break;
+							}
+						}
+
+						PrefabUtility.ReplacePrefab ( getInsParent, getBasePart.gameObject, ReplacePrefabOptions.ReplaceNameBased );
+						DestroyImmediate ( getInsParent, true );
+					}
+					else
+					{
 						getNewObj = ( GameObject ) Instantiate ( thisObj, listSearch [ a ] [ b ].transform.parent );
+						DestroyImmediate ( listSearch [ a ] [ b ].gameObject, true );
 
 						getNewObj.name = thisObj.name;
 						getNewObj.transform.localPosition = getCurr;
 						getNewObj.transform.localRotation = getCurrRot;
-
-						DestroyImmediate ( listSearch [ a ] [ b ].gameObject, true );
 					}
 				}
-				else
+
+				/*if ( replace )
+				{
+					if ( !listSearch [ a ].Equals ( allComp ) )
+					{
+						Debug.Log ( AssetDatabase.GetAssetPath ( listSearch [ a ] [ b ] ) );
+						getCurr = listSearch [ a ] [ b ].transform.localPosition;
+						getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
+
+						if ( getAssetPath != null && getAssetPath != string.Empty )
+						{
+						}
+						else
+						{
+							getNewObj = ( GameObject ) Instantiate ( thisObj, listSearch [ a ] [ b ].transform.parent );
+							DestroyImmediate ( listSearch [ a ] [ b ].gameObject, true );
+						}
+
+						getNewObj.name = thisObj.name;
+						getNewObj.transform.localPosition = getCurr;
+						getNewObj.transform.localRotation = getCurrRot;
+					}
+				}*/
+				/*else
 				{
 					listChild = SearchObject.GetComponentsInChildrenOfAsset ( listSearch [ a ] [ b ] );
 
@@ -668,7 +752,7 @@ public class WindowSearchObject : EditorWindow
 							listChild = SearchObject.GetComponentsInChildrenOfAsset ( listSearch [ a ] [ b ] );
 						}
 					}
-				}
+				}*/
 			}
 		}
 	}
