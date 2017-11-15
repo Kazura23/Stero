@@ -576,18 +576,21 @@ public class WindowSearchObject : EditorWindow
 		{
 			for ( b = 0; b < listSearch [ a ].Count; b++ )
 			{
-				if ( replace && !listSearch [ a ].Equals ( allComp ) )
+				if ( replace )
 				{
-					getCurr = listSearch [ a ] [ b ].transform.localPosition;
-					getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
+					if ( !listSearch [ a ].Equals ( allComp ) )
+					{
+						getCurr = listSearch [ a ] [ b ].transform.localPosition;
+						getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
 
-					getNewObj = ( GameObject ) Instantiate ( thisObj, listSearch [ a ] [ b ].transform.parent );
+						getNewObj = ( GameObject ) Instantiate ( thisObj, listSearch [ a ] [ b ].transform.parent );
 
-					getNewObj.name = thisObj.name;
-					getNewObj.transform.localPosition = getCurr;
-					getNewObj.transform.localRotation = getCurrRot;
+						getNewObj.name = thisObj.name;
+						getNewObj.transform.localPosition = getCurr;
+						getNewObj.transform.localRotation = getCurrRot;
 
-					DestroyImmediate ( listSearch [ a ] [ b ].gameObject, true );
+						DestroyImmediate ( listSearch [ a ] [ b ].gameObject, true );
+					}
 				}
 				else
 				{
