@@ -41,7 +41,7 @@ public class WindowSearchObject : EditorWindow
 	List<List<GameObject>> AllObjectProject;
 	List<List<GameObject>> AllObjectScene;
 	List<List<GameObject>> InfoOnPrefab;
-	List<Component> CompInfo;
+	List<objectInfo> CompInfo;
 	void OnEnable ()
 	{
 		thisType = ResearcheType.Tag;
@@ -81,7 +81,7 @@ public class WindowSearchObject : EditorWindow
 		AllObjectScene = new List<List<GameObject>> ( );
 		InfoOnPrefab = new List<List<GameObject>> ( );
 		thispref = new List<GameObject> ( );
-		CompInfo = new List<Component> ( );
+		CompInfo = new List<objectInfo> ( );
 	}
 	// chercher ref de l'obje en scene / projet & faire une recherche de pref 
 	[MenuItem("CustomTools/SearchTags")]
@@ -144,15 +144,16 @@ public class WindowSearchObject : EditorWindow
 			if ( EditorGUI.EndChangeCheck ( ) )
 			{
 				apply = false;
-				CompInfo = new List<Component> ( );
+				CompInfo = new List<objectInfo> ( );
+				List<objectInfo> getCI = CompInfo;
 
 				if ( objComp != null )
 				{
-					GameObject getObj = ( GameObject ) objComp;
-
-					foreach ( Component thisComp in getObj.GetComponents<Component> ( ) )
+					foreach ( GameObject thisObj in SearchObject.GetComponentsInChildrenOfAsset ( ( GameObject ) objComp ) )
 					{
-						CompInfo.Add ( thisComp );
+						getCI.Add ( new objectInfo ( ) );
+						getCI [ getCI.Count - 1 ].ThisObj = thisObj;
+						getCI[ getCI.Count - 1 ].thoseComp = thisObj.GetComponents<Component> ( );
 					}
 				}
 			}
@@ -301,7 +302,7 @@ public class WindowSearchObject : EditorWindow
 					apply = true;
 				}
 
-				EditorGUILayout.BeginVertical ( );
+				/*EditorGUILayout.BeginVertical ( );
 				EditorGUI.indentLevel = 2;
 				if ( CompInfo.Count > 0 )
 				{	
@@ -313,8 +314,8 @@ public class WindowSearchObject : EditorWindow
 					for( a = 0; a < CompInfo.Count; a++)
 					{
 						EditorGUILayout.BeginHorizontal( );
-						EditorGUILayout.PrefixLabel ( CompInfo [ a ].GetType ( ).ToString ( ) );
-
+						EditorGUILayout.PrefixLabel ( CompInfo [ a ].ThisObj.name );
+						//.GetType ( ).ToString ( )
 						if ( GUILayout.Button ( "Remove From Update", EditorStyles.miniButton ) )
 						{
 							CompInfo.RemoveAt ( a );
@@ -326,7 +327,7 @@ public class WindowSearchObject : EditorWindow
 				}
 				EditorGUI.indentLevel = 0;
 
-				EditorGUILayout.EndVertical ( );
+				EditorGUILayout.EndVertical ( );*/
 				EditorGUILayout.EndHorizontal();
 			}
 		}
@@ -534,59 +535,90 @@ public class WindowSearchObject : EditorWindow
 
 	void modifPref ( List<List<GameObject>> listSearch )
 	{
+		List<objectInfo> allComp;
+		GameObject[] listChild;
+		Component [] m_List;
+		Quaternion getCurrRot;
+		Vector3 getCurr;
+		GameObject getNewObj;
+
 		int a;
 		int b;
 		int c;
-		Component [] m_List;
-		Component [] allComp;
-		GameObject original = ( GameObject ) objComp;
-		Vector3 getCurr;
-		Quaternion getCurrRot;
+		int d;
+		int e;
 
-		allComp = CompInfo.ToArray ( );
-		System.Reflection.FieldInfo[] fields = original.GetType().GetFields();
+		bool checkChild;
+
+		allComp = CompInfo;
 
 		for ( a = 0; a < listSearch.Count; a++ )
 		{
 			for ( b = 0; b < listSearch [ a ].Count; b++ )
 			{
-				EditorUtility.SetDirty ( listSearch [ a ] [ b ] );
+				listChild = SearchObject.GetComponentsInChildrenOfAsset ( listSearch [ a ] [ b ] );
 
-				getCurr = listSearch [ a ] [ b ].transform.localPosition;
-				getCurrRot = listSearch [ a ] [ b ].transform.localRotation;
-
-				m_List = listSearch [ a ] [ b ].GetComponents<Component>();
-
-				for ( c = 0; c < allComp.Length; c++ )
+				for ( c = 0; c < allComp.Count; c++ )
 				{
-					if ( listSearch [ a ] [ b ].GetComponent ( allComp [ c ].GetType ( ) ) == null )
+					checkChild = false;
+					for ( d = 0; d < listChild.Length; d++ )
 					{
-						listSearch [ a ] [ b ].AddComponent ( allComp [ c ].GetType ( ) );
+						if ( allComp [ c ].ThisObj.name == listChild [ d ].name && ( ( allComp [ c ].ThisObj.transform.parent == null && listChild [ d ].transform.parent == null ) || allComp [ c ].ThisObj.transform.parent.name == listChild [ d ].transform.parent.name ) )
+						{
+							checkChild = true;
+							EditorUtility.SetDirty ( listChild [ d ] );
+
+							getCurr = listChild [ d ].transform.localPosition;
+							getCurrRot = listChild [ d ].transform.localRotation;
+
+							m_List = listChild [ d ].GetComponents<Component>();
+
+							for ( e = 0; e < allComp [ c ].thoseComp.Length; e++ )
+							{
+								if ( listChild [ d ].GetComponent ( allComp [ c ].thoseComp [ e ].GetType ( ) ) == null )
+								{
+									listChild [ d ].gameObject.AddComponent ( allComp [ c ].thoseComp [ e ].GetType ( ) );
+								}
+
+								UnityEditorInternal.ComponentUtility.CopyComponent ( allComp [ c ].thoseComp [ e ] );
+								UnityEditorInternal.ComponentUtility.PasteComponentValues ( listChild [ d ].GetComponent ( allComp [ c ].thoseComp [ e ].GetType ( ) ) );
+							}
+
+							for ( e = 0; e < m_List.Length; e++ )
+							{
+								if ( allComp [ c ].ThisObj.GetComponent ( m_List [ e ].GetType ( ) ) == null )
+								{
+									DestroyImmediate ( listChild [ d ].GetComponent ( m_List [ c ].GetType ( ) ), true );
+								}
+							}
+
+							listChild [ d ].transform.localPosition = getCurr;
+							listChild [ d ].transform.localRotation = getCurrRot;
+							break;
+						}
 					}
 
-					UnityEditorInternal.ComponentUtility.CopyComponent ( allComp [ c ] );
-					UnityEditorInternal.ComponentUtility.PasteComponentValues ( listSearch [ a ] [ b ].GetComponent ( allComp [ c ].GetType ( ) ) );
-				}
-
-				for ( c = 0; c < m_List.Length; c++ )
-				{
-					if ( original.GetComponent ( m_List [ c ].GetType ( ) ) == null )
+					if ( !checkChild )
 					{
-						DestroyImmediate ( listSearch [ a ] [ b ].GetComponent ( m_List [ c ].GetType ( ) ), true );
+						getCurr = allComp [ c ].ThisObj.transform.localPosition;
+						getCurrRot = allComp [ c ].ThisObj.transform.localRotation;
+
+						getNewObj = ( GameObject ) Instantiate ( allComp [ c ].ThisObj, listSearch [ a ] [ b ].transform );
+
+						getNewObj.name = allComp [ c ].ThisObj.name;
+						getNewObj.transform.localPosition = getCurr;
+						getNewObj.transform.localRotation = getCurrRot;
+						listChild = SearchObject.GetComponentsInChildrenOfAsset ( listSearch [ a ] [ b ] );
 					}
 				}
-					
-				listSearch [ a ] [ b ].transform.localPosition = getCurr;
-				listSearch [ a ] [ b ].transform.localRotation = getCurrRot;
-
 			}
 		}
 	}
 }
 
-// faire un slider de tolérence
-// faire en sorte que l'on peu choisir pour chaque component de l'update / delete / rien faire
-public class ActionOnComp 
+
+public class objectInfo
 {
-	
+	public GameObject ThisObj;
+	public Component[] thoseComp;
 }
