@@ -14,7 +14,6 @@ public class SearchObject : MonoBehaviour
 	#region Public Methods
 	public static List<List<GameObject>> LoadAssetsInProject(ResearcheType thisType, Object objComp, string thisStringSearch, bool getChildren, string optionalPath = "", int diffComp = 2 )
 	{
-		string currTag = thisStringSearch;
 		string[] GUIDs;
 		if(optionalPath != "")
 		{
