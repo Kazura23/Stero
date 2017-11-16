@@ -193,7 +193,7 @@ public class SpawnChunks : MonoBehaviour
 
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
-				if ( getChunks [ currLevel ].ChunkAleat )
+				if ( getChunks [ currLevel ].ChunkAleat && a == 0 )
 				{
 					currChunk = Random.Range ( 0, getChunks [ currLevel ].TheseChunks.Count );
 					thisSpawn = getChunks [ currLevel ].TheseChunks [ currChunk ];
@@ -204,6 +204,7 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = getChunks [ currLevel ].TheseChunks [ currNbrCh ];
 				}
 
+				
 				if ( thisSpawn != null )
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
@@ -248,10 +249,11 @@ public class SpawnChunks : MonoBehaviour
 			{
 				for ( a = 0; a < getNewChunk.Count - 1; a++ )
 				{
-					diffLine = ( int ) ( 1 + getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
+					diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
 
-					if ( diffLine != 0 )
+					if ( diffLine >= 0 )
 					{
+						diffLine++;
 						getNewChunk [ a + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
 						getNewChunk [ a + 1 ].CurrLane += diffLine;
 
@@ -277,10 +279,11 @@ public class SpawnChunks : MonoBehaviour
 			{
 				for ( a = getNewChunk.Count - 1; a > 0; a-- )
 				{
-					diffLine = ( int ) ( 1 + getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a - 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a - 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
+					diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a - 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a - 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
 
-					if ( diffLine != 0 )
+					if ( diffLine >= 0 )
 					{
+						diffLine++;
 						getNewChunk [ a - 1 ].ThisObj.transform.localPosition -= new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
 						getNewChunk [ a - 1 ].CurrLane -= diffLine;
 
