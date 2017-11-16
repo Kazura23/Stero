@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class SpawnNewLvl : MonoBehaviour 
 {
 	#region Variable
-	public List<NewChunkInfo> InfoChunk;
+	public NewChunkInfo InfoChunk;
 
 	bool detect = false;
 	#endregion
@@ -33,6 +33,12 @@ public class NewChunkInfo
 {
 	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
 	public Vector2 NbrLaneDebut, NbrLaneFin;
+	public List <ChunkExit> ThoseExit;
+}
+
+[System.Serializable]
+public class ChunkExit
+{
 	public int LaneParent = 0;
 	public Transform LevelParent;
 }

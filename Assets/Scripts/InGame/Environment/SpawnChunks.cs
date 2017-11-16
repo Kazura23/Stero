@@ -77,7 +77,7 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
-	public void NewSpawn ( List<NewChunkInfo> sourceSpawn )
+	public void NewSpawn ( NewChunkInfo sourceSpawn )
 	{
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<GameObject> getSpc = getSpawnChunks;
@@ -170,7 +170,7 @@ public class SpawnChunks : MonoBehaviour
 		currNbrCh = 0;
 	}
 
-	void spawnAfterThis ( List<NewChunkInfo> sourceSpawn = null )
+	void spawnAfterThis ( NewChunkInfo sourceSpawn = null )
 	{
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<List<GetSpawnable>> getSpawnable = AllSpawnable;
@@ -182,6 +182,7 @@ public class SpawnChunks : MonoBehaviour
 		{
 			List<NewChunkSaveInf> getNewChunk = new List<NewChunkSaveInf> ( );
 			NewChunkSaveInf getOtherNC;
+			NewChunkInfo nChunInfo;
 
 			int a;
 			int getInd;
@@ -189,7 +190,7 @@ public class SpawnChunks : MonoBehaviour
 			int diffLine;
 			int randChunk;
 
-			for ( a = 0; a < sourceSpawn.Count; a++ )
+			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
 				if ( getChunks [ currLevel ].ChunkAleat )
 				{
@@ -207,16 +208,17 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 
 					getChunkT = thisSpawn.transform;
-					getChunkT.rotation = sourceSpawn [ a ].LevelParent.rotation;
-					getChunkT.position = sourceSpawn [ a ].LevelParent.position;
+					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
+					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
 
 					getNewChunk.Add ( new NewChunkSaveInf ( ) );
 					getInd = getNewChunk.Count - 1;
 					getNewChunk [ getInd ].ThisObj = getChunkT.gameObject;
-					getNewChunk [ getInd ].NbrLaneDebut = sourceSpawn [ a ].NbrLaneFin;
-					getNewChunk [ getInd ].CurrLane = sourceSpawn [ a ].LaneParent;
+					getNewChunk [ getInd ].NbrLaneDebut = sourceSpawn.NbrLaneFin;
+					getNewChunk [ getInd ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 
-					totalLine += ( int ) sourceSpawn [ a ].NbrLaneFin.x + ( int ) sourceSpawn [ a ].NbrLaneFin.y + 1;
+					nChunInfo = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( ).InfoChunk;
+					totalLine += ( int ) nChunInfo.NbrLaneFin.x + ( int ) nChunInfo.NbrLaneFin.y + 1;
 
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getEnnemySpawnable, getChunks [ currLevel ].EnnemySpawnable );
@@ -242,12 +244,13 @@ public class SpawnChunks : MonoBehaviour
 			{
 				if ( a != getNewChunk.Count - 1 )
 				{
-					diffLine = ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x ) - ( getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane );
+					diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x - getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane );
 
 					if ( diffLine != 0 )
 					{
 						randChunk = Random.Range ( 0, 2 );
-
+						//if (getNewChunk[a].CurrLane -  getNewChunk[a].NbrLaneDebut.x < 
+							
 						getNewChunk [ a + randChunk ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
 						getNewChunk [ a + randChunk ].NbrLaneDebut += new Vector2 ( diffLine, diffLine );
 					}
