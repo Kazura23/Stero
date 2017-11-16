@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
-		GlobalManager.Ui.CloseMadness ( );
+		stopMadness ( );
 	}
 
 	public void GameOver ( bool forceDead = false )
@@ -374,7 +374,7 @@ public class PlayerController : MonoBehaviour
             GetComponentInChildren<Animator>().SetBool("InMadness", false);
 
 
-            GlobalManager.Ui.CloseMadness();
+			stopMadness ( );
             InMadness = false;
 		}
 
@@ -1053,6 +1053,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void stopMadness ( )
+	{
+		InMadness = !InMadness;
+
+		maxSpeed = MaxSpeed;
+		maxSpeedCL = MaxSpeedCL;
+		accelerationCL = AccelerationCL;
+		acceleration = Acceleration;
+
+		GlobalManager.Ui.CloseMadness();
+	}
+
     private void SmoothBar()
     {
         float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
@@ -1061,16 +1073,10 @@ public class PlayerController : MonoBehaviour
             BarMadness.value = 0;
             valueSmooth = 0;
             valueSmoothUse = 0;
+
             if (InMadness)
             {
-                InMadness = !InMadness;
-
-				maxSpeed = MaxSpeed;
-				maxSpeedCL = MaxSpeedCL;
-				accelerationCL = AccelerationCL;
-				acceleration = Acceleration;
-
-                GlobalManager.Ui.CloseMadness();
+				stopMadness ( );
             }
         }else if (BarMadness.value + res >= 100)
         {
