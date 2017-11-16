@@ -47,7 +47,8 @@ public enum ResearcheType
 	Name,
 	Component,
 	SamePref,
-	MissingComp
+	MissingComp,
+	SearchRef
 }
 
 public enum TypeRotate

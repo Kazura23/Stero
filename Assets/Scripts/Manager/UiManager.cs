@@ -187,7 +187,7 @@ public class UiManager : ManagerParent
 
         //Camera.main.DOKill(true);
 
-        Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f);
+		Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
         Debug.Log("CloseMad");
         //Camera.main.GetComponent<RainbowRotate>().enabled = true;
 
