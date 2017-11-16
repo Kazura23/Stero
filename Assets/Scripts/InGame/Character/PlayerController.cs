@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
-		GlobalManager.Ui.CloseMadness ( );
+		stopMadness ( );
 	}
 
 	public void GameOver ( bool forceDead = false )
@@ -374,7 +374,7 @@ public class PlayerController : MonoBehaviour
             GetComponentInChildren<Animator>().SetBool("InMadness", false);
 
 
-            GlobalManager.Ui.CloseMadness();
+			stopMadness ( );
             InMadness = false;
 		}
 
@@ -644,7 +644,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if ( thisCam.fieldOfView > calCFov )
 			{
-				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 4;
+				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
 				if ( thisCam.fieldOfView < calCFov )
 				{
 					thisCam.fieldOfView = calCFov;
@@ -653,7 +653,22 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			thisCam.fieldOfView = Constants.DefFov;
+			if ( thisCam.fieldOfView < Constants.DefFov )
+			{
+				thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
+				if ( thisCam.fieldOfView > Constants.DefFov )
+				{
+					thisCam.fieldOfView = Constants.DefFov;
+				}
+			}
+			else if ( thisCam.fieldOfView > Constants.DefFov )
+			{
+				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
+				if ( thisCam.fieldOfView < Constants.DefFov )
+				{
+					thisCam.fieldOfView = Constants.DefFov;
+				}
+			}
 		}
 
 		if ( currentDir == Direction.North )
@@ -1038,6 +1053,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void stopMadness ( )
+	{
+		InMadness = !InMadness;
+
+		maxSpeed = MaxSpeed;
+		maxSpeedCL = MaxSpeedCL;
+		accelerationCL = AccelerationCL;
+		acceleration = Acceleration;
+
+		GlobalManager.Ui.CloseMadness();
+	}
+
     private void SmoothBar()
     {
         float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
@@ -1046,16 +1073,10 @@ public class PlayerController : MonoBehaviour
             BarMadness.value = 0;
             valueSmooth = 0;
             valueSmoothUse = 0;
+
             if (InMadness)
             {
-                InMadness = !InMadness;
-
-				maxSpeed = MaxSpeed;
-				maxSpeedCL = MaxSpeedCL;
-				accelerationCL = AccelerationCL;
-				acceleration = Acceleration;
-
-                GlobalManager.Ui.CloseMadness();
+				stopMadness ( );
             }
         }else if (BarMadness.value + res >= 100)
         {

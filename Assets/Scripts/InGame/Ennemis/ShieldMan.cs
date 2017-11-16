@@ -57,6 +57,7 @@ public class ShieldMan : AbstractObject {
 		}
 		else
 		{
+			getTrans.DOKill ( );
 			base.ForceProp ( forceProp );
 		}
 	}
