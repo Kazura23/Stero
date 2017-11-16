@@ -29,7 +29,7 @@ public class UiManager : ManagerParent
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
-
+    public GameObject TextFeelMadness;
     private Camera camTw1;
 
     Dictionary <MenuType, UiParent> AllMenu;
@@ -155,6 +155,10 @@ public class UiManager : ManagerParent
     {
         Camera.main.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
         Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+
+        Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
+        GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+        //textMad.GetComponentInChildren<TextMesh>().text = 
         //Camera.main.transform.GetComponent<RainbowMove>().enabled = false;
 
         //Camera.main.transform.DOKill(false);
