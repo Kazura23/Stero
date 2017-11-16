@@ -22,7 +22,7 @@ public class SpawnNewLvl : MonoBehaviour
 		if (other.gameObject.tag == "Player"&& !detect) 
 		{
 			detect = true;
-			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( LevelParent );
+			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( LevelParent, gameObject );
 		}
 	}
 	#endregion

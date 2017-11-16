@@ -77,12 +77,19 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
-	public void NewSpawn ( Transform sourceSpawn )
+	public void NewSpawn ( Transform sourceSpawn, GameObject thisColl = null )
 	{
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<GameObject> getSpc = getSpawnChunks;
 
-		spawnAfterThis ( sourceSpawn.position, sourceSpawn.rotation, sourceSpawn.GetComponent<SpawnNewLvl> ( ) );
+		if ( thisColl != null )
+		{
+			spawnAfterThis ( sourceSpawn.position, sourceSpawn.rotation, thisColl.GetComponent<SpawnNewLvl> ( ) );
+		}
+		else
+		{
+			spawnAfterThis ( sourceSpawn.position, sourceSpawn.rotation );
+		}
 
 		if ( getSpc.Count > 5 )
 		{
