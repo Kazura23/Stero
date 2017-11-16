@@ -45,7 +45,6 @@ public class SpawnChunks : MonoBehaviour
 		{
 			getSpawnable.Add ( new List<GetSpawnable> ( ) );
 
-
 			for ( b = 0; b < getChunks [ a ].TheseChunks.Count; b++ )
 			{
 				getSpawnable [ a ].Add ( new GetSpawnable ( ) );

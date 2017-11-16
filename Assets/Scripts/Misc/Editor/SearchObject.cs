@@ -6,6 +6,7 @@ using System.Collections;
 public class SearchObject : MonoBehaviour 
 {
 	#region Variables
+
 	#endregion
 
 	#region Mono
@@ -14,7 +15,6 @@ public class SearchObject : MonoBehaviour
 	#region Public Methods
 	public static List<List<GameObject>> LoadAssetsInProject(ResearcheType thisType, Object objComp, string thisStringSearch, bool getChildren, string optionalPath = "", int diffComp = 2 )
 	{
-		string currTag = thisStringSearch;
 		string[] GUIDs;
 		if(optionalPath != "")
 		{
@@ -129,7 +129,7 @@ public class SearchObject : MonoBehaviour
 		}
 
 		return objectList;
-	
+
 	}
 	#endregion
 
@@ -218,6 +218,43 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
+			case ResearcheType.SearchRef:
+				components = objectList [ a ].GetComponents<Component> ( );
+
+				for ( b = 0; b < components.Length; b++ )
+				{
+					Debug.Log ( components [ b ].GetType ( ) + " / " + components [ b ].GetType ( ).GetFields ( ).Length );
+
+					if ( components [ b ].GetType ( ).GetFields ( ).Length > 0 )
+					{
+						foreach ( var field in components[b].GetType ( ).GetFields ( ) )
+						{
+							if ( field.GetValue ( components [ b ] ) == objComp )
+							{
+								objTagList.Add ( objectList [ a ] );
+								break;
+							}
+						}
+					}
+					else
+					{
+						foreach ( var field in components[b].GetType ( ).GetProperties ( ) )
+						{
+							try 
+							{
+								if ( field.GetValue ( components [ b ], null ) == objComp )
+								{
+									objTagList.Add ( objectList [ a ] );
+									break;
+								}
+							}
+							catch{
+								Debug.Log ( "Property value error" );
+							}
+						}
+					}
+				}
+				break;
 			case ResearcheType.SamePref:
 				components = objectList [ a ].GetComponents<Component> ( );
 				if ( (componentsPref.Length - components.Length  <= diffComp ) && objectList [ a ].name.Length >= getPref.name.Length && objectList [ a ].name.Substring ( 0, getPref.name.Length ) == getPref.name )
@@ -231,7 +268,7 @@ public class SearchObject : MonoBehaviour
 		return objTagList;
 	}
 
-	static GameObject[] GetComponentsInChildrenOfAsset( GameObject go  )
+	public static GameObject[] GetComponentsInChildrenOfAsset( GameObject go  )
 	{
 		List<GameObject> tfs = new List<GameObject>();
 

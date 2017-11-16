@@ -14,11 +14,11 @@ public class Piece : MonoBehaviour
 
             GlobalManager.Ui.TakeCoin();
 
-            GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<SphereCollider>().enabled = false;
 
             Debug.Log(GetComponent<MeshRenderer>().material.name);
 
-            if (GetComponent<MeshRenderer>().material.name == "Piece (Instance)")
+            if (GetComponent<MeshRenderer>().material.name == "gold_piece_BC")
             { 
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 1);
                 
