@@ -14,6 +14,7 @@ public class SpawnChunks : MonoBehaviour
 
 	List<List<GetSpawnable>> AllSpawnable;
 	List<GameObject> getSpawnChunks;
+	List<GameObject> otherSpawn;
 
 	GameObject WallOnLastChunk;
 	Transform thisT;
@@ -26,10 +27,32 @@ public class SpawnChunks : MonoBehaviour
 	#endregion
 		
 	#region Public
+	public void RemoveAll ( )
+	{
+		int a;
+
+		for ( a = 0; a < otherSpawn.Count; a++ )
+		{
+			if ( otherSpawn [ a ] != null )
+			{
+				Destroy ( otherSpawn [ a ] );
+			}
+		}
+
+		for ( a = 0; a < getSpawnChunks.Count; a++ )
+		{
+			if ( getSpawnChunks [ a ] != null )
+			{
+				Destroy ( getSpawnChunks [ a ] );
+			}
+		}
+	}
+
 	public void InitChunck ( )
 	{
 		getSpawnChunks = new List<GameObject> ( );
 		AllSpawnable = new List<List<GetSpawnable>> ( );
+		otherSpawn = new List<GameObject> ( );
 		thisT = transform;
 
 		List<ChunksScriptable> getChunks = ChunksInfo;
@@ -84,7 +107,7 @@ public class SpawnChunks : MonoBehaviour
 
 		spawnAfterThis ( sourceSpawn );
 
-		if ( getSpc.Count > 5 )
+		if ( getSpc.Count > 3 )
 		{
 			Destroy ( getSpc [ 0 ] );
 			getSpc.RemoveAt ( 0 );
@@ -127,6 +150,11 @@ public class SpawnChunks : MonoBehaviour
 				newLevel ( );
 			}
 		}
+	}
+
+	public void AddNewChunk ( GameObject thisSpawn )
+	{
+		getSpawnChunks.Add ( thisSpawn );
 	}
 	#endregion
 	
@@ -181,13 +209,12 @@ public class SpawnChunks : MonoBehaviour
 		if ( sourceSpawn != null )
 		{
 			List<NewChunkSaveInf> getNewChunk = new List<NewChunkSaveInf> ( );
+			List<ToDestChunk> allNewChunk = new List<ToDestChunk> ( );
 			NewChunkSaveInf getOtherNC;
-			NewChunkInfo nChunInfo;
 
 			int a;
 			int b;
 			int getInd;
-			int totalLine = 0;
 			int diffLine;
 			int randChunk = Random.Range ( 0, 2 );
 
@@ -204,7 +231,6 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = getChunks [ currLevel ].TheseChunks [ currNbrCh ];
 				}
 
-				
 				if ( thisSpawn != null )
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
@@ -219,15 +245,27 @@ public class SpawnChunks : MonoBehaviour
 					getNewChunk [ getInd ].NbrLaneDebut = sourceSpawn.NbrLaneFin;
 					getNewChunk [ getInd ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 
-					nChunInfo = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( ).InfoChunk;
-					totalLine += ( int ) nChunInfo.NbrLaneFin.x + ( int ) nChunInfo.NbrLaneFin.y + 1;
+					allNewChunk.Add ( new ToDestChunk ( ) );
+					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
+					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
 
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getEnnemySpawnable, getChunks [ currLevel ].EnnemySpawnable );
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleSpawnable, getChunks [ currLevel ].ObstacleSpawnable );
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleDestrucSpawnable, getChunks [ currLevel ].ObstacleDestrucSpawnable );
 
-					getSpc.Add ( thisSpawn );
+					otherSpawn.Add ( thisSpawn );
+				}
+			}
+
+			for ( a = 0; a < allNewChunk.Count; a++ )
+			{
+				for ( b = 0; b < allNewChunk.Count; b++ )
+				{
+					if ( a != b )
+					{
+						allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+					}
 				}
 			}
 
@@ -418,3 +456,8 @@ public class NewChunkSaveInf
 	public int CurrLane;
 }
 
+public class ToDestChunk 
+{
+	public GameObject ThisObj;
+	public SpawnNewLvl ThisSL;
+}

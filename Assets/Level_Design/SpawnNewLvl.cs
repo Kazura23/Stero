@@ -7,6 +7,9 @@ public class SpawnNewLvl : MonoBehaviour
 	#region Variable
 	public NewChunkInfo InfoChunk;
 
+	[HideInInspector]
+	public List<GameObject> ToDest;
+
 	bool detect = false;
 	#endregion
 	
@@ -23,6 +26,12 @@ public class SpawnNewLvl : MonoBehaviour
 		{
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
+
+			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+			for ( int a = 0; a < ToDest.Count; a++ )
+			{
+				Destroy ( ToDest [ a ] );
+			}
 		}
 	}
 	#endregion
