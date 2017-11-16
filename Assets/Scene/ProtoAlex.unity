@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479245, g: 0.49433935, b: 0.57353824, a: 1}
+  m_IndirectSpecularColor: {r: 0.44479203, g: 0.494339, b: 0.57353723, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ Prefab:
     - target: {fileID: 114275943528702584, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
       propertyPath: projection_basic.z
-      value: 100
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
@@ -914,6 +914,11 @@ Prefab:
         type: 2}
       propertyPath: delayInBeginMadness
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114275943528702584, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: projection_basic.x
+      value: 8.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
@@ -1796,6 +1801,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -2410,7 +2429,7 @@ Prefab:
         type: 2}
       propertyPath: ChunksInfo.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 8c39cac52faee384e8f026761ef26143,
+      objectReference: {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be,
         type: 2}
     - target: {fileID: 224175754688186618, guid: 15bb641fdb1f44941a035ea7b9db8239,
         type: 2}
