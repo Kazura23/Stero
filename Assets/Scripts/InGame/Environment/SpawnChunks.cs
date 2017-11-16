@@ -188,7 +188,6 @@ public class SpawnChunks : MonoBehaviour
 		if ( getChunks [ currLevel ].ChunkAleat )
 		{
 			currChunk = Random.Range ( 0, getChunks [ currLevel ].TheseChunks.Count );
-
 			thisSpawn = getChunks [ currLevel ].TheseChunks [ currChunk ];
 		}
 		else
@@ -199,10 +198,11 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( thisLvl != null )
 		{
+			GameObject getObj;
 			SpawnNewLvl getNew = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
 			int getNbr;
 			int calNbr;
-
+			//comparer le nombre de lane fin et debut du nouveau chunk par rapport a la position du parent pour placer les walls
 			if ( Random.Range ( 0, 2 ) == 0 )
 			{
 				getNbr = -Random.Range ( 0, ( int ) thisLvl.NbrLaneFin.x + 1 );
@@ -221,7 +221,8 @@ public class SpawnChunks : MonoBehaviour
 			{
 				for ( a = calNbr; a > getNew.NbrLaneDebut.x; a-- )
 				{
-					Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
+					getObj = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
+					getObj.transform.position = new Vector3 ( thisPos.x + a * 6, thisPos.y, thisPos.z );
 				}
 			}
 

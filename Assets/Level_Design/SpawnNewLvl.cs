@@ -5,6 +5,7 @@ public class SpawnNewLvl : MonoBehaviour
 	#region Variable
 	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
 	public Vector2 NbrLaneDebut, NbrLaneFin;
+	public int LineParent = 0;
 	public Transform LevelParent;
 
 	bool detect = false;
