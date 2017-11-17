@@ -50,4 +50,5 @@ public class ChunkExit
 {
 	public int LaneParent = 0;
 	public Transform LevelParent;
+	public List<GameObject> SpawnEnable;
 }
