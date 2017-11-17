@@ -3,7 +3,7 @@ guid: 7d259d37d8cbc1448bcf14d1e9bb4a50
 timeCreated: 1509820155
 licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
     100002: charlotte_champi1_Ctrl_ChestEndEffector
@@ -216,22 +216,10 @@ ModelImporter:
     7400002: attack_char
     9500000: //RootNode
     13700000: charlotte_champi_mesh
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: charlotte_champi_charlotte_champi_corpus
-    second: {fileID: 2100000, guid: 365d7cf3761253b40b79cb8c53300393, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: charlotte_champi_charlotte_champi_eyes
-    second: {fileID: 2100000, guid: 448795a8018eea647a870a8e343620ea, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -244,8 +232,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -339,8 +326,822 @@ ModelImporter:
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
-    human: []
-    skeleton: []
+    human:
+    - boneName: charlotte_champi1_Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: joint1
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandRing1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_LeftHandRing2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandThumb1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandThumb2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandIndex1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandIndex2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandRing1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_RightHandRing2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: charlotte_champi1_Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Charlotte_champi 1(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Reference
+      parentName: Charlotte_champi 1(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_ChestEndEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.00021013737, y: 1.2718458, z: 0.14670473}
+      rotation: {x: 0.26328033, y: 0.028207649, z: 0.011204764, w: 0.96424186}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_ChestOriginEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.002661056, y: 0.90428495, z: 0.0030800854}
+      rotation: {x: 0.14575972, y: -0.00634252, z: 0.0038579786, w: 0.98929214}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_HeadEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.0025767982, y: 1.6729177, z: 0.24296172}
+      rotation: {x: 0.047682807, y: -0.042239893, z: -0.0017308156, w: 0.99796754}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Hips
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.0020000811, y: 0.6920211, z: 0.0010944591}
+      rotation: {x: 0.004682476, y: 0.0034779508, z: -0.0015406539, w: 0.9999818}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftUpLeg
+      parentName: charlotte_champi1_Ctrl_Hips
+      position: {x: -0.1445752, y: -0.06270004, z: 0}
+      rotation: {x: -0.28561983, y: 0.012630055, z: -0.06272243, w: 0.95620483}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftLeg
+      parentName: charlotte_champi1_Ctrl_LeftUpLeg
+      position: {x: -0, y: -0.44294658, z: 0.042532597}
+      rotation: {x: 0.68574494, y: 0.015283448, z: 0.014403144, w: 0.7275389}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftFoot
+      parentName: charlotte_champi1_Ctrl_LeftLeg
+      position: {x: -0, y: -0.3757029, z: 0}
+      rotation: {x: -0.45304403, y: 0.0124729965, z: 0.04789326, w: 0.89011335}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftToeBase
+      parentName: charlotte_champi1_Ctrl_LeftFoot
+      position: {x: -0.000000085830685, y: -0.06262317, z: 0.12954721}
+      rotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightUpLeg
+      parentName: charlotte_champi1_Ctrl_Hips
+      position: {x: 0.14765756, y: -0.06270004, z: 0}
+      rotation: {x: -0.40869, y: -0.04768137, z: 0.15989217, w: 0.8972923}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightLeg
+      parentName: charlotte_champi1_Ctrl_RightUpLeg
+      position: {x: 0.000000028610229, y: -0.44294658, z: 0.04253699}
+      rotation: {x: 0.70176345, y: -0.037225004, z: -0.03671392, w: 0.710489}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightFoot
+      parentName: charlotte_champi1_Ctrl_RightLeg
+      position: {x: -0.000000009536743, y: -0.3757029, z: 8.881784e-18}
+      rotation: {x: -0.3518568, y: -0.03201123, z: -0.12683348, w: 0.92686856}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightToeBase
+      parentName: charlotte_champi1_Ctrl_RightFoot
+      position: {x: 0.000010852814, y: -0.06262317, z: 0.12954749}
+      rotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Spine
+      parentName: charlotte_champi1_Ctrl_Hips
+      position: {x: -0, y: 0.21227394, z: 0}
+      rotation: {x: 0.14112107, y: -0.009540482, z: 0.005918708, w: 0.98992866}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Spine1
+      parentName: charlotte_champi1_Ctrl_Spine
+      position: {x: -0, y: 0.17717002, z: 0}
+      rotation: {x: 0.061418723, y: 0.0146050565, z: 0.0016962113, w: 0.9980038}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Spine2
+      parentName: charlotte_champi1_Ctrl_Spine1
+      position: {x: -0, y: 0.1771701, z: 0}
+      rotation: {x: 0.058952343, y: 0.01997269, z: -0.0004762042, w: 0.9980609}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftShoulder
+      parentName: charlotte_champi1_Ctrl_Spine2
+      position: {x: -0.10220529, y: 0.041545257, z: 0}
+      rotation: {x: -0.00000017179087, y: 0.000032203345, z: 0.000042644904, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftArm
+      parentName: charlotte_champi1_Ctrl_LeftShoulder
+      position: {x: -0.1070725, y: 0.000001373291, z: 0}
+      rotation: {x: -0.16439866, y: -0.09742949, z: 0.27844328, w: 0.94124913}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftForeArm
+      parentName: charlotte_champi1_Ctrl_LeftArm
+      position: {x: -0.18181354, y: -0.20372207, z: 0}
+      rotation: {x: -0.16409461, y: 0.5949112, z: -0.2351076, w: 0.75091815}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHand
+      parentName: charlotte_champi1_Ctrl_LeftForeArm
+      position: {x: -0.2262783, y: -0.24937882, z: -0.013741018}
+      rotation: {x: -0.26323083, y: -0.29010627, z: -0.015986534, w: 0.9199415}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandIndex1
+      parentName: charlotte_champi1_Ctrl_LeftHand
+      position: {x: -0.05671215, y: -0.0906041, z: 0.021808352}
+      rotation: {x: -0.00000019036952, y: 0.000000052892236, z: 0.00000017773137,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandIndex2
+      parentName: charlotte_champi1_Ctrl_LeftHandIndex1
+      position: {x: -0.027628707, y: -0.053726654, z: -0.0037595832}
+      rotation: {x: 0.00000022335281, y: -0.00000007123109, z: 0.000000019034731,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandRing1
+      parentName: charlotte_champi1_Ctrl_LeftHand
+      position: {x: -0.05252529, y: -0.08552223, z: -0.013206797}
+      rotation: {x: -0.00000019036952, y: 0.000000052892233, z: 0.00000017773137,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandRing2
+      parentName: charlotte_champi1_Ctrl_LeftHandRing1
+      position: {x: -0.021380309, y: -0.040025175, z: 0}
+      rotation: {x: 0.00000022335281, y: -0.00000007123109, z: 0.000000019034731,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandThumb1
+      parentName: charlotte_champi1_Ctrl_LeftHand
+      position: {x: -0.002354126, y: -0.05816818, z: 0.04282434}
+      rotation: {x: -0.00000019036952, y: 0.000000052892236, z: 0.00000017773137,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandThumb2
+      parentName: charlotte_champi1_Ctrl_LeftHandThumb1
+      position: {x: 0.0026055526, y: -0.024117965, z: 0.011028759}
+      rotation: {x: 3.884112e-15, y: 0.000000085111665, z: -0.000000044331053, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Neck
+      parentName: charlotte_champi1_Ctrl_Spine2
+      position: {x: -0, y: 0.1771701, z: 0}
+      rotation: {x: -0.2171919, y: -0.06986983, z: -0.00038540168, w: 0.97362506}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_Head
+      parentName: charlotte_champi1_Ctrl_Neck
+      position: {x: -0, y: 0.28564575, z: 0}
+      rotation: {x: 0.000000027572286, y: 1.25180085e-14, z: 0.0000004469427, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightShoulder
+      parentName: charlotte_champi1_Ctrl_Spine2
+      position: {x: 0.10562599, y: 0.041545257, z: 0}
+      rotation: {x: -0.0000001273298, y: -5.2622216e-12, z: -6.666495e-19, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightArm
+      parentName: charlotte_champi1_Ctrl_RightShoulder
+      position: {x: 0.10707275, y: 0.0000044250487, z: 0}
+      rotation: {x: -0.19221511, y: -0.16173042, z: 0.004965242, w: 0.9679215}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightForeArm
+      parentName: charlotte_champi1_Ctrl_RightArm
+      position: {x: 0.18227401, y: -0.20331192, z: 0}
+      rotation: {x: -0.06514564, y: -0.4237123, z: 0.089795455, w: 0.89897764}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHand
+      parentName: charlotte_champi1_Ctrl_RightForeArm
+      position: {x: 0.22719073, y: -0.2509375, z: 0.04406154}
+      rotation: {x: -0.19754475, y: 0.21819328, z: -0.03831006, w: 0.9549346}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandIndex1
+      parentName: charlotte_champi1_Ctrl_RightHand
+      position: {x: 0.052730445, y: -0.070750885, z: 0.021294022}
+      rotation: {x: -0.00000012910566, y: -0.000000021906278, z: 0.0000001796924,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandIndex2
+      parentName: charlotte_champi1_Ctrl_RightHandIndex1
+      position: {x: 0.03414818, y: -0.04614128, z: 0.0035499048}
+      rotation: {x: -6.4216147e-15, y: -0.000000030606973, z: -0.00000020901541, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandRing1
+      parentName: charlotte_champi1_Ctrl_RightHand
+      position: {x: 0.054617193, y: -0.07029526, z: -0.007923765}
+      rotation: {x: -0.00000030941516, y: -0.000000153665, z: -0.00000015471953, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandRing2
+      parentName: charlotte_champi1_Ctrl_RightHandRing1
+      position: {x: 0.01835846, y: -0.03696602, z: -0.001582477}
+      rotation: {x: 0.00000033574136, y: 0.00000021023362, z: 0.00000046419464, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandThumb1
+      parentName: charlotte_champi1_Ctrl_RightHand
+      position: {x: 0.011408959, y: -0.038166426, z: 0.047936358}
+      rotation: {x: -0.00000025723497, y: 0.000000045263025, z: -0.000000094031286,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandThumb2
+      parentName: charlotte_champi1_Ctrl_RightHandThumb1
+      position: {x: 0.00708374, y: -0.017359085, z: 0.016973581}
+      rotation: {x: 1.6038446e-15, y: -0.000000037203655, z: 0.00000003042711, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_HipsEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.0033460425, y: 0.6293193, z: 0.00049721455}
+      rotation: {x: 0.0046824752, y: 0.0034779503, z: -0.0015406536, w: 0.9999818}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftAnkleEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.21707647, y: 0.063536264, z: -0.026623802}
+      rotation: {x: -0.0000000010402966, y: -1.9505575e-10, z: 0.000000001040297,
+        w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftElbowEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.25494888, y: 1.0073868, z: 0.07539385}
+      rotation: {x: -0.20220973, y: 0.4391762, z: 0.005381433, w: 0.87533224}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftFootEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.21707654, y: 0.0009131145, z: 0.10292341}
+      rotation: {x: 6.1985984e-17, y: -0.0000000010584256, z: 0.000000001040297, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandIndexEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.3722292, y: 0.72657317, z: 0.47401595}
+      rotation: {x: -0.42189544, y: 0.14542799, z: 0.1652243, w: 0.87952024}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandRingEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.37420723, y: 0.71469885, z: 0.43804783}
+      rotation: {x: -0.42189544, y: 0.14542797, z: 0.16522431, w: 0.87952024}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHandThumbEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.31731197, y: 0.80564016, z: 0.41906288}
+      rotation: {x: -0.42189544, y: 0.14542799, z: 0.1652243, w: 0.87952024}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftHipEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.14276634, y: 0.62976474, z: 0.001515678}
+      rotation: {x: -0.2813359, y: 0.0166892, z: -0.06314198, w: 0.95738435}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftKneeEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.18928985, y: 0.2832904, z: 0.2768378}
+      rotation: {x: 0.453044, y: -0.012472987, z: -0.047893208, w: 0.8901134}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftShoulderEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.21038894, y: 1.2641428, z: 0.15693922}
+      rotation: {x: 0.09824945, y: -0.14253543, z: 0.2580687, w: 0.95049}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_LeftWristEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: -0.35782018, y: 0.81154424, z: 0.3296456}
+      rotation: {x: -0.4218953, y: 0.1454279, z: 0.16522415, w: 0.87952036}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightAnkleEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.33167654, y: 0.11284031, z: 0.10815716}
+      rotation: {x: -0.000000003120768, y: 1.9505543e-10, z: 9.1026053e-10, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightElbowEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.3817542, y: 1.0673103, z: 0.15365332}
+      rotation: {x: -0.021147141, y: -0.54258, z: 0.030526826, w: 0.83918285}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightFootEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.3316874, y: 0.05021719, z: 0.23770468}
+      rotation: {x: 1.6023841e-16, y: -0.0000000031269813, z: 9.1026e-10, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandIndexEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.4530237, y: 0.7288148, z: 0.49865764}
+      rotation: {x: -0.17184496, y: -0.34186497, z: -0.11479591, w: 0.91674405}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandRingEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.46607107, y: 0.72539663, z: 0.46282387}
+      rotation: {x: -0.17184503, y: -0.34186512, z: -0.11479625, w: 0.9167439}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHandThumbEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.39901862, y: 0.8070668, z: 0.46691093}
+      rotation: {x: -0.17184496, y: -0.3418649, z: -0.11479622, w: 0.916744}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightHipEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.14945842, y: 0.6288738, z: -0.00052124885}
+      rotation: {x: -0.40399837, y: -0.044678815, z: 0.15970501, w: 0.8996018}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightKneeEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.2518061, y: 0.3834293, z: 0.35626036}
+      rotation: {x: 0.35185662, y: 0.032011285, z: 0.12683353, w: 0.9268686}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightShoulderEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.21080986, y: 1.2795426, z: 0.13647446}
+      rotation: {x: 0.07144491, y: -0.13210543, z: -0.021525454, w: 0.9884232}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Ctrl_RightWristEffector
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.44167167, y: 0.83402276, z: 0.3955494}
+      rotation: {x: -0.17184483, y: -0.341865, z: -0.11479606, w: 0.916744}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ikHandle1
+      parentName: charlotte_champi1_Ctrl_Reference
+      position: {x: 0.16496019, y: 1.4746927, z: 0.95276153}
+      rotation: {x: 0, y: -0, z: -0.08207891, w: 0.99662584}
+      scale: {x: 3.0502594, y: 3.0502594, z: 3.0502594}
+    - name: charlotte_champi1_Reference
+      parentName: Charlotte_champi 1(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: charlotte_champi1_Hips
+      parentName: charlotte_champi1_Reference
+      position: {x: -0.0015411302, y: 0.97041196, z: -0.0013041812}
+      rotation: {x: -1.2717884e-19, y: -1.8189891e-10, z: 0.0000000041097787, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+    - name: charlotte_champi1_LeftUpLeg
+      parentName: charlotte_champi1_Hips
+      position: {x: -0.14457534, y: -0.062699996, z: -8.445495e-10}
+      rotation: {x: 0.00000004656613, y: 0.000000011687007, z: 0.0000000023021585,
+        w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1.0000001}
+    - name: charlotte_champi1_LeftLeg
+      parentName: charlotte_champi1_LeftUpLeg
+      position: {x: 0.00000042313917, y: -0.44294688, z: 0.042533964}
+      rotation: {x: -0.00000004656613, y: -0.000000021691449, z: -0.0000000035015537,
+        w: 1}
+      scale: {x: 1.0000005, y: 1.0000007, z: 1.0000002}
+    - name: charlotte_champi1_LeftFoot
+      parentName: charlotte_champi1_LeftLeg
+      position: {x: 0.000000078312674, y: -0.37570345, z: -0.000000085507395}
+      rotation: {x: -0, y: 0.000000010186341, z: -0.0000000029103804, w: 1}
+      scale: {x: 1, y: 1, z: 1.0000002}
+    - name: charlotte_champi1_LeftToeBase
+      parentName: charlotte_champi1_LeftFoot
+      position: {x: -0.00000008790217, y: -0.06262319, z: 0.12954728}
+      rotation: {x: 1.6543612e-23, y: -8.881784e-16, z: -1.3322676e-15, w: 1}
+      scale: {x: 1, y: 1, z: 0.9999999}
+    - name: charlotte_champi1_RightUpLeg
+      parentName: charlotte_champi1_Hips
+      position: {x: 0.1476576, y: -0.062700056, z: 1.7960188e-10}
+      rotation: {x: -0.000000023283064, y: -0.0000000129148265, z: 0.0000000017109882,
+        w: 1}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1.0000004}
+    - name: charlotte_champi1_RightLeg
+      parentName: charlotte_champi1_RightUpLeg
+      position: {x: 0.000000019258238, y: -0.4429466, z: 0.042537306}
+      rotation: {x: 0.00000004656613, y: 0.000000018553695, z: 0.000000002182787,
+        w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1.0000001}
+    - name: charlotte_champi1_RightFoot
+      parentName: charlotte_champi1_RightLeg
+      position: {x: -0.00000005602564, y: -0.37570325, z: 0.00000007348335}
+      rotation: {x: -0.000000023283075, y: -0.00000000545697, z: -0.000000008003548,
+        w: 1}
+      scale: {x: 1, y: 1, z: 0.99999976}
+    - name: charlotte_champi1_RightToeBase
+      parentName: charlotte_champi1_RightFoot
+      position: {x: 0.000010859273, y: -0.06262318, z: 0.12954749}
+      rotation: {x: 1.2434498e-14, y: -0.00004189127, z: 1.5115947e-15, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: charlotte_champi1_Spine
+      parentName: charlotte_champi1_Hips
+      position: {x: -0.000000015411587, y: 0.21227403, z: -0.000000004410647}
+      rotation: {x: -0.000000011641532, y: -0.0000000020008883, z: -0.0000000052011724,
+        w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+    - name: charlotte_champi1_Spine1
+      parentName: charlotte_champi1_Spine
+      position: {x: 6.664132e-10, y: 0.17717004, z: -0.000000009196677}
+      rotation: {x: 0.000000023283064, y: 0.00000000509317, z: 0.000000009094946,
+        w: 1}
+      scale: {x: 0.99999976, y: 0.9999999, z: 0.9999999}
+    - name: charlotte_champi1_Spine2
+      parentName: charlotte_champi1_Spine1
+      position: {x: -0.000000018023282, y: 0.1771702, z: -0.000000008234012}
+      rotation: {x: 0.000000011641532, y: -0.000000005820767, z: -0.000000028376235,
+        w: 1}
+      scale: {x: 0.9999999, y: 0.99999976, z: 0.99999976}
+    - name: charlotte_champi1_LeftShoulder
+      parentName: charlotte_champi1_Spine2
+      position: {x: -0.10220528, y: 0.041545264, z: -0.000000015063891}
+      rotation: {x: -0.000000023283064, y: 0.0000000058207665, z: -0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000002}
+    - name: charlotte_champi1_LeftArm
+      parentName: charlotte_champi1_LeftShoulder
+      position: {x: -0.10707267, y: 0.000001341475, z: 0.000000024281976}
+      rotation: {x: 0.000000010728683, y: -0.000000026633183, z: -0.38803267, w: 0.9216456}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1}
+    - name: charlotte_champi1_LeftForeArm
+      parentName: charlotte_champi1_LeftArm
+      position: {x: -0.18181625, y: -0.20372003, z: 0.000000022799775}
+      rotation: {x: -0.000000029102639, y: 0.00000004656568, z: -0.000025657937, w: 1}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000007}
+    - name: charlotte_champi1_LeftHand
+      parentName: charlotte_champi1_LeftForeArm
+      position: {x: -0.226269, y: -0.24938767, z: -0.013740932}
+      rotation: {x: 0.0000000046458446, y: -0.0000000346774, z: 0.11876936, w: 0.9929219}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000001}
+    - name: charlotte_champi1_LeftHandThumb1
+      parentName: charlotte_champi1_LeftHand
+      position: {x: -0.016004942, y: -0.055972494, z: 0.042824328}
+      rotation: {x: -0.28933132, y: 0.015981708, z: -0.05396395, w: 0.9555731}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1.0000002}
+    - name: charlotte_champi1_LeftHandThumb2
+      parentName: charlotte_champi1_LeftHandThumb1
+      position: {x: -0.012730032, y: -0.022315783, z: 0.0070745638}
+      rotation: {x: 0.00000002235174, y: -0.0000000037252899, z: 0.0000063760663,
+        w: 1}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: charlotte_champi1_LeftHandIndex1
+      parentName: charlotte_champi1_LeftHand
+      position: {x: -0.07647896, y: -0.07467495, z: 0.021808343}
+      rotation: {x: -0.00798428, y: 0.012764343, z: -0.0712489, w: 0.997345}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: charlotte_champi1_LeftHandIndex2
+      parentName: charlotte_champi1_LeftHandIndex1
+      position: {x: -0.039516993, y: -0.04569805, z: -0.003759582}
+      rotation: {x: 0.00000017077153, y: -0.017452454, z: 0.0000037807667, w: 0.99984777}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+    - name: charlotte_champi1_LeftHandRing1
+      parentName: charlotte_champi1_LeftHand
+      position: {x: -0.07121178, y: -0.070723735, z: -0.013206814}
+      rotation: {x: 0.00000012781268, y: -0.00000022500707, z: -0.061375875, w: 0.9981147}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+    - name: charlotte_champi1_LeftHandRing2
+      parentName: charlotte_champi1_LeftHandRing1
+      position: {x: -0.03021428, y: -0.033855997, z: 0.00000005383028}
+      rotation: {x: -0.00000001144198, y: -0.000031094532, z: 0.0000064000515, w: 1}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000005}
+    - name: charlotte_champi1_RightShoulder
+      parentName: charlotte_champi1_Spine2
+      position: {x: 0.10562602, y: 0.04154524, z: 0.000000017861762}
+      rotation: {x: -0.000000023283064, y: 4.440892e-16, z: 0.000000029103832, w: 1}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000001}
+    - name: charlotte_champi1_RightArm
+      parentName: charlotte_champi1_RightShoulder
+      position: {x: 0.10707291, y: 0.000004418226, z: -0.000000037354592}
+      rotation: {x: -0.000000017529509, y: 0.00000016799017, z: 0.3869269, w: 0.92211044}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: charlotte_champi1_RightForeArm
+      parentName: charlotte_champi1_RightArm
+      position: {x: 0.1822824, y: -0.2033047, z: 0.00000007378071}
+      rotation: {x: 0.018763935, y: 0.01841897, z: 0.008237302, w: 0.9996204}
+      scale: {x: 1.0000004, y: 0.9999999, z: 1.0000002}
+    - name: charlotte_champi1_RightHand
+      parentName: charlotte_champi1_RightForeArm
+      position: {x: 0.22716035, y: -0.2509651, z: 0.04406173}
+      rotation: {x: -0.0000000047481734, y: -0.000000034291915, z: -0.05661314, w: 0.9983962}
+      scale: {x: 0.99999976, y: 1.0000001, z: 1}
+    - name: charlotte_champi1_RightHandThumb1
+      parentName: charlotte_champi1_RightHand
+      position: {x: 0.01564589, y: -0.03663399, z: 0.04793637}
+      rotation: {x: -0.042213988, y: 0.017216055, z: 0.039141174, w: 0.9981932}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
+    - name: charlotte_champi1_RightHandThumb2
+      parentName: charlotte_champi1_RightHandThumb1
+      position: {x: 0.008996054, y: -0.0164496, z: 0.016973576}
+      rotation: {x: -0.000000023282603, y: 0.000000023283526, z: -0.000020127743,
+        w: 1}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+    - name: charlotte_champi1_RightHandIndex1
+      parentName: charlotte_champi1_RightHand
+      position: {x: 0.06038265, y: -0.064343885, z: 0.021294016}
+      rotation: {x: 0.0000000058245284, y: 0.000000046565667, z: 0.00008086115, w: 1}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
+    - name: charlotte_champi1_RightHandIndex2
+      parentName: charlotte_champi1_RightHandIndex1
+      position: {x: 0.039133456, y: -0.041996278, z: 0.003549925}
+      rotation: {x: -0.00000034540406, y: -0.017452974, z: -0.000020201096, w: 0.9998477}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: charlotte_champi1_RightHandRing1
+      parentName: charlotte_champi1_RightHand
+      position: {x: 0.06220592, y: -0.06367807, z: -0.007923767}
+      rotation: {x: -0.017129418, y: -0.014422556, z: 0.07334857, w: 0.99705493}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000002}
+    - name: charlotte_champi1_RightHandRing2
+      parentName: charlotte_champi1_RightHandRing1
+      position: {x: 0.022409793, y: -0.034660097, z: -0.0015825187}
+      rotation: {x: -0.00000037629056, y: -0.017452879, z: -0.000020171388, w: 0.9998477}
+      scale: {x: 1, y: 0.99999976, z: 0.9999998}
+    - name: charlotte_champi1_Neck
+      parentName: charlotte_champi1_Spine2
+      position: {x: -0.000000024614732, y: 0.17717011, z: -0.000000018559051}
+      rotation: {x: -0.000000017462298, y: 0.0000000047293733, z: 0.000000018007995,
+        w: 1}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+    - name: charlotte_champi1_Head
+      parentName: charlotte_champi1_Neck
+      position: {x: 0.00000027094873, y: 0.28564692, z: 0.000000112096146}
+      rotation: {x: -0.00039534867, y: 0.7071067, z: -0.0003953495, w: 0.7071067}
+      scale: {x: 1.0000011, y: 1, z: 1.000001}
+    - name: joint1
+      parentName: charlotte_champi1_Head
+      position: {x: -0.42284355, y: -5.2735593e-18, z: 1.0412963e-30}
+      rotation: {x: 0.000000004540197, y: -0, z: 0.11716099, w: 0.9931129}
+      scale: {x: 1.0000002, y: 0.9999998, z: 1.0000002}
+    - name: joint2
+      parentName: joint1
+      position: {x: -0.14836308, y: -2.7256925e-15, z: -0.011917093}
+      rotation: {x: -0.000000092738716, y: 0.000000012223006, z: 0.2804868, w: 0.95985794}
+      scale: {x: 1.0000002, y: 0.9999999, z: 0.9999998}
+    - name: joint3
+      parentName: joint2
+      position: {x: -0.09558968, y: -2.2026293e-15, z: -0.015117958}
+      rotation: {x: 0.00000004161153, y: 0.000000032950826, z: 0.14585553, w: 0.9893059}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000006}
+    - name: joint4
+      parentName: joint3
+      position: {x: -0.08504254, y: 0, z: -0.008611517}
+      rotation: {x: -0.00000004619977, y: -0.00000011970157, z: 0.1186495, w: 0.9929362}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1.0000007}
+    - name: joint5
+      parentName: joint4
+      position: {x: -0.07779045, y: -3.3668223e-16, z: -0.0049782065}
+      rotation: {x: -0.9906619, y: -0.13634148, z: -0.000000036874336, w: 0.00000013589599}
+      scale: {x: 1.0000002, y: 0.99999934, z: 0.9999997}
+    - name: joint6
+      parentName: joint5
+      position: {x: -0.06418691, y: -7.261445e-17, z: 0.011443165}
+      rotation: {x: 0.49099603, y: 0.50884455, z: -0.4909961, w: 0.5088448}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000005}
+    - name: charlotte_champi_mesh
+      parentName: Charlotte_champi 1(Clone)
+      position: {x: -0, y: 0, z: 0.035351004}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -351,10 +1152,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -55,8 +55,9 @@ public class ProtoEnnemis : AbstractObject
 	public override void Dead ( bool enemy = false ) 
 	{
 
-		base.Dead ( enemy );
-		GlobalManager.Ui.BloodHit();
+        GlobalManager.Ui.BloodHit();
+
+        base.Dead ( enemy );
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }
 	#endregion
@@ -66,16 +67,19 @@ public class ProtoEnnemis : AbstractObject
 	{
         base.OnCollisionEnter ( thisColl );
 
-		if ( isDead )
+
+        if ( isDead )
 		{
-			GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y, transform.localPosition.z + 5f), "EnemyNormalDeath", transform.parent, .35f);
+
+            GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y, transform.localPosition.z + 5f), "EnemyNormalDeath", transform.parent, .35f);
 		}
 	}
 
 	protected override void CollDetect ( )
 	{
 		base.CollDetect ( );
-		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+
+        GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 	#endregion
 }

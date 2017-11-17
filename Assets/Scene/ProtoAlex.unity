@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479245, g: 0.49433935, b: 0.57353824, a: 1}
+  m_IndirectSpecularColor: {r: 0.44479203, g: 0.494339, b: 0.57353723, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -197,64 +197,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 9459705}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &12424615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 12424616}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &12424616
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 12424615}
-  m_LocalRotation: {x: -0.19221511, y: -0.16173042, z: 0.004965242, w: 0.9679215}
-  m_LocalPosition: {x: 0.10707275, y: 0.0000044250487, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 556103656}
-  m_Father: {fileID: 132969189}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 24.113, y: 7.145691, z: -19.525112}
---- !u!1 &17041339
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 17041340}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandIndex2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &17041340
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 17041339}
-  m_LocalRotation: {x: -6.4216147e-15, y: -0.000000030606973, z: -0.00000020901541,
-    w: 1}
-  m_LocalPosition: {x: 0.03414818, y: -0.04614128, z: 0.0035499048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1797097846}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -1.1949777e-12, y: -0.000002856539, z: -0.000025169722}
 --- !u!1 &18047493
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,35 +375,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 25809915}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &27028067
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 27028068}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Reference
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &27028068
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 27028067}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 782776700}
-  m_Father: {fileID: 1620319517}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &34139853
 Prefab:
   m_ObjectHideFlags: 0
@@ -950,7 +863,7 @@ Prefab:
     - target: {fileID: 114275943528702584, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
       propertyPath: projection_basic.z
-      value: 100
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
@@ -1001,6 +914,11 @@ Prefab:
         type: 2}
       propertyPath: delayInBeginMadness
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114275943528702584, guid: b4cea04d2ef6e224da8a8b609103e64f,
+        type: 2}
+      propertyPath: projection_basic.x
+      value: 8.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
@@ -1272,140 +1190,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 50834146}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &68411774
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 68411775}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandThumbEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &68411775
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 68411774}
-  m_LocalRotation: {x: -0.17184496, y: -0.3418649, z: -0.11479622, w: 0.916744}
-  m_LocalPosition: {x: 0.39901862, y: 0.8070668, z: 0.46691093}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 2.032079, y: 10.147757, z: -1.5145812}
---- !u!1 &72438062
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1131350923728168, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1749320282}
-  - component: {fileID: 72438066}
-  - component: {fileID: 72438065}
-  - component: {fileID: 72438064}
-  - component: {fileID: 72438063}
-  m_Layer: 11
-  m_Name: ProtoEnnemis
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &72438063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114260640822614706, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72438062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90339c5e89f5134aba48336c80c1cd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDead: 0
-  delayDead: 1
-  VelRestant: 20
-  onObjForward: 100
-  FreezeAxe: {x: 0, y: 0, z: 0}
-  FreezeRot: {x: 0, y: 0, z: 0}
-  useGravity: 1
-  NewColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!54 &72438064
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 54808680580977132, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72438062}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0.5
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!65 &72438065
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65876195950192430, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72438062}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &72438066
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 33854818312233570, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72438062}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &77621835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 77621836}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandIndex1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &77621836
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77621835}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00008092607, w: 1}
-  m_LocalPosition: {x: 0.06038265, y: -0.064343885, z: 0.021294016}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 618033416}
-  m_Father: {fileID: 1105968104}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.009274167}
 --- !u!1 &78526969 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1294808330193280, guid: b4cea04d2ef6e224da8a8b609103e64f,
@@ -1500,92 +1284,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 85669900}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &87904392
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 87904393}
-  m_Layer: 0
-  m_Name: joint5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &87904393
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 87904392}
-  m_LocalRotation: {x: 0.95469177, y: 0.2959078, z: 0.020219158, w: 0.024359459}
-  m_LocalPosition: {x: -0.07779045, y: -3.3668223e-16, z: -0.0049782065}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1422214325}
-  m_Father: {fileID: 196200820}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &91498461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 91498462}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightAnkleEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &91498462
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 91498461}
-  m_LocalRotation: {x: -0.000000003120768, y: 1.9505543e-10, z: 9.1026053e-10, w: 1}
-  m_LocalPosition: {x: 0.33167654, y: 0.11284031, z: 0.10815716}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: -0.00000038578932, y: 0.000000021604887, z: 0.000000101650286}
---- !u!1 &106488225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 106488226}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftForeArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &106488226
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 106488225}
-  m_LocalRotation: {x: -0.22151552, y: 0.6300773, z: -0.27503633, w: 0.69158405}
-  m_LocalPosition: {x: -0.18181625, y: -0.20372003, z: 0.000000022799775}
-  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
-  m_Children:
-  - {fileID: 1719824412}
-  m_Father: {fileID: 1688673138}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.5134656, y: 68.6741, z: -25.324976}
 --- !u!1 &106990646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,35 +1486,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 109136774}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &114639168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 114639169}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Spine1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &114639169
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 114639168}
-  m_LocalRotation: {x: 0.05980136, y: 0.005087415, z: -0.038078286, w: 0.9974708}
-  m_LocalPosition: {x: 6.664132e-10, y: 0.17717004, z: -0.000000009196677}
-  m_LocalScale: {x: 0.99999976, y: 0.99999976, z: 0.9999999}
-  m_Children:
-  - {fileID: 1195505121}
-  m_Father: {fileID: 1517665913}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.2926784, y: 3.0831358, z: -1.4433974}
 --- !u!1 &130864005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,35 +1575,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 130864005}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &132969188
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 132969189}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightShoulder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &132969189
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 132969188}
-  m_LocalRotation: {x: -0.0000001273298, y: -5.2622216e-12, z: -6.666495e-19, w: 1}
-  m_LocalPosition: {x: 0.10562599, y: 0.041545257, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 12424616}
-  m_Father: {fileID: 1340722035}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &133472072
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,6 +1801,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -2178,34 +1832,6 @@ Transform:
   m_Father: {fileID: 1253207701}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 55, y: 2.8, z: 0}
---- !u!1 &184969471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 184969472}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandIndexEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &184969472
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 184969471}
-  m_LocalRotation: {x: -0.17184496, y: -0.34186497, z: -0.11479591, w: 0.91674405}
-  m_LocalPosition: {x: 0.4530237, y: 0.7288148, z: 0.49865764}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 2.0320792, y: 10.147757, z: -1.514581}
 --- !u!1 &189623116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,35 +1921,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 189623116}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &196200819
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 196200820}
-  m_Layer: 0
-  m_Name: joint4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &196200820
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 196200819}
-  m_LocalRotation: {x: -0.032052558, y: 0.0004158326, z: 0.35275033, w: 0.9351683}
-  m_LocalPosition: {x: -0.08504254, y: 0, z: -0.008611517}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 87904393}
-  m_Father: {fileID: 749560155}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &212090523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,93 +2010,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212090523}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &215934127
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 215934128}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_ChestOriginEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &215934128
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 215934127}
-  m_LocalRotation: {x: 0.14575972, y: -0.00634252, z: 0.0038579786, w: 0.98929214}
-  m_LocalPosition: {x: 0.002661056, y: 0.90428495, z: 0.0030800854}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0.20494528, y: 1.6152496, z: -0.80746764}
---- !u!1 &232542859
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 232542860}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandRing1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &232542860
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 232542859}
-  m_LocalRotation: {x: -0.00000030941516, y: -0.000000153665, z: -0.00000015471953,
-    w: 1}
-  m_LocalPosition: {x: 0.054617193, y: -0.07029526, z: -0.007923765}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1563366051}
-  m_Father: {fileID: 1317153975}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -0.00003454, y: -0.00001717269, z: -0.00001727111}
---- !u!1 &244340875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 244340876}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandThumb2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &244340876
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 244340875}
-  m_LocalRotation: {x: 1.6038446e-15, y: -0.000000037203655, z: 0.00000003042711,
-    w: 1}
-  m_LocalPosition: {x: 0.00708374, y: -0.017359085, z: 0.016973581}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 903607556}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.574423e-13, y: -0.0000034722052, z: 0.0000028397526}
 --- !u!1001 &245624842
 Prefab:
   m_ObjectHideFlags: 0
@@ -2537,7 +2047,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4640565487808094, guid: 5de88afc57002d04eb9e3e145bc47372, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1429027651367742, guid: 5de88afc57002d04eb9e3e145bc47372, type: 2}
       propertyPath: m_Name
@@ -2663,6 +2173,76 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 265817920}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
+--- !u!1001 &269251981
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 28.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947967898028366, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947967898028366, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947967898028366, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378168390868352, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486570489892692, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.011711045
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486570489892692, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.011711051
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486570489892692, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.011711051
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &299119466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,7 +2369,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4724961795793312, guid: 15bb641fdb1f44941a035ea7b9db8239, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224562249454764838, guid: 15bb641fdb1f44941a035ea7b9db8239,
         type: 2}
@@ -3083,35 +2663,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 313259137}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &313375366
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 313375367}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightFoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &313375367
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 313375366}
-  m_LocalRotation: {x: -0.39306077, y: -0.022803344, z: -0.07486338, w: 0.91617614}
-  m_LocalPosition: {x: -0.00000005602564, y: -0.37570325, z: 0.00000007348335}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 1510718163}
-  m_Father: {fileID: 1046361811}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -7.186089, y: -0.53266203, z: -17.040226}
 --- !u!1 &314175869
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,34 +2784,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 319142087}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &320269345
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 320269346}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandIndexEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &320269346
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 320269345}
-  m_LocalRotation: {x: -0.42189544, y: 0.14542799, z: 0.1652243, w: 0.87952024}
-  m_LocalPosition: {x: -0.3722292, y: 0.72657317, z: 0.47401595}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 2.1492822, y: 9.283805, z: -6.4324937}
 --- !u!1 &322989929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3350,35 +2873,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 322989929}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &348672489
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 348672490}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandIndex1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &348672490
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 348672489}
-  m_LocalRotation: {x: 0, y: -0, z: -0.000025666184, w: 1}
-  m_LocalPosition: {x: -0.07647896, y: -0.07467495, z: 0.021808343}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_Children:
-  - {fileID: 1914832893}
-  m_Father: {fileID: 1719824412}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.0029418364}
 --- !u!1 &359126513
 GameObject:
   m_ObjectHideFlags: 0
@@ -4120,34 +3614,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 422861941}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &440832066
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 440832067}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHipEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &440832067
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 440832066}
-  m_LocalRotation: {x: -0.2813359, y: 0.0166892, z: -0.06314198, w: 0.95738435}
-  m_LocalPosition: {x: -0.14276634, y: 0.62976474, z: 0.001515678}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: -33.1195, y: 4.5813885, z: -8.809394}
 --- !u!1 &457765151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4277,89 +3743,6 @@ Transform:
   m_Father: {fileID: 563309871}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &473268516
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 473268517}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Reference
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &473268517
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 473268516}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1360082278}
-  - {fileID: 215934128}
-  - {fileID: 759837421}
-  - {fileID: 1246820149}
-  - {fileID: 1457571941}
-  - {fileID: 1924355576}
-  - {fileID: 948988935}
-  - {fileID: 1039972994}
-  - {fileID: 320269346}
-  - {fileID: 1842673589}
-  - {fileID: 1219078161}
-  - {fileID: 440832067}
-  - {fileID: 1042813590}
-  - {fileID: 1315792560}
-  - {fileID: 1024321053}
-  - {fileID: 91498462}
-  - {fileID: 1974513856}
-  - {fileID: 1848882199}
-  - {fileID: 184969472}
-  - {fileID: 723219946}
-  - {fileID: 68411775}
-  - {fileID: 540585221}
-  - {fileID: 1024701889}
-  - {fileID: 1606288167}
-  - {fileID: 817006507}
-  - {fileID: 1530450384}
-  m_Father: {fileID: 1620319517}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &473968510
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 473968511}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &473968511
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 473968510}
-  m_LocalRotation: {x: -0.16439866, y: -0.09742949, z: 0.27844328, w: 0.94124913}
-  m_LocalPosition: {x: -0.1070725, y: 0.000001373291, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1581133376}
-  m_Father: {fileID: 781487501}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 29.58663, y: -14.37094, z: 18.407469}
 --- !u!1 &476098910
 GameObject:
   m_ObjectHideFlags: 0
@@ -4723,34 +4106,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 528172277}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &540585220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 540585221}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHipEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &540585221
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 540585220}
-  m_LocalRotation: {x: -0.40399837, y: -0.044678815, z: 0.15970501, w: 0.8996018}
-  m_LocalPosition: {x: 0.14945842, y: 0.6288738, z: -0.00052124885}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: -46.580616, y: -18.633444, z: 28.67046}
 --- !u!1 &551115352
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,35 +4195,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 551115352}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &556103655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 556103656}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightForeArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &556103656
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 556103655}
-  m_LocalRotation: {x: -0.06514564, y: -0.4237123, z: 0.089795455, w: 0.89897764}
-  m_LocalPosition: {x: 0.18227401, y: -0.20331192, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1317153975}
-  m_Father: {fileID: 12424616}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -2.1766355, y: -48.643513, z: 11.269282}
 --- !u!1 &563309870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5104,35 +4430,6 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   ComponentType: 1
---- !u!1 &574773716
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 574773717}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandRing2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &574773717
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 574773716}
-  m_LocalRotation: {x: 0.00000022335281, y: -0.00000007123109, z: 0.000000019034731,
-    w: 1}
-  m_LocalPosition: {x: -0.021380309, y: -0.040025175, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380608595}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000026507827, y: -0.000009479165, z: 0.000001776504}
 --- !u!1 &589046429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,34 +4697,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 610672203}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &618033415
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 618033416}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandIndex2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &618033416
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 618033415}
-  m_LocalRotation: {x: -0.00000086063443, y: -0.01745297, z: -0.000020237294, w: 0.9998477}
-  m_LocalPosition: {x: 0.039133456, y: -0.041996278, z: 0.003549925}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 77621836}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.00013875497, y: -2.0000637, z: -0.0023173916}
 --- !u!1 &630068222
 GameObject:
   m_ObjectHideFlags: 0
@@ -5517,35 +4786,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 630068222}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &635989141
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 635989142}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandThumb1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &635989142
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 635989141}
-  m_LocalRotation: {x: -0.07215658, y: 0.03300811, z: 0.18921177, w: 0.9787251}
-  m_LocalPosition: {x: -0.016004942, y: -0.055972494, z: 0.042824328}
-  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 906284768}
-  m_Father: {fileID: 1719824412}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -8.843378, y: 2.163706, z: 21.716091}
 --- !u!1 &637778353
 GameObject:
   m_ObjectHideFlags: 0
@@ -5813,35 +5053,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664192714}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &696321676
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 696321677}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &696321677
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 696321676}
-  m_LocalRotation: {x: 0.68574494, y: 0.015283448, z: 0.014403144, w: 0.7275389}
-  m_LocalPosition: {x: -0, y: -0.44294658, z: 0.042532597}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1110747428}
-  m_Father: {fileID: 1262672404}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 85.845215, y: 35.422184, z: 35.350807}
 --- !u!1 &714199961
 GameObject:
   m_ObjectHideFlags: 0
@@ -5872,66 +5083,10 @@ Transform:
   - {fileID: 2040634787}
   - {fileID: 1531952266}
   - {fileID: 1455175050}
+  - {fileID: 1605801329}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &722286128
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 722286129}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandIndex2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &722286129
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 722286128}
-  m_LocalRotation: {x: 0.00000022335281, y: -0.00000007123109, z: 0.000000019034731,
-    w: 1}
-  m_LocalPosition: {x: -0.027628707, y: -0.053726654, z: -0.0037595832}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1872478126}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000026507827, y: -0.000009479165, z: 0.000001776504}
---- !u!1 &723219945
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 723219946}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandRingEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &723219946
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 723219945}
-  m_LocalRotation: {x: -0.17184503, y: -0.34186512, z: -0.11479625, w: 0.9167439}
-  m_LocalPosition: {x: 0.46607107, y: 0.72539663, z: 0.46282387}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 19
-  m_LocalEulerAnglesHint: {x: 2.032079, y: 10.147757, z: -1.5145811}
 --- !u!1 &723223707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6199,35 +5354,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 745224316}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &749560154
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 749560155}
-  m_Layer: 0
-  m_Name: joint3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &749560155
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 749560154}
-  m_LocalRotation: {x: -0.03291649, y: 0.008309822, z: 0.34428722, w: 0.93825036}
-  m_LocalPosition: {x: -0.09558968, y: -2.2026293e-15, z: -0.015117958}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 196200820}
-  m_Father: {fileID: 1379098784}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758691415
 GameObject:
   m_ObjectHideFlags: 0
@@ -6282,34 +5408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c37143169487843a3d76318489716e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &759837420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 759837421}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_HeadEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &759837421
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 759837420}
-  m_LocalRotation: {x: 0.047682807, y: -0.042239893, z: -0.0017308156, w: 0.99796754}
-  m_LocalPosition: {x: -0.0025767982, y: 1.6729177, z: 0.24296172}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 5.8704042, y: 2.3185773, z: -1.575955}
 --- !u!1 &764082836
 GameObject:
   m_ObjectHideFlags: 0
@@ -6338,7 +5436,7 @@ Transform:
   m_Children:
   - {fileID: 314175870}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &764082838
 MonoBehaviour:
@@ -6358,35 +5456,6 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   useGravity: 1
---- !u!1 &781487500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 781487501}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftShoulder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &781487501
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 781487500}
-  m_LocalRotation: {x: -0.00000017179087, y: 0.000032203345, z: 0.000042644904, w: 1}
-  m_LocalPosition: {x: -0.10220529, y: 0.041545257, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 473968511}
-  m_Father: {fileID: 1340722035}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.0794006e-19}
 --- !u!1 &782294300
 GameObject:
   m_ObjectHideFlags: 0
@@ -6441,37 +5510,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 25, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &782776699
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 782776700}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Hips
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &782776700
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 782776699}
-  m_LocalRotation: {x: 0.0046015736, y: 0.0023395082, z: -0.024645235, w: 0.99968296}
-  m_LocalPosition: {x: 0.08163709, y: 0.65700865, z: -0.0013041812}
-  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 1233407167}
-  - {fileID: 1227872544}
-  - {fileID: 1517665913}
-  m_Father: {fileID: 27028068}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.0011179894, y: 0.6417207, z: -0.3337946}
 --- !u!1 &795411973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6545,120 +5583,6 @@ Transform:
   m_Father: {fileID: 1918391476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &816114508
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 816114509}
-  - component: {fileID: 816114510}
-  m_Layer: 0
-  m_Name: charlotte_champi_mesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &816114509
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 816114508}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.035351004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1620319517}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &816114510
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 816114508}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 9354ee617aec0ad4f929cbde9b099ecf, type: 2}
-  - {fileID: 2100000, guid: fc93284d8c76ab0478d3d67a1d0c19d2, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: 7d259d37d8cbc1448bcf14d1e9bb4a50, type: 3}
-  m_Bones:
-  - {fileID: 4685737472787932, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4985188854593084, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4227078048430688, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4879488621878860, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4172278773556762, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4136814566562656, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4987015163324918, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4593000988691232, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4677803401407116, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4031011431428176, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4680304696518518, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4477866239446230, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4400237920018702, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4881472549995928, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4751961866428272, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4517756162361758, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4646729206665042, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4234497135401132, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4085727251701498, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4030791952672494, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4410901852418848, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4199073135808306, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4784074607981238, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4998618350876810, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4524430064898634, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4333288948914758, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4910290051675494, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4698111815718934, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4179755119597512, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4272865950758918, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4501347425591322, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4429323691074152, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4603144573239632, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4388327551523688, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4248905370561422, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4733839577323480, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4851376950714504, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4694691691954488, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4735741555462594, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  - {fileID: 4138842174120852, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 4685737472787932, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
-  m_AABB:
-    m_Center: {x: 0.18345982, y: 0.42854828, z: 0.26121086}
-    m_Extent: {x: 0.7704408, y: 1.3136954, z: 0.76413304}
-  m_DirtyAABB: 0
 --- !u!1 &816318225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6699,34 +5623,6 @@ Transform:
   m_Father: {fileID: 806519015}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &817006506
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 817006507}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightWristEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &817006507
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 817006506}
-  m_LocalRotation: {x: -0.17184483, y: -0.341865, z: -0.11479606, w: 0.916744}
-  m_LocalPosition: {x: 0.44167167, y: 0.83402276, z: 0.3955494}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: -10.608278, y: 5.0863547, z: -45.89674}
 --- !u!1 &831847887 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1173696423758702, guid: b4cea04d2ef6e224da8a8b609103e64f,
@@ -6744,64 +5640,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &838061312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 838061313}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftFoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &838061313
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 838061312}
-  m_LocalRotation: {x: -0.46276832, y: 0.025380014, z: 0.10101538, w: 0.8803393}
-  m_LocalPosition: {x: 0.000000078312674, y: -0.37570345, z: -0.000000085507395}
-  m_LocalScale: {x: 1, y: 1, z: 0.99999994}
-  m_Children:
-  - {fileID: 1316300739}
-  m_Father: {fileID: 2119468363}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -13.502966, y: 0.07808483, z: 0.92514235}
---- !u!1 &842422549
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 842422550}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftShoulder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &842422550
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 842422549}
-  m_LocalRotation: {x: -0.0000000013659703, y: 0.00003218838, z: 0.00004243675, w: 1}
-  m_LocalPosition: {x: -0.10220528, y: 0.041545264, z: -0.000000015063891}
-  m_LocalScale: {x: 1.0000004, y: 1.0000004, z: 1.0000002}
-  m_Children:
-  - {fileID: 1688673138}
-  m_Father: {fileID: 1195505121}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883538197
 GameObject:
   m_ObjectHideFlags: 0
@@ -6891,64 +5729,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 883538197}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &903607555
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 903607556}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandThumb1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &903607556
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 903607555}
-  m_LocalRotation: {x: -0.00000025723497, y: 0.000000045263025, z: -0.000000094031286,
-    w: 1}
-  m_LocalPosition: {x: 0.011408959, y: -0.038166426, z: 0.047936358}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 244340876}
-  m_Father: {fileID: 1317153975}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 6.727056e-15, y: -2.522646e-14, z: 8.408819e-15}
---- !u!1 &906284767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 906284768}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandThumb2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &906284768
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906284767}
-  m_LocalRotation: {x: 0, y: 0, z: 0.000006416546, w: 1}
-  m_LocalPosition: {x: -0.012730032, y: -0.022315783, z: 0.0070745638}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
-  m_Children: []
-  m_Father: {fileID: 635989142}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.0007347513}
 --- !u!1 &908010883
 GameObject:
   m_ObjectHideFlags: 0
@@ -7373,63 +6153,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 940122669}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &941260751
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 941260752}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Head
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &941260752
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 941260751}
-  m_LocalRotation: {x: -0.03159143, y: 0.75141656, z: -0.13948062, w: 0.64414304}
-  m_LocalPosition: {x: 0.00000027094873, y: 0.28564692, z: 0.000000112096146}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 1030079298}
-  m_Father: {fileID: 2147118632}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.5336475, y: 87.062805, z: -0.17179061}
---- !u!1 &948988934
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 948988935}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftElbowEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &948988935
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 948988934}
-  m_LocalRotation: {x: -0.20220973, y: 0.4391762, z: 0.005381433, w: 0.87533224}
-  m_LocalPosition: {x: -0.25494888, y: 1.0073868, z: 0.07539385}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 2.426698, y: 53.66634, z: 9.903669}
 --- !u!1 &956274328
 GameObject:
   m_ObjectHideFlags: 0
@@ -7875,62 +6598,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1021317351}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1024321052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1024321053}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftWristEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1024321053
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024321052}
-  m_LocalRotation: {x: -0.4218953, y: 0.1454279, z: 0.16522415, w: 0.87952036}
-  m_LocalPosition: {x: -0.35782018, y: 0.81154424, z: 0.3296456}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: -19.21714, y: 15.04955, z: 46.314445}
---- !u!1 &1024701888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1024701889}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightKneeEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1024701889
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024701888}
-  m_LocalRotation: {x: 0.35185662, y: 0.032011285, z: 0.12683353, w: 0.9268686}
-  m_LocalPosition: {x: 0.2518061, y: 0.3834293, z: 0.35626036}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 40.774086, y: 11.574989, z: 20.232346}
 --- !u!1 &1029315501
 GameObject:
   m_ObjectHideFlags: 0
@@ -7970,150 +6637,6 @@ Transform:
   m_Father: {fileID: 1944412807}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1030079297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1030079298}
-  m_Layer: 0
-  m_Name: joint1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1030079298
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1030079297}
-  m_LocalRotation: {x: 0, y: 0, z: 0.11716098, w: 0.9931129}
-  m_LocalPosition: {x: -0.42284355, y: -5.2735593e-18, z: 1.0412963e-30}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1379098784}
-  m_Father: {fileID: 941260752}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1039972993
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1039972994}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftFootEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1039972994
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1039972993}
-  m_LocalRotation: {x: 6.1985984e-17, y: -0.0000000010584256, z: 0.000000001040297,
-    w: 1}
-  m_LocalPosition: {x: -0.21707654, y: 0.0009131145, z: 0.10292341}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 7.45998e-15, y: -0.0000001308572, z: 0.00000012057649}
---- !u!1 &1042813589
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1042813590}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftKneeEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1042813590
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1042813589}
-  m_LocalRotation: {x: 0.453044, y: -0.012472987, z: -0.047893208, w: 0.8901134}
-  m_LocalPosition: {x: -0.18928985, y: 0.2832904, z: 0.2768378}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 54.602554, y: -6.4935393, z: -9.343931}
---- !u!1 &1043919043
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1043919044}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandThumb2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1043919044
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1043919043}
-  m_LocalRotation: {x: 3.884112e-15, y: 0.000000085111665, z: -0.000000044331053,
-    w: 1}
-  m_LocalPosition: {x: 0.0026055526, y: -0.024117965, z: 0.011028759}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1587764787}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 7.147549e-13, y: 0.000010774635, z: -0.000004137402}
---- !u!1 &1046361810
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1046361811}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1046361811
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1046361810}
-  m_LocalRotation: {x: 0.767008, y: -0.024525905, z: -0.02924931, w: 0.64050114}
-  m_LocalPosition: {x: 0.000000019258238, y: -0.4429466, z: 0.042537306}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 313375367}
-  m_Father: {fileID: 1227872544}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20.079102, y: -2.6363726, z: -0.9040545}
 --- !u!1 &1046912537
 GameObject:
   m_ObjectHideFlags: 0
@@ -8292,37 +6815,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1067963397}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1105968103
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1105968104}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1105968104
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1105968103}
-  m_LocalRotation: {x: -0.27316496, y: 0.26942453, z: -0.102076575, w: 0.9178081}
-  m_LocalPosition: {x: 0.22716035, y: -0.2509651, z: 0.04406173}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 77621836}
-  - {fileID: 2111606775}
-  - {fileID: 1901732240}
-  m_Father: {fileID: 1490104084}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -23.28049, y: 30.953901, z: -33.09525}
 --- !u!1 &1107888032
 GameObject:
   m_ObjectHideFlags: 0
@@ -8501,35 +6993,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1108823492}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1110747427
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1110747428}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftFoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1110747428
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1110747427}
-  m_LocalRotation: {x: -0.45304403, y: 0.0124729965, z: 0.04789326, w: 0.89011335}
-  m_LocalPosition: {x: -0, y: -0.3757029, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1185478521}
-  m_Father: {fileID: 696321677}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -53.87335, y: -2.0598032, z: 7.2064896}
 --- !u!1 &1119705581
 GameObject:
   m_ObjectHideFlags: 0
@@ -9449,34 +7912,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1183355249}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1185478520
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1185478521}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftToeBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1185478521
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1185478520}
-  m_LocalRotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
-  m_LocalPosition: {x: -0.000000085830685, y: -0.06262317, z: 0.12954721}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1110747428}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.2377395e-30, y: 0, z: -1.1429587e-14}
 --- !u!1 &1185542917
 GameObject:
   m_ObjectHideFlags: 0
@@ -9590,37 +8025,6 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   ComponentType: 1
---- !u!1 &1195505120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1195505121}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Spine2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1195505121
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1195505120}
-  m_LocalRotation: {x: 0.059196852, y: 0.0053428994, z: -0.038886588, w: 0.9974743}
-  m_LocalPosition: {x: -0.000000018023282, y: 0.1771702, z: -0.000000008234012}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 842422550}
-  - {fileID: 2147118632}
-  - {fileID: 1223555790}
-  m_Father: {fileID: 114639169}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.5877033, y: 3.0666058, z: -1.4168788}
 --- !u!1 &1204371296
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,34 +8203,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1207820254}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1219078160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1219078161}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandThumbEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1219078161
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1219078160}
-  m_LocalRotation: {x: -0.42189544, y: 0.14542799, z: 0.1652243, w: 0.87952024}
-  m_LocalPosition: {x: -0.31731197, y: 0.80564016, z: 0.41906288}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 2.1492817, y: 9.283805, z: -6.432494}
 --- !u!1 &1223238830
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,35 +8292,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1223238830}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1223555789
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1223555790}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightShoulder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1223555790
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1223555789}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.10562602, y: 0.04154524, z: 0.000000017861762}
-  m_LocalScale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
-  m_Children:
-  - {fileID: 1335370568}
-  m_Father: {fileID: 1195505121}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1224402675
 GameObject:
   m_ObjectHideFlags: 0
@@ -10074,95 +8421,6 @@ Transform:
   m_Father: {fileID: 563309871}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1227872543
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1227872544}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightUpLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1227872544
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1227872543}
-  m_LocalRotation: {x: -0.45551267, y: -0.044577636, z: 0.1227591, w: 0.8805971}
-  m_LocalPosition: {x: 0.1476576, y: -0.062700056, z: 1.7960188e-10}
-  m_LocalScale: {x: 1.0000004, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 1046361811}
-  m_Father: {fileID: 782776700}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -13.182894, y: -1.8026485, z: 18.220703}
---- !u!1 &1233407166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1233407167}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftUpLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1233407167
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1233407166}
-  m_LocalRotation: {x: -0.29410464, y: 0.029564347, z: -0.10822623, w: 0.9491657}
-  m_LocalPosition: {x: -0.14457534, y: -0.062699996, z: -8.445495e-10}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
-  m_Children:
-  - {fileID: 2119468363}
-  m_Father: {fileID: 782776700}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.005986929, y: -0.9905684, z: -0.6761245}
---- !u!1 &1246820148
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1246820149}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Hips
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1246820149
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1246820148}
-  m_LocalRotation: {x: 0.004682476, y: 0.0034779508, z: -0.0015406539, w: 0.9999818}
-  m_LocalPosition: {x: 0.0020000811, y: 0.6920211, z: 0.0010944591}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1262672404}
-  - {fileID: 1554497752}
-  - {fileID: 2108662727}
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -0.0059905266, y: 0.5808791, z: -0.30251038}
 --- !u!1 &1253207700
 GameObject:
   m_ObjectHideFlags: 0
@@ -10190,7 +8448,7 @@ Transform:
   m_Children:
   - {fileID: 179102523}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257939797
 GameObject:
@@ -10281,35 +8539,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1257939797}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1262672403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1262672404}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftUpLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1262672404
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1262672403}
-  m_LocalRotation: {x: -0.28561983, y: 0.012630055, z: -0.06272243, w: 0.95620483}
-  m_LocalPosition: {x: -0.1445752, y: -0.06270004, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 696321677}
-  m_Father: {fileID: 1246820149}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -32.99991, y: 4.1014056, z: -8.721261}
 --- !u!1 &1265183220
 GameObject:
   m_ObjectHideFlags: 0
@@ -10666,209 +8895,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1311708290}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1315792559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1315792560}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftShoulderEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1315792560
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1315792559}
-  m_LocalRotation: {x: 0.09824945, y: -0.14253543, z: 0.2580687, w: 0.95049}
-  m_LocalPosition: {x: -0.21038894, y: 1.2641428, z: 0.15693922}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 30.546564, y: -10.545108, z: 14.460436}
---- !u!1 &1316300738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1316300739}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftToeBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1316300739
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1316300738}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000008790217, y: -0.06262319, z: 0.12954728}
-  m_LocalScale: {x: 1, y: 1, z: 0.99999994}
-  m_Children: []
-  m_Father: {fileID: 838061313}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1317153974
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1317153975}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1317153975
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1317153974}
-  m_LocalRotation: {x: -0.19754475, y: 0.21819328, z: -0.03831006, w: 0.9549346}
-  m_LocalPosition: {x: 0.22719073, y: -0.2509375, z: 0.04406154}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1797097846}
-  - {fileID: 232542860}
-  - {fileID: 903607556}
-  m_Father: {fileID: 556103656}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -23.284168, y: 30.951468, z: -26.60503}
---- !u!1 &1323797472
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1323797473}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandRing2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1323797473
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1323797472}
-  m_LocalRotation: {x: 1.9953955e-10, y: -0.000031097657, z: 0.000006416546, w: 1}
-  m_LocalPosition: {x: -0.03021428, y: -0.033855997, z: 0.00000005383028}
-  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
-  m_Children: []
-  m_Father: {fileID: 1656770382}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000000037245922, y: -0.0035648327, z: 0.0007347513}
---- !u!1 &1335370567
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1335370568}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1335370568
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1335370567}
-  m_LocalRotation: {x: 0.0948888, y: 0.2876189, z: 0.18133597, w: 0.93562216}
-  m_LocalPosition: {x: 0.10707291, y: 0.000004418226, z: -0.000000037354592}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1490104084}
-  m_Father: {fileID: 1223555790}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 24.112883, y: 7.1456366, z: -19.527348}
---- !u!1 &1340722034
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1340722035}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Spine2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1340722035
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1340722034}
-  m_LocalRotation: {x: 0.058952343, y: 0.01997269, z: -0.0004762042, w: 0.9980609}
-  m_LocalPosition: {x: -0, y: 0.1771701, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 781487501}
-  - {fileID: 1380206466}
-  - {fileID: 132969189}
-  m_Father: {fileID: 1611225959}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.5877035, y: 3.0666058, z: -1.4168775}
---- !u!1 &1360082277
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1360082278}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_ChestEndEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1360082278
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1360082277}
-  m_LocalRotation: {x: 0.26328033, y: 0.028207649, z: 0.011204764, w: 0.96424186}
-  m_LocalPosition: {x: 0.00021013737, y: 1.2718458, z: 0.14670473}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.4517605, y: 9.164502, z: -4.0968533}
 --- !u!1 &1361528356
 GameObject:
   m_ObjectHideFlags: 0
@@ -10923,152 +8949,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 25, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1379098783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1379098784}
-  m_Layer: 0
-  m_Name: joint2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1379098784
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1379098783}
-  m_LocalRotation: {x: 0.18388255, y: -0.0818916, z: 0.12335841, w: 0.9717323}
-  m_LocalPosition: {x: -0.14836308, y: -2.7256925e-15, z: -0.011917093}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 749560155}
-  m_Father: {fileID: 1030079298}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1380206465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1380206466}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Neck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1380206466
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1380206465}
-  m_LocalRotation: {x: -0.2171919, y: -0.06986983, z: -0.00038540168, w: 0.97362506}
-  m_LocalPosition: {x: -0, y: 0.1771701, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1490327860}
-  m_Father: {fileID: 1340722035}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 4.219605, y: -3.15348, z: 5.1003942}
---- !u!1 &1380608594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1380608595}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandRing1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1380608595
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1380608594}
-  m_LocalRotation: {x: -0.00000019036952, y: 0.000000052892233, z: 0.00000017773137,
-    w: 1}
-  m_LocalPosition: {x: -0.05252529, y: -0.08552223, z: -0.013206797}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 574773717}
-  m_Father: {fileID: 1596442484}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -0.000020598316, y: 0.000004936411, z: 0.0000194188}
---- !u!1 &1383684280
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1221139931999064, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1383684281}
-  - component: {fileID: 1383684283}
-  - component: {fileID: 1383684282}
-  m_Layer: 11
-  m_Name: BoxDetection
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1383684281
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4986242236910118, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1383684280}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1749320282}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1383684282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114687979805415018, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1383684280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecfec35d00fa0844db7aba76f1d1f657, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GetAbs: {fileID: 114260640822614706, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
---- !u!65 &1383684283
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65142582006481138, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1383684280}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 7}
-  m_Center: {x: 0, y: 0, z: -4}
 --- !u!1 &1401346738
 GameObject:
   m_ObjectHideFlags: 0
@@ -11158,34 +9038,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1401346738}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1422214324
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1422214325}
-  m_Layer: 0
-  m_Name: joint6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1422214325
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1422214324}
-  m_LocalRotation: {x: 0.49099603, y: 0.5088447, z: -0.49099603, w: 0.5088447}
-  m_LocalPosition: {x: -0.06418691, y: -7.261445e-17, z: 0.011443165}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 87904393}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1428035836
 GameObject:
   m_ObjectHideFlags: 0
@@ -11573,37 +9425,11 @@ Transform:
   - {fileID: 2060699248}
   - {fileID: 1183355250}
   - {fileID: 1602716556}
+  - {fileID: 25809916}
+  - {fileID: 1021317352}
   m_Father: {fileID: 714199962}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1457571940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1457571941}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_HipsEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1457571941
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1457571940}
-  m_LocalRotation: {x: 0.0046824752, y: 0.0034779503, z: -0.0015406536, w: 0.9999818}
-  m_LocalPosition: {x: 0.0033460425, y: 0.6293193, z: 0.00049721455}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -0.0011006251, y: 0.6417128, z: -0.33379328}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1460402362
 GameObject:
   m_ObjectHideFlags: 0
@@ -11960,63 +9786,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1481761698}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1490104083
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1490104084}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightForeArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1490104084
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1490104083}
-  m_LocalRotation: {x: -0.39170432, y: -0.66212845, z: 0.23342256, w: 0.59469956}
-  m_LocalPosition: {x: 0.1822824, y: -0.2033047, z: 0.00000007378071}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_Children:
-  - {fileID: 1105968104}
-  m_Father: {fileID: 1335370568}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -2.1748323, y: -48.64377, z: 11.277953}
---- !u!1 &1490327859
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1490327860}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Head
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1490327860
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1490327859}
-  m_LocalRotation: {x: 0.000000027572286, y: 1.25180085e-14, z: 0.0000004469427, w: 1}
-  m_LocalPosition: {x: -0, y: 0.28564575, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380206466}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.09679422, y: -2.934577, z: -2.5357804}
 --- !u!1 &1496368757
 GameObject:
   m_ObjectHideFlags: 0
@@ -12130,34 +9899,6 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   ComponentType: 1
---- !u!1 &1510718162
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1510718163}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightToeBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1510718163
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1510718162}
-  m_LocalRotation: {x: 0, y: -0.000041891268, z: -0, w: 1}
-  m_LocalPosition: {x: 0.000010859273, y: -0.06262318, z: 0.12954749}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
-  m_Children: []
-  m_Father: {fileID: 313375367}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0.0048015234, z: 0}
 --- !u!1 &1513969106
 GameObject:
   m_ObjectHideFlags: 0
@@ -12247,63 +9988,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1513969106}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1517665912
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1517665913}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Spine
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1517665913
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1517665912}
-  m_LocalRotation: {x: 0.14300184, y: -0.0008863914, z: -0.05562618, w: 0.98815763}
-  m_LocalPosition: {x: -0.000000015411587, y: 0.21227403, z: -0.000000004410647}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_Children:
-  - {fileID: 114639169}
-  m_Father: {fileID: 782776700}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0.16331194, y: 0.33142564, z: -0.1538658}
---- !u!1 &1522557544
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1522557545}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandThumb2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1522557545
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1522557544}
-  m_LocalRotation: {x: 0, y: -0, z: -0.000020231517, w: 1}
-  m_LocalPosition: {x: 0.008996054, y: -0.0164496, z: 0.016973576}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
-  m_Children: []
-  m_Father: {fileID: 1901732240}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.0023185418}
 --- !u!1 &1528717255
 GameObject:
   m_ObjectHideFlags: 0
@@ -12506,34 +10190,6 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   ComponentType: 1
---- !u!1 &1530450383
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1530450384}
-  m_Layer: 0
-  m_Name: ikHandle1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1530450384
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1530450383}
-  m_LocalRotation: {x: 0, y: -0, z: -0.08207891, w: 0.99662584}
-  m_LocalPosition: {x: 0.16496019, y: 1.4746927, z: 0.95276153}
-  m_LocalScale: {x: 3.0502594, y: 3.0502594, z: 3.0502594}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 25
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.4161415}
 --- !u!1 &1531952265
 GameObject:
   m_ObjectHideFlags: 0
@@ -12565,7 +10221,7 @@ Transform:
   m_LocalScale: {x: 1, y: 10000.004, z: 10000}
   m_Children: []
   m_Father: {fileID: 714199962}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.00001}
 --- !u!64 &1531952267
 MeshCollider:
@@ -12623,35 +10279,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1531952265}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1545005312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1545005313}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1545005313
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1545005312}
-  m_LocalRotation: {x: 0.70176345, y: -0.037225004, z: -0.03671392, w: 0.710489}
-  m_LocalPosition: {x: 0.000000028610229, y: -0.44294658, z: 0.04253699}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1986940609}
-  m_Father: {fileID: 1554497752}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 83.96456, y: -83.290375, z: -83.24891}
 --- !u!1 &1549428588
 GameObject:
   m_ObjectHideFlags: 0
@@ -12692,35 +10319,6 @@ Transform:
   m_Father: {fileID: 806519015}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1554497751
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1554497752}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightUpLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1554497752
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1554497751}
-  m_LocalRotation: {x: -0.40869, y: -0.04768137, z: 0.15989217, w: 0.8972923}
-  m_LocalPosition: {x: 0.14765756, y: -0.06270004, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1545005313}
-  m_Father: {fileID: 1246820149}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -45.904503, y: -18.106474, z: 27.928127}
 --- !u!1 &1556823001
 GameObject:
   m_ObjectHideFlags: 0
@@ -12810,35 +10408,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1556823001}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1563366050
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1563366051}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandRing2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1563366051
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1563366050}
-  m_LocalRotation: {x: 0.00000033574136, y: 0.00000021023362, z: 0.00000046419464,
-    w: 1}
-  m_LocalPosition: {x: 0.01835846, y: -0.03696602, z: -0.001582477}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 232542860}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000039828195, y: 0.000025283432, z: 0.00005181671}
 --- !u!1 &1571792019
 GameObject:
   m_ObjectHideFlags: 0
@@ -13017,35 +10586,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1575530200}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1581133375
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1581133376}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftForeArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1581133376
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1581133375}
-  m_LocalRotation: {x: -0.16409461, y: 0.5949112, z: -0.2351076, w: 0.75091815}
-  m_LocalPosition: {x: -0.18181354, y: -0.20372207, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1596442484}
-  m_Father: {fileID: 473968511}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.512862, y: 68.674126, z: -25.3224}
 --- !u!1 &1586410044
 GameObject:
   m_ObjectHideFlags: 0
@@ -13135,67 +10675,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1586410044}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1587764786
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1587764787}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandThumb1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1587764787
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1587764786}
-  m_LocalRotation: {x: -0.00000019036952, y: 0.000000052892236, z: 0.00000017773137,
-    w: 1}
-  m_LocalPosition: {x: -0.002354126, y: -0.05816818, z: 0.04282434}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1043919044}
-  m_Father: {fileID: 1596442484}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -0.000020598316, y: 0.000004936412, z: 0.0000194188}
---- !u!1 &1596442483
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1596442484}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1596442484
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1596442483}
-  m_LocalRotation: {x: -0.26323083, y: -0.29010627, z: -0.015986534, w: 0.9199415}
-  m_LocalPosition: {x: -0.2262783, y: -0.24937882, z: -0.013741018}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1872478126}
-  - {fileID: 1380608595}
-  - {fileID: 1587764787}
-  m_Father: {fileID: 1581133376}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -27.161491, y: -36.529305, z: 38.82855}
 --- !u!1 &1602716555
 GameObject:
   m_ObjectHideFlags: 0
@@ -13290,34 +10769,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4640565487808094, guid: 5de88afc57002d04eb9e3e145bc47372,
     type: 2}
   m_PrefabInternal: {fileID: 245624842}
---- !u!1 &1606288166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1606288167}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightShoulderEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1606288167
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1606288166}
-  m_LocalRotation: {x: 0.07144491, y: -0.13210543, z: -0.021525454, w: 0.9884232}
-  m_LocalPosition: {x: 0.21080986, y: 1.2795426, z: 0.13647446}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 23
-  m_LocalEulerAnglesHint: {x: 25.84247, y: 11.408104, z: -21.938065}
 --- !u!1 &1610724879
 GameObject:
   m_ObjectHideFlags: 0
@@ -13407,35 +10858,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1610724879}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1611225958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1611225959}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Spine1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1611225959
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1611225958}
-  m_LocalRotation: {x: 0.061418723, y: 0.0146050565, z: 0.0016962113, w: 0.9980038}
-  m_LocalPosition: {x: -0, y: 0.17717002, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1340722035}
-  m_Father: {fileID: 2108662727}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.29267848, y: 3.083137, z: -1.4433986}
 --- !u!1 &1613057490
 GameObject:
   m_ObjectHideFlags: 0
@@ -13579,55 +11001,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1617495817}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1620319516
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1620319517}
-  - component: {fileID: 1620319518}
-  m_Layer: 0
-  m_Name: Charlotte_champi 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1620319517
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1620319516}
-  m_LocalRotation: {x: -0, y: -0.9999688, z: -0, w: -0.007897072}
-  m_LocalPosition: {x: -0.058, y: -0.46600002, z: 0.248}
-  m_LocalScale: {x: 1, y: 0.33333334, z: 1}
-  m_Children:
-  - {fileID: 473268517}
-  - {fileID: 27028068}
-  - {fileID: 816114509}
-  m_Father: {fileID: 1749320282}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -180.905, z: 0}
---- !u!95 &1620319518
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1620319516}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7d259d37d8cbc1448bcf14d1e9bb4a50, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8624c1180c1a8674f816782376267556, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1634930990
 GameObject:
   m_ObjectHideFlags: 0
@@ -13750,35 +11123,6 @@ Transform:
   m_Father: {fileID: 714199962}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1656770381
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1656770382}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandRing1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1656770382
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1656770381}
-  m_LocalRotation: {x: 0, y: -0, z: -0.000025666184, w: 1}
-  m_LocalPosition: {x: -0.07121178, y: -0.070723735, z: -0.013206814}
-  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000001}
-  m_Children:
-  - {fileID: 1323797473}
-  m_Father: {fileID: 1719824412}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.0029418364}
 --- !u!1 &1659927417
 GameObject:
   m_ObjectHideFlags: 0
@@ -14046,35 +11390,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1680581906}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1688673137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1688673138}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftArm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1688673138
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1688673137}
-  m_LocalRotation: {x: 0.16108717, y: -0.17223321, z: 0.27499944, w: 0.932074}
-  m_LocalPosition: {x: -0.10707267, y: 0.000001341475, z: 0.000000024281976}
-  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
-  m_Children:
-  - {fileID: 106488226}
-  m_Father: {fileID: 842422550}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 29.586723, y: -14.370982, z: 18.40825}
 --- !u!1 &1692637526
 GameObject:
   m_ObjectHideFlags: 0
@@ -14366,37 +11681,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
---- !u!1 &1719824411
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1719824412}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1719824412
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1719824411}
-  m_LocalRotation: {x: -0.30430737, y: -0.26417598, z: 0.09236049, w: 0.910537}
-  m_LocalPosition: {x: -0.226269, y: -0.24938767, z: -0.013740932}
-  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 348672490}
-  - {fileID: 1656770382}
-  - {fileID: 635989142}
-  m_Father: {fileID: 106488226}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -27.160227, y: -36.530205, z: 52.470512}
 --- !u!1 &1746157144
 GameObject:
   m_ObjectHideFlags: 0
@@ -14486,22 +11770,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1746157144}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!4 &1749320282
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72438062}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.035, y: 1.5, z: 48}
-  m_LocalScale: {x: 1, y: 3, z: 1}
-  m_Children:
-  - {fileID: 1383684281}
-  - {fileID: 1620319517}
-  m_Father: {fileID: 714199962}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757802431
 GameObject:
   m_ObjectHideFlags: 0
@@ -14619,7 +11887,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
@@ -14772,34 +12040,6 @@ MonoBehaviour:
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   ComponentType: 1
---- !u!1 &1781921655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1781921656}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandRing2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1781921656
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1781921655}
-  m_LocalRotation: {x: -0.00000035310006, y: -0.01745297, z: -0.000020228435, w: 0.9998477}
-  m_LocalPosition: {x: 0.022409793, y: -0.034660097, z: -0.0015825187}
-  m_LocalScale: {x: 0.9999998, y: 0.9999999, z: 0.9999998}
-  m_Children: []
-  m_Father: {fileID: 2111606775}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.00008005534, y: -2.0000637, z: -0.0023173916}
 --- !u!1 &1782380261
 GameObject:
   m_ObjectHideFlags: 0
@@ -14889,36 +12129,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1782380261}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1797097845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1797097846}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandIndex1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1797097846
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1797097845}
-  m_LocalRotation: {x: -0.00000012910566, y: -0.000000021906278, z: 0.0000001796924,
-    w: 1}
-  m_LocalPosition: {x: 0.052730445, y: -0.070750885, z: 0.021294022}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 17041340}
-  m_Father: {fileID: 1317153975}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.000014880579, y: -0.000002044508, z: 0.000019601823}
 --- !u!1 &1797243104
 GameObject:
   m_ObjectHideFlags: 0
@@ -15263,34 +12473,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1923672295306400, guid: b4cea04d2ef6e224da8a8b609103e64f,
     type: 2}
   m_PrefabInternal: {fileID: 34139853}
---- !u!1 &1842673588
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1842673589}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandRingEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1842673589
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1842673588}
-  m_LocalRotation: {x: -0.42189544, y: 0.14542797, z: 0.16522431, w: 0.87952024}
-  m_LocalPosition: {x: -0.37420723, y: 0.71469885, z: 0.43804783}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 2.1492817, y: 9.283805, z: -6.4324937}
 --- !u!1 &1845633505
 GameObject:
   m_ObjectHideFlags: 0
@@ -15380,34 +12562,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1845633505}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1848882198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1848882199}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightFootEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1848882199
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1848882198}
-  m_LocalRotation: {x: 1.6023841e-16, y: -0.0000000031269813, z: 9.1026e-10, w: 1}
-  m_LocalPosition: {x: 0.3316874, y: 0.05021719, z: 0.23770468}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 1.8523287e-14, y: -0.00000038541808, z: 0.00000010165022}
 --- !u!1 &1852894705
 GameObject:
   m_ObjectHideFlags: 0
@@ -15497,65 +12651,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1852894705}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1872478125
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1872478126}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftHandIndex1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1872478126
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1872478125}
-  m_LocalRotation: {x: -0.00000019036952, y: 0.000000052892236, z: 0.00000017773137,
-    w: 1}
-  m_LocalPosition: {x: -0.05671215, y: -0.0906041, z: 0.021808352}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 722286129}
-  m_Father: {fileID: 1596442484}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.000020598316, y: 0.000004936412, z: 0.0000194188}
---- !u!1 &1901732239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1901732240}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandThumb1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1901732240
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901732239}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00008092607, w: 1}
-  m_LocalPosition: {x: 0.01564589, y: -0.03663399, z: 0.04793637}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 1522557545}
-  m_Father: {fileID: 1105968104}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.009274165}
 --- !u!1 &1903424545
 GameObject:
   m_ObjectHideFlags: 0
@@ -15645,34 +12740,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1903424545}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1914832892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1914832893}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftHandIndex2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1914832893
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1914832892}
-  m_LocalRotation: {x: 0.00000015757409, y: -0.017452406, z: 0.0000038037233, w: 0.9998477}
-  m_LocalPosition: {x: -0.039516993, y: -0.04569805, z: -0.003759582}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_Children: []
-  m_Father: {fileID: 348672490}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.00002656209, y: -1.9999999, z: 0.00043679404}
 --- !u!1 &1918391475
 GameObject:
   m_ObjectHideFlags: 0
@@ -15705,35 +12772,6 @@ Transform:
   m_Father: {fileID: 1637803200}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1924355575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1924355576}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftAnkleEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1924355576
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1924355575}
-  m_LocalRotation: {x: -0.0000000010402966, y: -1.9505575e-10, z: 0.000000001040297,
-    w: 1}
-  m_LocalPosition: {x: -0.21707647, y: 0.063536264, z: -0.026623802}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -0.0000001286013, y: -0.000000024271143, z: 0.00000012057652}
 --- !u!1 &1927917094
 GameObject:
   m_ObjectHideFlags: 0
@@ -15761,7 +12799,7 @@ RectTransform:
   m_Children:
   - {fileID: 908010884}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15876,7 +12914,7 @@ Transform:
   m_Children:
   - {fileID: 2108583278}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935769118
 GameObject:
@@ -16231,34 +13269,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1958461819}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &1974513855
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1974513856}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightElbowEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1974513856
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1974513855}
-  m_LocalRotation: {x: -0.021147141, y: -0.54258, z: 0.030526826, w: 0.83918285}
-  m_LocalPosition: {x: 0.3817542, y: 1.0673103, z: 0.15365332}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0.22828956, y: -31.553726, z: -22.05701}
 --- !u!1 &1977605926
 GameObject:
   m_ObjectHideFlags: 0
@@ -16437,35 +13447,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1984704502}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &1986940608
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1986940609}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightFoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1986940609
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1986940608}
-  m_LocalRotation: {x: -0.3518568, y: -0.03201123, z: -0.12683348, w: 0.92686856}
-  m_LocalPosition: {x: -0.000000009536743, y: -0.3757029, z: 8.881784e-18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2011019539}
-  m_Father: {fileID: 1545005313}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -41.328106, y: 2.2830074, z: -16.44515}
 --- !u!1 &1988443276
 GameObject:
   m_ObjectHideFlags: 0
@@ -16822,34 +13803,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2009966445}
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
---- !u!1 &2011019538
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2011019539}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightToeBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2011019539
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2011019538}
-  m_LocalRotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
-  m_LocalPosition: {x: 0.000010852814, y: -0.06262317, z: 0.12954749}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1986940609}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.2377395e-30, y: 0, z: -1.1429587e-14}
 --- !u!1 &2011535460
 GameObject:
   m_ObjectHideFlags: 0
@@ -17056,8 +14009,59 @@ Transform:
   - {fileID: 1130398476}
   - {fileID: 1000519869}
   m_Father: {fileID: 714199962}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2041755146
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.5022123
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.772
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 18.875751
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356111126795066, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_Name
+      value: Piece (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 23272452994879814, guid: b4bb5b35a636cd74384418cd5baca4a8,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5fa16e59eedd7024699d5d8a34d62aac, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2042374727
 GameObject:
   m_ObjectHideFlags: 0
@@ -17523,119 +14527,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!1 &2108662726
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2108662727}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_Spine
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2108662727
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2108662726}
-  m_LocalRotation: {x: 0.14112107, y: -0.009540482, z: 0.005918708, w: 0.98992866}
-  m_LocalPosition: {x: -0, y: 0.21227394, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1611225959}
-  m_Father: {fileID: 1246820149}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0.16331999, y: 0.33141702, z: -0.15390778}
---- !u!1 &2111606774
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2111606775}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandRing1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2111606775
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2111606774}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00008092607, w: 1}
-  m_LocalPosition: {x: 0.06220592, y: -0.06367807, z: -0.007923767}
-  m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 1781921656}
-  m_Father: {fileID: 1105968104}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.009274167}
---- !u!1 &2119468362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2119468363}
-  m_Layer: 0
-  m_Name: charlotte_champi1_LeftLeg
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2119468363
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2119468362}
-  m_LocalRotation: {x: 0.70034164, y: 0.03088237, z: 0.030353451, w: 0.7124932}
-  m_LocalPosition: {x: 0.00000042313917, y: -0.44294688, z: 0.042533964}
-  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
-  m_Children:
-  - {fileID: 838061313}
-  m_Father: {fileID: 1233407167}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 13.497752, y: 0.28809962, z: 0.068317495}
---- !u!1 &2147118631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2147118632}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Neck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2147118632
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2147118631}
-  m_LocalRotation: {x: -0.21935785, y: -0.02680073, z: 0.06541581, w: 0.97308}
-  m_LocalPosition: {x: -0.000000024614732, y: 0.17717011, z: -0.000000018559051}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 941260752}
-  m_Father: {fileID: 1195505121}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 4.219508, y: -3.1534424, z: 5.1004653}
