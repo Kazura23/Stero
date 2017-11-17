@@ -653,6 +653,8 @@ public class WindowSearchObject : EditorWindow
 						getNewObj.transform.localRotation = getCurrRot;
 					}
 				}
+				// opti sur l'instanciation / destruction d'object : vérifier que le prochain obj n'as pas le meme parent sinon ne pas détruire, etc
+				// donner une option qui permet à l'utilisateur de : tout remplacer / choisir les composants a mettre a jour / choisir les fields a mettre a jour
 
 				/*if ( replace )
 				{

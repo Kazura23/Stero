@@ -14,6 +14,7 @@ public class SpawnChunks : MonoBehaviour
 
 	List<List<GetSpawnable>> AllSpawnable;
 	List<GameObject> getSpawnChunks;
+	List<GameObject> otherSpawn;
 
 	GameObject WallOnLastChunk;
 	Transform thisT;
@@ -26,10 +27,32 @@ public class SpawnChunks : MonoBehaviour
 	#endregion
 		
 	#region Public
+	public void RemoveAll ( )
+	{
+		int a;
+
+		for ( a = 0; a < otherSpawn.Count; a++ )
+		{
+			if ( otherSpawn [ a ] != null )
+			{
+				Destroy ( otherSpawn [ a ] );
+			}
+		}
+
+		for ( a = 0; a < getSpawnChunks.Count; a++ )
+		{
+			if ( getSpawnChunks [ a ] != null )
+			{
+				Destroy ( getSpawnChunks [ a ] );
+			}
+		}
+	}
+
 	public void InitChunck ( )
 	{
 		getSpawnChunks = new List<GameObject> ( );
 		AllSpawnable = new List<List<GetSpawnable>> ( );
+		otherSpawn = new List<GameObject> ( );
 		thisT = transform;
 
 		List<ChunksScriptable> getChunks = ChunksInfo;
@@ -77,14 +100,14 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
-	public void NewSpawn ( Transform sourceSpawn )
+	public void NewSpawn ( NewChunkInfo sourceSpawn )
 	{
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<GameObject> getSpc = getSpawnChunks;
 
-		spawnAfterThis ( sourceSpawn.position, sourceSpawn.rotation, sourceSpawn.GetComponent<SpawnNewLvl> ( ) );
+		spawnAfterThis ( sourceSpawn );
 
-		if ( getSpc.Count > 5 )
+		if ( getSpc.Count > 3 )
 		{
 			Destroy ( getSpc [ 0 ] );
 			getSpc.RemoveAt ( 0 );
@@ -120,13 +143,18 @@ public class SpawnChunks : MonoBehaviour
 		{
 			List<ChunksScriptable> getChunks = ChunksInfo;
 
-			spawnAfterThis ( DefaultPos, Quaternion.identity );
+			spawnAfterThis ( );
 
 			if ( getChunks [ currLevel ].NbrChunkOneLvl <= currNbrCh )
 			{
 				newLevel ( );
 			}
 		}
+	}
+
+	public void AddNewChunk ( GameObject thisSpawn )
+	{
+		getSpawnChunks.Add ( thisSpawn );
 	}
 	#endregion
 	
@@ -136,7 +164,7 @@ public class SpawnChunks : MonoBehaviour
 		yield return new WaitForEndOfFrame ( );
 		List<ChunksScriptable> getChunks = ChunksInfo;
 
-		spawnAfterThis ( DefaultPos, Quaternion.identity );
+		spawnAfterThis ( );
 
 		if ( getChunks [ currLevel ].NbrChunkOneLvl <= currNbrCh )
 		{
@@ -170,7 +198,7 @@ public class SpawnChunks : MonoBehaviour
 		currNbrCh = 0;
 	}
 
-	void spawnAfterThis ( Vector3 thisPos, Quaternion thisRot, SpawnNewLvl thisLvl = null )
+	void spawnAfterThis ( NewChunkInfo sourceSpawn = null )
 	{
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<List<GetSpawnable>> getSpawnable = AllSpawnable;
@@ -178,73 +206,219 @@ public class SpawnChunks : MonoBehaviour
 		GameObject thisSpawn;
 		Transform getChunkT;
 
-		if ( getChunks [ currLevel ].ChunkAleat )
+		if ( sourceSpawn != null )
 		{
-			currChunk = Random.Range ( 0, getChunks [ currLevel ].TheseChunks.Count );
+			List<NewChunkSaveInf> getNewChunk = new List<NewChunkSaveInf> ( );
+			List<ToDestChunk> allNewChunk = new List<ToDestChunk> ( );
+			NewChunkSaveInf getOtherNC;
 
-			thisSpawn = getChunks [ currLevel ].TheseChunks [ currChunk ];
-		}
-		else
-		{
-			currChunk = currNbrCh;
-			thisSpawn = getChunks [ currLevel ].TheseChunks [ currNbrCh ];
-		}
+			int a;
+			int b;
+			int getInd;
+			int diffLine;
+			int randChunk = Random.Range ( 0, 2 );
 
-		if ( thisLvl != null )
-		{
-			SpawnNewLvl getNew = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
-			int getNbr;
-			int calNbr;
-
-			if ( Random.Range ( 0, 2 ) == 0 )
+			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
-				getNbr = -Random.Range ( 0, ( int ) thisLvl.NbrLaneFin.x + 1 );
-				thisPos = new Vector3 ( thisPos.x + Constants.LineDist * getNbr, thisPos.y, thisPos.z );
+				if ( getChunks [ currLevel ].ChunkAleat && a == 0 )
+				{
+					currChunk = Random.Range ( 0, getChunks [ currLevel ].TheseChunks.Count );
+					thisSpawn = getChunks [ currLevel ].TheseChunks [ currChunk ];
+				}
+				else
+				{
+					currChunk = currNbrCh;
+					thisSpawn = getChunks [ currLevel ].TheseChunks [ currNbrCh ];
+				}
+
+				if ( thisSpawn != null )
+				{
+					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+
+					getChunkT = thisSpawn.transform;
+					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
+					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
+
+					getNewChunk.Add ( new NewChunkSaveInf ( ) );
+					getInd = getNewChunk.Count - 1;
+					getNewChunk [ getInd ].ThisObj = getChunkT.gameObject;
+					getNewChunk [ getInd ].NbrLaneDebut = sourceSpawn.NbrLaneFin;
+					getNewChunk [ getInd ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
+
+					allNewChunk.Add ( new ToDestChunk ( ) );
+					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
+					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
+
+					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
+					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getEnnemySpawnable, getChunks [ currLevel ].EnnemySpawnable );
+					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleSpawnable, getChunks [ currLevel ].ObstacleSpawnable );
+					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleDestrucSpawnable, getChunks [ currLevel ].ObstacleDestrucSpawnable );
+
+					otherSpawn.Add ( thisSpawn );
+				}
+			}
+
+			for ( a = 0; a < allNewChunk.Count; a++ )
+			{
+				for ( b = 0; b < allNewChunk.Count; b++ )
+				{
+					if ( a != b )
+					{
+						allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+					}
+				}
+			}
+
+			a = getNewChunk.Count;
+			while ( a > 1 )
+			{
+				a--;
+
+				if ( getNewChunk [ a ].CurrLane < getNewChunk [ a - 1 ].CurrLane )
+				{
+					getOtherNC = getNewChunk [ a - 1 ];
+					getNewChunk [ a - 1 ] = getNewChunk [ a ];
+					getNewChunk [ a ] = getOtherNC;
+					a = getNewChunk.Count;
+				}
+			}
+
+			if ( randChunk == 0 )
+			{
+				for ( a = 0; a < getNewChunk.Count - 1; a++ )
+				{
+					diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
+
+					if ( diffLine >= 0 )
+					{
+						diffLine++;
+						getNewChunk [ a + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
+						getNewChunk [ a + 1 ].CurrLane += diffLine;
+
+						b = a;
+						while ( b < getNewChunk.Count - 1 )
+						{
+							if ( getNewChunk [ b ].CurrLane > getNewChunk [ b + 1 ].CurrLane )
+							{
+								getOtherNC = getNewChunk [ b + 1 ];
+								getNewChunk [ b + 1 ] = getNewChunk [ b ];
+								getNewChunk [ b ] = getOtherNC;
+								b = a;
+							}
+
+							b++;
+						}
+
+						a--;
+					}
+				}
 			}
 			else
 			{
-				getNbr = Random.Range ( 0, ( int ) thisLvl.NbrLaneFin.y + 1 );
-				thisPos = new Vector3 ( thisPos.x + Constants.LineDist * getNbr, thisPos.y, thisPos.z );
-			}
-
-			calNbr = ( int ) thisLvl.NbrLaneFin.x - getNbr;
-
-			int a;
-			if ( getNew.NbrLaneDebut.x < calNbr )
-			{
-				for ( a = calNbr; a > getNew.NbrLaneDebut.x; a-- )
+				for ( a = getNewChunk.Count - 1; a > 0; a-- )
 				{
-					Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
+					diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a - 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a - 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
+
+					if ( diffLine >= 0 )
+					{
+						diffLine++;
+						getNewChunk [ a - 1 ].ThisObj.transform.localPosition -= new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
+						getNewChunk [ a - 1 ].CurrLane -= diffLine;
+
+						b = a;
+						while ( b > 0 )
+						{
+							if ( getNewChunk [ b ].CurrLane < getNewChunk [ b - 1 ].CurrLane )
+							{
+								getOtherNC = getNewChunk [ b - 1 ];
+								getNewChunk [ b - 1 ] = getNewChunk [ b ];
+								getNewChunk [ b ] = getOtherNC;
+								b = a;
+							}
+
+							b--;
+						}
+
+						a++;
+					}
 				}
 			}
 
-			calNbr = ( int ) thisLvl.NbrLaneFin.x + getNbr;
-			if ( getNew.NbrLaneDebut.y > calNbr )
+
+
+
+
+
+
+		}
+		else
+		{
+			if ( getChunks [ currLevel ].ChunkAleat )
 			{
-				for ( a = calNbr; a < getNew.NbrLaneDebut.y; a++ )
-				{
-					Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
-				}
+				currChunk = Random.Range ( 0, getChunks [ currLevel ].TheseChunks.Count );
+				thisSpawn = getChunks [ currLevel ].TheseChunks [ currChunk ];
+			}
+			else
+			{
+				currChunk = currNbrCh;
+				thisSpawn = getChunks [ currLevel ].TheseChunks [ currNbrCh ];
+			}
+
+			if ( thisSpawn != null )
+			{
+				thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+
+				getChunkT = thisSpawn.transform;
+				getChunkT.rotation = Quaternion.identity;
+				getChunkT.position = DefaultPos;
+
+				spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
+				spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getEnnemySpawnable, getChunks [ currLevel ].EnnemySpawnable );
+				spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleSpawnable, getChunks [ currLevel ].ObstacleSpawnable );
+				spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleDestrucSpawnable, getChunks [ currLevel ].ObstacleDestrucSpawnable );
+
+				getSpc.Add ( thisSpawn );
 			}
 		}
 
 		currNbrCh++;
 
-		if ( thisSpawn != null )
-		{
-			thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+		/*
+		GameObject getObj;
+		NewChunkInfo getNew = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( ).InfoChunk;
+		int getNbr;
+		int calNbr;
 
-			getChunkT = thisSpawn.transform;
-			getChunkT.rotation = thisRot;
-			getChunkT.position = thisPos;
+		if ( Random.Range ( 0, 2 ) == 0 )
+		{
+			getNbr = -Random.Range ( 0, ( int ) thisLvl.NbrLaneFin.x + 1 );
+			thisPos = new Vector3 ( thisPos.x + Constants.LineDist * getNbr, thisPos.y, thisPos.z );
+		}
+		else
+		{
+			getNbr = Random.Range ( 0, ( int ) thisLvl.NbrLaneFin.y + 1 );
+			thisPos = new Vector3 ( thisPos.x + Constants.LineDist * getNbr, thisPos.y, thisPos.z );
 		}
 
-		spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
-		spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getEnnemySpawnable, getChunks [ currLevel ].EnnemySpawnable );
-		spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleSpawnable, getChunks [ currLevel ].ObstacleSpawnable );
-		spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getObstacleDestrucSpawnable, getChunks [ currLevel ].ObstacleDestrucSpawnable );
+		calNbr = ( int ) thisLvl.NbrLaneFin.x - getNbr;
 
-		getSpc.Add ( thisSpawn );
+		if ( getNew.NbrLaneDebut.x < calNbr )
+		{
+			for ( a = calNbr; a > getNew.NbrLaneDebut.x; a-- )
+			{
+				getObj = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
+				getObj.transform.position = new Vector3 ( thisPos.x + a * 6, thisPos.y, thisPos.z );
+			}
+		}
+
+		calNbr = ( int ) thisLvl.NbrLaneFin.x + getNbr;
+		if ( getNew.NbrLaneDebut.y > calNbr )
+		{
+			for ( a = calNbr; a < getNew.NbrLaneDebut.y; a++ )
+			{
+				Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
+			}
+		}*/
 	}
 
 	void spawnElements ( List<GameObject> spawnerElem, List<GameObject> elemSpawnable )
@@ -274,7 +448,16 @@ public class GetSpawnable
 	public List<GameObject> getCoinSpawnable;
 }
 
-public class SpawnDetail 
+[System.Serializable]
+public class NewChunkSaveInf 
 {
+	public GameObject ThisObj;
+	public Vector2 NbrLaneDebut;
+	public int CurrLane;
+}
 
+public class ToDestChunk 
+{
+	public GameObject ThisObj;
+	public SpawnNewLvl ThisSL;
 }
