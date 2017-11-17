@@ -46,6 +46,6 @@ public static class ScriptableObjectUtility
 	[MenuItem("CustomTools/Scriptable/ListChunk")]
 	public static void CreateListChunk ( )
 	{
-		//ScriptableObjectUtility.CreateAsset<ListChunkScriptable> ( );
+		ScriptableObjectUtility.CreateAsset<ListChunkScriptable> ( );
 	}
 }
