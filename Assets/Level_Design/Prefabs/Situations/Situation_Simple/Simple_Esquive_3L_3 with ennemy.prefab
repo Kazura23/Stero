@@ -46807,9 +46807,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a95e408bd992bb499080f1142d91049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NbrLaneDebut: {x: 0, y: 0}
-  NbrLaneFin: {x: 0, y: 0}
-  LevelParent: {fileID: 4203651550300050}
+  InfoChunk:
+    NbrLaneDebut: {x: 0, y: 0}
+    NbrLaneFin: {x: 0, y: 0}
+    ThoseExit:
+    - LaneParent: 0
+      LevelParent: {fileID: 4203651550300050}
+  ToDest: []
 --- !u!114 &114733565189766520
 MonoBehaviour:
   m_ObjectHideFlags: 1
