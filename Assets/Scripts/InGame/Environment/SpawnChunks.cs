@@ -220,7 +220,7 @@ public class SpawnChunks : MonoBehaviour
 
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
-				if ( sourceSpawn.ThoseExit.Count > 1 )
+				if ( sourceSpawn.ThoseExit.Count > 1 && sourceSpawn.ThoseExit [ a ].SpawnEnable.Count > 0 )
 				{
 					currChunk = Random.Range ( 0, sourceSpawn.ThoseExit [ a ].SpawnEnable.Count );
 					thisSpawn = sourceSpawn.ThoseExit [ a ].SpawnEnable [ currChunk ];
