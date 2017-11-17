@@ -211,7 +211,7 @@ public class SpawnChunks : MonoBehaviour
 			List<NewChunkSaveInf> getNewChunk = new List<NewChunkSaveInf> ( );
 			List<ToDestChunk> allNewChunk = new List<ToDestChunk> ( );
 			NewChunkSaveInf getOtherNC;
-
+			SpawnNewLvl currSL;
 			int a;
 			int b;
 			int getInd;
@@ -241,6 +241,7 @@ public class SpawnChunks : MonoBehaviour
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 
+					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
@@ -248,12 +249,12 @@ public class SpawnChunks : MonoBehaviour
 					getNewChunk.Add ( new NewChunkSaveInf ( ) );
 					getInd = getNewChunk.Count - 1;
 					getNewChunk [ getInd ].ThisObj = getChunkT.gameObject;
-					getNewChunk [ getInd ].NbrLaneDebut = sourceSpawn.NbrLaneFin;
+					getNewChunk [ getInd ].NbrLaneDebut = currSL.InfoChunk.NbrLaneFin;
 					getNewChunk [ getInd ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 					//getNewChunk [ getInd ].ParentObj = sourceSpawn.ThoseExit [ a ].LevelParent;
 
 					allNewChunk.Add ( new ToDestChunk ( ) );
-					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
+					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
 					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
 
 					spawnElements ( getSpawnable [ currLevel ] [ currChunk ].getCoinSpawnable, getChunks [ currLevel ].CoinSpawnable );
@@ -265,6 +266,7 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
+			// add the other chunk on current chunk in order to destroye them later
 			for ( a = 0; a < allNewChunk.Count; a++ )
 			{
 				for ( b = 0; b < allNewChunk.Count; b++ )
@@ -276,6 +278,7 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
+			// re calculate the order by lane parent
 			a = getNewChunk.Count;
 			while ( a > 1 )
 			{
@@ -290,7 +293,8 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
-			/*if ( randChunk == 0 )
+			// check the space between each chunks
+			if ( randChunk == 0 )
 			{
 				for ( a = 0; a < getNewChunk.Count - 1; a++ )
 				{
@@ -349,20 +353,21 @@ public class SpawnChunks : MonoBehaviour
 						a++;
 					}
 				}
-			}*/
+			}
 
-			/*for ( a = 0; a < getNewChunk.Count; a++ )
+			// check if there is spaces and place wall if yes
+			for ( a = 0; a < getNewChunk.Count - 1; a++ )
 			{
 				diffLine = ( int ) ( getNewChunk [ a ].NbrLaneDebut.y + getNewChunk [ a + 1 ].NbrLaneDebut.x - Mathf.Abs ( getNewChunk [ a + 1 ].CurrLane - getNewChunk [ a ].CurrLane ) );
 
-				while ( diffLine < 0 )
+				/*while ( diffLine < 0 )
 				{
 					thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getNewChunk [ a ].ParentObj );
 					thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
 					thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 					diffLine++;
-				}
-			}*/
+				}*/
+			}
 		}
 		else
 		{
