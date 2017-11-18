@@ -9,8 +9,10 @@ public class WindowSearchObject : EditorWindow
 
 	string thisStringSearch;
 	string SpecificPath;
+	string specName;
 	int thisNbr;
 	int compDiff;
+	int childDiff;
 
 	int aPageProj;
 	List<bool> foldoutProj;
@@ -49,6 +51,7 @@ public class WindowSearchObject : EditorWindow
 
 		thisStringSearch = string.Empty;
 		SpecificPath = string.Empty;
+		specName = string.Empty;
 
 		objComp = null;
 		thisNbr = 0;
@@ -65,7 +68,8 @@ public class WindowSearchObject : EditorWindow
 		aPageProj = 0;
 		aPageScene = 0;
 		aPagePref = 0;
-		compDiff = 2;
+		compDiff = 1;
+		childDiff = 1;
 
 		scrollPosProj = Vector2.zero;
 		scrollPosScene = Vector2.zero;
@@ -108,7 +112,8 @@ public class WindowSearchObject : EditorWindow
 		int a; 
 		GUILayout.Label ("Get Specific object", EditorStyles.boldLabel);
 
-		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.BeginHorizontal ( );
+		EditorGUILayout.BeginVertical ( );
 		EditorGUI.BeginChangeCheck ( );
 		thisType = (ResearcheType)EditorGUILayout.EnumPopup("Research Type:", thisType);
 		if ( EditorGUI.EndChangeCheck ( ) )
@@ -118,10 +123,14 @@ public class WindowSearchObject : EditorWindow
 			InfoOnPrefab = new List<List<GameObject>> ( );
 			objComp = null;
 			thisStringSearch = string.Empty;
+			specName = string.Empty;
 			thisNbr = 0;
-			compDiff = 2;
+			compDiff = 1;
+			childDiff = 1;
 			apply = false;
 		}
+
+		EditorGUI.indentLevel = 1;
 
 		switch (thisType) 
 		{
@@ -158,17 +167,22 @@ public class WindowSearchObject : EditorWindow
 					{
 						getCI.Add ( new objectInfo ( ) );
 						getCI [ getCI.Count - 1 ].ThisObj = thisObj;
-						getCI[ getCI.Count - 1 ].thoseComp = thisObj.GetComponents<Component> ( );
+						getCI [ getCI.Count - 1 ].thoseComp = thisObj.GetComponents<Component> ( );
 					}
 				}
 			}
 
-			compDiff = (int) EditorGUILayout.Slider ( "Max Number Component Different" ,compDiff, 0, 10 );
+			EditorGUI.indentLevel = 2;
+			specName = EditorGUILayout.TextField ( "Other Name ?", specName );
+			compDiff = ( int ) EditorGUILayout.Slider ( "Max component gap", compDiff, 0, 10 );
+			childDiff = ( int ) EditorGUILayout.Slider ( "Max child gap", childDiff, 0, 50 );
+			EditorGUI.indentLevel = 0;
 
 			EditorGUILayout.EndVertical ( );
 
 			break;
 		}
+		EditorGUILayout.EndVertical ( );
 
 		var buttonStyle = new GUIStyle( EditorStyles.miniButton );
 
@@ -186,6 +200,7 @@ public class WindowSearchObject : EditorWindow
 			getChildren = !getChildren;
 		}
 		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.Space ( );
 
 		if ( GUILayout.Button ( "Object On Scene" ) )
 		{
@@ -195,7 +210,7 @@ public class WindowSearchObject : EditorWindow
 			fScene = foldoutScene;
 			childScene = getChildren;
 
-			AllObjectScene = SearchObject.LoadAssetOnScenes ( thisType, objComp, thisStringSearch, getChildren, compDiff );
+			AllObjectScene = SearchObject.LoadAssetOnScenes ( thisType, objComp, thisStringSearch, getChildren, compDiff, childDiff, specName );
 			getAllOnScene = AllObjectScene;
 
 			for ( a = 0; a < getAllOnScene.Count; a++ )
@@ -216,7 +231,7 @@ public class WindowSearchObject : EditorWindow
 			aPageProj = 0;
 			childProj = getChildren;
 
-			AllObjectProject = SearchObject.LoadAssetsInProject ( thisType, objComp, thisStringSearch, getChildren, SpecificPath, compDiff );
+			AllObjectProject = SearchObject.LoadAssetsInProject ( thisType, objComp, thisStringSearch, getChildren, SpecificPath, compDiff, childDiff, specName );
 			getAllOnProj = AllObjectProject;
 
 			for ( a = 0; a < getAllOnProj.Count; a++ )
@@ -238,7 +253,7 @@ public class WindowSearchObject : EditorWindow
 			fPref = foldoutPref;
 			childPref = getChildren;
 
-			InfoOnPrefab = SearchObject.LoadOnPrefab ( thisType, objComp, thispref, thisStringSearch, getChildren, compDiff );
+			InfoOnPrefab = SearchObject.LoadOnPrefab ( thisType, objComp, thispref, thisStringSearch, getChildren, compDiff, childDiff, specName );
 			getAllOnPrefab = InfoOnPrefab;
 
 			for ( a = 0; a < getAllOnPrefab.Count; a++ )
