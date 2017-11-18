@@ -363,8 +363,8 @@ public class SpawnChunks : MonoBehaviour
 					while ( diffLine < 0 )
 					{
 						thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getNewChunk [ a ].ThisObj.transform );
-						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.x ), 0, 0 );
-						//thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
+						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.x ) + 3, 0, -3 );
+						thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 						diffLine++;
 					}
 				}
@@ -376,8 +376,8 @@ public class SpawnChunks : MonoBehaviour
 					while ( diffLine > 0 )
 					{
 						thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getNewChunk [ a ].ThisObj.transform );
-						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.y ), 0, 0 );
-						//thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
+						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.y ) + 3, 0, -3 );
+						thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 						diffLine--;
 					}
 				}
@@ -390,8 +390,9 @@ public class SpawnChunks : MonoBehaviour
 					while ( diffLine != 0 )
 					{
 						thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getNewChunk [ a ].ThisObj.transform );
-						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.y ), 0, 0 );
-						//thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
+						thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getNewChunk [ a ].NbrLaneDebut.y ) + 3, 0, -3 );
+						thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
+
 						if ( diffLine > 0 )
 						{
 							diffLine--;
