@@ -286,35 +286,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 18047493}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &27028067
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 27028068}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Reference
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &27028068
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 27028067}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 782776700}
-  m_Father: {fileID: 1620319517}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &34139853
 Prefab:
   m_ObjectHideFlags: 0
@@ -352,7 +323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4437041050613948, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114420335998659392, guid: b4cea04d2ef6e224da8a8b609103e64f,
         type: 2}
@@ -1130,34 +1101,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 50834146}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
---- !u!1 &68411774
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 68411775}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightHandThumbEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &68411775
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 68411774}
-  m_LocalRotation: {x: -0.17184496, y: -0.3418649, z: -0.11479622, w: 0.916744}
-  m_LocalPosition: {x: 0.39901862, y: 0.8070668, z: 0.46691093}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 2.032079, y: 10.147757, z: -1.5145812}
 --- !u!1 &72438062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,7 +1109,7 @@ GameObject:
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 1749320282}
+  - component: {fileID: 72438067}
   - component: {fileID: 72438066}
   - component: {fileID: 72438065}
   - component: {fileID: 72438064}
@@ -1235,35 +1178,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 72438062}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &77621835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 77621836}
-  m_Layer: 0
-  m_Name: charlotte_champi1_RightHandIndex1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &77621836
+--- !u!4 &72438067
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 77621835}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00008092607, w: 1}
-  m_LocalPosition: {x: 0.06038265, y: -0.064343885, z: 0.021294016}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
-  m_Children:
-  - {fileID: 618033416}
-  m_Father: {fileID: 1105968104}
+  m_GameObject: {fileID: 72438062}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.009274167}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &78526969 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1294808330193280, guid: b4cea04d2ef6e224da8a8b609103e64f,
@@ -2443,7 +2370,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4724961795793312, guid: 15bb641fdb1f44941a035ea7b9db8239, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 224562249454764838, guid: 15bb641fdb1f44941a035ea7b9db8239,
         type: 2}
@@ -2503,7 +2430,7 @@ Prefab:
         type: 2}
       propertyPath: ChunksInfo.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: a1c86fda395ef514bab8bb5e88ded302,
+      objectReference: {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be,
         type: 2}
     - target: {fileID: 224175754688186618, guid: 15bb641fdb1f44941a035ea7b9db8239,
         type: 2}
@@ -5167,7 +5094,6 @@ Transform:
   - {fileID: 2040634787}
   - {fileID: 1531952266}
   - {fileID: 1455175050}
-  - {fileID: 1749320282}
   - {fileID: 1605801329}
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -5707,6 +5633,34 @@ Transform:
   - {fileID: 9459706}
   m_Father: {fileID: 806519015}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &826593934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 269251981}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 826593935}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &826593935
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 269251981}
+  m_GameObject: {fileID: 826593934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &831847887 stripped
 GameObject:
@@ -6594,62 +6548,6 @@ MonoBehaviour:
   - {x: 0.1, y: 0.1, z: 0.1}
   - {x: 0.25, y: 0.25, z: 0.25}
   easeType: 23
---- !u!1 &1024321052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1024321053}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_LeftWristEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1024321053
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024321052}
-  m_LocalRotation: {x: -0.4218953, y: 0.1454279, z: 0.16522415, w: 0.87952036}
-  m_LocalPosition: {x: -0.35782018, y: 0.81154424, z: 0.3296456}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: -19.21714, y: 15.04955, z: 46.314445}
---- !u!1 &1024701888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1024701889}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_RightKneeEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1024701889
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1024701888}
-  m_LocalRotation: {x: 0.35185662, y: 0.032011285, z: 0.12683353, w: 0.9268686}
-  m_LocalPosition: {x: 0.2518061, y: 0.3834293, z: 0.35626036}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 40.774086, y: 11.574989, z: 20.232346}
 --- !u!1 &1029315501
 GameObject:
   m_ObjectHideFlags: 0
@@ -8500,7 +8398,7 @@ Transform:
   m_Children:
   - {fileID: 179102523}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257939797
 GameObject:
@@ -9477,37 +9375,7 @@ Transform:
   - {fileID: 2060699248}
   - {fileID: 1183355250}
   - {fileID: 1602716556}
-  - {fileID: 25809916}
-  - {fileID: 1021317352}
   m_Father: {fileID: 714199962}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1457571940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1457571941}
-  m_Layer: 0
-  m_Name: charlotte_champi1_Ctrl_HipsEffector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1457571941
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1457571940}
-  m_LocalRotation: {x: 0.0046824752, y: 0.0034779503, z: -0.0015406536, w: 0.9999818}
-  m_LocalPosition: {x: 0.0033460425, y: 0.6293193, z: 0.00049721455}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 473268517}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1460402362
@@ -11967,7 +11835,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
@@ -12994,7 +12862,7 @@ Transform:
   m_Children:
   - {fileID: 2108583278}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935769118
 GameObject:
@@ -14091,57 +13959,6 @@ Transform:
   m_Father: {fileID: 714199962}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2041755146
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.5022123
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.772
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 18.875751
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0.70710677
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1356111126795066, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-      propertyPath: m_Name
-      value: Piece (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 23272452994879814, guid: b4bb5b35a636cd74384418cd5baca4a8,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5fa16e59eedd7024699d5d8a34d62aac, type: 2}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &2042374727
 GameObject:
   m_ObjectHideFlags: 0
