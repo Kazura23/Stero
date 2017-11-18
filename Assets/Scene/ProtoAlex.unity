@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.1, g: 0.1, b: 0.1, a: 0}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0
+  m_AmbientIntensity: 1.23
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -37,20 +37,20 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17893484, g: 0.22405374, b: 0.30590007, a: 1}
+  m_Sun: {fileID: 179102522}
+  m_IndirectSpecularColor: {r: 0.17879046, g: 0.22387128, b: 0.30576676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_TemporalCoherenceThreshold: 1
-    m_EnvironmentLightingMode: 0
+    m_EnvironmentLightingMode: 1
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
@@ -86,7 +86,8 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: c9e79d108ac4a4f4792545608a68127a,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -1242,6 +1243,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 154744026}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
+--- !u!108 &179102522 stripped
+Light:
+  m_PrefabParentObject: {fileID: 108662729620879930, guid: b4cea04d2ef6e224da8a8b609103e64f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1698743220}
 --- !u!1 &189623116
 GameObject:
   m_ObjectHideFlags: 0
@@ -10989,36 +10995,6 @@ Prefab:
     - target: {fileID: 1528059048823118, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
       propertyPath: m_Name
       value: ==> Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 108662729620879930, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Intensity
-      value: 0.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 108568150508692066, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Intensity
-      value: 3.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 108568150508692066, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Range
-      value: 15.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 108568150508692066, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Shadows.m_Strength
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 108568150508692066, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Shadows.m_NearPlane
-      value: 5.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 108568150508692066, guid: b4cea04d2ef6e224da8a8b609103e64f,
-        type: 2}
-      propertyPath: m_Shadows.m_NormalBias
-      value: 0.73
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4cea04d2ef6e224da8a8b609103e64f, type: 2}
