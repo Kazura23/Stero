@@ -115,7 +115,7 @@ public class WindowSearchObject : EditorWindow
 		EditorGUILayout.BeginHorizontal ( );
 		EditorGUILayout.BeginVertical ( );
 		EditorGUI.BeginChangeCheck ( );
-		thisType = (ResearcheType)EditorGUILayout.EnumPopup("Research Type:", thisType);
+		thisType = ( ResearcheType ) EditorGUILayout.EnumPopup ( "Research Type:", thisType );
 		if ( EditorGUI.EndChangeCheck ( ) )
 		{
 			AllObjectScene = new List<List<GameObject>> ( );
@@ -262,7 +262,6 @@ public class WindowSearchObject : EditorWindow
 				fPref.Add ( false );
 			}
 		}
-
 
 		var list = thispref;
 		int newCount = Mathf.Max(0, EditorGUILayout.IntField("Number Ref", list.Count));
@@ -567,7 +566,21 @@ public class WindowSearchObject : EditorWindow
 							EditorGUILayout.Space ( );
 							EditorGUILayout.Space ( );
 
+							EditorGUILayout.BeginHorizontal();
 							EditorGUILayout.ObjectField ( "OtherParent", listSearch [ a ] [ b ].transform.parent.gameObject, typeof( GameObject ), true );
+							bigParent = currParent;
+
+							while ( bigParent.parent != null )
+							{
+								bigParent = bigParent.parent;
+							}
+
+							if ( bigParent != currParent )
+							{
+								EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof ( GameObject ), true );
+							}
+
+							EditorGUILayout.EndHorizontal ( );
 							EditorGUI.indentLevel = getindentLevel;
 						}
 					}
@@ -597,6 +610,7 @@ public class WindowSearchObject : EditorWindow
 		GameObject getNewObj;
 		GameObject getInsParent;
 		Transform getBasePart;
+		List<InfoParent> parentUpdate = new List<InfoParent> ( );
 
 		int a;
 		int b;
@@ -639,7 +653,24 @@ public class WindowSearchObject : EditorWindow
 
 					if ( getAssetPath != null && getAssetPath != string.Empty )
 					{
-						getInsParent = ( GameObject ) Instantiate ( getBasePart.gameObject );
+						getInsParent = null;
+
+						for ( c = 0; c < parentUpdate.Count; c++ )
+						{
+							if ( parentUpdate [ c ].ThisParent == getBasePart )
+							{
+								getInsParent = parentUpdate [ c ].ThisObj;
+								break;
+							}
+						}
+
+						if ( getInsParent == null )
+						{
+							getInsParent = ( GameObject ) Instantiate ( getBasePart.gameObject );
+							parentUpdate.Add ( new InfoParent ( ) );
+							parentUpdate [ parentUpdate.Count - 1 ].ThisObj = getInsParent;
+							parentUpdate [ parentUpdate.Count - 1 ].ThisParent = getBasePart;
+						}
 
 						foreach ( Transform currT in getInsParent.GetComponentsInChildren<Transform>( true) )
 						{
@@ -655,8 +686,6 @@ public class WindowSearchObject : EditorWindow
 							}
 						}
 
-						PrefabUtility.ReplacePrefab ( getInsParent, getBasePart.gameObject, ReplacePrefabOptions.ReplaceNameBased );
-						DestroyImmediate ( getInsParent, true );
 					}
 					else
 					{
@@ -772,6 +801,12 @@ public class WindowSearchObject : EditorWindow
 				}*/
 			}
 		}
+
+		for ( a = 0; a < parentUpdate.Count; a++ )
+		{
+			PrefabUtility.ReplacePrefab ( parentUpdate [ a ].ThisObj, parentUpdate [ a ].ThisParent.gameObject, ReplacePrefabOptions.ReplaceNameBased );
+			DestroyImmediate ( parentUpdate [ a ].ThisObj, true );
+		}
 	}
 }
 
@@ -780,4 +815,10 @@ public class objectInfo
 {
 	public GameObject ThisObj;
 	public Component[] thoseComp;
+}
+
+public class InfoParent 
+{
+	public Transform ThisParent;
+	public GameObject ThisObj;
 }
