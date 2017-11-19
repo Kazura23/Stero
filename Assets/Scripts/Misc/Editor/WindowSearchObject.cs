@@ -425,7 +425,8 @@ public class WindowSearchObject : EditorWindow
 		#region Pref Layout
 		if ( getAllOnPrefab.Count > 0 )
 		{
-			if ( GUILayout.Button ( "Clear Pref", EditorStyles.miniButton ) )
+			EditorGUILayout.BeginVertical();
+			if ( GUILayout.Button ( "Clear Object", EditorStyles.miniButton ) )
 			{
 				InfoOnPrefab = new List<List<GameObject>> ( );
 			}
@@ -433,6 +434,7 @@ public class WindowSearchObject : EditorWindow
 			scrollPosPref = EditorGUILayout.BeginScrollView ( scrollPosPref );
 			aPagePref = LayoutSearch( getAllOnPrefab, bPref, fPref, aPagePref, childPref );
 			EditorGUILayout.EndScrollView ( );
+			EditorGUILayout.EndVertical();
 		}
 
 		#endregion
