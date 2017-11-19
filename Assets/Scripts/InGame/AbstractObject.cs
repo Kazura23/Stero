@@ -56,6 +56,7 @@ public class AbstractObject : MonoBehaviour
     protected virtual void Start()
     {
         playerTrans = GlobalManager.GameCont.Player.transform;
+
     }
 	#endregion
 
@@ -71,7 +72,12 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-		isDead = true;
+
+        var animation = GetComponentInChildren<Animator>();
+        animation.enabled = false;
+        //Debug.Log(GetComponentInChildren<Animator>());
+        
+        isDead = true;
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         getTrans.tag = Constants._ObjDeadTag;
@@ -80,9 +86,6 @@ public class AbstractObject : MonoBehaviour
 			corps [ i ].useGravity = true;
 		}
 
-        var animation = GetComponentInChildren<Animator>();
-        if (animation)
-            animation.enabled = false;
 
         mainCorps.constraints = RigidbodyConstraints.None;
 		checkConstAxe ( );
