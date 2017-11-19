@@ -149,7 +149,7 @@ public class AbstractObject : MonoBehaviour
 
 			if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
 			{
-				Debug.Log ( "ennemis touche" );
+				//Debug.Log ( "ennemis touche" );
 			}
 			CollDetect ( );
 		}
