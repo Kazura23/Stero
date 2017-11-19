@@ -80,7 +80,11 @@ public class AbstractObject : MonoBehaviour
 			corps [ i ].useGravity = true;
 		}
 
-		mainCorps.constraints = RigidbodyConstraints.None;
+        var animation = GetComponentInChildren<Animator>();
+        if (animation)
+            animation.enabled = false;
+
+        mainCorps.constraints = RigidbodyConstraints.None;
 		checkConstAxe ( );
 		if ( useGravity )
 		{
