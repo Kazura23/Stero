@@ -49,6 +49,7 @@ public class NewChunkInfo
 public class ChunkExit
 {
 	public int LaneParent = 0;
+	public int Verticalite = 0;
 	public Transform LevelParent;
 	public ListChunkScriptable LCS;
 }
