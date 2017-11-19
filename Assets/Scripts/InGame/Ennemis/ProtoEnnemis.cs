@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ProtoEnnemis : AbstractObject
 {
@@ -34,8 +35,11 @@ public class ProtoEnnemis : AbstractObject
 
 		if ( isDetected && !isDead)
 		{
-			//parMat.color = NewColor;
-
+            //parMat.color = NewColor;
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
+            txt.transform.DOScale(Vector3.one * .15f, 0);
+            txt.GetComponent<TextMesh>().text = "Your ex is a bitch";
+            
         }
 		else
 		{

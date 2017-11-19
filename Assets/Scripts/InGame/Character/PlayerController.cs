@@ -275,6 +275,11 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
+	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
+	{
+		//NbrLineLeft = NbrLineL 
+	}
+
 	public void ResetPlayer ( )
 	{
 		Life = 1;

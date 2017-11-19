@@ -102,7 +102,6 @@ public class GameController : ManagerParent
 					getObj = ( GameObject ) Instantiate ( getObj );
 				}
 
-
 				getObj.transform.position = thisPos;
 
 				Destroy ( getObj, timeDest );
@@ -117,6 +116,7 @@ public class GameController : ManagerParent
     public void Restart ( ) 
 	{
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+		SpawnerChunck.RemoveAll ( );
         GameStarted = false;
     }   
     
