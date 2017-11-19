@@ -119,7 +119,7 @@ public class UiManager : ManagerParent
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0.05f;
+		Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.04f, () => {
 			Time.timeScale = 1;
