@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_saturation", BarMadness.value / 15);
+		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
 		float getTime = Time.deltaTime;
 
