@@ -72,12 +72,8 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-
-        var animation = GetComponentInChildren<Animator>();
-        animation.enabled = false;
+       
         //Debug.Log(GetComponentInChildren<Animator>());
-        
-        isDead = true;
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         getTrans.tag = Constants._ObjDeadTag;
@@ -86,26 +82,18 @@ public class AbstractObject : MonoBehaviour
 			corps [ i ].useGravity = true;
 		}
 
-
-        mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
-		if ( useGravity )
-		{
-			mainCorps.useGravity = true;
-		}
-
 		//checkConstAxe ( );
 
 		if ( enemy )
 		{
-			mainCorps.AddForce ( getTrans.forward * onObjForward, ForceMode.VelocityChange );
+			onEnemyDead ( getTrans.forward * onObjForward );
 		}
 		else
 		{
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
-			mainCorps.AddForce ( getFor + getRig + getUp, ForceMode.VelocityChange );
+			onEnemyDead ( getFor + getRig + getUp );
 		}
         
 		Destroy ( this.gameObject, delayDead );
@@ -125,22 +113,7 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void ForceProp ( Vector3 forceProp )
 	{
-		isDead = true;
-
-		getTrans.tag = Constants._ObjDeadTag;
-		for ( int i = 0; i < corps.Count; i++ )
-		{
-			corps [ i ].useGravity = true;
-		}
-
-		mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
-		if ( useGravity )
-		{
-			mainCorps.useGravity = true;
-		}
-
-		mainCorps.AddForce ( forceProp, ForceMode.VelocityChange );
+		onEnemyDead ( forceProp );
 		StartCoroutine ( enableColl ( ) );
 	}
 	#endregion
@@ -165,6 +138,29 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 		}*/
+	}
+
+	void onEnemyDead ( Vector3 forceProp )
+	{
+		isDead = true;
+
+		var animation = GetComponentInChildren<Animator>();
+		animation.enabled = false;
+
+		getTrans.tag = Constants._ObjDeadTag;
+		for ( int i = 0; i < corps.Count; i++ )
+		{
+			corps [ i ].useGravity = true;
+		}
+
+		mainCorps.constraints = RigidbodyConstraints.None;
+		checkConstAxe ( );
+		if ( useGravity )
+		{
+			mainCorps.useGravity = true;
+		}
+
+		mainCorps.AddForce ( forceProp, ForceMode.VelocityChange );
 	}
 
 	IEnumerator enableColl ( )
