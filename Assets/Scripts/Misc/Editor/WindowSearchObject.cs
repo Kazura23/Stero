@@ -9,8 +9,10 @@ public class WindowSearchObject : EditorWindow
 
 	string thisStringSearch;
 	string SpecificPath;
+	string specName;
 	int thisNbr;
 	int compDiff;
+	int childDiff;
 
 	int aPageProj;
 	List<bool> foldoutProj;
@@ -49,6 +51,7 @@ public class WindowSearchObject : EditorWindow
 
 		thisStringSearch = string.Empty;
 		SpecificPath = string.Empty;
+		specName = string.Empty;
 
 		objComp = null;
 		thisNbr = 0;
@@ -65,7 +68,8 @@ public class WindowSearchObject : EditorWindow
 		aPageProj = 0;
 		aPageScene = 0;
 		aPagePref = 0;
-		compDiff = 2;
+		compDiff = 1;
+		childDiff = 1;
 
 		scrollPosProj = Vector2.zero;
 		scrollPosScene = Vector2.zero;
@@ -108,9 +112,10 @@ public class WindowSearchObject : EditorWindow
 		int a; 
 		GUILayout.Label ("Get Specific object", EditorStyles.boldLabel);
 
-		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.BeginHorizontal ( );
+		EditorGUILayout.BeginVertical ( );
 		EditorGUI.BeginChangeCheck ( );
-		thisType = (ResearcheType)EditorGUILayout.EnumPopup("Research Type:", thisType);
+		thisType = ( ResearcheType ) EditorGUILayout.EnumPopup ( "Research Type:", thisType );
 		if ( EditorGUI.EndChangeCheck ( ) )
 		{
 			AllObjectScene = new List<List<GameObject>> ( );
@@ -118,10 +123,14 @@ public class WindowSearchObject : EditorWindow
 			InfoOnPrefab = new List<List<GameObject>> ( );
 			objComp = null;
 			thisStringSearch = string.Empty;
+			specName = string.Empty;
 			thisNbr = 0;
-			compDiff = 2;
+			compDiff = 1;
+			childDiff = 1;
 			apply = false;
 		}
+
+		EditorGUI.indentLevel = 1;
 
 		switch (thisType) 
 		{
@@ -158,17 +167,22 @@ public class WindowSearchObject : EditorWindow
 					{
 						getCI.Add ( new objectInfo ( ) );
 						getCI [ getCI.Count - 1 ].ThisObj = thisObj;
-						getCI[ getCI.Count - 1 ].thoseComp = thisObj.GetComponents<Component> ( );
+						getCI [ getCI.Count - 1 ].thoseComp = thisObj.GetComponents<Component> ( );
 					}
 				}
 			}
 
-			compDiff = (int) EditorGUILayout.Slider ( "Max Number Component Different" ,compDiff, 0, 10 );
+			EditorGUI.indentLevel = 2;
+			specName = EditorGUILayout.TextField ( "Other Name ?", specName );
+			compDiff = ( int ) EditorGUILayout.Slider ( "Max component gap", compDiff, 0, 10 );
+			childDiff = ( int ) EditorGUILayout.Slider ( "Max child gap", childDiff, 0, 50 );
+			EditorGUI.indentLevel = 0;
 
 			EditorGUILayout.EndVertical ( );
 
 			break;
 		}
+		EditorGUILayout.EndVertical ( );
 
 		var buttonStyle = new GUIStyle( EditorStyles.miniButton );
 
@@ -186,6 +200,7 @@ public class WindowSearchObject : EditorWindow
 			getChildren = !getChildren;
 		}
 		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.Space ( );
 
 		if ( GUILayout.Button ( "Object On Scene" ) )
 		{
@@ -195,7 +210,7 @@ public class WindowSearchObject : EditorWindow
 			fScene = foldoutScene;
 			childScene = getChildren;
 
-			AllObjectScene = SearchObject.LoadAssetOnScenes ( thisType, objComp, thisStringSearch, getChildren, compDiff );
+			AllObjectScene = SearchObject.LoadAssetOnScenes ( thisType, objComp, thisStringSearch, getChildren, compDiff, childDiff, specName );
 			getAllOnScene = AllObjectScene;
 
 			for ( a = 0; a < getAllOnScene.Count; a++ )
@@ -216,7 +231,7 @@ public class WindowSearchObject : EditorWindow
 			aPageProj = 0;
 			childProj = getChildren;
 
-			AllObjectProject = SearchObject.LoadAssetsInProject ( thisType, objComp, thisStringSearch, getChildren, SpecificPath, compDiff );
+			AllObjectProject = SearchObject.LoadAssetsInProject ( thisType, objComp, thisStringSearch, getChildren, SpecificPath, compDiff, childDiff, specName );
 			getAllOnProj = AllObjectProject;
 
 			for ( a = 0; a < getAllOnProj.Count; a++ )
@@ -238,7 +253,7 @@ public class WindowSearchObject : EditorWindow
 			fPref = foldoutPref;
 			childPref = getChildren;
 
-			InfoOnPrefab = SearchObject.LoadOnPrefab ( thisType, objComp, thispref, thisStringSearch, getChildren, compDiff );
+			InfoOnPrefab = SearchObject.LoadOnPrefab ( thisType, objComp, thispref, thisStringSearch, getChildren, compDiff, childDiff, specName );
 			getAllOnPrefab = InfoOnPrefab;
 
 			for ( a = 0; a < getAllOnPrefab.Count; a++ )
@@ -247,7 +262,6 @@ public class WindowSearchObject : EditorWindow
 				fPref.Add ( false );
 			}
 		}
-
 
 		var list = thispref;
 		int newCount = Mathf.Max(0, EditorGUILayout.IntField("Number Ref", list.Count));
@@ -552,7 +566,21 @@ public class WindowSearchObject : EditorWindow
 							EditorGUILayout.Space ( );
 							EditorGUILayout.Space ( );
 
+							EditorGUILayout.BeginHorizontal();
 							EditorGUILayout.ObjectField ( "OtherParent", listSearch [ a ] [ b ].transform.parent.gameObject, typeof( GameObject ), true );
+							bigParent = currParent;
+
+							while ( bigParent.parent != null )
+							{
+								bigParent = bigParent.parent;
+							}
+
+							if ( bigParent != currParent )
+							{
+								EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof ( GameObject ), true );
+							}
+
+							EditorGUILayout.EndHorizontal ( );
 							EditorGUI.indentLevel = getindentLevel;
 						}
 					}
@@ -582,6 +610,7 @@ public class WindowSearchObject : EditorWindow
 		GameObject getNewObj;
 		GameObject getInsParent;
 		Transform getBasePart;
+		List<InfoParent> parentUpdate = new List<InfoParent> ( );
 
 		int a;
 		int b;
@@ -624,7 +653,24 @@ public class WindowSearchObject : EditorWindow
 
 					if ( getAssetPath != null && getAssetPath != string.Empty )
 					{
-						getInsParent = ( GameObject ) Instantiate ( getBasePart.gameObject );
+						getInsParent = null;
+
+						for ( c = 0; c < parentUpdate.Count; c++ )
+						{
+							if ( parentUpdate [ c ].ThisParent == getBasePart )
+							{
+								getInsParent = parentUpdate [ c ].ThisObj;
+								break;
+							}
+						}
+
+						if ( getInsParent == null )
+						{
+							getInsParent = ( GameObject ) Instantiate ( getBasePart.gameObject );
+							parentUpdate.Add ( new InfoParent ( ) );
+							parentUpdate [ parentUpdate.Count - 1 ].ThisObj = getInsParent;
+							parentUpdate [ parentUpdate.Count - 1 ].ThisParent = getBasePart;
+						}
 
 						foreach ( Transform currT in getInsParent.GetComponentsInChildren<Transform>( true) )
 						{
@@ -640,8 +686,6 @@ public class WindowSearchObject : EditorWindow
 							}
 						}
 
-						PrefabUtility.ReplacePrefab ( getInsParent, getBasePart.gameObject, ReplacePrefabOptions.ReplaceNameBased );
-						DestroyImmediate ( getInsParent, true );
 					}
 					else
 					{
@@ -653,6 +697,8 @@ public class WindowSearchObject : EditorWindow
 						getNewObj.transform.localRotation = getCurrRot;
 					}
 				}
+				// opti sur l'instanciation / destruction d'object : vérifier que le prochain obj n'as pas le meme parent sinon ne pas détruire, etc
+				// donner une option qui permet à l'utilisateur de : tout remplacer / choisir les composants a mettre a jour / choisir les fields a mettre a jour
 
 				/*if ( replace )
 				{
@@ -755,6 +801,12 @@ public class WindowSearchObject : EditorWindow
 				}*/
 			}
 		}
+
+		for ( a = 0; a < parentUpdate.Count; a++ )
+		{
+			PrefabUtility.ReplacePrefab ( parentUpdate [ a ].ThisObj, parentUpdate [ a ].ThisParent.gameObject, ReplacePrefabOptions.ReplaceNameBased );
+			DestroyImmediate ( parentUpdate [ a ].ThisObj, true );
+		}
 	}
 }
 
@@ -763,4 +815,10 @@ public class objectInfo
 {
 	public GameObject ThisObj;
 	public Component[] thoseComp;
+}
+
+public class InfoParent 
+{
+	public Transform ThisParent;
+	public GameObject ThisObj;
 }

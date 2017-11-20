@@ -42,4 +42,10 @@ public static class ScriptableObjectUtility
 	{
 		ScriptableObjectUtility.CreateAsset<AudioScriptable> ();
 	}
+
+	[MenuItem("CustomTools/Scriptable/ListChunk")]
+	public static void CreateListChunk ( )
+	{
+		ScriptableObjectUtility.CreateAsset<ListChunkScriptable> ( );
+	}
 }

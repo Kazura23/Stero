@@ -275,6 +275,11 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
+	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
+	{
+		//NbrLineLeft = NbrLineL 
+	}
+
 	public void ResetPlayer ( )
 	{
 		Life = 1;
@@ -406,7 +411,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( !playerDead )
+		if ( !playerDead && !InBeginMadness)
 		{
 			if ( Input.GetAxis ( "CoupSimple" ) == 0 )
 			{
@@ -417,11 +422,13 @@ public class PlayerController : MonoBehaviour
 			{
 				resetAxeD = true;
 
-				if ( timeToDP < TimeToDoublePunch * 0.8f )
+                if ( timeToDP < TimeToDoublePunch * 0.8f )
 				{
 					resetAxeD = false;
 					dpunch = true;
-				}
+
+                    
+                }
 				else
 				{
 					timeToDP = TimeToDoublePunch;
@@ -443,7 +450,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash") != 0 && newH == 0 && canDash && !InMadness )
+		if ( Input.GetAxis ( "Dash") != 0 && newH == 0 && canDash && !InMadness && !InBeginMadness && !playerDead)
 		{
             if (Time.timeScale < 1)
                 Time.timeScale = 1;
