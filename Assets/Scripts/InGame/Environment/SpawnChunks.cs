@@ -397,7 +397,8 @@ public class SpawnChunks : MonoBehaviour
 				{
 					if ( b == 0 )
 					{
-						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x - getCurrNew [ b ].CurrLane - sourceSpawn.NbrLaneFin.x );
+						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
+
 						while ( diffLine < 0 )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getCurrNew [ b ].ThisObj.transform );
@@ -408,7 +409,7 @@ public class SpawnChunks : MonoBehaviour
 					}
 					else if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
 					{
-						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b ].CurrLane - sourceSpawn.NbrLaneFin.x );
+						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
 						diffLine = -diffLine;
 
 						while ( diffLine > 0 )
@@ -422,7 +423,7 @@ public class SpawnChunks : MonoBehaviour
 
 					if ( b < getNewChunk [ a ].AllInfNewChunk.Count - 1 )
 					{
-						diffLine = ( int ) ( 1 + getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b + 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
+						diffLine = ( int ) ( 1 + getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b + 1 ].NbrLaneDebut.x ) - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
 						diffLine = -diffLine;
 
 						while ( diffLine != 0 )
