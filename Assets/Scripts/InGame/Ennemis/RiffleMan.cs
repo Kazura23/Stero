@@ -29,7 +29,13 @@ public class RiffleMan : AbstractObject
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-		if ( isDetected && !isDead )
+        if (!isDead)
+        {
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+            Debug.Log("anime active !!!");
+        }
+
+        if ( isDetected && !isDead )
 		{
 			StartCoroutine ( shootPlayer ( new WaitForSeconds ( SpeedSpawn ), false ) );
 		}
@@ -63,6 +69,7 @@ public class RiffleMan : AbstractObject
 	{
 		int a;
 		GameObject getCurr;
+
 		for ( a = 0; a < NbrBalls; a++ )
 		{
 			yield return thisF;

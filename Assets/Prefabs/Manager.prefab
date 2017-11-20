@@ -2713,7 +2713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChunksInfo:
-  - {fileID: 11400000, guid: 18a71cb75a9df274fa9a247199684f9c, type: 2}
+  - {fileID: 11400000, guid: 8c39cac52faee384e8f026761ef26143, type: 2}
   DefaultPos: {x: 0, y: 0, z: 34}
   currLevel: 0
 --- !u!114 &114459444097662066
@@ -3552,12 +3552,12 @@ MonoBehaviour:
   AllFx:
   - FxName: EnemyNormalDeath
     FxObj: {fileID: 100002, guid: 0335ac9c6b697e54494e51a7abf8b161, type: 2}
-  - FxName: 
-    FxObj: {fileID: 0}
-  - FxName: 
-    FxObj: {fileID: 0}
-  - FxName: 
-    FxObj: {fileID: 0}
+  - FxName: PlayerReady
+    FxObj: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 2}
+  - FxName: TextMadness
+    FxObj: {fileID: 1548981012730192, guid: e956dc97a4931e74db37c0b975d2321c, type: 2}
+  - FxName: TextEnemy
+    FxObj: {fileID: 1385383073318620, guid: dacbcacc61db837498a7e2711bf40e58, type: 2}
   - FxName: 
     FxObj: {fileID: 0}
   - FxName: 
@@ -3575,6 +3575,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   SpawnerChunck: {fileID: 114434075597277522}
   GameStarted: 0
+  Intro: 0
   AllTempsItem: []
 --- !u!114 &114930067391110948
 MonoBehaviour:
@@ -3675,6 +3676,7 @@ MonoBehaviour:
   SlowMotion: {fileID: 114712813480562110}
   BonusLife: {fileID: 114526648184768980}
   CircleFeel: {fileID: 114340937616088520}
+  TextFeelMadness: {fileID: 0}
 --- !u!114 &114959568330275056
 MonoBehaviour:
   m_ObjectHideFlags: 1

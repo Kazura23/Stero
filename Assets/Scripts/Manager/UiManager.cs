@@ -119,11 +119,11 @@ public class UiManager : ManagerParent
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0f;
-        Time.fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.1f, () => {
+		Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.04f, () => {
 			Time.timeScale = 1;
-            Time.fixedDeltaTime = .02F;
+            //Time.fixedDeltaTime = .02F;
         });
 
 		float saveFov = Camera.main.fieldOfView;

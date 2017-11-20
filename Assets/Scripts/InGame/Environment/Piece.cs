@@ -14,7 +14,7 @@ public class Piece : MonoBehaviour
 
             GlobalManager.Ui.TakeCoin();
 
-            GetComponent<SphereCollider>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
 
             Debug.Log(GetComponent<MeshRenderer>().material.name);
 
