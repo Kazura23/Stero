@@ -29,8 +29,11 @@ public class RiffleMan : AbstractObject
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-
-        GetComponentInChildren<Animator>().SetTrigger("Attack");
+        if (!isDead)
+        {
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+            Debug.Log("anime active !!!");
+        }
 
         if ( isDetected && !isDead )
 		{
