@@ -71,6 +71,9 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
+        var animation = GetComponentInChildren<Animator>();
+        if (animation)
+            animation.enabled = false;
 		isDead = true;
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
