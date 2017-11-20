@@ -27,13 +27,30 @@ public class UiPoubelle : MonoBehaviour {
     }
     public void onActiveRagdoll()
     {
-        GameObject champi = GameObject.Find("Charlotte_champi");
-        champi.GetComponent<Animator>().enabled = false;
+        GameObject champi = GameObject.Find("Enemy_Shoot");
+        champi.GetComponentInChildren<Animator>().enabled = false;
+        //champi.GetComponent<Rigidbody>().AddForce(propulsion, ForceMode.VelocityChange);
         Rigidbody[] rigis = champi.GetComponentsInChildren<Rigidbody>();
         foreach(Rigidbody rig in rigis)
         {
             rig.useGravity = true;
-            if(rig.gameObject.name == "charlotte_champi1_Hips" /*&& rig.gameObject.name == "charlotte_champi1_Head"*/)
+            if(rig.gameObject.name == "Vino_veritas_Hips"/* && rig.gameObject.name == "charlotte_champi1_Head"*/)
+            {
+                rig.AddForce(propulsion, ForceMode.VelocityChange);
+            }
+        }
+    }
+
+    public void onActiveRagdoll2()
+    {
+        GameObject champi = GameObject.Find("Enemy_Normal");
+        champi.GetComponentInChildren<Animator>().enabled = false;
+        //champi.GetComponent<Rigidbody>().AddForce(propulsion, ForceMode.VelocityChange);
+        Rigidbody[] rigis = champi.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rig in rigis)
+        {
+            rig.useGravity = true;
+            if (rig.gameObject.name == "Character1_Hips"/* && rig.gameObject.name == "charlotte_champi1_Head"*/)
             {
                 rig.AddForce(propulsion, ForceMode.VelocityChange);
             }
@@ -42,7 +59,7 @@ public class UiPoubelle : MonoBehaviour {
 
     public void onInterrupt()
     {
-        //GameObject.Find("Interrupt").GetComponent<PunchInterrupt>().Activation();
+        GameObject.Find("Interrupt").GetComponent<PunchInterrupt>().Activation();
     }
 
 }

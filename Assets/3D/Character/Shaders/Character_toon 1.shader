@@ -8,7 +8,6 @@ Shader "Custom/Character_toon" {
         _outline_basevalue ("outline_basevalue", Range(0.1, 0.5)) = 0.1
         _distanceratio ("distanceratio", Range(0.1, 0.3)) = 0.1
         [MaterialToggle] _emissive ("emissive", Float ) = 0
-        _emisive_force ("emisive_force", Range(0, 1)) = 0
     }
     SubShader {
         Tags {

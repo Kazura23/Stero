@@ -7,9 +7,9 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Generic_Colors
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 6
+  m_Shader: {fileID: 4800000, guid: 8b320431eeb0598498533b252aba1f67, type: 3}
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -66,6 +66,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RMA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _ColorStrength: 1
@@ -86,9 +90,13 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _distanceratio: 0.1
+    - _emisive_force: 0.396
+    - _emissive: 0
     - _gloss: 0
     - _gloss_color: 1
+    - _outline_basevalue: 0.1
     m_Colors:
-    - _Color: {r: 0.6911765, g: 0.6911765, b: 0.6911765, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0.5661765, g: 0.43295848, b: 0.43295848, a: 1}
     - _shadow_color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
