@@ -121,14 +121,14 @@ public class UiManager : ManagerParent
 	{
 		Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.04f, () => {
+        DOVirtual.DelayedCall(.03f, () => {
 			Time.timeScale = 1;
             //Time.fixedDeltaTime = .02F;
         });
 
 		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(45, .12f);//.SetEase(Ease.InBounce);
-		RedScreen.DOFade(.4f, .12f).OnComplete(() => {
+		Camera.main.DOFieldOfView(33.5f, .16f);//.SetEase(Ease.InBounce);
+		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
 			RedScreen.DOFade(0, .08f);
 			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
