@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_saturation", BarMadness.value / 15);
+		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
 		float getTime = Time.deltaTime;
 
@@ -725,7 +725,7 @@ public class PlayerController : MonoBehaviour
 		float newImp = Input.GetAxis ( "Horizontal" );
 		float lineDistance = Constants.LineDist;
 
-		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine )
+		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine && !InBeginMadness)
 		{
 			if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
 			{

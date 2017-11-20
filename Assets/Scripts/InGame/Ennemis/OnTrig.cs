@@ -10,7 +10,12 @@ public class OnTrig : MonoBehaviour
 	{
 		if ( thisColl.tag == Constants._PlayerTag )
 		{
-			if ( GetAbs.gameObject.gameObject.tag != Constants._UnTagg )
+			if ( GetAbs == null )
+			{
+				GetAbs = GetComponentInParent<AbstractObject> ( );
+			}
+
+			if ( GetAbs != null && GetAbs.gameObject.gameObject.tag != Constants._UnTagg )
 			{
 				GetAbs.PlayerDetected ( thisColl.gameObject, true );
 			}
