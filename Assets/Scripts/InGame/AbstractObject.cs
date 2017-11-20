@@ -74,7 +74,7 @@ public class AbstractObject : MonoBehaviour
 	{
        
         //Debug.Log(GetComponentInChildren<Animator>());
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         getTrans.tag = Constants._ObjDeadTag;
 		for ( int i = 0; i < corps.Count; i++ )
