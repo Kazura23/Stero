@@ -313,8 +313,10 @@ public class UiManager : ManagerParent
 
         if ( PatternBackground != null )
 		{
-			PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
-				PatternBackground.transform.DOLocalMoveY(1092, 0);
+            PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
+
+            PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
+				PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
 			}).SetLoops(-1, LoopType.Restart);
 		}
 	}
