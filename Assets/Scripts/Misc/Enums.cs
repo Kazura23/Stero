@@ -28,7 +28,8 @@ public enum MenuType
 public enum SpecialAction
 {
 	Nothing,
-	SlowMot
+	SlowMot,
+    OndeChoc
 }
 
 public enum AudioType

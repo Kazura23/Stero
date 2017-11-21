@@ -44,6 +44,7 @@ public class MenuShop : UiParent
 	bool waitInputV = false;
 	bool waitImpCan = false;
 	bool waitImpSub = false;
+    bool transition = false;
 	#endregion
 
 	#region Mono
@@ -53,9 +54,10 @@ public class MenuShop : UiParent
 		float getV = Input.GetAxis ( "Vertical" );
 
 		// Touche pour pouvoir selectionner les items
-		if ( Input.GetAxis ( "Submit" ) == 1 && !waitImpSub )
+		if ( Input.GetAxis ( "Submit" ) == 1 && !waitImpSub && !transition)
 		{
-			waitImpSub = true;
+            transition = true;
+            waitImpSub = true;
 			if ( !catCurrSelected )
 			{
 				BuyItem ( );
@@ -71,10 +73,12 @@ public class MenuShop : UiParent
 		}
 
 		// Touche pour sortir des items
-		if ( Input.GetAxis ( "Cancel" ) == 1 && !waitImpCan )
+		if ( Input.GetAxis ( "Cancel" ) == 1 && !waitImpCan && !transition )
 		{
 			waitImpCan = true;
-			if ( !catCurrSelected )
+            transition = true;
+
+            if ( !catCurrSelected )
 			{
 				ChangeToItem ( false );
 				ChangeToCat();
@@ -90,11 +94,11 @@ public class MenuShop : UiParent
 		}
 
 		// Navigation horizontale des catégories ou items
-		if ( getH != 0 && !waitInputH )
+		if ( getH != 0 && !waitInputH && !transition )
 		{
 			waitInputH = true;
 
-			if ( catCurrSelected )
+            if ( catCurrSelected )
 			{
 				if ( getH > 0 )
 				{
@@ -136,7 +140,9 @@ public class MenuShop : UiParent
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
 		base.OpenThis ( GetTok );
-		fixBackShop.SetActive ( true );
+        transition = false;
+
+        fixBackShop.SetActive ( true );
 		currCatSeled = DefCatSelected;
 		if ( currItemSeled != currCatSeled.DefautItem )
 		{
@@ -150,7 +156,7 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
-		fixBackShop.SetActive ( false );
+        fixBackShop.SetActive ( false );
 		base.CloseThis (  );
 	}
 
@@ -352,7 +358,12 @@ public class MenuShop : UiParent
             transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
             transform.DOLocalMoveX(transform.localPosition.x -625, 1f);
             transform.DOLocalMoveY(transform.localPosition.y - 200, 1f);
+
+
+
+
             transform.DOScale(1.25f, 1f).OnComplete(()=> {
+                transition = false;
                 thisShop.GetComponent<Image>().DOFade(1, 0.1f);
                 iconCategory.transform.DORotate(Vector3.zero, 0);
                 textCategory.transform.DORotate(new Vector3(0,0,423), 0);
@@ -405,6 +416,7 @@ public class MenuShop : UiParent
         transform.DORotate(Vector3.zero, .5f);
         transform.DOScale(1, .5f);
         transform.DOLocalMove(Vector2.zero, .5f).OnComplete(()=> {
+            transition = false;
             iconCategory.transform.DORotate(Vector3.zero, 0);
             textCategory.transform.DORotate(Vector3.zero, 0);
             barCategory.transform.DORotate(Vector3.zero, 0);
