@@ -19,7 +19,6 @@ public class MenuShop : UiParent
 
 	//Object par défaut sélectionner a l'ouverture du shop
 	public CatShop DefCatSelected;
-
     [Header("ALL INFO")]
 
     public Image iconCategory;
@@ -386,8 +385,8 @@ public class MenuShop : UiParent
             }
 
             //Seul le premier item est centré
-            thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
-            thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
+           // thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
+           // thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
 
             DOVirtual.DelayedCall(1f, () => {
                 foreach (Transform trans in thisShop.transform)

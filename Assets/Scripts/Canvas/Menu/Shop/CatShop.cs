@@ -6,7 +6,6 @@ public class CatShop : MonoBehaviour
 {
 	#region Variables
 	[Header ("Information Categorie")]
-
     public string NameCat;
     public bool Selected;
 	public bool UseColor;
