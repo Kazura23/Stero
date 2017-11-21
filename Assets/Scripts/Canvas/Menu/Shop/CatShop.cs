@@ -18,6 +18,7 @@ public class CatShop : MonoBehaviour
     public bool UseSprite;
 	public Sprite SpriteSelected;
 	public Sprite SpriteUnSelected;
+	public Sprite OtherRefSprite;
 
 	public CatShop LeftCategorie;
 	public CatShop RightCategorie;
