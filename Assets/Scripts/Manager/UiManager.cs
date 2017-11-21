@@ -29,7 +29,7 @@ public class UiManager : ManagerParent
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
-
+    public GameObject TextFeelMadness;
     private Camera camTw1;
 
     Dictionary <MenuType, UiParent> AllMenu;
@@ -119,16 +119,16 @@ public class UiManager : ManagerParent
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0f;
-        Time.fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.1f, () => {
+		Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.03f, () => {
 			Time.timeScale = 1;
-            Time.fixedDeltaTime = .02F;
+            //Time.fixedDeltaTime = .02F;
         });
 
 		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(45, .12f);//.SetEase(Ease.InBounce);
-		RedScreen.DOFade(.4f, .12f).OnComplete(() => {
+		Camera.main.DOFieldOfView(33.5f, .16f);//.SetEase(Ease.InBounce);
+		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
 			RedScreen.DOFade(0, .08f);
 			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
@@ -155,6 +155,10 @@ public class UiManager : ManagerParent
     {
         Camera.main.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
         Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+
+        Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
+        GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+        //textMad.GetComponentInChildren<TextMesh>().text = 
         //Camera.main.transform.GetComponent<RainbowMove>().enabled = false;
 
         //Camera.main.transform.DOKill(false);
@@ -183,7 +187,7 @@ public class UiManager : ManagerParent
 
         //Camera.main.DOKill(true);
 
-        Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f);
+		Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
         Debug.Log("CloseMad");
         //Camera.main.GetComponent<RainbowRotate>().enabled = true;
 

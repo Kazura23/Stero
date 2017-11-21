@@ -7,8 +7,9 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Wall_Gray_A
-  m_Shader: {fileID: 4800000, guid: 3999c8d706ec0324e8449c4a9b0d78fe, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSIVE_ON _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+    _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -66,6 +67,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RMA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _ColorStrength: 5
@@ -73,22 +82,27 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionColorStrength: 1
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
+    - _GlossMapScale: 0.24
+    - _Glossiness: 0
+    - _GlossyReflections: 0
     - _LessGray: 0.339
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SmoothnessTextureChannel: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _distanceratio: 0.1026
+    - _emisive_force: 0.243
+    - _emissive: 1
     - _gloss: 0
     - _gloss_color: 1
+    - _outline_basevalue: 0.115
     m_Colors:
     - _Color: {r: 0.7352941, g: 0.7352941, b: 0.7352941, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
     - _shadow_color: {r: 0.5, g: 0.5, b: 0.5, a: 1}

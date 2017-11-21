@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_saturation", BarMadness.value / 15);
+		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
 		float getTime = Time.deltaTime;
 
@@ -275,6 +275,11 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
+	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
+	{
+		//NbrLineLeft = NbrLineL 
+	}
+
 	public void ResetPlayer ( )
 	{
 		Life = 1;
@@ -294,7 +299,7 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
-		GlobalManager.Ui.CloseMadness ( );
+		stopMadness ( );
 	}
 
 	public void GameOver ( bool forceDead = false )
@@ -374,7 +379,7 @@ public class PlayerController : MonoBehaviour
             GetComponentInChildren<Animator>().SetBool("InMadness", false);
 
 
-            GlobalManager.Ui.CloseMadness();
+			stopMadness ( );
             InMadness = false;
 		}
 
@@ -406,7 +411,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( !playerDead )
+		if ( !playerDead && !InBeginMadness)
 		{
 			if ( Input.GetAxis ( "CoupSimple" ) == 0 )
 			{
@@ -417,11 +422,13 @@ public class PlayerController : MonoBehaviour
 			{
 				resetAxeD = true;
 
-				if ( timeToDP < TimeToDoublePunch * 0.8f )
+                if ( timeToDP < TimeToDoublePunch * 0.8f )
 				{
 					resetAxeD = false;
 					dpunch = true;
-				}
+
+                    
+                }
 				else
 				{
 					timeToDP = TimeToDoublePunch;
@@ -443,7 +450,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash") != 0 && newH == 0 && canDash && !InMadness )
+		if ( Input.GetAxis ( "Dash") != 0 && newH == 0 && canDash && !InMadness && !InBeginMadness && !playerDead)
 		{
             if (Time.timeScale < 1)
                 Time.timeScale = 1;
@@ -718,7 +725,7 @@ public class PlayerController : MonoBehaviour
 		float newImp = Input.GetAxis ( "Horizontal" );
 		float lineDistance = Constants.LineDist;
 
-		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine )
+		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine && !InBeginMadness)
 		{
 			if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
 			{
@@ -1053,6 +1060,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void stopMadness ( )
+	{
+		InMadness = !InMadness;
+
+		maxSpeed = MaxSpeed;
+		maxSpeedCL = MaxSpeedCL;
+		accelerationCL = AccelerationCL;
+		acceleration = Acceleration;
+
+		GlobalManager.Ui.CloseMadness();
+	}
+
     private void SmoothBar()
     {
         float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
@@ -1061,16 +1080,10 @@ public class PlayerController : MonoBehaviour
             BarMadness.value = 0;
             valueSmooth = 0;
             valueSmoothUse = 0;
+
             if (InMadness)
             {
-                InMadness = !InMadness;
-
-				maxSpeed = MaxSpeed;
-				maxSpeedCL = MaxSpeedCL;
-				accelerationCL = AccelerationCL;
-				acceleration = Acceleration;
-
-                GlobalManager.Ui.CloseMadness();
+				stopMadness ( );
             }
         }else if (BarMadness.value + res >= 100)
         {
