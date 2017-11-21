@@ -144,6 +144,8 @@ public class AbstractObject : MonoBehaviour
 	{
 		isDead = true;
 
+        ScreenShake.Singleton.ShakeEnemy();
+
 		var animation = GetComponentInChildren<Animator>();
 		animation.enabled = false;
 
@@ -220,7 +222,12 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
-		
-	}
-	#endregion
+        Renderer rend = GetComponentInChildren<Renderer>();
+        //rend.material.shader = Shader.Find("Character_toon");
+        //Debug.Log(rend);
+        //Debug.Log(Shader.GetGlobalFloat(");
+        //Shader.SetGlobalFloat("highlight_amount", 0);
+        //rend.material.SetFloat("highlight_amount", 0);
+    }
+    #endregion
 }

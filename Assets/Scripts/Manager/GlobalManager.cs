@@ -20,13 +20,15 @@ public class GlobalManager : MonoBehaviour
 
 	static AudioManager mAudio;
 	public static AudioManager AudioMa { get { return mAudio; } }
-	#endregion
 
-	#region Mono
-	void Awake()
+    static DialogueManager dialMa;
+    public static DialogueManager DialMa { get { return dialMa; } }
+    #endregion
+
+    #region Mono
+    void Awake()
 	{
 		//PlayerPrefs.DeleteAll ( );
-	
 		if ( mainManagerInstance != null )
 		{
 			Destroy ( gameObject );
@@ -51,9 +53,10 @@ public class GlobalManager : MonoBehaviour
 		InitializeManager ( ref ui );
 		InitializeManager ( ref scene );
 		InitializeManager ( ref mAudio );
+		InitializeManager ( ref dialMa);
     }
 
-	void InitializeManager<T>(ref T manager) where T : ManagerParent
+    void InitializeManager<T>(ref T manager) where T : ManagerParent
 	{
 		//Debug.Log("Initializing managers");
 		T[] managers = GetComponentsInChildren<T>();
