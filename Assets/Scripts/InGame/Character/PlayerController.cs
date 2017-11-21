@@ -53,12 +53,13 @@ public class PlayerController : MonoBehaviour
 	public float SlowMotion, SpeedSlowMot, SpeedDeacSM, RecovSlider, ReduceSlider;
 
 	[Header ("Caractérique punchs")]
+	public float FOVIncrease = 20;
     public float DelayPunch = 0.05f;
 	public float TimeToDoublePunch = 0.25f;
 	public float CooldownDoublePunch = 1;
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
-    public float delayChocWave = 5;
+	public float delayChocWave = 5;
 
 	[Tooltip ("Le temps max sera delayPunch")]
 	public float TimePropulsePunch = 0.1f, TimePropulseDoublePunch = 0.2f;
@@ -153,6 +154,7 @@ public class PlayerController : MonoBehaviour
     float valueSmoothUse = 0;
 	float timeToDP;
     float timerBeginMadness = 0;
+	float getFOVDP;
 
 	int currLine = 0;
 	int LastImp = 0;
@@ -164,7 +166,6 @@ public class PlayerController : MonoBehaviour
 	bool newPos = false;
 	bool resetAxeS = true;
 	bool resetAxeD = true;
-	bool canDash = true;
 	bool inAir = false;
 	bool canChange = true;
 	bool invDamage = false;
@@ -282,6 +283,7 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		getFOVDP = FOVIncrease;
 		Life = 1;
 		playerDead = false;
 		StopPlayer = true;
@@ -319,16 +321,14 @@ public class PlayerController : MonoBehaviour
 
         StopPlayer = true;
 
-        Camera.main.GetComponent<RainbowMove>().enabled = false;
-        Camera.main.GetComponent<RainbowRotate>().enabled = false;
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
         DOVirtual.DelayedCall(.2f, () => {
 
-            Camera.main.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
-            Camera.main.transform.DOLocalMoveZ(-50f, .4f);
+			thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
+			thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
-
-
 
         Life--;
 
@@ -373,11 +373,11 @@ public class PlayerController : MonoBehaviour
 			thisCam.fieldOfView = Constants.DefFov;
 			return;
 		}
+		float getDelta = Time.deltaTime;
 
 		if( BarMadness.value == 0 && InMadness )
 		{
             GetComponentInChildren<Animator>().SetBool("InMadness", false);
-
 
 			stopMadness ( );
             InMadness = false;
@@ -413,21 +413,20 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
-			if ( Input.GetAxis ( "CoupSimple" ) == 0 )
+			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash)
 			{
 				resetAxeS = true;
 			}
 
-			if ( Input.GetAxis ( "CoupDouble" ) == 0 )
+			if ( Input.GetAxis ( "CoupDouble" ) == 0 && !Dash )
 			{
 				resetAxeD = true;
+				getFOVDP = FOVIncrease;
 
                 if ( timeToDP < TimeToDoublePunch * 0.8f )
 				{
 					resetAxeD = false;
 					dpunch = true;
-
-                    
                 }
 				else
 				{
@@ -435,29 +434,52 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 
-			if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
+			if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
-				timeToDP -= Time.deltaTime;
+				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
+				timeToDP -= getDelta;
+				getFOVDP -= calcRatio;
+
+				if ( getFOVDP > 0 )
+				{
+					thisCam.fieldOfView += calcRatio;
+				}
+				else
+				{
+					getFOVDP = 0;
+				}
 
 				if ( timeToDP <= 0 )
 				{
+					getFOVDP = FOVIncrease;
 					timeToDP = 0;
 					resetAxeD = false;
 					dpunch = true;
+				}
+			}
+			else
+			{
+				if ( !dpunch && thisCam.fieldOfView > Constants.DefFov )
+				{
+					thisCam.fieldOfView -= getDelta * 10;
+
+					if ( thisCam.fieldOfView < Constants.DefFov )
+					{
+						thisCam.fieldOfView = Constants.DefFov;
+					}
 				}
 			}
 
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash") != 0 && newH == 0 && canDash && !InMadness && !InBeginMadness && !playerDead)
+		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead )
 		{
-            if (Time.timeScale < 1)
-                Time.timeScale = 1;
-            Dash = true;
-			canDash = false;
-
-			StartCoroutine ( waitStopDash ( ) );
+			Dash = true;
+		}
+		else
+		{
+			Dash = false;
 		}
 
 		checkInAir ( getTime );
@@ -507,7 +529,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( ThisAct == SpecialAction.SlowMot )
 		{
-			if ( Input.GetAxis ( "SpecialAction" ) > 0 && canSpe && SliderContent > 0 )
+			if ( Input.GetAxis ( "SpecialAction" ) > 0 && canSpe && SliderContent > 0 && !Dash )
 			{
 				Camera.main.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
 
@@ -637,43 +659,46 @@ public class PlayerController : MonoBehaviour
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
-		if ( !inAir )
+		if ( timeToDP == TimeToDoublePunch )
 		{
-			Shader.SetGlobalFloat ( "_ReduceVis", speed / maxSpeed );
+			if ( !inAir )
+			{
+				Shader.SetGlobalFloat ( "_ReduceVis", speed / maxSpeed );
 
-			if ( thisCam.fieldOfView < calCFov )
-			{
-				thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
-				if ( thisCam.fieldOfView > calCFov )
-				{
-					thisCam.fieldOfView = calCFov;
-				}
-			}
-			else if ( thisCam.fieldOfView > calCFov )
-			{
-				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
 				if ( thisCam.fieldOfView < calCFov )
 				{
-					thisCam.fieldOfView = calCFov;
+					thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
+					if ( thisCam.fieldOfView > calCFov )
+					{
+						thisCam.fieldOfView = calCFov;
+					}
 				}
-			}
-		}
-		else
-		{
-			if ( thisCam.fieldOfView < Constants.DefFov )
-			{
-				thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
-				if ( thisCam.fieldOfView > Constants.DefFov )
+				else if ( thisCam.fieldOfView > calCFov )
 				{
-					thisCam.fieldOfView = Constants.DefFov;
+					thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
+					if ( thisCam.fieldOfView < calCFov )
+					{
+						thisCam.fieldOfView = calCFov;
+					}
 				}
 			}
-			else if ( thisCam.fieldOfView > Constants.DefFov )
+			else
 			{
-				thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
 				if ( thisCam.fieldOfView < Constants.DefFov )
 				{
-					thisCam.fieldOfView = Constants.DefFov;
+					thisCam.fieldOfView += Time.deltaTime * SpeedEffectTime;
+					if ( thisCam.fieldOfView > Constants.DefFov )
+					{
+						thisCam.fieldOfView = Constants.DefFov;
+					}
+				}
+				else if ( thisCam.fieldOfView > Constants.DefFov )
+				{
+					thisCam.fieldOfView -= Time.deltaTime * SpeedEffectTime * 2;
+					if ( thisCam.fieldOfView < Constants.DefFov )
+					{
+						thisCam.fieldOfView = Constants.DefFov;
+					}
 				}
 			}
 		}
@@ -733,7 +758,6 @@ public class PlayerController : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-				Dash = false;
 				canChange = false;
 				currLine++;
 				LastImp = 1;
@@ -747,7 +771,6 @@ public class PlayerController : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-                Dash = false;
 				canChange = false;
 				currLine--;
 				LastImp = -1;
@@ -845,7 +868,6 @@ public class PlayerController : MonoBehaviour
 
 		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  )
         {
-			Dash = false;
             resetAxeS = false;
             canPunch = false;
             propP = true;
@@ -881,7 +903,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
-			Dash = false;
 			dpunch = false;
 			canPunch = false;
 
@@ -970,17 +991,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(delayChocWave);
         canChocWave = true;
     }
-	IEnumerator waitStopDash ( )
-	{
-		WaitForSeconds thisS = new WaitForSeconds ( DashTime );
-
-		yield return thisS;
-
-		Dash = false;
-
-		yield return new WaitForSeconds ( DashTime / 2 );
-		canDash = true;
-	}
 
 	IEnumerator propulsePunch ( float thisTime )
 	{
