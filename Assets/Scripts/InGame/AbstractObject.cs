@@ -144,6 +144,8 @@ public class AbstractObject : MonoBehaviour
 	{
 		isDead = true;
 
+        ScreenShake.Singleton.ShakeEnemy();
+
 		var animation = GetComponentInChildren<Animator>();
 		animation.enabled = false;
 
