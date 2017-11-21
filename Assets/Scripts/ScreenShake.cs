@@ -57,7 +57,7 @@ public class ScreenShake : MonoBehaviour
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
 
-        shakePos = transform.DOShakePosition(.15f, .3f, 15, 360);
+        shakePos = transform.DOShakePosition(.15f, .15f, 12, 180);
         //transform.DOPunchPosition(new Vector3(1*1.5f, 0, 1*.5f), .25f, 4, 1);
     }
 
