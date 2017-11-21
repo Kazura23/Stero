@@ -19,7 +19,7 @@ public class Punch : MonoBehaviour {
 		
     private int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
-    public Vector3 projection_basic, projection_double;
+    public Vector3 projection_basic, projection_double, projection_dash;
     public float facteurVitesseRenvoie = 1.5f;
 	public bool RightPunch = false;
 

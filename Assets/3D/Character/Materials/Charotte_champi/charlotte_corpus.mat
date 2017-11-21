@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: charlotte_corpus
-  m_Shader: {fileID: 4800000, guid: 8b320431eeb0598498533b252aba1f67, type: 3}
-  m_ShaderKeywords: _EMISSIVE_ON _METALLICGLOSSMAP _NORMALMAP
+  m_Shader: {fileID: 4800000, guid: 9afd8f00746355341be379bd6762983e, type: 3}
+  m_ShaderKeywords: _EMISSIVE_ON _HIGHLIGHT_ON _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -128,6 +128,10 @@ Material:
     - _emissive: 1
     - _gloss: 0.444
     - _gloss_color: 1.66
+    - _highlight: 1
+    - _highlight__force: 2
+    - _highlight_amount: 5
+    - _highlight_speed: 3
     - _light_force: 0
     - _node_1265: 0
     - _node_2055: 0
@@ -145,5 +149,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _highlight_Color: {r: 1, g: 0, b: 0, a: 1}
     - _shadow_color: {r: 0.25724858, g: 0.19923228, b: 0.4044118, a: 1}
     - _shadowcolor: {r: 0.011870602, g: 0.006001304, b: 0.022058845, a: 1}
