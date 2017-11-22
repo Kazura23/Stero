@@ -453,13 +453,14 @@ public class PlayerController : MonoBehaviour
 				{
 					timeToDP = TimeToDoublePunch;
 
-                    Debug.Log("Charging");
-
-                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", true);
                 }
 			}
 
-			if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
+            if (Input.GetAxis("CoupDouble") < 0.02 && Input.GetAxis("CoupDouble") > 0.01 && resetAxeD && !Dash)
+            {
+                GetComponentInChildren<Animator>().SetTrigger("Double");
+            }
+                if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 				timeToDP -= getDelta;
@@ -467,7 +468,11 @@ public class PlayerController : MonoBehaviour
 
 				if ( getFOVDP > 0 )
 				{
-					thisCam.fieldOfView += calcRatio;
+
+                    Debug.Log("Charging");
+
+                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", true);
+                    thisCam.fieldOfView += calcRatio;
 				}
 				else
 				{
@@ -908,7 +913,10 @@ public class PlayerController : MonoBehaviour
 			//if ( !InMadness )
 			//{
 				punch.MadnessMana("Simple");
-			//}
+
+            Debug.Log(GlobalManager.AudioMa.transform.GetChild(1));
+            GlobalManager.AudioMa.transform.GetChild(1).GetComponent<AudioSource>().Play();
+            //}
 
             ScreenShake.Singleton.ShakeHitSimple();
        

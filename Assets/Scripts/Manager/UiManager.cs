@@ -207,7 +207,7 @@ public class UiManager : ManagerParent
 		else
 		{
 			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f);
-            Debug.Log("DashStop");
+            //Debug.Log("DashStop");
 		}
 	}
 
