@@ -136,8 +136,7 @@ public class UiManager : ManagerParent
 
     public void GameOver()
     {
-        Debug.Log("ShakeOver");
-
+        //Debug.Log("ShakeOver");
 
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -207,7 +206,8 @@ public class UiManager : ManagerParent
 		}
 		else
 		{
-			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f); 
+			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f);
+            Debug.Log("DashStop");
 		}
 	}
 
