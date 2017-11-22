@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 224735425126683814}
   - component: {fileID: 222691228712182028}
   - component: {fileID: 114146923325066034}
-  - component: {fileID: 114721325547333472}
+  - component: {fileID: 114227476113059484}
   m_Layer: 5
   m_Name: Icon_Cat
   m_TagString: Untagged
@@ -735,6 +735,7 @@ MonoBehaviour:
   UseSprite: 1
   SpriteSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
   SpriteUnSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
+  OtherRefSprite: {fileID: 0}
   LeftCategorie: {fileID: 114154100091204666}
   RightCategorie: {fileID: 114359889350697428}
   DefautItem: {fileID: 114938333280622132}
@@ -819,6 +820,7 @@ MonoBehaviour:
   UseSprite: 1
   SpriteSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
   SpriteUnSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
+  OtherRefSprite: {fileID: 0}
   LeftCategorie: {fileID: 114359889350697428}
   RightCategorie: {fileID: 114154100091204666}
   DefautItem: {fileID: 114631320227861184}
@@ -974,9 +976,26 @@ MonoBehaviour:
   UseSprite: 1
   SpriteSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
   SpriteUnSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
+  OtherRefSprite: {fileID: 0}
   LeftCategorie: {fileID: 114087282151574038}
   RightCategorie: {fileID: 114024698903977474}
   DefautItem: {fileID: 114273258982980320}
+--- !u!114 &114227476113059484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820952721086248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649fefe4a2e17314d90106d1b4e9fb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.35
+  scales:
+  - {x: 1.1, y: 1.1, z: 1.1}
+  - {x: 0.9, y: 0.9, z: 0.9}
+  easeType: 1
 --- !u!114 &114244518848788936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1314,6 +1333,7 @@ MonoBehaviour:
   UseSprite: 1
   SpriteSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
   SpriteUnSelected: {fileID: 21300000, guid: 8a31f11fc8c662f468a5c4b7ef68406b, type: 3}
+  OtherRefSprite: {fileID: 0}
   LeftCategorie: {fileID: 114024698903977474}
   RightCategorie: {fileID: 114087282151574038}
   DefautItem: {fileID: 114244518848788936}
@@ -1736,23 +1756,6 @@ MonoBehaviour:
   SpeedDeacSM: 3
   ReduceSlider: 0
   RecovSlider: 0
---- !u!114 &114721325547333472
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1820952721086248}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d66e95897310864b85ec28ea1ee4a6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 0.5
-  movesType: 0
-  moves:
-  - -10
-  - 10
-  easeType: 1
 --- !u!114 &114765614248969054
 MonoBehaviour:
   m_ObjectHideFlags: 1
