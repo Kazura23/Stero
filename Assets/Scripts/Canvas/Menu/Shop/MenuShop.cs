@@ -354,14 +354,14 @@ public class MenuShop : UiParent
             barCategory.DOFade(0, .1f);
 		
 
-            transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
-            transform.DOLocalMoveX(transform.localPosition.x -625, 1f);
-            transform.DOLocalMoveY(transform.localPosition.y - 200, 1f);
+            moleculeContainer.transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
+            moleculeContainer.transform.DOLocalMoveX(transform.localPosition.x -539, 1f);
+            moleculeContainer.transform.DOLocalMoveY(transform.localPosition.y - 10, 1f);
 
 
 
 
-            transform.DOScale(1.25f, 1f).OnComplete(()=> {
+            moleculeContainer.transform.DOScale(1.25f, 1f).OnComplete(()=> {
                 transition = false;
                 thisShop.GetComponent<Image>().DOFade(1, 0.1f);
                 iconCategory.transform.DORotate(Vector3.zero, 0);
@@ -412,10 +412,11 @@ public class MenuShop : UiParent
         iconCategory.DOFade(0, .05f);
         textCategory.DOFade(0, .05f);
         barCategory.DOFade(0, .05f);
-        transform.DORotate(Vector3.zero, .5f);
-        transform.DOScale(1, .5f);
-        transform.DOLocalMove(Vector2.zero, .5f).OnComplete(()=> {
+        moleculeContainer.transform.DORotate(Vector3.zero, .5f);
+        moleculeContainer.transform.DOScale(1, .5f);
+        moleculeContainer.transform.DOLocalMove(Vector2.zero, .5f).OnComplete(()=> {
             transition = false;
+
             iconCategory.transform.DORotate(Vector3.zero, 0);
             textCategory.transform.DORotate(Vector3.zero, 0);
             barCategory.transform.DORotate(Vector3.zero, 0);
@@ -474,12 +475,12 @@ public class MenuShop : UiParent
                 barCategory.transform.GetChild(0).transform.DOLocalMoveX(0, .6f);
 
                 textCategory.text = thisShop.NameCat;
-                iconCategory.sprite = thisShop.SpriteSelected;
+                iconCategory.sprite = thisShop.OtherRefSprite;
                 
 
                 thisShop.GetComponent<Image>().transform.DOScale(1.25f, .2f);
                 //thisShop.GetComponent<Image>().DOFade(1f, .05f);
-                iconCategory.GetComponent<Image>().sprite = thisShop.SpriteSelected;
+                iconCategory.GetComponent<Image>().sprite = thisShop.OtherRefSprite;
                 
 
                 barCategory.transform.GetChild(0).GetComponent<Image>().DOColor(thisShop.ColorSelected, 0);
@@ -506,7 +507,6 @@ public class MenuShop : UiParent
             }).SetLoops(-1,LoopType.Restart);*/
 
             //iconCategory.transform.DOKill();
-            //iconCategory.GetComponent<RainbowMove>().enabled = true;
 
 
             if ( thisShop.UseColor )
@@ -527,7 +527,7 @@ public class MenuShop : UiParent
             
                 iconCategory.GetComponent<Image>().DOFade(0, .1f);
             textCategory.DOFade(0, .1f);
-            iconCategory.GetComponent<RainbowMove>().enabled = false;
+            //iconCategory.GetComponent<RainbowMove>().enabled = false;
             thisShop.GetComponent<Image>().transform.DOScale(.8f, .2f);
            // thisShop.GetComponent<Image>().DOFade(0, .2f);
 
@@ -546,11 +546,11 @@ public class MenuShop : UiParent
     {
         ItemModif thisItem = currItemSeled;
 
-        thisItem.LeftItem.transform.DOLocalMove(new Vector2(-50, 340), .5f);
+        thisItem.LeftItem.transform.DOLocalMoveX(-50, .5f);
         thisItem.LeftItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
         thisItem.LeftItem.transform.DOScale(.4f, .2f);
 
-        thisItem.transform.DOLocalMove(new Vector2 (-280,600), .5f);
+        thisItem.transform.DOLocalMoveX(50f, .5f);
         thisItem.transform.DOScale(.75f, .2f);
         thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
 
