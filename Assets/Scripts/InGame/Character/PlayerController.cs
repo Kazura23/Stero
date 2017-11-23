@@ -396,7 +396,7 @@ public class PlayerController : MonoBehaviour
 
 		if( BarMadness.value == 0 && InMadness )
 		{
-            GetComponentInChildren<Animator>().SetBool("InMadness", false);
+            playAnimator.SetBool("InMadness", false);
 
 			stopMadness ( );
             InMadness = false;
@@ -448,30 +448,48 @@ public class PlayerController : MonoBehaviour
 					resetAxeD = false;
 					dpunch = true;
 
-                }
-				else
-				{
-					timeToDP = TimeToDoublePunch;
+                    playAnimator.SetBool("ChargingPunch", true);
+                    playAnimator.SetBool("ChargingPunch_verif", true);
 
+                }
+                else
+				{
+                    playAnimator.SetBool("ChargingPunch_verif", false);
+                    playAnimator.SetBool("ChargingPunch", false);
+
+                    timeToDP = TimeToDoublePunch;
                 }
 			}
 
             if (Input.GetAxis("CoupDouble") < 0.02 && Input.GetAxis("CoupDouble") > 0.01 && resetAxeD && !Dash)
             {
-                GetComponentInChildren<Animator>().SetTrigger("Double");
             }
                 if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
-				timeToDP -= getDelta;
+
+
+                if ( timeToDP == TimeToDoublePunch)
+                {
+                    playAnimator.SetBool("ChargingPunch_verif", true);
+                    playAnimator.SetBool("ChargingPunch", true);
+                    playAnimator.SetTrigger("Double");
+                    Debug.Log("trigger");
+                }
+
+
+                timeToDP -= getDelta;
+
+
 				getFOVDP -= calcRatio;
+
+
 
 				if ( getFOVDP > 0 )
 				{
 
                     Debug.Log("Charging");
 
-                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", true);
                     thisCam.fieldOfView += calcRatio;
 				}
 				else
@@ -487,10 +505,11 @@ public class PlayerController : MonoBehaviour
 
                     Debug.Log("Not Charging");
 
-                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", false);
                     resetAxeD = false;
 					dpunch = true;
-				}
+
+                    
+                }
 			}
 			else
 			{
@@ -941,14 +960,15 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
-			dpunch = false;
+            playAnimator.SetBool("ChargingPunch", false);
+
+            dpunch = false;
 			canPunch = false;
 
             ScreenShake.Singleton.ShakeHitDouble();
 
             GlobalManager.Ui.DoubleCoup();
 
-			playAnimator.SetTrigger("Double");
 
             if (Time.timeScale < 1)
                 Time.timeScale = 1;
