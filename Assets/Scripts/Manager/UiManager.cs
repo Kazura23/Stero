@@ -112,8 +112,8 @@ public class UiManager : ManagerParent
     {
 		float saveFov = Camera.main.fieldOfView;
 
-        Camera.main.DOFieldOfView(47, .15f).OnComplete(() => {
-			Camera.main.DOFieldOfView(saveFov, .1f);
+        Camera.main.DOFieldOfView(40, .1f).OnComplete(() => {
+			Camera.main.DOFieldOfView(saveFov, .15f);
         });
     }
 
