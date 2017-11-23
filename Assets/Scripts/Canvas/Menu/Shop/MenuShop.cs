@@ -27,6 +27,7 @@ public class MenuShop : UiParent
     public Image moleculeCategory;
     public GameObject moleculeContainer;
 
+
 	[HideInInspector]
 	public CatShop currCatSeled;
 
@@ -274,12 +275,22 @@ public class MenuShop : UiParent
 			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.Price )
 			{
 				Debug.Log ( "buy" );
-				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
+
+
+
+                //moneyNumberPlayer.transform.DOScale(3, .25f);
+
+                AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
 
 				if ( currCatSeled.BuyForLife )
 				{
 					getAllBuy.Add ( getCons, currItemSeled );
 					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
+
+                    //float ease = DOVirtual.EasedValue(0, 1,1,AnimationCurve.Linear);
+                    currItemSeled.transform.GetChild(0).DOPunchScale(Vector3.one * 1.2f, .5f, 10, 1);
+                   currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
+
 				}
 				else
 				{
@@ -347,6 +358,8 @@ public class MenuShop : UiParent
 		{
 			catCurrSelected = false;
 
+
+
             currItemSeled = thisShop.DefautItem;
 
             iconCategory.DOFade(0, .1f);
@@ -389,10 +402,9 @@ public class MenuShop : UiParent
            // thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
 
             DOVirtual.DelayedCall(1f, () => {
-                foreach (Transform trans in thisShop.transform)
+                foreach (Transform trans in currItemSeled.transform.parent)
                 {
                     trans.GetComponent<CanvasGroup>().DOFade(1, 0.5f);
-                    trans.DOLocalRotate(new Vector3(0, 0, 130), 0);
                     trans.DOScale(.75f, 0);
                 }
             });
@@ -408,6 +420,8 @@ public class MenuShop : UiParent
     void ChangeToCat()
     {
         CatShop thisShop = currCatSeled;
+
+        //Debug.Log(thisShop.transform.GetChild(0));
 
         iconCategory.DOFade(0, .05f);
         textCategory.DOFade(0, .05f);
@@ -447,7 +461,7 @@ public class MenuShop : UiParent
             cat.GetComponent<Image>().DOFade(1, 0.1f);
         }
 
-        foreach (Transform trans in thisShop.transform)
+        foreach (Transform trans in currItemSeled.transform.parent)
         {
             trans.GetComponent<CanvasGroup>().DOFade(0, 0);
         }
@@ -480,7 +494,7 @@ public class MenuShop : UiParent
 
                 thisShop.GetComponent<Image>().transform.DOScale(1.25f, .2f);
                 //thisShop.GetComponent<Image>().DOFade(1f, .05f);
-                iconCategory.GetComponent<Image>().sprite = thisShop.OtherRefSprite;
+                //iconCategory.GetComponent<Image>().sprite = thisShop.OtherRefSprite;
                 
 
                 barCategory.transform.GetChild(0).GetComponent<Image>().DOColor(thisShop.ColorSelected, 0);
@@ -546,11 +560,11 @@ public class MenuShop : UiParent
     {
         ItemModif thisItem = currItemSeled;
 
-        thisItem.LeftItem.transform.DOLocalMoveX(-50, .5f);
+        thisItem.LeftItem.transform.DOLocalMoveX(250, .5f);
         thisItem.LeftItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
         thisItem.LeftItem.transform.DOScale(.4f, .2f);
 
-        thisItem.transform.DOLocalMoveX(50f, .5f);
+        thisItem.transform.DOLocalMoveX(650, .5f);
         thisItem.transform.DOScale(.75f, .2f);
         thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
 
@@ -560,11 +574,11 @@ public class MenuShop : UiParent
     {
         ItemModif thisItem = currItemSeled;
 
-        thisItem.RightItem.transform.DOLocalMove(new Vector2(-50, 340), .5f);
+        thisItem.RightItem.transform.DOLocalMoveX(650, .5f);
         thisItem.RightItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
         thisItem.LeftItem.transform.DOScale(.4f, .2f);
 
-        thisItem.transform.DOLocalMove(new Vector2(-280, 600), .5f);
+        thisItem.transform.DOLocalMoveX(1050, .5f);
         thisItem.transform.DOScale(.75f, .2f);
         thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
 

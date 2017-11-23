@@ -30,6 +30,7 @@ public class AbstractObject : MonoBehaviour
 
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
+    PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
 
@@ -53,9 +54,16 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
+    void Update()
+    {
+        if (playerCont.playerDead)
+            PlayerDetected(playerTrans.gameObject, false);
+    }
+
     protected virtual void Start()
     {
         playerTrans = GlobalManager.GameCont.Player.transform;
+        playerCont = playerTrans.GetComponent<PlayerController>();
 
     }
 	#endregion
@@ -223,6 +231,7 @@ public class AbstractObject : MonoBehaviour
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
         Renderer rend = GetComponentInChildren<Renderer>();
+        //rend.material.shader.
         //rend.material.shader = Shader.Find("Character_toon");
         //Debug.Log(rend);
         //Debug.Log(Shader.GetGlobalFloat(");

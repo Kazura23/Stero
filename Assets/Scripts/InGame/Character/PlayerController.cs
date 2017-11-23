@@ -172,7 +172,8 @@ public class PlayerController : MonoBehaviour
 	bool animeSlo = false;
 	bool canSpe = true;
     bool canChocWave = true;
-	bool playerDead = false;
+    [HideInInspector]
+    public bool playerDead = false;
 	bool dpunch = false;
     bool InBeginMadness = false;
 	#endregion
@@ -314,6 +315,7 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
+
         ScreenShake.Singleton.ShakeGameOver();
 
         GameOverTok thisTok = new GameOverTok ( );
@@ -324,11 +326,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove>().enabled = false;
 		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
-        DOVirtual.DelayedCall(.2f, () => {
-
-			thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
-			thisCam.transform.DOLocalMoveZ(-50f, .4f);
-        });
+        
 
         Life--;
 
@@ -336,22 +334,43 @@ public class PlayerController : MonoBehaviour
 		{
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
-			GlobalManager.Ui.StartBonusLife();
 
-			return;
+
+            if (!playerDead)
+            {
+
+                GlobalManager.Ui.StartBonusLife();
+            }
+
+            return;
 		}
 
+        DOVirtual.DelayedCall(.2f, () =>
+        {
 
-        DOVirtual.DelayedCall(1f, () => {
+            thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
+            thisCam.transform.DOLocalMoveZ(-50f, .4f);
+        });
+
+
+
+        playerDead = true;
+
+
+
+
+
+        DOVirtual.DelayedCall(1f, () =>
+        {
 
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
             ScreenShake.Singleton.ShakeGameOver();
-            playerDead = true;
-        });
-		//GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-		//GlobalManager.GameCont.Restart ( );
-	}
+        });
+        //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
+
+        //GlobalManager.GameCont.Restart ( );
+    }
 
     public void AddSmoothCurve(float p_value)
     {
@@ -423,18 +442,25 @@ public class PlayerController : MonoBehaviour
 				resetAxeD = true;
 				getFOVDP = FOVIncrease;
 
+
                 if ( timeToDP < TimeToDoublePunch * 0.8f )
 				{
 					resetAxeD = false;
 					dpunch = true;
+
                 }
 				else
 				{
 					timeToDP = TimeToDoublePunch;
-				}
+
+                }
 			}
 
-			if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
+            if (Input.GetAxis("CoupDouble") < 0.02 && Input.GetAxis("CoupDouble") > 0.01 && resetAxeD && !Dash)
+            {
+                GetComponentInChildren<Animator>().SetTrigger("Double");
+            }
+                if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 				timeToDP -= getDelta;
@@ -442,7 +468,11 @@ public class PlayerController : MonoBehaviour
 
 				if ( getFOVDP > 0 )
 				{
-					thisCam.fieldOfView += calcRatio;
+
+                    Debug.Log("Charging");
+
+                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", true);
+                    thisCam.fieldOfView += calcRatio;
 				}
 				else
 				{
@@ -453,7 +483,12 @@ public class PlayerController : MonoBehaviour
 				{
 					getFOVDP = FOVIncrease;
 					timeToDP = 0;
-					resetAxeD = false;
+
+
+                    Debug.Log("Not Charging");
+
+                    GetComponentInChildren<Animator>().SetBool("ChargingPunch", false);
+                    resetAxeD = false;
 					dpunch = true;
 				}
 			}
@@ -635,7 +670,7 @@ public class PlayerController : MonoBehaviour
 			canJump = true;
 		}*/
 
-		if ( Dash )
+		if ( Dash && !playerDead && !InMadness && !InBeginMadness )
 		{
 			speed *= DashSpeed;
 
@@ -878,7 +913,10 @@ public class PlayerController : MonoBehaviour
 			//if ( !InMadness )
 			//{
 				punch.MadnessMana("Simple");
-			//}
+
+            Debug.Log(GlobalManager.AudioMa.transform.GetChild(1));
+            GlobalManager.AudioMa.transform.GetChild(1).GetComponent<AudioSource>().Play();
+            //}
 
             ScreenShake.Singleton.ShakeHitSimple();
        
