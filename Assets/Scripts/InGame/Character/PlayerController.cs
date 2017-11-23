@@ -644,6 +644,11 @@ public class PlayerController : MonoBehaviour
 		bool checkAir = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
+		if ( Dash )
+		{
+			getTime *= DashSpeed;
+		}
+
 		foreach ( RaycastHit thisRay in allHit )
 		{
 			checkAir = false;
@@ -659,7 +664,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( getThis.rotation.x > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 			}
