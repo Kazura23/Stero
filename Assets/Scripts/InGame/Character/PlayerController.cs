@@ -672,9 +672,17 @@ public class PlayerController : MonoBehaviour
 
 		if ( checkAir )
 		{
-			//pRig.useGravity = true;
+            //pRig.useGravity = true;
+            // Camera.main.GetComponent<RainbowMove>().enabled = false;
+
 			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
-		}
+        }
+        else
+        {
+            // Camera.main.transform.DOKill(false);
+            // Camera.main.GetComponent<RainbowMove>().enabled = true;
+            ScreenShake.Singleton.ShakeFall();
+        }
 
 		inAir = checkAir;
 	}
