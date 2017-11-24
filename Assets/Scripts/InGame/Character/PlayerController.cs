@@ -672,8 +672,8 @@ public class PlayerController : MonoBehaviour
 
 		if ( checkAir )
 		{
-			pRig.useGravity = true;
-			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.Acceleration );
+			//pRig.useGravity = true;
+			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 		}
 
 		inAir = checkAir;
