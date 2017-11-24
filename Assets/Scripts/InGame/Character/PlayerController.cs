@@ -638,6 +638,7 @@ public class PlayerController : MonoBehaviour
 		invDamage = false;
 	}
 
+	bool getCamRM = false;
 	void checkInAir ( float getTime )
 	{
 		RaycastHit[] allHit;
@@ -673,14 +674,20 @@ public class PlayerController : MonoBehaviour
 		if ( checkAir )
 		{
             //pRig.useGravity = true;
+			if ( !getCamRM )
+			{
+				getCamRM = true;
+				thisCam.GetComponent<RainbowMove>().enabled = false;
+			}
             // Camera.main.GetComponent<RainbowMove>().enabled = false;
 
 			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
         }
-        else
+		else if ( !checkAir && getCamRM )
         {
-            // Camera.main.transform.DOKill(false);
-            // Camera.main.GetComponent<RainbowMove>().enabled = true;
+			getCamRM = false;
+			thisCam.transform.DOKill(false);
+			thisCam.GetComponent<RainbowMove>().enabled = true;
             ScreenShake.Singleton.ShakeFall();
         }
 
