@@ -664,7 +664,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( getThis.rotation.x > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 1.5f, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 			}
@@ -673,7 +673,7 @@ public class PlayerController : MonoBehaviour
 		if ( checkAir )
 		{
 			pRig.useGravity = true;
-			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.Force );
+			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.Acceleration );
 		}
 
 		inAir = checkAir;
