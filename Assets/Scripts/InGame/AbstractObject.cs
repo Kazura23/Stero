@@ -90,9 +90,14 @@ public class AbstractObject : MonoBehaviour
 			corps [ i ].useGravity = true;
 		}
 
-		//checkConstAxe ( );
 
-		if ( enemy )
+        int randomSong = UnityEngine.Random.Range(0, 9);
+
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + randomSong,false);
+
+        //checkConstAxe ( );
+
+        if ( enemy )
 		{
 			onEnemyDead ( getTrans.forward * onObjForward );
 		}
@@ -151,6 +156,7 @@ public class AbstractObject : MonoBehaviour
 	void onEnemyDead ( Vector3 forceProp )
 	{
 		isDead = true;
+
 
         ScreenShake.Singleton.ShakeEnemy();
 
