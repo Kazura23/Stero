@@ -116,7 +116,9 @@ public class GameController : ManagerParent
     public void Restart ( ) 
 	{
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
-		SpawnerChunck.RemoveAll ( );
+
+        GlobalManager.Ui.DashSpeedEffect(false);
+        SpawnerChunck.RemoveAll ( );
         GameStarted = false;
     }   
     

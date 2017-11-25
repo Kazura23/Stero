@@ -9,6 +9,7 @@ public class ScreenShake : MonoBehaviour
 
     Tween punchPos;
     Tween shakePos;
+    Tween shakeFall;
     float dir = 1;
 
 	void Awake ()
@@ -25,9 +26,14 @@ public class ScreenShake : MonoBehaviour
 	{
         if (Input.GetKeyDown(KeyCode.H))
         {
-            ShakeEnemy();
+            ShakeFall();
         }
 	}
+
+    public void ShakeFall()
+    {
+        shakeFall = transform.DOPunchPosition(new Vector3(1 * 2, 1, 0), .9f, 10, 1.5f);
+    }
 
 	public void ShakeHitSimple ()
 	{

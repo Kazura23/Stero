@@ -57,7 +57,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1186811020979782
 GameObject:
   m_ObjectHideFlags: 1
@@ -750,7 +750,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1110362141345582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.5}
+  m_LocalPosition: {x: 0, y: 0.28, z: -0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4243065657503650}
@@ -790,7 +790,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1379156540791322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14422357, y: 3.6412495e-10, z: 27.16}
+  m_LocalPosition: {x: 0, y: 0, z: 25}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 4332243710324682}
@@ -1223,13 +1223,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1171439607377770}
-  m_LocalRotation: {x: -0.09120167, y: 0.761569, z: 0.63579726, w: 0.08635267}
-  m_LocalPosition: {x: -0.004, y: -0.568, z: 0.024}
+  m_LocalRotation: {x: -0.020429075, y: 0.8146239, z: 0.5620707, w: -0.14158796}
+  m_LocalPosition: {x: 0.030999139, y: -0.5449998, z: -0.10900066}
   m_LocalScale: {x: 0.56595093, y: 0.56595117, z: 0.5659509}
   m_Children: []
   m_Father: {fileID: 4768115566508342}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -79.788, y: 174.966, z: -9.449}
+  m_LocalEulerAnglesHint: {x: -65.501, y: 217.70999, z: -27.651001}
 --- !u!4 &4982720526389622
 Transform:
   m_ObjectHideFlags: 1
@@ -1549,17 +1549,17 @@ MonoBehaviour:
   isDead: 0
   delayDead: 2
   VelRestant: 15
-  onObjForward: 25
+  onObjForward: 77.28
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   useGravity: 1
   ball: {fileID: 1740949778150274, guid: bae88c420c1a2db4796651c9139ee75f, type: 2}
-  NbrBalls: 10
-  ForceBall: -10
+  NbrBalls: 3
+  ForceBall: -2
   angle: 1
-  angleY: 3
+  angleY: 0
   SpeedSpawn: 0.01
-  TimeDestr: 0.8
+  TimeDestr: 0.4
 --- !u!114 &114901100320491422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1948,7 +1948,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000002537334, y: 1.3223665, z: 0.00068944483}
+  m_ConnectedAnchor: {x: 0, y: 1.3223665, z: 0.00068944483}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1992,7 +1992,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000017881393, y: -0.44878638, z: 0.0000052495798}
+  m_ConnectedAnchor: {x: 0.0000001937151, y: -0.44878638, z: 0.0000052495798}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2080,7 +2080,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.18042861, y: -0.06270009, z: -1.38390145e-17}
+  m_ConnectedAnchor: {x: 0.1804286, y: -0.06270009, z: -1.38390145e-17}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2168,7 +2168,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000002537334, y: 0.38864595, z: -1.38390145e-17}
+  m_ConnectedAnchor: {x: 0, y: 0.38864595, z: -1.38390145e-17}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2305,7 +2305,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2131793516
+  randomSeed: -1277656197
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2865,7 +2865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 25
+      scalar: 40.8
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3422,7 +3422,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 3.09
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3463,7 +3463,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.58
+      scalar: 7
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4852,7 +4852,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.37
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2

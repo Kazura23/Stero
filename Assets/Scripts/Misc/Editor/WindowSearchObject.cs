@@ -93,7 +93,7 @@ public class WindowSearchObject : EditorWindow
 
 	}
 	// chercher ref de l'obje en scene / projet & faire une recherche de pref 
-	[MenuItem("CustomTools/SearchTags")]
+	[MenuItem("CustomTools/SearchObject")]
 	public static void ShowWindow()
 	{
 		EditorWindow.GetWindow ( typeof( WindowSearchObject ) );

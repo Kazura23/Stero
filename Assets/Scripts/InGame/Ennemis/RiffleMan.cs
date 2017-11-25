@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RiffleMan : AbstractObject 
 {
@@ -31,6 +32,9 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
             GetComponentInChildren<Animator>().SetTrigger("Attack");
             Debug.Log("anime active !!!");
         }
