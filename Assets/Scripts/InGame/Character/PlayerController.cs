@@ -681,7 +681,7 @@ public class PlayerController : MonoBehaviour
         {
             // Camera.main.transform.DOKill(false);
             // Camera.main.GetComponent<RainbowMove>().enabled = true;
-            ScreenShake.Singleton.ShakeFall();
+            //ScreenShake.Singleton.ShakeFall();
         }
 
 		inAir = checkAir;

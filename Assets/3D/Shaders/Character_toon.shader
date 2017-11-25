@@ -15,7 +15,7 @@ Shader "Custom/Character_toon" {
        // _emisive_force ("emisive_force", Range(0, 1)) = 0
         [MaterialToggle] _highlight ("highlight", Float ) = 0
         _highlight_Color ("highlight_Color", Color) = (0.5,0.5,0.5,1)
-        _highlight_amount ("highlight_amount", Range(5, 2)) = 2
+        _highlight_amount ("highlight_amount", Range(5, -10)) = 2
         _highlight_speed ("highlight_speed", Range(1, 3)) = 1
         _highlight__force ("highlight__force", Range(0, 2)) = 2
     }
