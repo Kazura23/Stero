@@ -216,6 +216,7 @@ public class SpawnChunks : MonoBehaviour
 			int a;
 			int b;
 			int c;
+			int randChunk = Random.Range ( 0, 2 );
 			int getInd;
 			int diffLine;
 			int vertChunk;
@@ -324,32 +325,64 @@ public class SpawnChunks : MonoBehaviour
 			for ( a = 0; a < getNewChunk.Count; a++ )
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
-				for ( b = 0; b < getCurrNew.Count - 1; b++ )
+				if ( randChunk == 0 )
 				{
-					diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b + 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
-
-					if ( diffLine >= 0 )
+					for ( b = 0; b < getCurrNew.Count - 1; b++ )
 					{
-						diffLine++;
-						getCurrNew [ b + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
-						getCurrNew [ b + 1 ].CurrLane += diffLine;
-						getCurrNew [ b + 1 ].SpawnNL.OnLine += diffLine;
-						c = b;
+						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b + 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
 
-						while ( c < getCurrNew.Count - 1 )
+						if ( diffLine >= 0 )
 						{
-							if ( getCurrNew [ c ].CurrLane > getCurrNew [ c + 1 ].CurrLane )
+							diffLine++;
+							getCurrNew [ b + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
+							getCurrNew [ b + 1 ].CurrLane += diffLine;
+
+							c = b;
+							while ( c < getCurrNew.Count - 1 )
 							{
-								getOtherNC = getCurrNew [ c + 1 ];
-								getCurrNew [ c + 1 ] = getCurrNew [ c ];
-								getCurrNew [ c ] = getOtherNC;
-								c = b;
+								if ( getCurrNew [ c ].CurrLane > getCurrNew [ c + 1 ].CurrLane )
+								{
+									getOtherNC = getCurrNew [ c + 1 ];
+									getCurrNew [ c + 1 ] = getCurrNew [ c ];
+									getCurrNew [ c ] = getOtherNC;
+									c = b;
+								}
+
+								c++;
 							}
 
-							c++;
+							b--;
 						}
+					}
+				}
+				else
+				{
+					for ( b = getCurrNew.Count - 1; b > 0; b-- )
+					{
+						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b - 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b - 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
 
-						b--;
+						if ( diffLine >= 0 )
+						{
+							diffLine++;
+							getCurrNew [ b - 1 ].ThisObj.transform.localPosition -= new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
+							getCurrNew [ b - 1 ].CurrLane -= diffLine;
+
+							c = b;
+							while ( c > 0 )
+							{
+								if ( getCurrNew [ c ].CurrLane < getCurrNew [ c - 1 ].CurrLane )
+								{
+									getOtherNC = getCurrNew [ c - 1 ];
+									getCurrNew [ c - 1 ] = getCurrNew [ c ];
+									getCurrNew [ c ] = getOtherNC;
+									c = b;
+								}
+
+								c--;
+							}
+
+							b++;
+						}
 					}
 				}
 			}
