@@ -244,6 +244,7 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
+					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;

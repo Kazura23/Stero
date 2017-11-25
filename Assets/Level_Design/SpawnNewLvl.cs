@@ -10,6 +10,9 @@ public class SpawnNewLvl : MonoBehaviour
 	[HideInInspector]
 	public List<GameObject> ToDest;
 
+	[HideInInspector]
+	public int OnLine;
+
 	bool detect = false;
 	#endregion
 	
@@ -26,8 +29,12 @@ public class SpawnNewLvl : MonoBehaviour
 		{
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
-
 			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
+			getPlayer.NbrLineRight =  (int)InfoChunk.NbrLaneDebut.y;
+			getPlayer.currLine -= OnLine;
+
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
 				Destroy ( ToDest [ a ], 10 );

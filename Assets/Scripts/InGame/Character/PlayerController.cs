@@ -111,6 +111,8 @@ public class PlayerController : MonoBehaviour
     public GameObject rightHand;
     public GameObject Plafond;
 
+	[HideInInspector]
+	public int currLine = 0;
     Transform pTrans;
 	Rigidbody pRig;
 
@@ -156,7 +158,6 @@ public class PlayerController : MonoBehaviour
     float timerBeginMadness = 0;
 	float getFOVDP;
 
-	int currLine = 0;
 	int LastImp = 0;
 	int clDir = 0;
 
@@ -665,7 +666,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( getThis.rotation.x > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 1.5f, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 			}
@@ -688,7 +689,7 @@ public class PlayerController : MonoBehaviour
 			getCamRM = false;
 			thisCam.transform.DOKill(false);
 			thisCam.GetComponent<RainbowMove>().enabled = true;
-            ScreenShake.Singleton.ShakeFall();
+           // ScreenShake.Singleton.ShakeFall();
         }
 
 		inAir = checkAir;
