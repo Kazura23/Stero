@@ -19,6 +19,7 @@ public class EditCat : Editor
 	SerializedProperty Selected;
 	SerializedProperty SpriteSelected;
 	SerializedProperty SpriteUnSelected;
+	SerializedProperty OtherRefSprite;
 
 	SerializedProperty LeftCategorie;
 	SerializedProperty RightCategorie;
@@ -36,6 +37,7 @@ public class EditCat : Editor
 		ColorUnSelected = serializedObject.FindProperty("ColorUnSelected");
 		SpriteSelected = serializedObject.FindProperty("SpriteSelected");
 		SpriteUnSelected = serializedObject.FindProperty("SpriteUnSelected");
+		OtherRefSprite = serializedObject.FindProperty("OtherRefSprite");
 
 		LeftCategorie = serializedObject.FindProperty("LeftCategorie");
 		RightCategorie = serializedObject.FindProperty("RightCategorie");
@@ -136,10 +138,13 @@ public class EditCat : Editor
 				myTarget.GetComponent<Image> ( ).sprite = myTarget.SpriteUnSelected;
 			}
 		}
-
 		EditorGUI.indentLevel = 0;
 
+
 		EditorGUILayout.Space ( );
+		EditorGUILayout.PropertyField ( OtherRefSprite );
+		EditorGUILayout.Space ( );
+
 		EditorGUILayout.LabelField("Around Information", EditorStyles.boldLabel);
 		EditorGUILayout.PropertyField ( LeftCategorie );
 		EditorGUILayout.PropertyField ( RightCategorie );

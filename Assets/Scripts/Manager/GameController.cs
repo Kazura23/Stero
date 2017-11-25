@@ -116,7 +116,9 @@ public class GameController : ManagerParent
     public void Restart ( ) 
 	{
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
-		SpawnerChunck.RemoveAll ( );
+
+        GlobalManager.Ui.DashSpeedEffect(false);
+        SpawnerChunck.RemoveAll ( );
         GameStarted = false;
     }   
     
@@ -166,7 +168,8 @@ public class GameController : ManagerParent
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot )
 			{
-				currPlayer.SlowMotion = thisItem.SlowMotion;
+
+                currPlayer.SlowMotion = thisItem.SlowMotion;
 				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot;
 				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM;
 				currPlayer.ReduceSlider = thisItem.ReduceSlider;
