@@ -218,7 +218,9 @@ public class PlayerController : MonoBehaviour
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
-		float getTime = Time.deltaTime;
+
+
+        float getTime = Time.deltaTime;
 
 		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
 		punch.SetPunch ( !playerDead );
@@ -234,12 +236,13 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
 
+        /*
         if (Input.GetKeyDown(KeyCode.M))
         {
             sphereChocWave.enabled = true;
             StartCoroutine(CooldownWave());
             StartCoroutine(TimerHitbox());
-        }
+        }*/
 
         SmoothBar();
 
@@ -408,7 +411,8 @@ public class PlayerController : MonoBehaviour
 			if ( currSpeed < maxSpeed )
 			{
 				currSpeed += acceleration * getTime;
-			}
+
+            }
 			else if ( currSpeed > maxSpeed )
 			{
 				currSpeed = maxSpeed;
@@ -954,8 +958,8 @@ public class PlayerController : MonoBehaviour
 			//{
 				punch.MadnessMana("Simple");
 
-            Debug.Log(GlobalManager.AudioMa.transform.GetChild(1));
-            GlobalManager.AudioMa.transform.GetChild(1).GetComponent<AudioSource>().Play();
+            int randomSong = UnityEngine.Random.Range(0, 3);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
             //}
 
             ScreenShake.Singleton.ShakeHitSimple();
@@ -1176,14 +1180,14 @@ public class PlayerController : MonoBehaviour
             }
         }else if (BarMadness.value + res >= 100)
         {
-            Debug.Log("first etape");
+            //Debug.Log("first etape");
             BarMadness.value = 100;
             valueSmooth = 0;
             valueSmoothUse = 0;
 
             if (!InMadness)
             {
-                Debug.Log("MADDDDDDDD");
+                GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MadnessBegin", false);
                 InMadness = !InMadness;
                 InBeginMadness = true;
                 timerBeginMadness = 0;
