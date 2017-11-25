@@ -19,7 +19,6 @@ public class MenuShop : UiParent
 
 	//Object par défaut sélectionner a l'ouverture du shop
 	public CatShop DefCatSelected;
-
     [Header("ALL INFO")]
 
     public Image iconCategory;
@@ -27,6 +26,7 @@ public class MenuShop : UiParent
     public Image barCategory;
     public Image moleculeCategory;
     public GameObject moleculeContainer;
+
 
 	[HideInInspector]
 	public CatShop currCatSeled;
@@ -44,6 +44,7 @@ public class MenuShop : UiParent
 	bool waitInputV = false;
 	bool waitImpCan = false;
 	bool waitImpSub = false;
+    bool transition = false;
 	#endregion
 
 	#region Mono
@@ -53,9 +54,10 @@ public class MenuShop : UiParent
 		float getV = Input.GetAxis ( "Vertical" );
 
 		// Touche pour pouvoir selectionner les items
-		if ( Input.GetAxis ( "Submit" ) == 1 && !waitImpSub )
+		if ( Input.GetAxis ( "Submit" ) == 1 && !waitImpSub && !transition)
 		{
-			waitImpSub = true;
+            transition = true;
+            waitImpSub = true;
 			if ( !catCurrSelected )
 			{
 				BuyItem ( );
@@ -71,10 +73,12 @@ public class MenuShop : UiParent
 		}
 
 		// Touche pour sortir des items
-		if ( Input.GetAxis ( "Cancel" ) == 1 && !waitImpCan )
+		if ( Input.GetAxis ( "Cancel" ) == 1 && !waitImpCan && !transition )
 		{
 			waitImpCan = true;
-			if ( !catCurrSelected )
+            transition = true;
+
+            if ( !catCurrSelected )
 			{
 				ChangeToItem ( false );
 				ChangeToCat();
@@ -90,11 +94,11 @@ public class MenuShop : UiParent
 		}
 
 		// Navigation horizontale des catégories ou items
-		if ( getH != 0 && !waitInputH )
+		if ( getH != 0 && !waitInputH && !transition )
 		{
 			waitInputH = true;
 
-			if ( catCurrSelected )
+            if ( catCurrSelected )
 			{
 				if ( getH > 0 )
 				{
@@ -136,7 +140,9 @@ public class MenuShop : UiParent
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
 		base.OpenThis ( GetTok );
-		fixBackShop.SetActive ( true );
+        transition = false;
+
+        fixBackShop.SetActive ( true );
 		currCatSeled = DefCatSelected;
 		if ( currItemSeled != currCatSeled.DefautItem )
 		{
@@ -150,7 +156,7 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
-		fixBackShop.SetActive ( false );
+        fixBackShop.SetActive ( false );
 		base.CloseThis (  );
 	}
 
@@ -269,12 +275,22 @@ public class MenuShop : UiParent
 			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.Price )
 			{
 				Debug.Log ( "buy" );
-				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
+
+
+
+                //moneyNumberPlayer.transform.DOScale(3, .25f);
+
+                AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
 
 				if ( currCatSeled.BuyForLife )
 				{
 					getAllBuy.Add ( getCons, currItemSeled );
 					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
+
+                    //float ease = DOVirtual.EasedValue(0, 1,1,AnimationCurve.Linear);
+                    currItemSeled.transform.GetChild(0).DOPunchScale(Vector3.one * 1.2f, .5f, 10, 1);
+                   currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
+
 				}
 				else
 				{
@@ -342,6 +358,8 @@ public class MenuShop : UiParent
 		{
 			catCurrSelected = false;
 
+
+
             currItemSeled = thisShop.DefautItem;
 
             iconCategory.DOFade(0, .1f);
@@ -349,10 +367,15 @@ public class MenuShop : UiParent
             barCategory.DOFade(0, .1f);
 		
 
-            transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
-            transform.DOLocalMoveX(transform.localPosition.x -625, 1f);
-            transform.DOLocalMoveY(transform.localPosition.y - 200, 1f);
-            transform.DOScale(1.25f, 1f).OnComplete(()=> {
+            moleculeContainer.transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
+            moleculeContainer.transform.DOLocalMoveX(transform.localPosition.x -539, 1f);
+            moleculeContainer.transform.DOLocalMoveY(transform.localPosition.y - 10, 1f);
+
+
+
+
+            moleculeContainer.transform.DOScale(1.25f, 1f).OnComplete(()=> {
+                transition = false;
                 thisShop.GetComponent<Image>().DOFade(1, 0.1f);
                 iconCategory.transform.DORotate(Vector3.zero, 0);
                 textCategory.transform.DORotate(new Vector3(0,0,423), 0);
@@ -375,14 +398,13 @@ public class MenuShop : UiParent
             }
 
             //Seul le premier item est centré
-            thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
-            thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
+           // thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
+           // thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
 
             DOVirtual.DelayedCall(1f, () => {
-                foreach (Transform trans in thisShop.transform)
+                foreach (Transform trans in currItemSeled.transform.parent)
                 {
                     trans.GetComponent<CanvasGroup>().DOFade(1, 0.5f);
-                    trans.DOLocalRotate(new Vector3(0, 0, 130), 0);
                     trans.DOScale(.75f, 0);
                 }
             });
@@ -399,12 +421,16 @@ public class MenuShop : UiParent
     {
         CatShop thisShop = currCatSeled;
 
+        //Debug.Log(thisShop.transform.GetChild(0));
+
         iconCategory.DOFade(0, .05f);
         textCategory.DOFade(0, .05f);
         barCategory.DOFade(0, .05f);
-        transform.DORotate(Vector3.zero, .5f);
-        transform.DOScale(1, .5f);
-        transform.DOLocalMove(Vector2.zero, .5f).OnComplete(()=> {
+        moleculeContainer.transform.DORotate(Vector3.zero, .5f);
+        moleculeContainer.transform.DOScale(1, .5f);
+        moleculeContainer.transform.DOLocalMove(Vector2.zero, .5f).OnComplete(()=> {
+            transition = false;
+
             iconCategory.transform.DORotate(Vector3.zero, 0);
             textCategory.transform.DORotate(Vector3.zero, 0);
             barCategory.transform.DORotate(Vector3.zero, 0);
@@ -435,7 +461,7 @@ public class MenuShop : UiParent
             cat.GetComponent<Image>().DOFade(1, 0.1f);
         }
 
-        foreach (Transform trans in thisShop.transform)
+        foreach (Transform trans in currItemSeled.transform.parent)
         {
             trans.GetComponent<CanvasGroup>().DOFade(0, 0);
         }
@@ -463,12 +489,12 @@ public class MenuShop : UiParent
                 barCategory.transform.GetChild(0).transform.DOLocalMoveX(0, .6f);
 
                 textCategory.text = thisShop.NameCat;
-                iconCategory.sprite = thisShop.SpriteSelected;
+                iconCategory.sprite = thisShop.OtherRefSprite;
                 
 
                 thisShop.GetComponent<Image>().transform.DOScale(1.25f, .2f);
                 //thisShop.GetComponent<Image>().DOFade(1f, .05f);
-                iconCategory.GetComponent<Image>().sprite = thisShop.SpriteSelected;
+                //iconCategory.GetComponent<Image>().sprite = thisShop.OtherRefSprite;
                 
 
                 barCategory.transform.GetChild(0).GetComponent<Image>().DOColor(thisShop.ColorSelected, 0);
@@ -495,7 +521,6 @@ public class MenuShop : UiParent
             }).SetLoops(-1,LoopType.Restart);*/
 
             //iconCategory.transform.DOKill();
-            //iconCategory.GetComponent<RainbowMove>().enabled = true;
 
 
             if ( thisShop.UseColor )
@@ -516,7 +541,7 @@ public class MenuShop : UiParent
             
                 iconCategory.GetComponent<Image>().DOFade(0, .1f);
             textCategory.DOFade(0, .1f);
-            iconCategory.GetComponent<RainbowMove>().enabled = false;
+            //iconCategory.GetComponent<RainbowMove>().enabled = false;
             thisShop.GetComponent<Image>().transform.DOScale(.8f, .2f);
            // thisShop.GetComponent<Image>().DOFade(0, .2f);
 
@@ -535,11 +560,11 @@ public class MenuShop : UiParent
     {
         ItemModif thisItem = currItemSeled;
 
-        thisItem.LeftItem.transform.DOLocalMove(new Vector2(-50, 340), .5f);
+        thisItem.LeftItem.transform.DOLocalMoveX(250, .5f);
         thisItem.LeftItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
         thisItem.LeftItem.transform.DOScale(.4f, .2f);
 
-        thisItem.transform.DOLocalMove(new Vector2 (-280,600), .5f);
+        thisItem.transform.DOLocalMoveX(650, .5f);
         thisItem.transform.DOScale(.75f, .2f);
         thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
 
@@ -549,11 +574,11 @@ public class MenuShop : UiParent
     {
         ItemModif thisItem = currItemSeled;
 
-        thisItem.RightItem.transform.DOLocalMove(new Vector2(-50, 340), .5f);
+        thisItem.RightItem.transform.DOLocalMoveX(650, .5f);
         thisItem.RightItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
         thisItem.LeftItem.transform.DOScale(.4f, .2f);
 
-        thisItem.transform.DOLocalMove(new Vector2(-280, 600), .5f);
+        thisItem.transform.DOLocalMoveX(1050, .5f);
         thisItem.transform.DOScale(.75f, .2f);
         thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
 

@@ -97,7 +97,7 @@ public class AudioManager : ManagerParent
 
 		foreach ( KeyValuePair <AudioType, AudioSource> thisKV in setDict )
 		{
-			thisKV.Value.enabled = false;
+			//thisKV.Value.enabled = false;
 		}
 
 		audioChild = setDict;
