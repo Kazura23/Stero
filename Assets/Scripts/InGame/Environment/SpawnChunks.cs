@@ -218,7 +218,6 @@ public class SpawnChunks : MonoBehaviour
 			int c;
 			int getInd;
 			int diffLine;
-			int randChunk = Random.Range ( 0, 2 );
 			int vertChunk;
 
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
@@ -264,13 +263,14 @@ public class SpawnChunks : MonoBehaviour
 					{
 						getNewChunk.Add ( new VertNCSI ( ) );
 						getInd = getNewChunk.Count - 1;
+						getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
 					}
 
-					getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
 					getCurrNew = getNewChunk [ getInd ].AllInfNewChunk;
 					getCurrNew.Add ( new NewChunkSaveInf ( ) );
 
 					vertChunk = getCurrNew.Count - 1;
+					getCurrNew [ vertChunk ].SpawnNL = currSL;
 					getCurrNew [ vertChunk ].ThisObj = getChunkT.gameObject;
 					getCurrNew [ vertChunk ].NbrLaneDebut = currSL.InfoChunk.NbrLaneFin;
 					getCurrNew [ vertChunk ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
@@ -306,8 +306,7 @@ public class SpawnChunks : MonoBehaviour
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
 				b = getCurrNew.Count;
-
-				while ( b > 1 )
+				while ( b > 1)
 				{
 					b--;
 
@@ -321,70 +320,36 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
-
 			// check the space between each chunks
 			for ( a = 0; a < getNewChunk.Count; a++ )
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
-
-				if ( randChunk == 0 )
+				for ( b = 0; b < getCurrNew.Count - 1; b++ )
 				{
-					for ( b = 0; b < getCurrNew.Count - 1; b++ )
+					diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b + 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
+
+					if ( diffLine >= 0 )
 					{
-						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b + 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
+						diffLine++;
+						getCurrNew [ b + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
+						getCurrNew [ b + 1 ].CurrLane += diffLine;
+						getCurrNew [ b + 1 ].SpawnNL.OnLine += diffLine;
+						c = b;
 
-						if ( diffLine >= 0 )
+						while ( c < getCurrNew.Count - 1 )
 						{
-							diffLine++;
-							getCurrNew [ b + 1 ].ThisObj.transform.localPosition += new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
-							getCurrNew [ b + 1 ].CurrLane += diffLine;
-
-							c = b;
-							while ( c < getCurrNew.Count - 1 )
+							if ( getCurrNew [ c ].CurrLane > getCurrNew [ c + 1 ].CurrLane )
 							{
-								if ( getCurrNew [ c ].CurrLane > getCurrNew [ c + 1 ].CurrLane )
-								{
-									getOtherNC = getCurrNew [ c + 1 ];
-									getCurrNew [ c + 1 ] = getCurrNew [ c ];
-									getCurrNew [ c ] = getOtherNC;
-									c = b;
-								}
-
-								c++;
+								getOtherNC = getCurrNew [ c + 1 ];
+								getCurrNew [ c + 1 ] = getCurrNew [ c ];
+								getCurrNew [ c ] = getOtherNC;
+								c = b;
 							}
 
-							b--;
+							c++;
 						}
-					}
-				}
-				else
-				{
-					for ( b = getCurrNew.Count - 1; b > 0; b-- )
-					{
-						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b - 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b - 1 ].CurrLane - getCurrNew [ b - 1 ].CurrLane ) );
 
-						if ( diffLine >= 0 )
-						{
-							diffLine++;
-							getCurrNew [ b - 1 ].ThisObj.transform.localPosition -= new Vector3 ( Constants.LineDist * diffLine, 0, 0 );
-							getCurrNew [ b - 1 ].CurrLane -= diffLine;
-
-							c = b;
-							while ( c > 0 )
-							{
-								if ( getCurrNew [ c ].CurrLane < getCurrNew [ c - 1 ].CurrLane )
-								{
-									getOtherNC = getCurrNew [ c - 1 ];
-									getCurrNew [ c - 1 ] = getCurrNew [ c ];
-									getCurrNew [ c ] = getOtherNC;
-									c = b;
-								}
-
-								c--;
-							}
-
-							b++;
-						}
+						b--;
 					}
 				}
 			}
@@ -553,6 +518,7 @@ public class NewChunkSaveInf
 {
 	public GameObject ThisObj;
 	public Vector2 NbrLaneDebut;
+	public SpawnNewLvl SpawnNL;
 	public int CurrLane;
 	public int CurrVert;
 }
