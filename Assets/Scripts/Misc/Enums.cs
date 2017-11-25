@@ -41,17 +41,6 @@ public enum AudioType
 	Other
 }
 
-public enum ResearcheType 
-{
-	Tag,
-	Layer,
-	Name,
-	Component,
-	SamePref,
-	MissingComp,
-	SearchRef
-}
-
 public enum TypeRotate
 {
 	Clockwise,
