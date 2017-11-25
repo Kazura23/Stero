@@ -30,7 +30,7 @@ public class SpawnNewLvl : MonoBehaviour
 			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Destroy ( ToDest [ a ] );
+				Destroy ( ToDest [ a ], 10 );
 			}
 		}
 	}

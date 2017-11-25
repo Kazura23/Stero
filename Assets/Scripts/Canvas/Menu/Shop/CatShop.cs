@@ -6,7 +6,6 @@ public class CatShop : MonoBehaviour
 {
 	#region Variables
 	[Header ("Information Categorie")]
-
     public string NameCat;
     public bool Selected;
 	public bool UseColor;
@@ -19,6 +18,7 @@ public class CatShop : MonoBehaviour
     public bool UseSprite;
 	public Sprite SpriteSelected;
 	public Sprite SpriteUnSelected;
+	public Sprite OtherRefSprite;
 
 	public CatShop LeftCategorie;
 	public CatShop RightCategorie;

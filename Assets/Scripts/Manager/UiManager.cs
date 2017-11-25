@@ -112,8 +112,8 @@ public class UiManager : ManagerParent
     {
 		float saveFov = Camera.main.fieldOfView;
 
-        Camera.main.DOFieldOfView(47, .15f).OnComplete(() => {
-			Camera.main.DOFieldOfView(saveFov, .1f);
+        Camera.main.DOFieldOfView(40, .1f).OnComplete(() => {
+			Camera.main.DOFieldOfView(saveFov, .15f);
         });
     }
 
@@ -136,8 +136,7 @@ public class UiManager : ManagerParent
 
     public void GameOver()
     {
-        Debug.Log("ShakeOver");
-
+        //Debug.Log("ShakeOver");
 
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -207,7 +206,8 @@ public class UiManager : ManagerParent
 		}
 		else
 		{
-			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f); 
+			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f);
+            //Debug.Log("DashStop");
 		}
 	}
 
@@ -313,8 +313,10 @@ public class UiManager : ManagerParent
 
         if ( PatternBackground != null )
 		{
-			PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
-				PatternBackground.transform.DOLocalMoveY(1092, 0);
+            PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
+
+            PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
+				PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
 			}).SetLoops(-1, LoopType.Restart);
 		}
 	}
