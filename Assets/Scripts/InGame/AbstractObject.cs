@@ -80,9 +80,12 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-       
-        //Debug.Log(GetComponentInChildren<Animator>());
-        //Time.timeScale = 1;
+        var animation = GetComponentInChildren<Animator>();
+        Debug.Log("anim = "+animation);
+        if (animation)
+            animation.enabled = false;
+		isDead = true;
+        Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         getTrans.tag = Constants._ObjDeadTag;
 		for ( int i = 0; i < corps.Count; i++ )
