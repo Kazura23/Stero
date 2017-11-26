@@ -111,6 +111,8 @@ public class PlayerController : MonoBehaviour
     public GameObject rightHand;
     public GameObject Plafond;
 
+	[HideInInspector]
+	public int currLine = 0;
     Transform pTrans;
 	Rigidbody pRig;
 
@@ -156,7 +158,6 @@ public class PlayerController : MonoBehaviour
     float timerBeginMadness = 0;
 	float getFOVDP;
 
-	int currLine = 0;
 	int LastImp = 0;
 	int clDir = 0;
 
@@ -642,6 +643,7 @@ public class PlayerController : MonoBehaviour
 		invDamage = false;
 	}
 
+	bool getCamRM = false;
 	void checkInAir ( float getTime )
 	{
 		RaycastHit[] allHit;
@@ -668,7 +670,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( getThis.rotation.x > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 1.5f, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 			}
@@ -677,15 +679,21 @@ public class PlayerController : MonoBehaviour
 		if ( checkAir )
 		{
             //pRig.useGravity = true;
+			if ( !getCamRM )
+			{
+				getCamRM = true;
+				thisCam.GetComponent<RainbowMove>().enabled = false;
+			}
             // Camera.main.GetComponent<RainbowMove>().enabled = false;
 
 			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
         }
-        else
+		else if ( !checkAir && getCamRM )
         {
-            // Camera.main.transform.DOKill(false);
-            // Camera.main.GetComponent<RainbowMove>().enabled = true;
-            //ScreenShake.Singleton.ShakeFall();
+			getCamRM = false;
+			thisCam.transform.DOKill(false);
+			thisCam.GetComponent<RainbowMove>().enabled = true;
+           // ScreenShake.Singleton.ShakeFall();
         }
 
 		inAir = checkAir;
