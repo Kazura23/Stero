@@ -698,7 +698,7 @@ public class PlayerController : MonoBehaviour
 		else if ( !checkAir && getCamRM )
         {
 			getCamRM = false;
-			thisCam.transform.DOKill(false);
+			//thisCam.transform.DOKill(false);
 			thisCam.GetComponent<RainbowMove>().enabled = true;
            // ScreenShake.Singleton.ShakeFall();
         }
