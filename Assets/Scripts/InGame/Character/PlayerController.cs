@@ -360,6 +360,8 @@ public class PlayerController : MonoBehaviour
 
         playerDead = true;
 
+        GlobalManager.GameCont.soundFootSteps.Kill();
+
 
 
 
