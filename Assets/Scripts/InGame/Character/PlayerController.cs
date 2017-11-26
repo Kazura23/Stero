@@ -448,7 +448,7 @@ public class PlayerController : MonoBehaviour
 				getFOVDP = FOVIncrease;
 
 
-                if ( timeToDP < TimeToDoublePunch * 0.8f )
+                if ( timeToDP < TimeToDoublePunch * 0.35f )
 				{
 					resetAxeD = false;
 					dpunch = true;
@@ -650,7 +650,7 @@ public class PlayerController : MonoBehaviour
 		bool checkAir = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
-		if ( Dash )
+		if ( Dash || InMadness )
 		{
 			getTime *= DashSpeed;
 		}
