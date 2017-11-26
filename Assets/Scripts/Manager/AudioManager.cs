@@ -39,17 +39,30 @@ public class AudioManager : ManagerParent
 						{
 							if ( audioChild.TryGetValue ( thisType, out thisSource ) )
 							{
-								thisSource.enabled = true;
-								thisSource.clip = getAllAudio [ c ].Audio;
-                                thisSource.Play();
-
                                 if ( loopAudio )
 								{
+									thisSource.enabled = true;
+									thisSource.volume = getAllAudio [ c ].Volume;
+									thisSource.pitch = getAllAudio [ c ].Pitch;
+									thisSource.clip = getAllAudio [ c ].Audio;
+									thisSource.Play();
+
 									thisSource.loop = true;
 								}
 								else
 								{
 									thisSource.loop = false;
+
+									AudioSource getAud = thisSource.gameObject.AddComponent<AudioSource> ( );
+
+									getAud.loop = false;
+									getAud.volume = getAllAudio [ c ].Volume;
+									getAud.pitch = getAllAudio [ c ].Pitch;
+									getAud.enabled = true;
+									getAud.clip = getAllAudio [ c ].Audio;
+									getAud.Play ( );
+
+									Destroy ( getAud, getAud.clip.length + 0.1f );
 								}
 								return;
 							}
