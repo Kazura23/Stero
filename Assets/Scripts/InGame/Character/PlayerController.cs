@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public float ratioDownInMadness = 1.5f;
 
     public float delayInBeginMadness = 2;
+    public float delayInEndMadness = 2;
     public float slowInBeginMadness = 3;
 
 
@@ -307,6 +308,9 @@ public class PlayerController : MonoBehaviour
         NbrLineLeft = 0;
 		InMadness = false;
 		stopMadness ( );
+
+        BarMadness.value = 80;
+
 	}
 
 	public void GameOver ( bool forceDead = false )
@@ -402,10 +406,11 @@ public class PlayerController : MonoBehaviour
 
 		if( BarMadness.value == 0 && InMadness )
 		{
-            playAnimator.SetBool("InMadness", false);
+            /*playAnimator.SetBool("InMadness", false);
 
-			stopMadness ( );
-            InMadness = false;
+			//stopMadness ( );
+            InMadness = false;*/
+            stopMadnessLeft();
 		}
 
 		if ( Running )
@@ -1125,7 +1130,8 @@ public class PlayerController : MonoBehaviour
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}*/
 				thisColl.collider.enabled = false;
-				thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
+                if(thisColl.gameObject.GetComponent<AbstractObject>())
+				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
 				return;
 			}
 			else if ( getObj.tag == Constants._Balls )
@@ -1157,7 +1163,8 @@ public class PlayerController : MonoBehaviour
 
 	void stopMadness ( )
 	{
-		InMadness = !InMadness;
+		InMadness = false;
+        
 
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
@@ -1167,10 +1174,41 @@ public class PlayerController : MonoBehaviour
 		GlobalManager.Ui.CloseMadness();
 	}
 
+    void stopMadnessLeft()
+    {
+        Debug.Log("val = " + delayInEndMadness);
+        InMadness = false;
+        playAnimator.SetBool("InMadness", false);
+        GlobalManager.Ui.CloseMadness();
+        DOTween.To(() => maxSpeed,
+            x => {
+                maxSpeed = x;
+                Debug.Log("val maxSpeed = "+maxSpeed);
+            },
+            MaxSpeed,
+            delayInEndMadness
+        );
+        DOTween.To(() => maxSpeedCL,
+            x => maxSpeedCL = x,
+            MaxSpeedCL,
+            delayInEndMadness
+        );
+        DOTween.To(() => accelerationCL,
+            x => accelerationCL = x,
+            AccelerationCL,
+            delayInEndMadness
+        );
+        DOTween.To(() => acceleration,
+            x => acceleration = x,
+            Acceleration,
+            delayInEndMadness
+        );
+    }
+
     private void SmoothBar()
     {
         float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
-        if(BarMadness.value + res < 0)
+        if(BarMadness.value + res <= 0)
         {
             BarMadness.value = 0;
             valueSmooth = 0;
@@ -1178,7 +1216,7 @@ public class PlayerController : MonoBehaviour
 
             if (InMadness)
             {
-				stopMadness ( );
+                stopMadnessLeft();
             }
         }else if (BarMadness.value + res >= 100)
         {
