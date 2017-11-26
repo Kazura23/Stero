@@ -164,7 +164,8 @@ public class AbstractObject : MonoBehaviour
         ScreenShake.Singleton.ShakeEnemy();
 
 		var animation = GetComponentInChildren<Animator>();
-		animation.enabled = false;
+        if(animation)
+		    animation.enabled = false;
 
 		getTrans.tag = Constants._ObjDeadTag;
 		for ( int i = 0; i < corps.Count; i++ )

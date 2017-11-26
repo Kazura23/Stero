@@ -32,6 +32,8 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
             GetComponentInChildren<Animator>().SetTrigger("Attack");
             Debug.Log("anime active !!!");
         }
@@ -104,7 +106,4 @@ public class RiffleMan : AbstractObject
 }
 
 
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
-            GetComponentInChildren<Animator>().SetTrigger("Attack");
-            Debug.Log("anime active !!!");
+            
