@@ -52,14 +52,19 @@ public class Punch : MonoBehaviour {
                 //case tag bibli
             }
         }
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe))
+
+        else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
 			{
 				return;
 			}
-			Vector3 getProj = projection_basic;
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherFx2, "PunchSuccess", false);
+            
+            Debug.Log("song");
+            Vector3 getProj = projection_basic;
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
@@ -85,6 +90,7 @@ public class Punch : MonoBehaviour {
             other.gameObject.GetComponent<MissileBazooka>().ActiveTir(-other.gameObject.GetComponent<MissileBazooka>().GetDirection(), facteurVitesseRenvoie, true);
             MadnessMana("Double");
         }
+        
     }
 
 	public void setTechnic(int typeTech/*, float pourc = 100*/ )
