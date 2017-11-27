@@ -51,7 +51,7 @@ public class GameController : ManagerParent
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    Debug.Log("Audio");
+                   // Debug.Log("Audio");
                 }).SetLoops(-1,LoopType.Restart);
 			}
 		}

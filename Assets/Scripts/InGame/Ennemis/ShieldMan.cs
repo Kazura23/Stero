@@ -16,6 +16,8 @@ public class ShieldMan : AbstractObject {
     Color saveCol;
 
     Material parMat;
+
+    bool detected;
     #endregion
 
     #region Mono
@@ -66,7 +68,18 @@ public class ShieldMan : AbstractObject {
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-		if ( isDetected )
+        if (!detected)
+        {
+            detected = true;
+
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
+            txt.transform.DOScale(Vector3.one * .15f, 0);
+            txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[2].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[2].quotes.Length)];
+        }
+
+
+
+        if ( isDetected )
 		{
 			parMat.color = NewColor;
 		}
