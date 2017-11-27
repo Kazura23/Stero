@@ -80,9 +80,12 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-       
-        //Debug.Log(GetComponentInChildren<Animator>());
-        //Time.timeScale = 1;
+        var animation = GetComponentInChildren<Animator>();
+        Debug.Log("anim = "+animation);
+        if (animation)
+            animation.enabled = false;
+		isDead = true;
+        Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         getTrans.tag = Constants._ObjDeadTag;
 		for ( int i = 0; i < corps.Count; i++ )
@@ -161,7 +164,13 @@ public class AbstractObject : MonoBehaviour
         ScreenShake.Singleton.ShakeEnemy();
 
 		var animation = GetComponentInChildren<Animator>();
-		animation.enabled = false;
+        if(animation)
+		    animation.enabled = false;
+
+		if ( animation != null )
+		{
+			animation.enabled = false;
+		}
 
 		getTrans.tag = Constants._ObjDeadTag;
 		for ( int i = 0; i < corps.Count; i++ )
@@ -243,6 +252,16 @@ public class AbstractObject : MonoBehaviour
         //Debug.Log(Shader.GetGlobalFloat(");
         //Shader.SetGlobalFloat("highlight_amount", 0);
         //rend.material.SetFloat("highlight_amount", 0);
+
+		int a;
+		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
+		{
+			for ( a = 0; a < thisSkin.materials.Length; a++ )
+			{
+				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
+				thisSkin.materials [ a ].SetFloat ( "_highlight", 1.0f );
+			}	
+		}
     }
     #endregion
 }

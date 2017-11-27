@@ -32,7 +32,6 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
-
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
             GetComponentInChildren<Animator>().SetTrigger("Attack");
@@ -105,3 +104,6 @@ public class RiffleMan : AbstractObject
 	}
 	#endregion
 }
+
+
+            
