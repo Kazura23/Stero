@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameController : ManagerParent
 {
@@ -70,15 +72,17 @@ public class GameController : ManagerParent
             thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
         }
 	}
+
+
     #endregion
 
     #region Public Methods
-	public void StartGame ( )
+    public void StartGame ( )
 	{
+        AllPlayerPrefs.ResetStaticVar();
 		Player = GameObject.FindGameObjectWithTag("Player");
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
-
         Intro = true;
 
 		SetAllBonus ( );
@@ -125,6 +129,7 @@ public class GameController : ManagerParent
 
     public void Restart ( ) 
 	{
+        AllPlayerPrefs.ResetStaticVar();
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
@@ -139,6 +144,7 @@ public class GameController : ManagerParent
 	{
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
+        AllPlayerPrefs.saveData = SaveData.Load();
 	}
 
 	void SetAllBonus ( )
@@ -192,9 +198,114 @@ public class GameController : ManagerParent
 			currPlayer.Life += thisItem.NombreVie;
 		}
 	}
-	#endregion
+    #endregion
+
 }
 
+#region Save
+public static class SaveData
+{
+    public static void Save(ListData p_dataSave)
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        FileStream fSave = File.Create(path1);
+        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
+        fSave.Close();
+        Debug.Log("save");
+    }
+
+    public static ListData Load()
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        ListData l = new ListData();
+        if (File.Exists(path1))
+        {
+            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
+            l.listScore = fSave.Deserialize<List<DataSave>>();
+        }
+        return l;
+    }
+}
+
+[System.Serializable]
+public class DataSave
+{
+    public DataSave(int p_fs, int p_s, int p_p, float p_d)
+    {
+        finalScore = p_fs;
+        score = p_s;
+        piece = p_p;
+        distance = p_d;
+    }
+
+    public DataSave()
+    {
+        finalScore = 0;
+        score = 0;
+        piece = 0;
+        distance = 0;
+    }
+
+    public int finalScore;
+    public int score;
+    public int piece;
+    public float distance;
+
+}
+
+public class ListData
+{
+    public List<DataSave> listScore;
+    public ListData()
+    {
+        listScore = new List<DataSave>();
+    }
+    public void Tri_Insert()
+    {
+        int verif;
+        int i, j;
+        DataSave verifSave;
+        for (i = 1; i < listScore.Count; i++)
+        {
+            verif = listScore[i].finalScore;
+            verifSave = listScore[i];
+            for (j = i; j > 0 && listScore[j - 1].finalScore < verif; j--)
+            {
+                listScore[j] = listScore[j - 1];
+            }
+            listScore[j] = verifSave;
+        }
+    }
+    public void Add(DataSave p_save)
+    {
+        if (listScore.Count <= 9)
+        {
+            listScore.Add(p_save);
+            Tri_Insert();
+        }
+        else if (p_save.finalScore > listScore[listScore.Count - 1].finalScore)
+        {
+            listScore.Add(p_save);
+            Tri_Insert();
+            listScore.RemoveAt(listScore.Count - 1);
+        }
+        SaveData.Save(this);
+    }
+}
+
+public static class StreamExtensions
+{
+    public static void SerializeTo<T>(this T o, Stream stream)
+    {
+        new BinaryFormatter().Serialize(stream, o);  // serialize o not typeof(T)
+    }
+
+    public static T Deserialize<T>(this Stream stream)
+    {
+        return (T)new BinaryFormatter().Deserialize(stream);
+    }
+}
+#endregion
 
 [System.Serializable]
 public class FxList 
