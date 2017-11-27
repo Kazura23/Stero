@@ -33,11 +33,12 @@ public class Punch : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+		Debug.Log ( other.gameObject.name );
         if(numTechnic == (int)Technic.onde_choc)
         {
             switch (other.tag)
             {
-                case Constants._EnnemisTag :
+					case Constants._EnnemisTag : case Constants._ElemDash :
                     Vector3 dir = Vector3.Normalize(other.transform.position - transform.position);
                     AbstractObject enn = other.GetComponentInChildren<AbstractObject>();
                     if (!enn)
@@ -53,12 +54,12 @@ public class Punch : MonoBehaviour {
             }
         }
 
-        else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
 			{
-				return;
+				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
 			}
 
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherFx2, "PunchSuccess", false);
