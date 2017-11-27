@@ -179,7 +179,12 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
-		meshRigid.tag = Constants._ObjDeadTag;
+		string getObsT = Constants._ObjDeadTag;
+		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		{
+			thisRig.tag = getObsT;
+		}
+		meshRigid.tag = getObsT;
 	}
 
 	IEnumerator enableColl ( )
