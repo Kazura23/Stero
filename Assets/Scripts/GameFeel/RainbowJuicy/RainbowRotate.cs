@@ -14,6 +14,10 @@ public class RainbowRotate : MonoBehaviour
 	Transform currT;
 	Quaternion startRot;
 
+	public void reStart()
+	{
+		index = - 1;
+	}
 
     void OnEnable()
     {

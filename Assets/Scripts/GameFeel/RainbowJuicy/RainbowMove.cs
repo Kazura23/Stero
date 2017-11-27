@@ -23,6 +23,11 @@ public class RainbowMove : MonoBehaviour
 
 	Vector3 startPos;
 
+	public void reStart()
+	{
+		index = - 1;
+	}
+
     void OnEnable()
     {
 		currT = transform;
