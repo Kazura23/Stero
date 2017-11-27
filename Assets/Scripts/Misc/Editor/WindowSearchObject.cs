@@ -486,7 +486,7 @@ public class WindowSearchObject : EditorWindow
 					modifPref ( getAllOnProj );
 					modifPref ( getAllOnPrefab );
 
-					Undo.RecordObjects(saveForUndo.ToArray(), "test");
+					//Undo.RecordObjects(saveForUndo.ToArray(), "test");
 
 					apply = false;
 				}
@@ -501,7 +501,7 @@ public class WindowSearchObject : EditorWindow
 			{
 				EditorGUILayout.BeginHorizontal( );
 
-				if ( ( getAllOnScene.Count > 0 || getAllOnProj.Count > 0 || getAllOnPrefab.Count > 0 ) && CompInfo.Count > 0 )
+				if ( ( getAllOnScene.Count > 0 || getAllOnProj.Count > 0 || getAllOnPrefab.Count > 0 ) && CompInfo.Count > 0 && endSearchObj && endSearchProj && endSearchScene )
 				{
 					if ( GUILayout.Button ( "Apply Update", EditorStyles.miniButton ))
 					{
@@ -831,7 +831,6 @@ public class WindowSearchObject : EditorWindow
 		{
 			for ( b = 0; b < listSearch [ a ].Count; b++ )
 			{
-
 				if ( !listSearch [ a ] [ b ].Equals ( thisObj ) )
 				{
 					saveForUndo.Add ( listSearch [ a ] [ b ] );
