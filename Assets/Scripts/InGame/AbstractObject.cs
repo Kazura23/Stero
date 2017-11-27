@@ -25,8 +25,10 @@ public class AbstractObject : MonoBehaviour
 
 	[Tooltip ("Si différent de 0 alors l'axe de rotation est freeze")]
 	public Vector3 FreezeRot = Vector3.zero;
+    [Tooltip("Lier au score")]
+    public int point = 100;
 
-	public bool useGravity = true;
+    public bool useGravity = true;
 
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
@@ -161,6 +163,8 @@ public class AbstractObject : MonoBehaviour
 	void onEnemyDead ( Vector3 forceProp )
 	{
 		isDead = true;
+        AllPlayerPrefs.scoreWhithoutDistance += point;
+
         ScreenShake.Singleton.ShakeEnemy();
 
 		var animation = GetComponentInChildren<Animator>();

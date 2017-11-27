@@ -21,7 +21,8 @@ public enum MenuType
 	MenuHome,
 	Shop,
 	Pause,
-	GameOver
+	GameOver,
+    Leaderboard
 }
 
 
