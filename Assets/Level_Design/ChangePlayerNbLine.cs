@@ -15,7 +15,7 @@ public class ChangePlayerNbLine : MonoBehaviour {
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = NbrLineLeft;
 			getPlayer.NbrLineRight = NbrLineRigh;
-			getPlayer.currLine -= CurrLine;
+			getPlayer.currLine = CurrLine;
 		}
 	}
 }
