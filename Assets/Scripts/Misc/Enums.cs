@@ -38,7 +38,8 @@ public enum AudioType
 	OtherMusic,
 	FxSound,
 	OtherSound,
-	Other
+	Other,
+    OtherFx2
 }
 
 public enum ResearcheType 
