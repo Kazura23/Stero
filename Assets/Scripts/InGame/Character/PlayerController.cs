@@ -719,8 +719,6 @@ public class PlayerController : MonoBehaviour
 
 			getCamRM = false;
 
-			thisCam.GetComponent<RainbowMove> ( ).reStart ( );
-			thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
 			thisCam.GetComponent<RainbowMove>().enabled = true;
 			thisCam.GetComponent<RainbowRotate>().enabled = true;
            // ScreenShake.Singleton.ShakeFall();
@@ -734,6 +732,8 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds ( 0.5f );
 
 		currWF = null;
+		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
+		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
 		thisCam.transform.localRotation = startRotRR;
 		thisCam.transform.localPosition = startPosRM; 
 		thisCam.GetComponent<RainbowMove>().enabled = false;
