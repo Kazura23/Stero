@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour
 	Text textDist;
 	Text textCoin;
 
+	IEnumerator currWF;
 	IEnumerator propPunch;
 	Animator playAnimator;
 	Slider SliderSlow;
@@ -132,6 +133,9 @@ public class PlayerController : MonoBehaviour
 	Punch getPunch;
     CameraFilterPack_Color_YUV camMad;
     Vector3 saveCamMad;
+
+	Quaternion startRotRR;
+	Vector3 startPosRM;
 
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
@@ -209,6 +213,9 @@ public class PlayerController : MonoBehaviour
         camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
         saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
         
+		startRotRR = thisCam.transform.localRotation;
+		startPosRM = thisCam.transform.localPosition;
+
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 
@@ -333,8 +340,6 @@ public class PlayerController : MonoBehaviour
 
 		thisCam.GetComponent<RainbowMove>().enabled = false;
 		thisCam.GetComponent<RainbowRotate>().enabled = false;
-
-        
 
         Life--;
 
@@ -662,9 +667,13 @@ public class PlayerController : MonoBehaviour
 
 		foreach ( RaycastHit thisRay in allHit )
 		{
+			if ( thisRay.collider.gameObject == gameObject )
+			{
+				continue;
+			}
 			checkAir = false;
 
-			if ( thisRay.collider.gameObject.layer == 9)
+			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
 
@@ -687,8 +696,14 @@ public class PlayerController : MonoBehaviour
 			if ( !getCamRM )
 			{
 				getCamRM = true;
-				thisCam.transform.DOKill(false);
-				thisCam.GetComponent<RainbowMove>().enabled = false;
+
+				if ( currWF != null )
+				{
+					StopCoroutine ( currWF );
+				}
+
+				currWF = waitFall ( );
+				StartCoroutine ( currWF );
 			}
             // Camera.main.GetComponent<RainbowMove>().enabled = false;
 
@@ -696,12 +711,33 @@ public class PlayerController : MonoBehaviour
         }
 		else if ( !checkAir && getCamRM )
         {
+			if ( currWF != null )
+			{
+				StopCoroutine ( currWF );
+				currWF = null;
+			}
+
 			getCamRM = false;
+
+			thisCam.GetComponent<RainbowMove> ( ).reStart ( );
+			thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
 			thisCam.GetComponent<RainbowMove>().enabled = true;
+			thisCam.GetComponent<RainbowRotate>().enabled = true;
            // ScreenShake.Singleton.ShakeFall();
         }
 
 		inAir = checkAir;
+	}
+
+	IEnumerator waitFall ( )
+	{
+		yield return new WaitForSeconds ( 0.5f );
+
+		currWF = null;
+		thisCam.transform.localRotation = startRotRR;
+		thisCam.transform.localPosition = startPosRM; 
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
 	}
 
 	void playerMove ( float delTime, float speed )
