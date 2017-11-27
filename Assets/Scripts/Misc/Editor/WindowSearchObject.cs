@@ -37,7 +37,7 @@ public class WindowSearchObject : EditorWindow
 	List<bool> foldoutProj;
 	List <int> bPageProj;
 	bool childProj;
-	bool endSearchProj;
+	static bool endSearchProj;
 	static int MaxCountProj;
 	static int CurrCountProj;
 
@@ -46,7 +46,7 @@ public class WindowSearchObject : EditorWindow
 	List <int> bPageScene;
 	List<bool> foldoutScene;
 	bool childScene;
-	bool endSearchScene;
+	static bool endSearchScene;
 	static int MaxCountScene;
 	static int CurrCountScene;
 
@@ -55,7 +55,7 @@ public class WindowSearchObject : EditorWindow
 	List <int> bPagePref;
 	List<bool> foldoutPref;
 	bool childPref;
-	bool endSearchObj;
+	static bool endSearchObj;
 	static int MaxCountObj;
 	static int CurrCountObj;
 
@@ -77,6 +77,7 @@ public class WindowSearchObject : EditorWindow
 	List<List<GameObject>> AllObjectScene;
 	List<List<GameObject>> InfoOnPrefab;
 	List<objectInfo> CompInfo;
+	List<Object> saveForUndo;
 
 	void OnEnable ()
 	{
@@ -141,9 +142,10 @@ public class WindowSearchObject : EditorWindow
 		InfoOnPrefab = new List<List<GameObject>> ( );
 		thispref = new List<GameObject> ( );
 		CompInfo = new List<objectInfo> ( );
+		saveForUndo = new List<Object> ( );
 	}
 	// chercher ref de l'obje en scene / projet & faire une recherche de pref 
-	[MenuItem("CustomTools/SearchTags")]
+	[MenuItem("CustomTools/ToolSearch")]
 	public static void ShowWindow()
 	{
 		EditorWindow.GetWindow ( typeof( WindowSearchObject ) );
@@ -298,10 +300,6 @@ public class WindowSearchObject : EditorWindow
 		currResearch.OtherName = specName;
 		currResearch.FolderProject = SpecificPath;
 
-		endSearchScene = MaxCountScene == CurrCountScene;
-		endSearchObj = MaxCountObj == CurrCountObj;
-		endSearchProj = MaxCountProj == CurrCountProj;
-
 #endregion
 
 #region ActionResearch
@@ -323,17 +321,17 @@ public class WindowSearchObject : EditorWindow
 
 			getAllOnScene.Clear ( );
 
+			endSearchScene = false;
 			EditorCoroutine.start ( SearchObject.LoadAssetOnScenes ( AllObjectScene, thisType, objComp, getChildren, currResearch ), TypePlace.OnScene );
 		}
 
 		if ( !endSearchScene )
 		{
+			EditorGUILayout.Slider( ( int ) ( ( ( float ) CurrCountScene / ( float ) MaxCountScene ) * 100 ), 0, 100 );
+
 			if ( GUILayout.Button ( "Cancel", EditorStyles.miniButton ) )
 			{
 				StopPlace( TypePlace.OnScene );
-
-				MaxCountScene = 0;
-				CurrCountScene = 0;
 			}
 		}
 		EditorGUILayout.EndVertical ( );
@@ -356,12 +354,8 @@ public class WindowSearchObject : EditorWindow
 
 			getAllOnProj.Clear ( );
 
+			endSearchProj = false;
 			EditorCoroutine.start  ( SearchObject.LoadAssetsInProject ( AllObjectProject, thisType, objComp, getChildren, currResearch ), TypePlace.OnProject );
-		}
-
-		if ( MaxCountProj > 0 )
-		{
-			EditorGUILayout.TextArea ( ( (float)CurrCountProj / (float)MaxCountProj ).ToString ( ) );
 		}
 
 		SpecificPath = EditorGUILayout.TextField ("Specific folder :", SpecificPath, GUILayout.Width ( sizeX / 3 ));
@@ -373,8 +367,6 @@ public class WindowSearchObject : EditorWindow
 			if ( GUILayout.Button ( "Cancel", EditorStyles.miniButton ) )
 			{
 				StopPlace( TypePlace.OnProject );
-				MaxCountProj = 0;
-				CurrCountProj = 0;
 			}
 		}
 
@@ -396,6 +388,7 @@ public class WindowSearchObject : EditorWindow
 
 			getAllOnPrefab.Clear ( );
 
+			endSearchObj = false;
 			EditorCoroutine.start  ( SearchObject.LoadOnPrefab ( InfoOnPrefab, thisType, objComp, thispref, getChildren, currResearch ), TypePlace.OnObject );
 		}
 
@@ -464,11 +457,14 @@ public class WindowSearchObject : EditorWindow
 			}
 		}
 		EditorGUILayout.EndVertical ( );
-		if ( !endSearchObj && GUILayout.Button ( "Cancel Object", EditorStyles.miniButton ) )
+		if ( !endSearchObj )
 		{
-			StopPlace( TypePlace.OnObject );
-			MaxCountObj = 0;
-			CurrCountObj = 0;
+			EditorGUILayout.Slider( ( int ) ( ( ( float ) CurrCountObj / ( float ) MaxCountObj ) * 100 ), 0, 100 );
+
+			if ( GUILayout.Button ( "Cancel Object", EditorStyles.miniButton ))
+			{
+				StopPlace( TypePlace.OnObject );
+			}
 		}
 		EditorGUILayout.EndVertical ( );
 		EditorGUILayout.EndHorizontal();
@@ -485,9 +481,12 @@ public class WindowSearchObject : EditorWindow
 				EditorGUILayout.BeginHorizontal ( );
 				if ( GUILayout.Button ( "Confirm", EditorStyles.miniButton ) )
 				{
+					
 					modifPref ( getAllOnScene );
 					modifPref ( getAllOnProj );
 					modifPref ( getAllOnPrefab );
+
+					Undo.RecordObjects(saveForUndo.ToArray(), "test");
 
 					apply = false;
 				}
@@ -832,8 +831,11 @@ public class WindowSearchObject : EditorWindow
 		{
 			for ( b = 0; b < listSearch [ a ].Count; b++ )
 			{
+
 				if ( !listSearch [ a ] [ b ].Equals ( thisObj ) )
 				{
+					saveForUndo.Add ( listSearch [ a ] [ b ] );
+
 					if ( listSearch [ a ] [ b ] == null )
 					{
 						listSearch [ a ].RemoveAt ( b );
@@ -1029,13 +1031,25 @@ public class WindowSearchObject : EditorWindow
 		switch ( thisPlace )
 		{
 		case TypePlace.OnProject:
-			CurrCountProj++;;
+			CurrCountProj++;
+			if ( CurrCountProj == MaxCountProj )
+			{
+				EndResearch ( thisPlace );
+			}
 			break;
 		case TypePlace.OnScene:
-			CurrCountScene++;;
+			CurrCountScene++;
+			if ( CurrCountScene == MaxCountScene )
+			{
+				EndResearch ( thisPlace );
+			}
 			break;
 		case TypePlace.OnObject:
-			CurrCountObj++;;
+			CurrCountObj++;
+			if ( CurrCountObj == MaxCountObj )
+			{
+				EndResearch ( thisPlace );
+			}
 			break;
 		}
 	}
@@ -1075,16 +1089,30 @@ public class WindowSearchObject : EditorWindow
 				getList [ a ].stop ( );
 			}
 		}
+
+		EndResearch ( thisPlace );
 	}
 
-	public static void CancelResearch ( )
+	public static void EndResearch ( TypePlace thisPlace )
 	{
-		CurrCountScene = 0;
-		CurrCountObj = 0;
-		CurrCountProj = 0;
-		MaxCountProj = 0;
-		MaxCountScene = 0;
-		MaxCountObj = 0;
+		switch ( thisPlace )
+		{
+		case TypePlace.OnProject:
+			CurrCountProj = 0;
+			MaxCountProj = 0;
+			endSearchProj = true;
+			break;
+		case TypePlace.OnScene:
+			MaxCountScene = 0;
+			CurrCountScene = 0;
+			endSearchScene = true;
+			break;
+		case TypePlace.OnObject:
+			MaxCountObj = 0;
+			CurrCountObj = 0;
+			endSearchObj = true;
+			break;
+		}
 	}
 
 	public void StopAll ( )
@@ -1098,7 +1126,6 @@ public class WindowSearchObject : EditorWindow
 		}
 	}
 }
-
 
 public class objectInfo
 {
