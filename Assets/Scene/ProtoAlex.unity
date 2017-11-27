@@ -77,17 +77,15 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-    m_PVRFilteringAtrousPositionSigmaIndirect: 2
-    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 112000002, guid: c9e79d108ac4a4f4792545608a68127a,
     type: 2}
   m_UseShadowmask: 1
@@ -239,7 +237,7 @@ Prefab:
     - target: {fileID: 114813587957960562, guid: 15bb641fdb1f44941a035ea7b9db8239,
         type: 2}
       propertyPath: AllMF.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4724961795793312, guid: 15bb641fdb1f44941a035ea7b9db8239, type: 2}
       propertyPath: m_LocalPosition.x
@@ -322,6 +320,12 @@ Prefab:
       propertyPath: AllMF.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: a45ccdeea626ab7489583211a06b9140,
+        type: 2}
+    - target: {fileID: 114813587957960562, guid: 15bb641fdb1f44941a035ea7b9db8239,
+        type: 2}
+      propertyPath: AllMF.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c11a4bd1cb956c4ba0b833193969b57,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 15bb641fdb1f44941a035ea7b9db8239, type: 2}
