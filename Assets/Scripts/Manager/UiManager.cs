@@ -23,6 +23,9 @@ public class UiManager : ManagerParent
 	public Text ScorePoints;
 	public Text MoneyPoints;
 
+    [Header("MAIN MENU")]
+    public int MenuSelection;
+
     [Header("SHOP STUFF")]
     public Image SlowMotion;
     public Image BonusLife;
@@ -31,6 +34,8 @@ public class UiManager : ManagerParent
     public Image CircleFeel;
     public GameObject TextFeelMadness;
     private Camera camTw1;
+
+
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -80,8 +85,29 @@ public class UiManager : ManagerParent
 	}
 
 
-    public void SimpleCoup()
+    public void MenuGlobal(int whichMenu)
     {
+        if(whichMenu == 1)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -60, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 2)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 3)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 0, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 4)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        MenuSelection = whichMenu;
     }
 
     public void Intro()

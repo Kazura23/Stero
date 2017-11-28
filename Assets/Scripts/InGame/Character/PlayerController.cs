@@ -1012,8 +1012,7 @@ public class PlayerController : MonoBehaviour
                 punch.RightPunch = true;
 
 				playAnimator.SetTrigger("Right");
-
-				GlobalManager.Ui.SimpleCoup();
+                
             }
             else
             {
