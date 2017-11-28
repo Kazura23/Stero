@@ -129,19 +129,21 @@ public class GameController : ManagerParent
 
     public void Restart ( ) 
 	{
+		GlobalManager.AudioMa.CloseAllAudio ( );
+
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         GameStarted = false;
 		gameIsOver = true;
+
 		setMusic ( );
     }
 
 	public void GameOver ( ) 
 	{
 		gameIsOver = false;
-		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
 	}
     #endregion
 
