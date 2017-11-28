@@ -183,6 +183,28 @@ public class AudioManager : ManagerParent
 			getAC [ a ].ThoseSource.Clear ( );
 		}
 	}
+
+	public bool IsAudioLaunch  ( AudioType thisType )
+	{
+		List<ParentAud> getAC = audioChild;
+
+		int b;
+		for ( int a = 0; a < getAC.Count; a++ )
+		{
+			if ( getAC [ a ].ThisType == thisType )
+			{
+				for ( b = 0; b < getAC [ a ].ThoseSource.Count; b++ )
+				{
+					if ( getAC [ a ].ThoseSource [ b ] != null )
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 	#endregion
 	
 	#region Private

@@ -93,7 +93,10 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
 
-		setMusic ( );
+		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) )
+		{
+			setMusic ( );
+		}
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -129,8 +132,6 @@ public class GameController : ManagerParent
 
     public void Restart ( ) 
 	{
-		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.FxSound );
-
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
