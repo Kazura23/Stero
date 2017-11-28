@@ -95,9 +95,9 @@ public class AbstractObject : MonoBehaviour
 
         int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "BoneBreak_" + (randomSongBone + 1), false);
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
 
-        Debug.Log("BoneBreak");
+       // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
 
