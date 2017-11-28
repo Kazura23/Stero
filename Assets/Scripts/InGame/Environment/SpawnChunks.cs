@@ -395,7 +395,7 @@ public class SpawnChunks : MonoBehaviour
 				// check if there is spaces and place wall if yes
 				for ( b = 0; b < getCurrNew.Count; b++ )
 				{
-					if ( b == 0 )
+					if ( b == 0 || getCurrNew.Count == 1 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
 
@@ -407,7 +407,8 @@ public class SpawnChunks : MonoBehaviour
 							diffLine++;
 						}
 					}
-					else if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
+
+					if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 || getCurrNew.Count == 1 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
 						diffLine = -diffLine;
