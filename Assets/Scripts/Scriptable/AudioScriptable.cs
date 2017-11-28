@@ -32,5 +32,7 @@ public class MusicFX
 public class AllAudio
 {
 	public string AudioName;
+	public float Volume = 1;
+	public float Pitch = 1;
 	public AudioClip Audio;
 }

@@ -6,13 +6,16 @@ public class ChangePlayerNbLine : MonoBehaviour {
 
 	public int NbrLineLeft;
 	public int NbrLineRigh;
+	public int CurrLine;
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Player") 
 		{
-			other.gameObject.GetComponent<PlayerController>().NbrLineLeft = NbrLineLeft ;
-			other.gameObject.GetComponent<PlayerController>().NbrLineRight = NbrLineRigh ;
+			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
+			getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
+			getPlayer.currLine = CurrLine;
 		}
 	}
 }
