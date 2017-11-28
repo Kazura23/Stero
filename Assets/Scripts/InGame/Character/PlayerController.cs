@@ -370,9 +370,6 @@ public class PlayerController : MonoBehaviour
         GlobalManager.GameCont.soundFootSteps.Kill();
 
 
-
-
-
         DOVirtual.DelayedCall(1f, () =>
         {
 
@@ -382,7 +379,7 @@ public class PlayerController : MonoBehaviour
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-        //GlobalManager.GameCont.Restart ( );
+		GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
@@ -662,7 +659,7 @@ public class PlayerController : MonoBehaviour
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed;
+			getTime *= DashSpeed * 1.3f;
 		}
 
 		foreach ( RaycastHit thisRay in allHit )
@@ -676,6 +673,7 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
+				float getDist = pTrans.position.y - thisRay.collider.transform.position.y;
 
 				if ( getThis.rotation.x < 0 )
 				{
@@ -684,7 +682,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( getThis.rotation.x > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 1.2f, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 			}

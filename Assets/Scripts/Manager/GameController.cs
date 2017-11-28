@@ -24,6 +24,7 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
+	bool gameIsOver = true;
     #endregion
 
     #region Mono
@@ -80,6 +81,7 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 
         Intro = true;
+		gameIsOver = true;
 
 		SetAllBonus ( );
 		GameStarted = true;
@@ -91,11 +93,7 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
 
-        int randomMusic = UnityEngine.Random.Range(0, 3);
-        GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "Music_" + (randomMusic + 1), false);
-
-
-
+		setMusic ( );
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -136,8 +134,15 @@ public class GameController : ManagerParent
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         GameStarted = false;
-    }   
-    
+		gameIsOver = true;
+		setMusic ( );
+    }
+
+	public void GameOver ( ) 
+	{
+		gameIsOver = false;
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
+	}
     #endregion
 
     #region Private Methods
@@ -145,6 +150,11 @@ public class GameController : ManagerParent
 	{
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
+	}
+
+	void setMusic ( )
+	{
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic );
 	}
 
 	void SetAllBonus ( )
