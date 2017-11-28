@@ -265,6 +265,7 @@ public class SpawnChunks : MonoBehaviour
 						getNewChunk.Add ( new VertNCSI ( ) );
 						getInd = getNewChunk.Count - 1;
 						getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
+						getNewChunk [ getInd ].Vert = vertChunk;
 					}
 
 					getCurrNew = getNewChunk [ getInd ].AllInfNewChunk;
@@ -289,6 +290,8 @@ public class SpawnChunks : MonoBehaviour
 					otherSpawn.Add ( thisSpawn );
 				}
 			}
+
+			Debug.Log ( getNewChunk.Count );
 
 			// add the other chunk on current chunk in order to destroye them later
 			for ( a = 0; a < allNewChunk.Count; a++ )
