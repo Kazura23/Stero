@@ -41,7 +41,9 @@ public class GameController : ManagerParent
 			{
                 GlobalManager.Ui.Intro();
 
-				checkStart = true;
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "PunchIntro", false);
+
+                checkStart = true;
 				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
 				Camera.main.GetComponent<RainbowRotate>().time = .4f;
 				Camera.main.GetComponent<RainbowMove>().time = .2f;

@@ -93,9 +93,6 @@ public class AbstractObject : MonoBehaviour
 
 		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-		randomSong = UnityEngine.Random.Range(0, 4);
-
-		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSong + 1), false);
 
        // Debug.Log("BoneBreak");
 
@@ -163,7 +160,12 @@ public class AbstractObject : MonoBehaviour
 		isDead = true;
         ScreenShake.Singleton.ShakeEnemy();
 
-		var animation = GetComponentInChildren<Animator>();
+
+        int randomSongBone = UnityEngine.Random.Range(0, 4);
+
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+
+        var animation = GetComponentInChildren<Animator>();
         if(animation)
 		    animation.enabled = false;
 

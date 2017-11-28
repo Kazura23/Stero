@@ -29,6 +29,7 @@ public class Punch : MonoBehaviour {
     {
 		control = GlobalManager.GameCont.Player.GetComponent<PlayerController>();
         barMadness = control.BarMadness;
+        barMadness.value = 0;
     }
 
     void OnTriggerEnter(Collider other)
