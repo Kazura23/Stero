@@ -460,7 +460,7 @@ public class PlayerController : MonoBehaviour
 				getFOVDP = FOVIncrease;
 
 
-                if ( timeToDP < TimeToDoublePunch * 0.35f )
+                if ( timeToDP < TimeToDoublePunch * 0.75f )
 				{
 					resetAxeD = false;
 					dpunch = true;

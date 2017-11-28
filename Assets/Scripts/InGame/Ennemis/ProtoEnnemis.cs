@@ -59,7 +59,9 @@ public class ProtoEnnemis : AbstractObject
         try {
 			GetComponentInChildren<Animator>().SetTrigger("Attack");
 
-            
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "Charlotte_Attack", false);
+
+
         }
 		catch{
 		}

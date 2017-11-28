@@ -90,6 +90,12 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
+
+        int randomMusic = UnityEngine.Random.Range(0, 3);
+        GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "Music_" + (randomMusic + 1), false);
+
+
+
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )

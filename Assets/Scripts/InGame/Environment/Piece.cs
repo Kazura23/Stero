@@ -14,11 +14,13 @@ public class Piece : MonoBehaviour
 
             GlobalManager.Ui.TakeCoin();
 
+            GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Coin", false);
+
             GetComponent<CapsuleCollider>().enabled = false;
 
             Debug.Log(GetComponent<MeshRenderer>().material.name);
 
-            if (GetComponent<MeshRenderer>().material.name == "gold_piece_BC")
+            if (GetComponent<MeshRenderer>().material.name == "GoldCoin (Instance)")
             { 
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 1);
                 
