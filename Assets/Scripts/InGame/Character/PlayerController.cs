@@ -370,9 +370,6 @@ public class PlayerController : MonoBehaviour
         GlobalManager.GameCont.soundFootSteps.Kill();
 
 
-
-
-
         DOVirtual.DelayedCall(1f, () =>
         {
 
@@ -382,7 +379,7 @@ public class PlayerController : MonoBehaviour
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-        //GlobalManager.GameCont.Restart ( );
+		GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)

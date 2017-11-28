@@ -291,8 +291,6 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
-			Debug.Log ( getNewChunk.Count );
-
 			// add the other chunk on current chunk in order to destroye them later
 			for ( a = 0; a < allNewChunk.Count; a++ )
 			{
