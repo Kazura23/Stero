@@ -46,6 +46,8 @@ public class ProtoEnnemis : AbstractObject
             Debug.Log(rdmText);
             txt.GetComponent<TextMesh>().text = rdmText;
 
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "Charlotte_Attack", false);
+
 
         }
 		else
@@ -59,7 +61,6 @@ public class ProtoEnnemis : AbstractObject
         try {
 			GetComponentInChildren<Animator>().SetTrigger("Attack");
 
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "Charlotte_Attack", false);
 
 
         }
