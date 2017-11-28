@@ -16,6 +16,8 @@ public class ShieldMan : AbstractObject {
     Color saveCol;
 
     Material parMat;
+
+    bool detected;
     #endregion
 
     #region Mono
@@ -66,7 +68,33 @@ public class ShieldMan : AbstractObject {
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-		if ( isDetected )
+
+       // if (GetComponenstInChildren<Transform>().tag == "Knighty")
+          //  Destroy(tran.gameObject);
+
+        foreach (Transform trans in transform)
+        {
+            if(trans.gameObject.tag == "Knighty")
+            {
+                Debug.Log(trans.gameObject);
+            }
+        }
+
+        if (!detected)
+        {
+            detected = true;
+
+
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
+            txt.transform.DOScale(Vector3.one * .15f, 0);
+            txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[2].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[2].quotes.Length)];
+        }
+
+
+
+        if ( isDetected )
 		{
 			parMat.color = NewColor;
 		}
@@ -87,6 +115,14 @@ public class ShieldMan : AbstractObject {
 				getTrans.DOMoveX(move.x, delay);
 				getTrans.DOMoveZ(move.z, delay);
 				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay / 2));
+
+
+                GameObject[] listKnight = GameObject.FindGameObjectsWithTag("Knighty");
+
+                foreach (GameObject trans in listKnight)
+                {
+                    Destroy(trans);
+                }
                 //animation shield destroy
             }
             else
