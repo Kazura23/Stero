@@ -146,7 +146,7 @@ public class AudioManager : ManagerParent
 				{
 					if ( getAC [ a ].ThoseSource [ b ] != null )
 					{
-						Destroy ( getAC [ a ].ThoseSource [ b ].gameObject );
+						Destroy ( getAC [ a ].ThoseSource [ b ] );
 					}
 				}
 
