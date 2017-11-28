@@ -132,6 +132,7 @@ public class GameController : ManagerParent
 		return null;
 	}
 
+
     public void Restart ( ) 
 	{
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );

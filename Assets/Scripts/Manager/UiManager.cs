@@ -134,6 +134,23 @@ public class UiManager : ManagerParent
 		});
 	}
 
+    public void BloodHitDash()
+    {
+        //Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.4f, () => {
+            Time.timeScale = 1;
+            //Time.fixedDeltaTime = .02F;
+        });
+
+        float saveFov = Camera.main.fieldOfView;
+        Camera.main.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
+        RedScreen.DOFade(.4f, .1f).OnComplete(() => {
+            RedScreen.DOFade(0, .08f);
+            Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
+        });
+    }
+
     public void GameOver()
     {
         //Debug.Log("ShakeOver");
