@@ -144,7 +144,10 @@ public class AudioManager : ManagerParent
 			{
 				for ( b = 0; b < getAC [ a ].ThoseSource.Count; b++ )
 				{
-					Destroy ( getAC [ a ].ThoseSource [ b ].gameObject );
+					if ( getAC [ a ].ThoseSource [ b ] != null )
+					{
+						Destroy ( getAC [ a ].ThoseSource [ b ].gameObject );
+					}
 				}
 
 				getAC [ a ].ThoseSource.Clear ( );
@@ -171,7 +174,10 @@ public class AudioManager : ManagerParent
 		{
 			for ( b = 0; b < getAC [ a ].ThoseSource.Count; b++ )
 			{
-				Destroy ( getAC [ a ].ThoseSource [ b ] );
+				if ( getAC [ a ].ThoseSource [ b ] != null )
+				{
+					Destroy ( getAC [ a ].ThoseSource [ b ] );
+				}
 			}
 
 			getAC [ a ].ThoseSource.Clear ( );
@@ -220,7 +226,10 @@ public class AudioManager : ManagerParent
 			thisAct.Invoke ( );
 		}
 
-		Destroy ( thisSource );
+		if ( thisSource != null )
+		{
+			Destroy ( thisSource );
+		}
 	}
 	#endregion
 }
