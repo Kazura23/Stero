@@ -34,9 +34,7 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
-            GetComponentInChildren<Animator>().SetTrigger("Attack");
+            
             //Debug.Log("anime active !!!");
         }
 
@@ -48,6 +46,13 @@ public class RiffleMan : AbstractObject
         if (!detected)
         {
             detected = true;
+
+
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
+
             GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];

@@ -74,7 +74,7 @@ public class ProtoEnnemis : AbstractObject
 
         GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "Charlotte_Death" + (randomSong + 1), false);
 
-        GlobalManager.Ui.BloodHit();
+        //GlobalManager.Ui.BloodHit();
 
         
 

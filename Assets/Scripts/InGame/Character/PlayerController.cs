@@ -1151,7 +1151,7 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
 			{
-				GlobalManager.Ui.BloodHit ( );
+				//GlobalManager.Ui.BloodHit ( );
 
 				/*Vector3 getProj = getPunch.projection_basic;
 
