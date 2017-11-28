@@ -216,9 +216,9 @@ public class SpawnChunks : MonoBehaviour
 			int a;
 			int b;
 			int c;
+			int randChunk = Random.Range ( 0, 2 );
 			int getInd;
 			int diffLine;
-			int randChunk = Random.Range ( 0, 2 );
 			int vertChunk;
 
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
@@ -244,6 +244,7 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
+					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
@@ -263,13 +264,14 @@ public class SpawnChunks : MonoBehaviour
 					{
 						getNewChunk.Add ( new VertNCSI ( ) );
 						getInd = getNewChunk.Count - 1;
+						getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
 					}
 
-					getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
 					getCurrNew = getNewChunk [ getInd ].AllInfNewChunk;
 					getCurrNew.Add ( new NewChunkSaveInf ( ) );
 
 					vertChunk = getCurrNew.Count - 1;
+					getCurrNew [ vertChunk ].SpawnNL = currSL;
 					getCurrNew [ vertChunk ].ThisObj = getChunkT.gameObject;
 					getCurrNew [ vertChunk ].NbrLaneDebut = currSL.InfoChunk.NbrLaneFin;
 					getCurrNew [ vertChunk ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
@@ -305,8 +307,7 @@ public class SpawnChunks : MonoBehaviour
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
 				b = getCurrNew.Count;
-
-				while ( b > 1 )
+				while ( b > 1)
 				{
 					b--;
 
@@ -320,12 +321,10 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
-
 			// check the space between each chunks
 			for ( a = 0; a < getNewChunk.Count; a++ )
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
-
 				if ( randChunk == 0 )
 				{
 					for ( b = 0; b < getCurrNew.Count - 1; b++ )
@@ -360,7 +359,7 @@ public class SpawnChunks : MonoBehaviour
 				{
 					for ( b = getCurrNew.Count - 1; b > 0; b-- )
 					{
-						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b - 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b - 1 ].CurrLane - getCurrNew [ b - 1 ].CurrLane ) );
+						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + getCurrNew [ b - 1 ].NbrLaneDebut.x - Mathf.Abs ( getCurrNew [ b - 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
 
 						if ( diffLine >= 0 )
 						{
@@ -552,6 +551,7 @@ public class NewChunkSaveInf
 {
 	public GameObject ThisObj;
 	public Vector2 NbrLaneDebut;
+	public SpawnNewLvl SpawnNL;
 	public int CurrLane;
 	public int CurrVert;
 }
