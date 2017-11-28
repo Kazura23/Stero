@@ -16,7 +16,6 @@ public class SearchObject : MonoBehaviour
 	public static IEnumerator LoadAssetsInProject ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
 		List<GameObject> asset = new List<GameObject> ( ); 
-
 		TypePlace currPlace = TypePlace.OnProject;
 
 		string guid;
@@ -47,6 +46,12 @@ public class SearchObject : MonoBehaviour
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
 		}
 
+		if ( asset.Count == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
+
 		if ( getChildren )
 		{
 			int countMax = 0;
@@ -74,6 +79,12 @@ public class SearchObject : MonoBehaviour
 	{
 		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
 		TypePlace currPlace = TypePlace.OnScene;
+
+		if ( objectList.Length == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
 
 		if ( getChildren )
 		{
@@ -103,6 +114,12 @@ public class SearchObject : MonoBehaviour
 	{
 		TypePlace currPlace = TypePlace.OnObject;
 		int a;
+
+		if ( thisPref.Count == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
 
 		if ( getChildren )
 		{
@@ -144,19 +161,29 @@ public class SearchObject : MonoBehaviour
 		int diffChil = thisResearch.NbrChildDiff;
 		string OtherName = thisResearch.OtherName;
 		bool getProper = false;
+		string getCompName;
+		bool checkRef;
 
-		if ( thisType == ResearcheType.SamePref )
+		if ( thisType == ResearcheType.SamePref || thisType == ResearcheType.SearchRef )
 		{
 			if ( objComp == null )
 			{
-				WindowSearchObject.CancelResearch ( );
+				WindowSearchObject.EndResearch ( thisPlace );
 
 				yield break;
 			}
 
 			getProper = thisResearch.TryGetProperty;
-			getPref = ( GameObject ) objComp;
-			componentsPref = getPref.GetComponents<Component> ( );
+
+			try
+			{
+				getPref = ( GameObject ) objComp;
+				componentsPref = getPref.GetComponents<Component> ( );
+			}
+			catch{
+				getPref = null;
+				componentsPref = null;
+			}
 		}
 		else
 		{
@@ -168,6 +195,7 @@ public class SearchObject : MonoBehaviour
 
 		int a;
 		int b;
+		int c;
 		int maxNbr = objectList.Length;
 		for ( a = 0; a < objectList.Length; a++ )
 		{
@@ -203,7 +231,7 @@ public class SearchObject : MonoBehaviour
 
 				if ( objComp == null )
 				{
-					WindowSearchObject.CancelResearch ( );
+					WindowSearchObject.EndResearch ( thisPlace );
 
 					yield break;
 				}
@@ -245,14 +273,37 @@ public class SearchObject : MonoBehaviour
 					{
 						foreach ( var field in components[b].GetType ( ).GetFields ( ) )
 						{
-							yield return thisF;
-
 							try 
 							{
+								getCompName = field.GetValue ( components [ b ] ).ToString ( );
+
 								if ( field.GetValue ( components [ b ] ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
 									break;
+								}
+								else if ( getPref!= null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								{
+									checkRef = false;
+
+									for ( c = 0; c < componentsPref.Length; c++ )
+									{
+										if ( componentsPref [ c ].GetType ( ) == field.GetValue ( components [ b ] ).GetType() )
+										{
+											objTagList.Add ( objectList [ a ] );
+											checkRef = true;
+											break;
+										}
+									}
+
+									if ( checkRef )
+									{
+										break;
+									}
+								}
+								else if ( getPref == null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								{
+									objTagList.Add ( objectList [ a ] );
 								}
 							}
 							catch{
@@ -263,10 +314,9 @@ public class SearchObject : MonoBehaviour
 					{
 						foreach ( var field in components[b].GetType ( ).GetProperties ( ) )
 						{
-							yield return thisF;
-
 							try 
 							{
+								
 								if ( field.GetValue ( components [ b ], null ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );

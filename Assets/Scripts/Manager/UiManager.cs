@@ -127,9 +127,9 @@ public class UiManager : ManagerParent
         });
 
 		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(33.5f, .16f);//.SetEase(Ease.InBounce);
+		Camera.main.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
 		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
-			RedScreen.DOFade(0, .08f);
+			RedScreen.DOFade(0, .12f);
 			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
 	}

@@ -14,6 +14,9 @@ public class ProtoEnnemis : AbstractObject
 
 	Material parMat;
 
+    bool detected = false;
+
+
 
 	#endregion
 
@@ -33,12 +36,15 @@ public class ProtoEnnemis : AbstractObject
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-		if ( isDetected && !isDead)
-		{
+        if (isDetected && !isDead && !detected)
+        {
+            detected = true;
             //parMat.color = NewColor;
             GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
             txt.transform.DOScale(Vector3.one * .15f, 0);
-            txt.GetComponent<TextMesh>().text = "Your ex is a bitch";
+            string rdmText = GlobalManager.DialMa.dial[0].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[0].quotes.Length)];
+            Debug.Log(rdmText);
+            txt.GetComponent<TextMesh>().text = rdmText;
 
 
         }
@@ -52,7 +58,9 @@ public class ProtoEnnemis : AbstractObject
 
         try {
 			GetComponentInChildren<Animator>().SetTrigger("Attack");
-		}
+
+            
+        }
 		catch{
 		}
 	}

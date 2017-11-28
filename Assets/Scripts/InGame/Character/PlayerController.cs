@@ -226,8 +226,6 @@ public class PlayerController : MonoBehaviour
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
-
-
         float getTime = Time.deltaTime;
 
 		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
@@ -505,7 +503,7 @@ public class PlayerController : MonoBehaviour
 				if ( getFOVDP > 0 )
 				{
 
-                    Debug.Log("Charging");
+                    //Debug.Log("Charging");
 
                     thisCam.fieldOfView += calcRatio;
 				}
