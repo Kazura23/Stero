@@ -62,7 +62,7 @@ public class Punch : MonoBehaviour {
 				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
 			}
 
-            GlobalManager.AudioMa.OpenAudio(AudioType.OtherFx2, "PunchSuccess", false);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
             
             Debug.Log("song");
             Vector3 getProj = projection_basic;

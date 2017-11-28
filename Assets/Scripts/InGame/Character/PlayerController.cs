@@ -367,6 +367,8 @@ public class PlayerController : MonoBehaviour
 
         playerDead = true;
 
+        GlobalManager.GameCont.soundFootSteps.Kill();
+
 
 
 
@@ -501,7 +503,7 @@ public class PlayerController : MonoBehaviour
 				if ( getFOVDP > 0 )
 				{
 
-                    Debug.Log("Charging");
+                    //Debug.Log("Charging");
 
                     thisCam.fieldOfView += calcRatio;
 				}
