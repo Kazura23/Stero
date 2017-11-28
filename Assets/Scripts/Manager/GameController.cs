@@ -154,8 +154,7 @@ public class GameController : ManagerParent
 
 	void setMusic ( )
 	{
-		int randomMusic = Random.Range ( 0, 3 );
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Music_" + randomMusic.ToString ( ), false, setMusic );
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic );
 	}
 
 	void SetAllBonus ( )

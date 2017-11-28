@@ -10,23 +10,52 @@ public class AudioManager : ManagerParent
 	public List<AudioScriptable> AllMF;
 	Dictionary<AudioType, AudioSource> audioParent;
 	List<ParentAud> audioChild;
+
 	#endregion
 	
 	#region Mono
 	#endregion
 		
 	#region Public
-	public void OpenAudio ( AudioType thisType, string thisName, bool loopAudio = false, System.Action thisAct = null )
+	public void OpenAudio ( AudioType thisType, string thisName = "", bool loopAudio = false, System.Action thisAct = null )
 	{
 		AudioSource thisSource;
 
 		List<AudioScriptable> getAMF = AllMF;
 		List<AllAudio> getAllAudio;
 		List<ParentAud> getAC = audioChild;;
-
+		List <string> getAllName = new List<string> ( );
 		int a;
 		int b;
 		int c;
+
+		if ( !audioParent.TryGetValue ( thisType, out thisSource ) )
+		{
+			return;
+		}
+		else if ( thisName == "" )
+		{
+			for ( a = 0; a < getAMF.Count; a++ )
+			{
+				for ( b = 0; b < getAMF [ b ].AllMF.Count; b++ )
+				{
+					if ( getAMF [ a ].AllMF [ b ].ThisType == thisType )
+					{
+						for ( c = 0; c < getAMF [ a ].AllMF [ b ].SetAudio.Count; c++ )
+						{
+							getAllName.Add ( getAMF [ a ].AllMF [ b ].SetAudio [ c ].AudioName );
+						}
+					}
+				}
+			}
+
+			if ( getAllName.Count == 0 )
+			{
+				return;
+			}
+
+			thisName = getAllName [ Random.Range ( 0, getAllName.Count ) ];
+		}
 
 		for ( a = 0; a < getAMF.Count; a++ )
 		{
@@ -39,45 +68,42 @@ public class AudioManager : ManagerParent
 					{
 						if ( getAllAudio [ c ].AudioName == thisName )
 						{
-							if ( audioParent.TryGetValue ( thisType, out thisSource ) )
+                            if ( loopAudio )
 							{
-                                if ( loopAudio )
-								{
-									thisSource.enabled = true;
-									thisSource.volume = getAllAudio [ c ].Volume;
-									thisSource.pitch = getAllAudio [ c ].Pitch;
-									thisSource.clip = getAllAudio [ c ].Audio;
-									thisSource.Play();
+								thisSource.enabled = true;
+								thisSource.volume = getAllAudio [ c ].Volume;
+								thisSource.pitch = getAllAudio [ c ].Pitch;
+								thisSource.clip = getAllAudio [ c ].Audio;
+								thisSource.Play();
 
-									thisSource.loop = true;
-								}
-								else
-								{
-									thisSource.loop = false;
-
-									AudioSource getAud = thisSource.gameObject.AddComponent<AudioSource> ( );
-
-									getAud.loop = false;
-									getAud.volume = getAllAudio [ c ].Volume;
-									getAud.pitch = getAllAudio [ c ].Pitch;
-									getAud.enabled = true;
-									getAud.clip = getAllAudio [ c ].Audio;
-									getAud.Play ( );
-
-									int d;
-									for ( d = 0; d < getAC.Count; d++ )
-									{
-										if ( getAC [ d ].ThisType == thisType )
-										{
-											getAC [ d ].ThoseSource.Add ( getAud );
-											break;
-										}
-									}
-
-									StartCoroutine ( waitEndAudio ( getAud.clip.length + 0.1f, d, getAud, thisAct ) );
-								}
-								return;
+								thisSource.loop = true;
 							}
+							else
+							{
+								thisSource.loop = false;
+
+								AudioSource getAud = thisSource.gameObject.AddComponent<AudioSource> ( );
+
+								getAud.loop = false;
+								getAud.volume = getAllAudio [ c ].Volume;
+								getAud.pitch = getAllAudio [ c ].Pitch;
+								getAud.enabled = true;
+								getAud.clip = getAllAudio [ c ].Audio;
+								getAud.Play ( );
+
+								int d;
+								for ( d = 0; d < getAC.Count; d++ )
+								{
+									if ( getAC [ d ].ThisType == thisType )
+									{
+										getAC [ d ].ThoseSource.Add ( getAud );
+										break;
+									}
+								}
+
+								StartCoroutine ( waitEndAudio ( getAud.clip.length + 0.1f, d, getAud, thisAct ) );
+							}
+							return;
 						}
 					}
 				}
