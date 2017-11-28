@@ -63,8 +63,10 @@ public class Punch : MonoBehaviour {
 			}
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
-            
-            Debug.Log("song");
+
+            GlobalManager.Ui.BloodHit();
+
+           // Debug.Log("song");
             Vector3 getProj = projection_basic;
             switch (numTechnic)
             {

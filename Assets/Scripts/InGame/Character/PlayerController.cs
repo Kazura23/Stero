@@ -455,7 +455,7 @@ public class PlayerController : MonoBehaviour
 				getFOVDP = FOVIncrease;
 
 
-                if ( timeToDP < TimeToDoublePunch * 0.35f )
+                if ( timeToDP < TimeToDoublePunch * 0.75f )
 				{
 					resetAxeD = false;
 					dpunch = true;
@@ -1149,7 +1149,7 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
 			{
-				GlobalManager.Ui.BloodHit ( );
+				//GlobalManager.Ui.BloodHit ( );
 
 				/*Vector3 getProj = getPunch.projection_basic;
 
