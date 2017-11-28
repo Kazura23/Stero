@@ -398,11 +398,10 @@ public class SpawnChunks : MonoBehaviour
 					if ( b == 0 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
-
 						while ( diffLine < 0 )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getCurrNew [ b ].ThisObj.transform );
-							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.x ) + 3, 0, -3 );
+							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine - getCurrNew [ b ].NbrLaneDebut.x ) - getChunks [ currLevel ].SizeWall.x, 0, getChunks [ currLevel ].SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine++;
 						}
@@ -416,7 +415,7 @@ public class SpawnChunks : MonoBehaviour
 						while ( diffLine > 0 )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getCurrNew [ b ].ThisObj.transform );
-							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + 3, 0, -3 );
+							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunks [ currLevel ].SizeWall.x, 0, getChunks [ currLevel ].SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine--;
 						}
@@ -430,7 +429,7 @@ public class SpawnChunks : MonoBehaviour
 						while ( diffLine != 0 )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( getChunks [ currLevel ].WallEndChunk, getCurrNew [ b ].ThisObj.transform );
-							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + 3, 0, -3 );
+							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunks [ currLevel ].SizeWall.x, 0, getChunks [ currLevel ].SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 
 							if ( diffLine > 0 )
@@ -553,6 +552,7 @@ public class NewChunkSaveInf
 {
 	public GameObject ThisObj;
 	public Vector2 NbrLaneDebut;
+	public Vector2 SizeWall;
 	public SpawnNewLvl SpawnNL;
 	public int CurrLane;
 	public int CurrVert;

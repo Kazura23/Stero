@@ -89,13 +89,13 @@ public class AbstractObject : MonoBehaviour
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
-        int randomSongBody = UnityEngine.Random.Range(0, 8);
+        int randomSong = UnityEngine.Random.Range(0, 8);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSongBody + 1),false);
+		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-        int randomSongBone = UnityEngine.Random.Range(0, 4);
+		randomSong = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSong + 1), false);
 
        // Debug.Log("BoneBreak");
 
