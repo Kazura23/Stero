@@ -407,7 +407,8 @@ public class SpawnChunks : MonoBehaviour
 							diffLine++;
 						}
 					}
-					else if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
+
+					if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
 						diffLine = -diffLine;
