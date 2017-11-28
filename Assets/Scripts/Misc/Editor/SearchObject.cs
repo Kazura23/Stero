@@ -174,8 +174,16 @@ public class SearchObject : MonoBehaviour
 			}
 
 			getProper = thisResearch.TryGetProperty;
-			getPref = ( GameObject ) objComp;
-			componentsPref = getPref.GetComponents<Component> ( );
+
+			try
+			{
+				getPref = ( GameObject ) objComp;
+				componentsPref = getPref.GetComponents<Component> ( );
+			}
+			catch{
+				getPref = null;
+				componentsPref = null;
+			}
 		}
 		else
 		{
@@ -265,18 +273,16 @@ public class SearchObject : MonoBehaviour
 					{
 						foreach ( var field in components[b].GetType ( ).GetFields ( ) )
 						{
-							yield return thisF;
-
 							try 
 							{
-								getCompName = field.GetValue ( components [ b ] ) .ToString();
+								getCompName = field.GetValue ( components [ b ] ).ToString ( );
 
 								if ( field.GetValue ( components [ b ] ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
 									break;
 								}
-								else if ( getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								else if ( getPref!= null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
 								{
 									checkRef = false;
 
@@ -295,6 +301,10 @@ public class SearchObject : MonoBehaviour
 										break;
 									}
 								}
+								else if ( getPref == null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								{
+									objTagList.Add ( objectList [ a ] );
+								}
 							}
 							catch{
 							}
@@ -304,10 +314,9 @@ public class SearchObject : MonoBehaviour
 					{
 						foreach ( var field in components[b].GetType ( ).GetProperties ( ) )
 						{
-							yield return thisF;
-
 							try 
 							{
+								
 								if ( field.GetValue ( components [ b ], null ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
