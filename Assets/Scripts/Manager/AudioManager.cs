@@ -221,14 +221,14 @@ public class AudioManager : ManagerParent
 			audioChild [ currIndex ].ThoseSource.Remove ( thisSource );
 		}
 
-		if ( thisAct != null )
-		{
-			thisAct.Invoke ( );
-		}
-
 		if ( thisSource != null )
 		{
 			Destroy ( thisSource );
+		}
+
+		if ( thisAct != null )
+		{
+			thisAct.Invoke ( );
 		}
 	}
 	#endregion
