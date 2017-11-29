@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour
 	float impulsionCL = 0;
 	float currSpeed = 0;
 	float currSpLine = 0;
+	float yRot = 0;
 
 	float PropulseBalls = 100;
 	float newH = 0;
@@ -663,8 +664,10 @@ public class PlayerController : MonoBehaviour
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed * 1.3f;
+			getTime *= DashSpeed;
 		}
+
+		getTime *= ( maxSpeed / MaxSpeed );
 
 		foreach ( RaycastHit thisRay in allHit )
 		{
@@ -679,15 +682,22 @@ public class PlayerController : MonoBehaviour
 				Transform getThis = thisRay.collider.transform;
 				float getDist = pTrans.position.y - thisRay.collider.transform.position.y;
 
-				if ( getThis.rotation.x < 0 )
+				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
+
+				if ( getThis.rotation.x > 0 || getThis.rotation.x == 0 && getThis.rotation.y > 0 && getThis.rotation.z > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( ( 360 - getThis.eulerAngles.x ) / 4  ) * getTime, 0 ), Space.World );
-					pRig.useGravity = false;
+					angle = -angle;
 				}
-				else if ( getThis.rotation.x > 0 )
+				Debug.Log ( angle );
+				if ( angle < 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 1.2f, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.2f, 0 ), Space.World );
 					pRig.useGravity = true;
+				}
+				else if ( angle > 0 )
+				{
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
+					pRig.useGravity = false;
 				}
 			}
 		}
@@ -709,7 +719,10 @@ public class PlayerController : MonoBehaviour
 			}
             // Camera.main.GetComponent<RainbowMove>().enabled = false;
 
-			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
+			if ( inAir )
+			{
+				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
+			}
         }
 		else if ( !checkAir && getCamRM )
         {
@@ -721,18 +734,22 @@ public class PlayerController : MonoBehaviour
 
 			getCamRM = false;
 
-			thisCam.GetComponent<RainbowMove>().enabled = true;
-			thisCam.GetComponent<RainbowRotate>().enabled = true;
+			if ( inAir )
+			{
+				inAir = false;
+
+				thisCam.GetComponent<RainbowMove> ( ).enabled = true;
+				thisCam.GetComponent<RainbowRotate> ( ).enabled = true;
+			}
            // ScreenShake.Singleton.ShakeFall();
         }
-
-		inAir = checkAir;
 	}
 
 	IEnumerator waitFall ( )
 	{
 		yield return new WaitForSeconds ( 0.5f );
 
+		inAir = true;
 		currWF = null;
 		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
 		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
@@ -825,25 +842,28 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( currentDir == Direction.North )
+		switch ( currentDir )
 		{
+		case Direction.North: 
 			calTrans = Vector3.forward * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.South )
-		{
-			calTrans = Vector3.back  * speed * delTime;
+			yRot = 0;
+			break;
+		case Direction.South: 
+			calTrans = Vector3.back * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.East )
-		{
+			yRot = 180;
+			break;
+		case Direction.East: 
 			calTrans = Vector3.right * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.West )
-		{
+			yRot = 90;
+			break;
+		case Direction.West: 
 			calTrans = Vector3.left * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), RotationSpeed * delTime );
+			yRot = -90;
+			break;
 		}
 
 		if ( newPos )
@@ -1143,6 +1163,18 @@ public class PlayerController : MonoBehaviour
 			befRot = Vector3.Distance ( getThisC, getPtr );
 		} 
 	}
+
+	/*void OnCollisionStay ( Collision thisColl )
+	{
+		if ( thisColl.gameObject.layer == 9 )
+		{
+			if ( inAir )
+			{
+				pTrans.position += pTrans.up * 2;
+				pRig.velocity = Vector3.zero;
+			}
+		}
+	}*/
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
