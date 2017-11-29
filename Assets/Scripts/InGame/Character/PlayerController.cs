@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 
-        Plafond.GetComponent<MeshRenderer>().enabled = true;
+        //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
 
 	void Update ( )
@@ -567,7 +567,7 @@ public class PlayerController : MonoBehaviour
 		totalDis += Vector3.Distance ( lastPos, pTrans.position );
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-		Debug.Log ( maxSpeed );
+		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
@@ -1259,7 +1259,7 @@ public class PlayerController : MonoBehaviour
         DOTween.To(() => maxSpeed,
             x => {
                 maxSpeed = x;
-                Debug.Log("val maxSpeed = "+maxSpeed);
+                //Debug.Log("val maxSpeed = "+maxSpeed);
             },
             MaxSpeed,
             delayInEndMadness
