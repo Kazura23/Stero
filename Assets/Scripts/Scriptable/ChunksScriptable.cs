@@ -12,6 +12,7 @@ public class ChunksScriptable : ScriptableObject
 
 	[Header ("Chunks")]
 	public GameObject WallEndChunk;
+	public Vector2 SizeWall = new Vector2 ( 0, -3 );
 	public GameObject WallOnLastChunk;
 	public List<GameObject> TheseChunks;
 
