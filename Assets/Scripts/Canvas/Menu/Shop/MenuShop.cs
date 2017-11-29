@@ -60,6 +60,8 @@ public class MenuShop : UiParent
             waitImpSub = true;
 			if ( !catCurrSelected )
 			{
+				transition = false;
+				waitImpSub = false;
 				BuyItem ( );
 			}
 			else
@@ -209,7 +211,7 @@ public class MenuShop : UiParent
 	// achete ou confirme un item
 	public void BuyItem ( )
 	{
-		string getCons = Constants.ItemBought + currItemSeled.CatName;
+		string getCons = Constants.ItemBought + currCatSeled.NameCat;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
 
 		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ItemName ) )
@@ -324,12 +326,12 @@ public class MenuShop : UiParent
 
 		for ( int a = 0; a < checkAllItem.Length; a++ )
 		{
-			if ( AllPlayerPrefs.GetBoolValue ( getCons + checkAllItem [ a ].CatName + checkAllItem [ a ].ItemName ) )
+			if ( AllPlayerPrefs.GetBoolValue ( getCons + currCatSeled.NameCat + checkAllItem [ a ].ItemName ) )
 			{
 				currItem = checkAllItem [ a ];
 
 				try{
-					getItemConf.Add ( getCons + checkAllItem [ a ].CatName, currItem ); 
+					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
 
 				}catch{Debug.Log("key same");}
 
@@ -479,8 +481,6 @@ public class MenuShop : UiParent
 			CheckSelectItem ( true );
 			thisShop.Selected = true;
 
-            
-            
 
             DOVirtual.DelayedCall(.1f, () => {
                 iconCategory.GetComponent<Image>().DOFade(1, .1f);
@@ -594,7 +594,6 @@ public class MenuShop : UiParent
         if ( selected )
 		{
 			thisItem.Selected = true;
-
 
             //Code du outline
             /*
