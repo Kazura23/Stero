@@ -26,6 +26,7 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
+	bool gameIsOver = true;
     #endregion
 
     #region Mono
@@ -36,27 +37,91 @@ public class GameController : ManagerParent
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
 
-		if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        float newImp = Input.GetAxis("Horizontal");
+
+
+        int menuSelect = GlobalManager.Ui.MenuSelection;
+        /*
+        if (newImp == 1)
         {
-			if ( GameStarted && !checkStart )
-			{
+            if(menuSelect < 4)
+                GlobalManager.Ui.MenuGlobal(menuSelect + 1);
+
+            //else
+              //  GlobalManager.Ui.MenuGlobal(1);
+        }
+
+        if (newImp == -1)
+        {
+            if (menuSelect > 1)
+                GlobalManager.Ui.MenuGlobal(menuSelect - 1);
+
+            //else
+             //   GlobalManager.Ui.MenuGlobal(4);
+        }*/
+
+        /*
+
+        if (newImp == 1)
+        {
+            if (menuSelect == 4)
+                GlobalManager.Ui.MenuGlobal(1);
+
+
+            if (menuSelect == 3)
+                GlobalManager.Ui.MenuGlobal(4);
+
+            if (menuSelect == 2)
+                GlobalManager.Ui.MenuGlobal(3);
+
+            if (menuSelect == 1)
+                GlobalManager.Ui.MenuGlobal(2);
+        }
+
+        if (newImp == -1)
+        {
+            if (menuSelect == 1)
+                GlobalManager.Ui.MenuGlobal(4);
+
+            if (menuSelect == 4)
+                GlobalManager.Ui.MenuGlobal(3);
+
+            if (menuSelect == 3)
+                GlobalManager.Ui.MenuGlobal(2);
+
+
+            if (menuSelect == 2)
+                GlobalManager.Ui.MenuGlobal(1);
+            //else
+            //   GlobalManager.Ui.MenuGlobal(4);
+        }
+
+    */
+
+        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        {
+            if (GameStarted && !checkStart)
+            {
                 GlobalManager.Ui.Intro();
 
-				checkStart = true;
-				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
-				Camera.main.GetComponent<RainbowRotate>().time = .4f;
-				Camera.main.GetComponent<RainbowMove>().time = .2f;
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "PunchIntro", false);
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed/ GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+                checkStart = true;
+                Player.GetComponent<PlayerController>().StopPlayer = false;
+                Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 17, () =>
+                {
 
                     int randomSound = UnityEngine.Random.Range(0, 6);
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    Debug.Log("Audio");
-                }).SetLoops(-1,LoopType.Restart);
-			}
-		}
+                    // Debug.Log("Audio");
+                }).SetLoops(-1, LoopType.Restart);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -84,6 +149,7 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
         Intro = true;
+		gameIsOver = true;
 
 		SetAllBonus ( );
 		GameStarted = true;
@@ -94,6 +160,11 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
+
+		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) )
+		{
+			setMusic ( );
+		}
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -127,6 +198,7 @@ public class GameController : ManagerParent
 		return null;
 	}
 
+
     public void Restart ( ) 
 	{
         AllPlayerPrefs.ResetStaticVar();
@@ -135,8 +207,13 @@ public class GameController : ManagerParent
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         GameStarted = false;
-    }   
-    
+		gameIsOver = true;
+    }
+
+	public void GameOver ( ) 
+	{
+		gameIsOver = false;
+	}
     #endregion
 
     #region Private Methods
@@ -145,6 +222,11 @@ public class GameController : ManagerParent
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
+	}
+
+	void setMusic ( )
+	{
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic );
 	}
 
 	void SetAllBonus ( )

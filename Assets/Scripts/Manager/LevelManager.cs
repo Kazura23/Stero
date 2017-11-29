@@ -30,7 +30,6 @@ public class LevelManager : ManagerParent
 		case "ProtoAlex":
 			e.onMenuHome = false;
 			e.Raise ( );
-
 			GlobalManager.GameCont.StartGame ( );
 			break;
 		case "HomeMenu":

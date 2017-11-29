@@ -91,15 +91,12 @@ public class AbstractObject : MonoBehaviour
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
-        int randomSongBody = UnityEngine.Random.Range(0, 8);
+        int randomSong = UnityEngine.Random.Range(0, 8);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSongBody + 1),false);
+		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-        int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "BoneBreak_" + (randomSongBone + 1), false);
-
-        Debug.Log("BoneBreak");
+       // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
 
@@ -167,7 +164,12 @@ public class AbstractObject : MonoBehaviour
 
         ScreenShake.Singleton.ShakeEnemy();
 
-		var animation = GetComponentInChildren<Animator>();
+
+        int randomSongBone = UnityEngine.Random.Range(0, 4);
+
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+
+        var animation = GetComponentInChildren<Animator>();
         if(animation)
 		    animation.enabled = false;
 
@@ -189,7 +191,12 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
-		meshRigid.tag = Constants._ObjDeadTag;
+		string getObsT = Constants._ObjDeadTag;
+		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		{
+			thisRig.tag = getObsT;
+		}
+		meshRigid.tag = getObsT;
 	}
 
 	IEnumerator enableColl ( )

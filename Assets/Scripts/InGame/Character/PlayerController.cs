@@ -148,6 +148,7 @@ public class PlayerController : MonoBehaviour
 	float impulsionCL = 0;
 	float currSpeed = 0;
 	float currSpLine = 0;
+	float yRot = 0;
 
 	float PropulseBalls = 100;
 	float newH = 0;
@@ -230,6 +231,8 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
 
+        if (Input.GetKeyDown(KeyCode.R))
+            GlobalManager.GameCont.Restart();
 
         float getTime = Time.deltaTime;
 
@@ -380,9 +383,6 @@ public class PlayerController : MonoBehaviour
         GlobalManager.GameCont.soundFootSteps.Kill();
 
 
-
-
-
         DOVirtual.DelayedCall(1f, () =>
         {
 
@@ -394,7 +394,7 @@ public class PlayerController : MonoBehaviour
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-        //GlobalManager.GameCont.Restart ( );
+		GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
@@ -470,7 +470,7 @@ public class PlayerController : MonoBehaviour
 				getFOVDP = FOVIncrease;
 
 
-                if ( timeToDP < TimeToDoublePunch * 0.35f )
+                if ( timeToDP < TimeToDoublePunch * 0.75f )
 				{
 					resetAxeD = false;
 					dpunch = true;
@@ -501,7 +501,7 @@ public class PlayerController : MonoBehaviour
                     playAnimator.SetBool("ChargingPunch_verif", true);
                     playAnimator.SetBool("ChargingPunch", true);
                     playAnimator.SetTrigger("Double");
-                    Debug.Log("trigger");
+                    //Debug.Log("trigger");
                 }
 
 
@@ -515,7 +515,7 @@ public class PlayerController : MonoBehaviour
 				if ( getFOVDP > 0 )
 				{
 
-                    Debug.Log("Charging");
+                    //Debug.Log("Charging");
 
                     thisCam.fieldOfView += calcRatio;
 				}
@@ -577,19 +577,19 @@ public class PlayerController : MonoBehaviour
 		totalDis += Vector3.Distance ( lastPos, pTrans.position );
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-
+		Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
 
-			if ( MaxSpeedInc > MaxSpeed - maxSpeed )
+			if ( MaxSpeedInc > maxSpeed - MaxSpeed )
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
 			}
 			else
 			{
-				maxSpeed = SpeedIncrease;
+				maxSpeed = MaxSpeed + MaxSpeedInc;
 			}
 
 			if ( MaxCLInc > maxSpeedCL - MaxSpeedCL )
@@ -601,7 +601,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else
 			{
-				maxSpeedCL = MaxCLInc;
+				maxSpeedCL = MaxSpeedCL + MaxCLInc;
 			}
 		}
 	}
@@ -677,6 +677,8 @@ public class PlayerController : MonoBehaviour
 			getTime *= DashSpeed;
 		}
 
+		getTime *= ( maxSpeed / MaxSpeed );
+
 		foreach ( RaycastHit thisRay in allHit )
 		{
 			if ( thisRay.collider.gameObject == gameObject )
@@ -688,16 +690,24 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
+				float getDist = pTrans.position.y - thisRay.collider.transform.position.y;
 
-				if ( getThis.rotation.x < 0 )
+				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
+
+				if ( getThis.rotation.x > 0 || getThis.rotation.x == 0 && getThis.rotation.y > 0 && getThis.rotation.z > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( ( 360 - getThis.eulerAngles.x ) / 4  ) * getTime, 0 ), Space.World );
-					pRig.useGravity = false;
+					angle = -angle;
 				}
-				else if ( getThis.rotation.x > 0 )
+
+				if ( angle < 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, ( -getThis.eulerAngles.x / 4 ) * getTime * 2, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.2f, 0 ), Space.World );
 					pRig.useGravity = true;
+				}
+				else if ( angle > 0 )
+				{
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
+					pRig.useGravity = false;
 				}
 			}
 		}
@@ -719,7 +729,10 @@ public class PlayerController : MonoBehaviour
 			}
             // Camera.main.GetComponent<RainbowMove>().enabled = false;
 
-			pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
+			if ( inAir )
+			{
+				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
+			}
         }
 		else if ( !checkAir && getCamRM )
         {
@@ -731,18 +744,22 @@ public class PlayerController : MonoBehaviour
 
 			getCamRM = false;
 
-			thisCam.GetComponent<RainbowMove>().enabled = true;
-			thisCam.GetComponent<RainbowRotate>().enabled = true;
+			if ( inAir )
+			{
+				inAir = false;
+
+				thisCam.GetComponent<RainbowMove> ( ).enabled = true;
+				thisCam.GetComponent<RainbowRotate> ( ).enabled = true;
+			}
            // ScreenShake.Singleton.ShakeFall();
         }
-
-		inAir = checkAir;
 	}
 
 	IEnumerator waitFall ( )
 	{
 		yield return new WaitForSeconds ( 0.5f );
 
+		inAir = true;
 		currWF = null;
 		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
 		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
@@ -835,25 +852,28 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( currentDir == Direction.North )
+		switch ( currentDir )
 		{
+		case Direction.North: 
 			calTrans = Vector3.forward * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.South )
-		{
-			calTrans = Vector3.back  * speed * delTime;
+			yRot = 0;
+			break;
+		case Direction.South: 
+			calTrans = Vector3.back * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.East )
-		{
+			yRot = 180;
+			break;
+		case Direction.East: 
 			calTrans = Vector3.right * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), RotationSpeed * delTime );
-		}
-		else if ( currentDir == Direction.West )
-		{
+			yRot = 90;
+			break;
+		case Direction.West: 
 			calTrans = Vector3.left * speed * delTime;
 			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), RotationSpeed * delTime );
+			yRot = -90;
+			break;
 		}
 
 		if ( newPos )
@@ -1022,8 +1042,7 @@ public class PlayerController : MonoBehaviour
                 punch.RightPunch = true;
 
 				playAnimator.SetTrigger("Right");
-
-				GlobalManager.Ui.SimpleCoup();
+                
             }
             else
             {
@@ -1155,17 +1174,37 @@ public class PlayerController : MonoBehaviour
 		} 
 	}
 
+	/*void OnCollisionStay ( Collision thisColl )
+	{
+		if ( thisColl.gameObject.layer == 9 )
+		{
+			if ( inAir )
+			{
+				pTrans.position += pTrans.up * 2;
+				pRig.velocity = Vector3.zero;
+			}
+		}
+	}*/
+
 	void OnCollisionEnter ( Collision thisColl )
 	{
 		GameObject getObj = thisColl.gameObject;
 
 		if ( Dash || InMadness )
 		{
-			if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
-			{
-				GlobalManager.Ui.BloodHit ( );
 
-				/*Vector3 getProj = getPunch.projection_basic;
+            if (getObj.tag == Constants._EnnemisTag)
+            {
+                GlobalManager.Ui.BloodHitDash();
+               // Debug.Log("Dasj");
+            }
+            if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
+			{
+
+               // Debug.Log("Dasj2");
+                //GlobalManager.Ui.BloodHit ( );
+
+                /*Vector3 getProj = getPunch.projection_basic;
 
 				if ( Random.Range ( 0,2 ) == 0 )
 				{
@@ -1175,12 +1214,13 @@ public class PlayerController : MonoBehaviour
 				{
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}*/
-				thisColl.collider.enabled = false;
+                thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
 				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
 				return;
 			}
-			else if ( getObj.tag == Constants._Balls )
+
+            else if ( getObj.tag == Constants._Balls )
 			{
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true ) );
 				return;
