@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     [Header("GRAPH")]
     public GameObject leftHand;
     public GameObject rightHand;
-    public GameObject Plafond;
+    //public GameObject Plafond;
 
 	[HideInInspector]
 	public int currLine = 0;
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 
-        Plafond.GetComponent<MeshRenderer>().enabled = true;
+       //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
 
 	void Update ( )
