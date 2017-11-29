@@ -78,9 +78,7 @@ LightmapSettings:
     m_PVRDirectSampleCount: 5
     m_PVRSampleCount: 50
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
@@ -6750,6 +6748,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -7470,7 +7482,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4243065657503650, guid: ac64f997d77b9cd4ab4efff6105597ce, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1379156540791322, guid: ac64f997d77b9cd4ab4efff6105597ce, type: 2}
       propertyPath: m_Name
@@ -11811,7 +11823,7 @@ Transform:
   - {fileID: 1084307442}
   - {fileID: 946574497}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438300177
 GameObject:
@@ -21156,7 +21168,7 @@ Transform:
   - {fileID: 1455175050}
   - {fileID: 1215113740}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &714429306
 GameObject:
@@ -22677,7 +22689,7 @@ Transform:
   m_Children:
   - {fileID: 314175870}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &764082838
 MonoBehaviour:
@@ -28114,7 +28126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4525732507343988, guid: cfe89f82f4c6c4f6fb515865f8b98c99, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4223555132747590, guid: cfe89f82f4c6c4f6fb515865f8b98c99, type: 2}
       propertyPath: m_LocalPosition.x
@@ -29205,6 +29217,20 @@ Light:
   m_Lightmapping: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 3.51
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -38036,7 +38062,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4468928296300624, guid: 6dba9ae15dfd19946b05af94a99d9aac, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4468928296300624, guid: 6dba9ae15dfd19946b05af94a99d9aac, type: 2}
       propertyPath: m_LocalScale.z
@@ -38068,7 +38094,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1390698707539956, guid: 6dba9ae15dfd19946b05af94a99d9aac, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dba9ae15dfd19946b05af94a99d9aac, type: 2}
@@ -42854,7 +42880,7 @@ Transform:
   - {fileID: 2067584097}
   - {fileID: 802005411}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1253705030
 GameObject:
@@ -52333,7 +52359,7 @@ Transform:
   - {fileID: 181272081}
   - {fileID: 1312217384}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1530126425
 GameObject:
@@ -57848,7 +57874,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4019637009555822, guid: 8a4bd94c402f1fc47a4982080a229450, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 144175664033173268, guid: 8a4bd94c402f1fc47a4982080a229450,
         type: 2}
@@ -59654,7 +59680,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4525732507343988, guid: cfe89f82f4c6c4f6fb515865f8b98c99, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1706531069296756, guid: cfe89f82f4c6c4f6fb515865f8b98c99, type: 2}
       propertyPath: m_Name
@@ -61009,6 +61035,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -66742,7 +66782,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356111126795066, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
@@ -71754,7 +71798,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4054680500349640, guid: ed76aa5d630f19a42a2e8d45eaeae68e, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed76aa5d630f19a42a2e8d45eaeae68e, type: 2}
@@ -72450,6 +72494,10 @@ Prefab:
     - target: {fileID: 4347746703351614, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356111126795066, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4bb5b35a636cd74384418cd5baca4a8, type: 2}
