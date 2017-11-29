@@ -564,7 +564,11 @@ public class PlayerController : MonoBehaviour
 
 	void distCal ( )
 	{
-		totalDis += Vector3.Distance ( lastPos, pTrans.position );
+		if ( !inAir )
+		{
+			totalDis += Vector3.Distance ( lastPos, pTrans.position );
+		}
+
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
 		Debug.Log ( maxSpeed );
@@ -664,7 +668,7 @@ public class PlayerController : MonoBehaviour
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed;
+			getTime *= DashSpeed * 1.2f;
 		}
 
 		getTime *= ( maxSpeed / MaxSpeed );
@@ -691,7 +695,7 @@ public class PlayerController : MonoBehaviour
 
 				if ( angle < 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.2f, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 				else if ( angle > 0 )
