@@ -35,27 +35,91 @@ public class GameController : ManagerParent
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
 
-		if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        float newImp = Input.GetAxis("Horizontal");
+
+
+        int menuSelect = GlobalManager.Ui.MenuSelection;
+        /*
+        if (newImp == 1)
         {
-			if ( GameStarted && !checkStart )
-			{
+            if(menuSelect < 4)
+                GlobalManager.Ui.MenuGlobal(menuSelect + 1);
+
+            //else
+              //  GlobalManager.Ui.MenuGlobal(1);
+        }
+
+        if (newImp == -1)
+        {
+            if (menuSelect > 1)
+                GlobalManager.Ui.MenuGlobal(menuSelect - 1);
+
+            //else
+             //   GlobalManager.Ui.MenuGlobal(4);
+        }*/
+
+        /*
+
+        if (newImp == 1)
+        {
+            if (menuSelect == 4)
+                GlobalManager.Ui.MenuGlobal(1);
+
+
+            if (menuSelect == 3)
+                GlobalManager.Ui.MenuGlobal(4);
+
+            if (menuSelect == 2)
+                GlobalManager.Ui.MenuGlobal(3);
+
+            if (menuSelect == 1)
+                GlobalManager.Ui.MenuGlobal(2);
+        }
+
+        if (newImp == -1)
+        {
+            if (menuSelect == 1)
+                GlobalManager.Ui.MenuGlobal(4);
+
+            if (menuSelect == 4)
+                GlobalManager.Ui.MenuGlobal(3);
+
+            if (menuSelect == 3)
+                GlobalManager.Ui.MenuGlobal(2);
+
+
+            if (menuSelect == 2)
+                GlobalManager.Ui.MenuGlobal(1);
+            //else
+            //   GlobalManager.Ui.MenuGlobal(4);
+        }
+
+    */
+
+        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        {
+            if (GameStarted && !checkStart)
+            {
                 GlobalManager.Ui.Intro();
 
-				checkStart = true;
-				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
-				Camera.main.GetComponent<RainbowRotate>().time = .4f;
-				Camera.main.GetComponent<RainbowMove>().time = .2f;
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "PunchIntro", false);
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed/ GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+                checkStart = true;
+                Player.GetComponent<PlayerController>().StopPlayer = false;
+                Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 17, () =>
+                {
 
                     int randomSound = UnityEngine.Random.Range(0, 6);
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                   // Debug.Log("Audio");
-                }).SetLoops(-1,LoopType.Restart);
-			}
-		}
+                    // Debug.Log("Audio");
+                }).SetLoops(-1, LoopType.Restart);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -129,6 +193,7 @@ public class GameController : ManagerParent
 
 		return null;
 	}
+
 
     public void Restart ( ) 
 	{
