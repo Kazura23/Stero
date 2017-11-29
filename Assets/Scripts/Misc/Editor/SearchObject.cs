@@ -69,6 +69,8 @@ public class SearchObject : MonoBehaviour
 		}
 		else
 		{
+			WindowSearchObject.MaxCount ( asset.Count, currPlace );
+
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, asset.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
@@ -104,6 +106,8 @@ public class SearchObject : MonoBehaviour
 		}
 		else
 		{
+			WindowSearchObject.MaxCount ( objectList.Length, currPlace );
+
 			EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, objectList, thisType, objComp, thisResearch ), currPlace );
 		}
 
@@ -138,6 +142,8 @@ public class SearchObject : MonoBehaviour
 		}
 		else 
 		{
+			WindowSearchObject.MaxCount ( thisPref.Count, currPlace );
+
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, thisPref.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
