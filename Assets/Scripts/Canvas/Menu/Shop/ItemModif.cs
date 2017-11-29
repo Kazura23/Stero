@@ -37,8 +37,6 @@ public class ItemModif : MonoBehaviour
 	public ItemModif UpItem;
 	public ItemModif DownItem;
 
-	public string CatName;
-
 	public bool ModifVie;
 	public bool ModifSpecial;
 
