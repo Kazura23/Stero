@@ -227,6 +227,10 @@ public class PlayerController : MonoBehaviour
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
+
+        if (Input.GetKeyDown(KeyCode.R))
+            GlobalManager.GameCont.Restart();
+
         float getTime = Time.deltaTime;
 
 		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
@@ -487,7 +491,7 @@ public class PlayerController : MonoBehaviour
                     playAnimator.SetBool("ChargingPunch_verif", true);
                     playAnimator.SetBool("ChargingPunch", true);
                     playAnimator.SetTrigger("Double");
-                    Debug.Log("trigger");
+                    //Debug.Log("trigger");
                 }
 
 
@@ -1028,8 +1032,7 @@ public class PlayerController : MonoBehaviour
                 punch.RightPunch = true;
 
 				playAnimator.SetTrigger("Right");
-
-				GlobalManager.Ui.SimpleCoup();
+                
             }
             else
             {
@@ -1179,11 +1182,19 @@ public class PlayerController : MonoBehaviour
 
 		if ( Dash || InMadness )
 		{
-			if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
-			{
-				//GlobalManager.Ui.BloodHit ( );
 
-				/*Vector3 getProj = getPunch.projection_basic;
+            if (getObj.tag == Constants._EnnemisTag)
+            {
+                GlobalManager.Ui.BloodHitDash();
+               // Debug.Log("Dasj");
+            }
+            if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
+			{
+
+               // Debug.Log("Dasj2");
+                //GlobalManager.Ui.BloodHit ( );
+
+                /*Vector3 getProj = getPunch.projection_basic;
 
 				if ( Random.Range ( 0,2 ) == 0 )
 				{
@@ -1193,12 +1204,13 @@ public class PlayerController : MonoBehaviour
 				{
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}*/
-				thisColl.collider.enabled = false;
+                thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
 				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
 				return;
 			}
-			else if ( getObj.tag == Constants._Balls )
+
+            else if ( getObj.tag == Constants._Balls )
 			{
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true ) );
 				return;
