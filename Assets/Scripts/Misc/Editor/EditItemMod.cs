@@ -89,8 +89,6 @@ public class EditItemMod : Editor
 		EditorGUILayout.PropertyField ( ItemName );
 		EditorGUILayout.PropertyField ( Price );
 
-		myTarget.CatName = myTarget.transform.parent.GetComponent<CatShop> ( ).NameCat;
-
 		#region MainButton
 
 		// Si l'item est acheté
