@@ -386,8 +386,8 @@ public class PlayerController : MonoBehaviour
         DOVirtual.DelayedCall(1f, () =>
         {
 
-            //GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
-            GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
+            GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
+            //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
             Debug.Log("compile");
             ScreenShake.Singleton.ShakeGameOver();
 
