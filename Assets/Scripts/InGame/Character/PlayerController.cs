@@ -567,19 +567,19 @@ public class PlayerController : MonoBehaviour
 		totalDis += Vector3.Distance ( lastPos, pTrans.position );
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-
+		Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
 
-			if ( MaxSpeedInc > MaxSpeed - maxSpeed )
+			if ( MaxSpeedInc > maxSpeed - MaxSpeed )
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
 			}
 			else
 			{
-				maxSpeed = SpeedIncrease;
+				maxSpeed = MaxSpeed + MaxSpeedInc;
 			}
 
 			if ( MaxCLInc > maxSpeedCL - MaxSpeedCL )
@@ -591,7 +591,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else
 			{
-				maxSpeedCL = MaxCLInc;
+				maxSpeedCL = MaxSpeedCL + MaxCLInc;
 			}
 		}
 	}
@@ -688,7 +688,7 @@ public class PlayerController : MonoBehaviour
 				{
 					angle = -angle;
 				}
-				Debug.Log ( angle );
+
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.2f, 0 ), Space.World );
