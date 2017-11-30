@@ -26,7 +26,6 @@ public class WindowSearchObject : EditorWindow
 	ResearcheType thisType;
 
 	string thisStringSearch;
-	string SpecificPath;
 	string specName;
 	int thisNbr;
 	int compDiff;
@@ -67,6 +66,7 @@ public class WindowSearchObject : EditorWindow
 	bool apply;
 	//bool replace;
 
+	Object SpecificPath;
 	Object objComp;
 	List<GameObject> thispref;
 	Vector2 scrollPosProj;
@@ -85,7 +85,7 @@ public class WindowSearchObject : EditorWindow
 		thisType = ResearcheType.Tag;
 
 		thisStringSearch = string.Empty;
-		SpecificPath = string.Empty;
+		SpecificPath = null;
 		specName = string.Empty;
 
 		objComp = null;
@@ -150,6 +150,11 @@ public class WindowSearchObject : EditorWindow
 	public static void ShowWindow()
 	{
 		EditorWindow.GetWindow ( typeof( WindowSearchObject ) );
+	}
+
+	void Update()
+	{
+		
 	}
 
 	void OnGUI()
@@ -309,7 +314,10 @@ public class WindowSearchObject : EditorWindow
 		currResearch.NbrCompDiff = compDiff;
 		currResearch.NbrChildDiff = childDiff;
 		currResearch.OtherName = specName;
-		currResearch.FolderProject = SpecificPath;
+		if ( SpecificPath != null )
+		{
+			currResearch.FolderProject = AssetDatabase.GetAssetOrScenePath( SpecificPath );
+		}
 
 #endregion
 
@@ -367,10 +375,11 @@ public class WindowSearchObject : EditorWindow
 			getAllOnProj.Clear ( );
 
 			endSearchProj = false;
+
 			EditorCoroutine.start  ( SearchObject.LoadAssetsInProject ( AllObjectProject, thisType, objComp, getChildren, currResearch ), TypePlace.OnProject );
 		}
 
-		SpecificPath = EditorGUILayout.TextField ("Specific folder :", SpecificPath, GUILayout.Width ( sizeX / 3.1f ));
+		SpecificPath = EditorGUILayout.ObjectField ("Specific folder :", SpecificPath, typeof( Object ), true, GUILayout.Width ( sizeX / 3.1f ));
 
 		if ( !endSearchProj )
 		{

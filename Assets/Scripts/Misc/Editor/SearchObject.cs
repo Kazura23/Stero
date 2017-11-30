@@ -44,6 +44,7 @@ public class SearchObject : MonoBehaviour
 			guid = GUIDs [ a ];
 			assetPath = AssetDatabase.GUIDToAssetPath ( guid );
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
+			yield return new WaitForEndOfFrame ( );
 		}
 
 		if ( asset.Count == 0 )
@@ -322,7 +323,6 @@ public class SearchObject : MonoBehaviour
 						{
 							try 
 							{
-								
 								if ( field.GetValue ( components [ b ], null ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
