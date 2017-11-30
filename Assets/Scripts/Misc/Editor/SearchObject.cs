@@ -14,8 +14,18 @@ public class SearchObject : MonoBehaviour
 	#region Public Methods
 	public static IEnumerator LoadAssetsInProject ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
-		List<GameObject> asset = new List<GameObject> ( ); 
 		TypePlace currPlace = TypePlace.OnProject;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
+		List<GameObject> asset = new List<GameObject> ( ); 
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		string guid;
@@ -86,8 +96,18 @@ public class SearchObject : MonoBehaviour
 
 	public static IEnumerator LoadAssetOnScenes ( List<List<GameObject>> getAllObj, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
-		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
 		TypePlace currPlace = TypePlace.OnScene;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
+		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		if ( objectList.Length == 0 )
@@ -126,6 +146,16 @@ public class SearchObject : MonoBehaviour
 	public static IEnumerator LoadOnPrefab ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, List<GameObject> thisPref, bool getChildren, InfoResearch thisResearch )
 	{
 		TypePlace currPlace = TypePlace.OnObject;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		int a;
@@ -190,13 +220,6 @@ public class SearchObject : MonoBehaviour
 
 		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
 		{
-			if ( objComp == null )
-			{
-				WindowSearchObject.EndResearch ( thisPlace );
-
-				yield break;
-			}
-
 			getProper = thisResearch.TryGetProperty;
 
 			try
@@ -204,7 +227,8 @@ public class SearchObject : MonoBehaviour
 				getPref = ( GameObject ) objComp;
 				componentsPref = getPref.GetComponents<Component> ( );
 			}
-			catch{
+			catch
+			{
 				getPref = null;
 				componentsPref = null;
 			}
