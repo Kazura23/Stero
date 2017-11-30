@@ -26,6 +26,11 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
+    bool isStay = true;
+    private int chooseOption = 0;
+    public Vector3[] moveRotate = new Vector3[5];
+    public GameObject[] tabGameObject = new GameObject[5];
+    public float delayRotate = 5;
     #endregion
 
     #region Mono
@@ -35,39 +40,34 @@ public class GameController : ManagerParent
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
-
-		if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        if (!checkStart && isStay)
         {
-			if ( GameStarted && !checkStart )
-			{
-                GlobalManager.Ui.Intro();
+            switch (chooseOption)
+            {
+                case 0: // start game
+                    Debug.Log("GameStart");
+                    GameStartedUpdate();
+                    break;
 
-				checkStart = true;
-				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
-				Camera.main.GetComponent<RainbowRotate>().time = .4f;
-				Camera.main.GetComponent<RainbowMove>().time = .2f;
+                case 1: // shop
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed/ GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
-
-                    int randomSound = UnityEngine.Random.Range(0, 6);
-
-                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
-                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    Debug.Log("Audio");
-                }).SetLoops(-1,LoopType.Restart);
-			}
-		}
+                    Debug.Log("Shop");
+                    break;
 
                 case 2: // quitter
 
+                    Debug.Log("Quit");
                     break;
 
-                case 3: // option
+                case 3: // highscore
 
+
+                    Debug.Log("Highscores");
                     break;
 
-                case 4: // highscore
+                case 4:  // option
 
+                    Debug.Log("Options");
                     break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -79,6 +79,8 @@ public class GameController : ManagerParent
             }
         }
 	}
+
+
     #endregion
 
     #region Public Methods
@@ -89,7 +91,6 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
         Intro = true;
-		gameIsOver = true;
 
 		SetAllBonus ( );
 		GameStarted = true;
@@ -100,11 +101,6 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
-
-		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) )
-		{
-			setMusic ( );
-		}
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -138,21 +134,16 @@ public class GameController : ManagerParent
 		return null;
 	}
 
-
     public void Restart ( ) 
 	{
+        AllPlayerPrefs.ResetStaticVar();
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         GameStarted = false;
-		gameIsOver = true;
-    }
-
-	public void GameOver ( ) 
-	{
-		gameIsOver = false;
-	}
+    }   
+    
     #endregion
 
     #region Private Methods
@@ -228,11 +219,6 @@ public class GameController : ManagerParent
         AllPlayerPrefs.saveData = SaveData.Load();
 	}
 
-	void setMusic ( )
-	{
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic );
-	}
-
 	void SetAllBonus ( )
 	{
 		Dictionary <string, ItemModif> getMod = AllModifItem;
@@ -284,10 +270,34 @@ public class GameController : ManagerParent
 			currPlayer.Life += thisItem.NombreVie;
 		}
 	}
-	#endregion
-}
-#endregion
+    #endregion
 
+}
+
+#region Save
+public static class SaveData
+{
+    public static void Save(ListData p_dataSave)
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        FileStream fSave = File.Create(path1);
+        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
+        fSave.Close();
+        Debug.Log("save");
+    }
+
+    public static ListData Load()
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        ListData l = new ListData();
+        if (File.Exists(path1))
+        {
+            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
+            l.listScore = fSave.Deserialize<List<DataSave>>();
+        }
+        return l;
+    }
+}
 
 [System.Serializable]
 public class DataSave
@@ -374,52 +384,4 @@ public class FxList
 {
 	public string FxName;
 	public GameObject FxObj;
-}
-
-    bool isStay = true;
-    private int chooseOption = 0;
-    public Vector3[] moveRotate = new Vector3[5];
-    public GameObject[] tabGameObject = new GameObject[5];
-    public float delayRotate = 5;
-		}
-        if (!checkStart && isStay)
-        {
-            switch (chooseOption)
-            {
-                case 0: // start game
-                    GameStartedUpdate();
-                    break;
-                case 1: // shop
-                    break;
-
-
-        AllPlayerPrefs.ResetStaticVar();
-		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
-
-        GlobalManager.Ui.DashSpeedEffect(false);
-    #endregion
-
-#region Save
-public static class SaveData
-{
-    public static void Save(ListData p_dataSave)
-    {
-        string path1 = Application.dataPath + "/Save/save.bin";
-        FileStream fSave = File.Create(path1);
-        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
-        fSave.Close();
-        Debug.Log("save");
-    }
-
-    public static ListData Load()
-    {
-        string path1 = Application.dataPath + "/Save/save.bin";
-        ListData l = new ListData();
-        if (File.Exists(path1))
-        {
-            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
-            l.listScore = fSave.Deserialize<List<DataSave>>();
-        }
-        return l;
-    }
 }

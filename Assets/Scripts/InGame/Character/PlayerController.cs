@@ -394,7 +394,7 @@ public class PlayerController : MonoBehaviour
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-		GlobalManager.GameCont.GameOver ( );
+		//GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
@@ -577,7 +577,7 @@ public class PlayerController : MonoBehaviour
 		totalDis += Vector3.Distance ( lastPos, pTrans.position );
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-		Debug.Log ( maxSpeed );
+		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
