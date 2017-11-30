@@ -26,7 +26,6 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
-	bool gameIsOver = true;
     #endregion
 
     #region Mono
@@ -37,108 +36,49 @@ public class GameController : ManagerParent
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
 
-        float newImp = Input.GetAxis("Horizontal");
-
-
-        int menuSelect = GlobalManager.Ui.MenuSelection;
-        /*
-        if (newImp == 1)
+		if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
         {
-            if(menuSelect < 4)
-                GlobalManager.Ui.MenuGlobal(menuSelect + 1);
-
-            //else
-              //  GlobalManager.Ui.MenuGlobal(1);
-        }
-
-        if (newImp == -1)
-        {
-            if (menuSelect > 1)
-                GlobalManager.Ui.MenuGlobal(menuSelect - 1);
-
-            //else
-             //   GlobalManager.Ui.MenuGlobal(4);
-        }*/
-
-        /*
-
-        if (newImp == 1)
-        {
-            if (menuSelect == 4)
-                GlobalManager.Ui.MenuGlobal(1);
-
-
-            if (menuSelect == 3)
-                GlobalManager.Ui.MenuGlobal(4);
-
-            if (menuSelect == 2)
-                GlobalManager.Ui.MenuGlobal(3);
-
-            if (menuSelect == 1)
-                GlobalManager.Ui.MenuGlobal(2);
-        }
-
-        if (newImp == -1)
-        {
-            if (menuSelect == 1)
-                GlobalManager.Ui.MenuGlobal(4);
-
-            if (menuSelect == 4)
-                GlobalManager.Ui.MenuGlobal(3);
-
-            if (menuSelect == 3)
-                GlobalManager.Ui.MenuGlobal(2);
-
-
-            if (menuSelect == 2)
-                GlobalManager.Ui.MenuGlobal(1);
-            //else
-            //   GlobalManager.Ui.MenuGlobal(4);
-        }
-
-    */
-
-        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
-        {
-            if (GameStarted && !checkStart)
-            {
+			if ( GameStarted && !checkStart )
+			{
                 GlobalManager.Ui.Intro();
 
-                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "PunchIntro", false);
+				checkStart = true;
+				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
+				Camera.main.GetComponent<RainbowRotate>().time = .4f;
+				Camera.main.GetComponent<RainbowMove>().time = .2f;
 
-                checkStart = true;
-                Player.GetComponent<PlayerController>().StopPlayer = false;
-                Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                Camera.main.GetComponent<RainbowMove>().time = .2f;
-
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 17, () =>
-                {
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed/ GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
 
                     int randomSound = UnityEngine.Random.Range(0, 6);
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    // Debug.Log("Audio");
-                }).SetLoops(-1, LoopType.Restart);
+                    Debug.Log("Audio");
+                }).SetLoops(-1,LoopType.Restart);
+			}
+		}
+
+                case 2: // quitter
+
+                    break;
+
+                case 3: // option
+
+                    break;
+
+                case 4: // highscore
+
+                    break;
+            }
+            if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                ChooseRotate(false);
+            }else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChooseRotate(true);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-
-            Debug.Log("Fx");
-            Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
-            GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
-            thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);
-            thisGO.transform.DOLocalMove(Vector3.zero, 0);
-
-            GameObject thisGOLeft = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
-            thisGOLeft.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().leftHand.transform);
-            thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
-        }
 	}
-
-
     #endregion
 
     #region Public Methods
@@ -201,7 +141,6 @@ public class GameController : ManagerParent
 
     public void Restart ( ) 
 	{
-        AllPlayerPrefs.ResetStaticVar();
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
@@ -217,6 +156,71 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
+
+    private IEnumerator TimerRotate()
+    {
+        yield return new WaitForSeconds(delayRotate);
+        isStay = true;
+    }
+
+    private void ChooseRotate(bool p_add)
+    {
+        if (p_add)
+        {
+            chooseOption++;
+            if (chooseOption == moveRotate.Length)
+                chooseOption = 0;
+        }
+        else
+        {
+            chooseOption--;
+            if (chooseOption == -1)
+                chooseOption = moveRotate.Length - 1;
+        }
+        isStay = false;
+        StartCoroutine(TimerRotate());
+        Player.transform.DOLocalRotate(moveRotate[chooseOption], delayRotate);
+    }
+
+    private void GameStartedUpdate()
+    {
+        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        {
+            if (GameStarted && !checkStart)
+            {
+                GlobalManager.Ui.Intro();
+
+                checkStart = true;
+                Player.GetComponent<PlayerController>().StopPlayer = false;
+                Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+
+                    int randomSound = UnityEngine.Random.Range(0, 6);
+
+                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+                    Debug.Log("Audio");
+                }).SetLoops(-1, LoopType.Restart);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+
+            Debug.Log("Fx");
+            Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
+            GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
+            thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);
+            thisGO.transform.DOLocalMove(Vector3.zero, 0);
+
+            GameObject thisGOLeft = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
+            thisGOLeft.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().leftHand.transform);
+            thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
+        }
+    }
+
     protected override void InitializeManager ( )
 	{
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
@@ -280,34 +284,10 @@ public class GameController : ManagerParent
 			currPlayer.Life += thisItem.NombreVie;
 		}
 	}
-    #endregion
-
+	#endregion
 }
+#endregion
 
-#region Save
-public static class SaveData
-{
-    public static void Save(ListData p_dataSave)
-    {
-        string path1 = Application.dataPath + "/Save/save.bin";
-        FileStream fSave = File.Create(path1);
-        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
-        fSave.Close();
-        Debug.Log("save");
-    }
-
-    public static ListData Load()
-    {
-        string path1 = Application.dataPath + "/Save/save.bin";
-        ListData l = new ListData();
-        if (File.Exists(path1))
-        {
-            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
-            l.listScore = fSave.Deserialize<List<DataSave>>();
-        }
-        return l;
-    }
-}
 
 [System.Serializable]
 public class DataSave
@@ -394,4 +374,52 @@ public class FxList
 {
 	public string FxName;
 	public GameObject FxObj;
-}
+}
+
+    bool isStay = true;
+    private int chooseOption = 0;
+    public Vector3[] moveRotate = new Vector3[5];
+    public GameObject[] tabGameObject = new GameObject[5];
+    public float delayRotate = 5;
+		}
+        if (!checkStart && isStay)
+        {
+            switch (chooseOption)
+            {
+                case 0: // start game
+                    GameStartedUpdate();
+                    break;
+                case 1: // shop
+                    break;
+
+
+        AllPlayerPrefs.ResetStaticVar();
+		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+
+        GlobalManager.Ui.DashSpeedEffect(false);
+    #endregion
+
+#region Save
+public static class SaveData
+{
+    public static void Save(ListData p_dataSave)
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        FileStream fSave = File.Create(path1);
+        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
+        fSave.Close();
+        Debug.Log("save");
+    }
+
+    public static ListData Load()
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        ListData l = new ListData();
+        if (File.Exists(path1))
+        {
+            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
+            l.listScore = fSave.Deserialize<List<DataSave>>();
+        }
+        return l;
+    }
+}
