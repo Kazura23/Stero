@@ -17,6 +17,7 @@ public class SearchObject : MonoBehaviour
 	{
 		List<GameObject> asset = new List<GameObject> ( ); 
 		TypePlace currPlace = TypePlace.OnProject;
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		string guid;
 		string assetPath;
@@ -47,7 +48,7 @@ public class SearchObject : MonoBehaviour
 			guid = GUIDs [ a ];
 			assetPath = AssetDatabase.GUIDToAssetPath ( guid );
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
-			yield return new WaitForEndOfFrame ( );
+			yield return thisF;
 		}
 
 		WindowSearchObject.AssetLoading ( false, GUIDs.Length );
@@ -71,6 +72,7 @@ public class SearchObject : MonoBehaviour
 			for ( a = 0; a < asset.Count; a++ )
 			{
 				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( asset [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				yield return thisF;
 			}
 		}
 		else
@@ -80,13 +82,14 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, asset.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 
 	public static IEnumerator LoadAssetOnScenes ( List<List<GameObject>> getAllObj, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
 		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
 		TypePlace currPlace = TypePlace.OnScene;
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		if ( objectList.Length == 0 )
 		{
@@ -108,6 +111,7 @@ public class SearchObject : MonoBehaviour
 			for ( a = 0; a < objectList.Length; a ++ )
 			{
 				EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, GetComponentsInChildrenOfAsset ( objectList [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				yield return thisF;
 			}
 		}
 		else
@@ -117,12 +121,14 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, objectList, thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 
 	public static IEnumerator LoadOnPrefab ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, List<GameObject> thisPref, bool getChildren, InfoResearch thisResearch )
 	{
 		TypePlace currPlace = TypePlace.OnObject;
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
 		int a;
 
 		if ( thisPref.Count == 0 )
@@ -136,14 +142,21 @@ public class SearchObject : MonoBehaviour
 			int countMax = 0;
 			for ( a = 0; a < thisPref.Count; a++ )
 			{
-				countMax += GetComponentsInChildrenOfAsset ( thisPref [ a ] ).Length;
+				if ( thisPref [ a ] != null )
+				{
+					countMax += GetComponentsInChildrenOfAsset ( thisPref [ a ] ).Length;
+				}
 			}
 
 			WindowSearchObject.MaxCount ( countMax, currPlace );
 
 			for ( a = 0; a < thisPref.Count; a++ )
 			{
-				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				if ( thisPref [ a ] != null )
+				{
+					EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisResearch ), currPlace );
+					yield return thisF;
+				}
 			}
 		}
 		else 
@@ -153,7 +166,7 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, thisPref.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 	#endregion
 
