@@ -6,7 +6,6 @@ using System.Collections;
 public class SearchObject : MonoBehaviour 
 {
 	#region Variables
-
 	#endregion
 
 	#region Mono
@@ -189,7 +188,7 @@ public class SearchObject : MonoBehaviour
 		string getCompName;
 		bool checkRef;
 
-		if ( thisType == ResearcheType.SamePref || thisType == ResearcheType.SearchRef )
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
 		{
 			if ( objComp == null )
 			{
@@ -282,7 +281,7 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
-			case ResearcheType.SearchRef:
+			case ResearcheType.Reference:
 				components = objectList [ a ].GetComponents<Component> ( );
 
 				for ( b = 0; b < components.Length; b++ )
@@ -354,7 +353,7 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
-			case ResearcheType.SamePref:
+			case ResearcheType.Object_Prefab:
 				components = objectList [ a ].GetComponents<Component> ( );
 
 				if ( objectList [ a ].Equals ( getPref ) )
@@ -406,4 +405,11 @@ public class SearchObject : MonoBehaviour
 		}
 	}
 	#endregion
+}
+
+
+public class EnumByType 
+{
+	public IEnumerator ThisEnum;
+	public TypePlace ThisPlace;
 }
