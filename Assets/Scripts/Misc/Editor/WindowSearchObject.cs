@@ -39,6 +39,8 @@ public class WindowSearchObject : EditorWindow
 	static bool endSearchProj;
 	static int MaxCountProj;
 	static int CurrCountProj;
+	static int MaxAssetToLoad;
+	static int NbrAssetLoad;
 
 	int nbrObjScene;
 	int aPageScene;
@@ -64,6 +66,7 @@ public class WindowSearchObject : EditorWindow
 	bool getProper;
 	//bool foldComp;
 	bool apply;
+	static bool assetLoading;
 	//bool replace;
 
 	Object SpecificPath;
@@ -103,9 +106,9 @@ public class WindowSearchObject : EditorWindow
 		foldListPref = true;
 		getProper = false;
 	
-
 		//foldComp = false;
 		apply = false;
+		assetLoading = false;
 		//replace = true;
 
 		aPageProj = 0;
@@ -150,11 +153,6 @@ public class WindowSearchObject : EditorWindow
 	public static void ShowWindow()
 	{
 		EditorWindow.GetWindow ( typeof( WindowSearchObject ) );
-	}
-
-	void Update()
-	{
-		
 	}
 
 	void OnGUI()
@@ -226,6 +224,7 @@ public class WindowSearchObject : EditorWindow
 
 			MaxCountProj = 0;
 			CurrCountProj = 0;
+			assetLoading = false;
 		}
 
 		if ( GUILayout.Button ( "Search On Children", buttonStyle, GUILayout.Width ( sizeX / 6 ) ) )
@@ -303,7 +302,6 @@ public class WindowSearchObject : EditorWindow
 				EditorGUILayout.EndVertical ( );
 			}
 		
-
 			break;
 		}
 		EditorGUILayout.EndVertical ( );
@@ -314,11 +312,11 @@ public class WindowSearchObject : EditorWindow
 		currResearch.NbrCompDiff = compDiff;
 		currResearch.NbrChildDiff = childDiff;
 		currResearch.OtherName = specName;
+
 		if ( SpecificPath != null )
 		{
 			currResearch.FolderProject = AssetDatabase.GetAssetOrScenePath( SpecificPath );
 		}
-
 #endregion
 
 #region ActionResearch
@@ -384,7 +382,19 @@ public class WindowSearchObject : EditorWindow
 		if ( !endSearchProj )
 		{
 			EditorGUILayout.BeginHorizontal ( );
-			getPourcVal = ( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 );
+			string getText;
+			if ( assetLoading )
+			{
+				getText = "Loading Asset";
+				getPourcVal = ( int ) ( ( ( float ) NbrAssetLoad / ( float ) MaxAssetToLoad ) * 100 );
+			}
+			else
+			{
+				getText = "Searching Object";
+				getPourcVal = ( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 );
+			}
+
+			EditorGUILayout.PrefixLabel ( getText );
 			GUILayout.HorizontalSlider( getPourcVal, 0, 100 );
 			//EditorGUILayout.PrefixLabel ( (( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 )).ToString()  );
 			EditorGUILayout.EndHorizontal ( );
@@ -394,7 +404,6 @@ public class WindowSearchObject : EditorWindow
 				StopPlace( TypePlace.OnProject );
 			}
 		}
-
 		EditorGUILayout.EndVertical ( );
 
 		EditorGUILayout.BeginVertical ( );
@@ -1077,6 +1086,18 @@ public class WindowSearchObject : EditorWindow
 			}
 			break;
 		}
+	}
+
+	public static void AssetLoading ( bool LoadAsset, int maxToLoad )
+	{
+		NbrAssetLoad = 0;
+		MaxAssetToLoad = maxToLoad;
+		assetLoading = LoadAsset;
+	}
+
+	public static void PlusAssetLoaded ( )
+	{
+		NbrAssetLoad++;
 	}
 
 	public static void MaxCount ( int maxNbr, TypePlace thisPlace )

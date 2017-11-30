@@ -39,13 +39,18 @@ public class SearchObject : MonoBehaviour
 			GUIDs = AssetDatabase.FindAssets("t:GameObject");
 		}
 
+		WindowSearchObject.AssetLoading ( true, GUIDs.Length );
+
 		for ( a = 0; a < GUIDs.Length; a++ )
 		{
+			WindowSearchObject.PlusAssetLoaded ( );
 			guid = GUIDs [ a ];
 			assetPath = AssetDatabase.GUIDToAssetPath ( guid );
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
 			yield return new WaitForEndOfFrame ( );
 		}
+
+		WindowSearchObject.AssetLoading ( false, GUIDs.Length );
 
 		if ( asset.Count == 0 )
 		{
