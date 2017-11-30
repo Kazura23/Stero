@@ -37,6 +37,8 @@ public class MenuShop : UiParent
 	Dictionary <string, ItemModif> allConfirm;
 	List<ItemModif> allTempItem;
 	GameObject fixBackShop;
+	Transform saveParentAb;
+	Transform saveParentBo;
 	Text moneyNumberPlayer;
 
 	bool catCurrSelected = true;
@@ -142,6 +144,10 @@ public class MenuShop : UiParent
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
 		base.OpenThis ( GetTok );
+
+		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( transform );
+		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( transform );
+
         transition = false;
 
         fixBackShop.SetActive ( true );
@@ -153,11 +159,13 @@ public class MenuShop : UiParent
 
 		currItemSeled = currCatSeled.DefautItem;
 		CheckSelectItem ( true );
-
     }
 
 	public override void CloseThis ( )
 	{
+		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
+		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
+
         fixBackShop.SetActive ( false );
 		base.CloseThis (  );
 	}
@@ -255,6 +263,11 @@ public class MenuShop : UiParent
 				getThis.GetComponent<Image> ( ).color = getThis.ColorConfirm;
 			}
 
+			if ( currCatSeled.NameCat == "ABILITIES" )
+			{
+				GlobalManager.Ui.SlowMotion.sprite = getThis.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
+			}
+
 			getAllBuy.Add ( getCons, getThis );
 		}
 		else 
@@ -278,7 +291,10 @@ public class MenuShop : UiParent
 			{
 				Debug.Log ( "buy" );
 
-
+				if ( currCatSeled.NameCat == "ABILITIES" )
+				{
+					GlobalManager.Ui.SlowMotion.sprite = currIT.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
+				}
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 
@@ -291,8 +307,7 @@ public class MenuShop : UiParent
 
                     //float ease = DOVirtual.EasedValue(0, 1,1,AnimationCurve.Linear);
                     currItemSeled.transform.GetChild(0).DOPunchScale(Vector3.one * 1.2f, .5f, 10, 1);
-                   currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
-
+                    currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
 				}
 				else
 				{
@@ -311,6 +326,8 @@ public class MenuShop : UiParent
 		currCatSeled = DefCatSelected;
 		currItemSeled = currCatSeled.DefautItem;
 
+		saveParentAb = GlobalManager.Ui.SlowMotion.transform.parent.parent;
+		saveParentBo = GlobalManager.Ui.BonusLife.transform.parent.parent;
 
         fixBackShop = transform.parent.Find ( "GlobalBackGround/Shop" ).gameObject;
 		moneyNumberPlayer = fixBackShop.transform.Find ( "MoneyMutation/MoneyNumber" ).GetComponent<Text> ( );
@@ -360,21 +377,15 @@ public class MenuShop : UiParent
 		{
 			catCurrSelected = false;
 
-
-
             currItemSeled = thisShop.DefautItem;
 
             iconCategory.DOFade(0, .1f);
             textCategory.DOFade(0, .1f);
             barCategory.DOFade(0, .1f);
-		
 
             moleculeContainer.transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
             moleculeContainer.transform.DOLocalMoveX(transform.localPosition.x -539, 1f);
             moleculeContainer.transform.DOLocalMoveY(transform.localPosition.y - 10, 1f);
-
-
-
 
             moleculeContainer.transform.DOScale(1.25f, 1f).OnComplete(()=> {
                 transition = false;
@@ -591,7 +602,7 @@ public class MenuShop : UiParent
 	{
         ItemModif thisItem = currItemSeled;
 
-        if ( selected )
+		if ( selected )
 		{
 			thisItem.Selected = true;
 

@@ -478,10 +478,7 @@ public class PlayerController : MonoBehaviour
                 }
 			}
 
-            if (Input.GetAxis("CoupDouble") < 0.02 && Input.GetAxis("CoupDouble") > 0.01 && resetAxeD && !Dash)
-            {
-            }
-                if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
+            if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 
@@ -494,13 +491,9 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log("trigger");
                 }
 
-
                 timeToDP -= getDelta;
 
-
 				getFOVDP -= calcRatio;
-
-
 
 				if ( getFOVDP > 0 )
 				{
@@ -519,13 +512,8 @@ public class PlayerController : MonoBehaviour
 					getFOVDP = FOVIncrease;
 					timeToDP = 0;
 
-
-                    Debug.Log("Not Charging");
-
-                    resetAxeD = false;
+					resetAxeD = false;
 					dpunch = true;
-
-                    
                 }
 			}
 			else
@@ -544,7 +532,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead )
+		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch )
 		{
 			Dash = true;
 		}
@@ -642,7 +630,6 @@ public class PlayerController : MonoBehaviour
 				{
 					canSpe = true;
 				}
-
 			}
 			else
 			{
@@ -997,6 +984,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 )
 		{
+			thisCam.fieldOfView = Constants.DefFov;
+
 			/*if (InMadness)
 			{
 				if (BarMadness.value - LessPointPunchInMadness < 0)
@@ -1014,6 +1003,7 @@ public class PlayerController : MonoBehaviour
 
 		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  )
         {
+			thisCam.fieldOfView = Constants.DefFov;
             resetAxeS = false;
             canPunch = false;
             propP = true;
@@ -1051,6 +1041,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
+			thisCam.fieldOfView = Constants.DefFov;
+
             playAnimator.SetBool("ChargingPunch", false);
 
             dpunch = false;
