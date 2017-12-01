@@ -1259,7 +1259,7 @@ public class PlayerController : MonoBehaviour
         DOTween.To(() => maxSpeed,
             x => {
                 maxSpeed = x;
-                Debug.Log("val maxSpeed = "+maxSpeed);
+                //Debug.Log("val maxSpeed = "+maxSpeed);
             },
             MaxSpeed,
             delayInEndMadness

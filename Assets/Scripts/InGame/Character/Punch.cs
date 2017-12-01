@@ -34,7 +34,7 @@ public class Punch : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-		Debug.Log ( other.gameObject.name );
+		//Debug.Log ( other.gameObject.name );
         if(numTechnic == (int)Technic.onde_choc)
         {
             switch (other.tag)
