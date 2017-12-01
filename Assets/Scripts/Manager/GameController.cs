@@ -260,7 +260,6 @@ public class GameController : ManagerParent
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot )
 			{
-
                 currPlayer.SlowMotion = thisItem.SlowMotion;
 				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot;
 				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM;
@@ -271,7 +270,7 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life += thisItem.NombreVie;
+			currPlayer.Life ++;
 		}
 	}
 	#endregion

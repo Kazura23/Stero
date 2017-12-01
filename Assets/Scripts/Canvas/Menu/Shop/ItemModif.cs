@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class ItemModif : MonoBehaviour 
 {
@@ -45,7 +47,6 @@ public class ItemModif : MonoBehaviour
 
 	public bool Selected;
 
-
 	#region SpecialSlowMot 
 	public float SlowMotion = 1;
 	public float SpeedSlowMot = 1;
@@ -55,5 +56,66 @@ public class ItemModif : MonoBehaviour
 	#endregion
 	#endregion
 
+	#region updateValue
+	public Vector3 CurrPos;
+	List<Image> getExtraH;
+	Vector3 saveStartPos;
+	Text getText;
+	int savePrice;
+	bool canText = true;
 
+	void Start ()
+	{
+		getExtraH = GlobalManager.Ui.ExtraHearts;
+		savePrice = Price;
+
+		if ( transform.Find ( "Cost Number" ) != null )
+		{
+			getText = transform.Find ( "Cost Number" ).GetComponent<Text> ( );
+		}
+
+		if ( getText == null )
+		{
+			canText = false;
+		}
+
+		saveStartPos = transform.position;
+		CurrPos = saveStartPos;
+	}
+
+	void Update ()
+	{
+		if ( !canText )
+		{
+			return;
+		}
+
+		if ( ModifVie )
+		{
+			if ( getExtraH [ 1 ].enabled )
+			{
+				getText.text = "Empty";
+			}
+			else
+			{
+				if ( getExtraH [ 0 ].enabled )
+				{
+					Price = savePrice * 2;
+				}
+				else
+				{
+					Price = savePrice;
+				}
+
+				getText.text = Price.ToString ( );
+			}
+		}
+	}
+
+	public void ResetPos ( )
+	{
+		transform.DOMove ( saveStartPos, 0, true );
+		CurrPos = saveStartPos;
+	}
+	#endregion
 }
