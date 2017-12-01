@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameController : ManagerParent
 {
@@ -24,7 +26,11 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
-	bool gameIsOver = true;
+    bool isStay = true;
+    private int chooseOption = 0;
+    public Vector3[] moveRotate = new Vector3[5];
+    public GameObject[] tabGameObject = new GameObject[5];
+    public float delayRotate = 5;
     #endregion
 
     #region Mono
@@ -34,118 +40,57 @@ public class GameController : ManagerParent
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
-
-        float newImp = Input.GetAxis("Horizontal");
-
-
-        int menuSelect = GlobalManager.Ui.MenuSelection;
-        /*
-        if (newImp == 1)
+        if (!checkStart && isStay)
         {
-            if(menuSelect < 4)
-                GlobalManager.Ui.MenuGlobal(menuSelect + 1);
-
-            //else
-              //  GlobalManager.Ui.MenuGlobal(1);
-        }
-
-        if (newImp == -1)
-        {
-            if (menuSelect > 1)
-                GlobalManager.Ui.MenuGlobal(menuSelect - 1);
-
-            //else
-             //   GlobalManager.Ui.MenuGlobal(4);
-        }*/
-
-        /*
-
-        if (newImp == 1)
-        {
-            if (menuSelect == 4)
-                GlobalManager.Ui.MenuGlobal(1);
-
-
-            if (menuSelect == 3)
-                GlobalManager.Ui.MenuGlobal(4);
-
-            if (menuSelect == 2)
-                GlobalManager.Ui.MenuGlobal(3);
-
-            if (menuSelect == 1)
-                GlobalManager.Ui.MenuGlobal(2);
-        }
-
-        if (newImp == -1)
-        {
-            if (menuSelect == 1)
-                GlobalManager.Ui.MenuGlobal(4);
-
-            if (menuSelect == 4)
-                GlobalManager.Ui.MenuGlobal(3);
-
-            if (menuSelect == 3)
-                GlobalManager.Ui.MenuGlobal(2);
-
-
-            if (menuSelect == 2)
-                GlobalManager.Ui.MenuGlobal(1);
-            //else
-            //   GlobalManager.Ui.MenuGlobal(4);
-        }
-
-    */
-
-        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
-        {
-            if (GameStarted && !checkStart)
+            switch (chooseOption)
             {
-                GlobalManager.Ui.Intro();
+                case 0: // start game
+                    Debug.Log("GameStart");
+                    GameStartedUpdate();
+                    break;
 
-                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "PunchIntro", false);
+                case 1: // shop
 
-                checkStart = true;
-                Player.GetComponent<PlayerController>().StopPlayer = false;
-                Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                Camera.main.GetComponent<RainbowMove>().time = .2f;
+                    Debug.Log("Shop");
+                    break;
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 17, () =>
-                {
+                case 2: // quitter
 
-                    int randomSound = UnityEngine.Random.Range(0, 6);
+                    Debug.Log("Quit");
+                    break;
 
-                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
-                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    // Debug.Log("Audio");
-                }).SetLoops(-1, LoopType.Restart);
+                case 3: // highscore
+
+
+                    Debug.Log("Highscores");
+                    break;
+
+                case 4:  // option
+
+                    Debug.Log("Options");
+                    break;
+            }
+            if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                ChooseRotate(false);
+            }else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChooseRotate(true);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-
-            Debug.Log("Fx");
-            Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
-            GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
-            thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);
-            thisGO.transform.DOLocalMove(Vector3.zero, 0);
-
-            GameObject thisGOLeft = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
-            thisGOLeft.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().leftHand.transform);
-            thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
-        }
 	}
+
+
     #endregion
 
     #region Public Methods
-	public void StartGame ( )
+    public void StartGame ( )
 	{
+        AllPlayerPrefs.ResetStaticVar();
 		Player = GameObject.FindGameObjectWithTag("Player");
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
-
         Intro = true;
-		gameIsOver = true;
 
 		SetAllBonus ( );
 		GameStarted = true;
@@ -156,11 +101,6 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
-
-		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) )
-		{
-			setMusic ( );
-		}
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -194,33 +134,89 @@ public class GameController : ManagerParent
 		return null;
 	}
 
-
     public void Restart ( ) 
 	{
+        AllPlayerPrefs.ResetStaticVar();
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         GameStarted = false;
-		gameIsOver = true;
-    }
-
-	public void GameOver ( ) 
-	{
-		gameIsOver = false;
-	}
+    }   
+    
     #endregion
 
     #region Private Methods
+
+    private IEnumerator TimerRotate()
+    {
+        yield return new WaitForSeconds(delayRotate);
+        isStay = true;
+    }
+
+    private void ChooseRotate(bool p_add)
+    {
+        if (p_add)
+        {
+            chooseOption++;
+            if (chooseOption == moveRotate.Length)
+                chooseOption = 0;
+        }
+        else
+        {
+            chooseOption--;
+            if (chooseOption == -1)
+                chooseOption = moveRotate.Length - 1;
+        }
+        isStay = false;
+        StartCoroutine(TimerRotate());
+        Player.transform.DOLocalRotate(moveRotate[chooseOption], delayRotate);
+    }
+
+    private void GameStartedUpdate()
+    {
+        if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
+        {
+            if (GameStarted && !checkStart)
+            {
+                GlobalManager.Ui.Intro();
+
+                checkStart = true;
+                Player.GetComponent<PlayerController>().StopPlayer = false;
+                Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+
+                    int randomSound = UnityEngine.Random.Range(0, 6);
+
+                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+                    Debug.Log("Audio");
+                }).SetLoops(-1, LoopType.Restart);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+
+            Debug.Log("Fx");
+            Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
+            GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
+            thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);
+            thisGO.transform.DOLocalMove(Vector3.zero, 0);
+
+            GameObject thisGOLeft = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
+            thisGOLeft.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().leftHand.transform);
+            thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
+        }
+    }
+
     protected override void InitializeManager ( )
 	{
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-	}
-
-	void setMusic ( )
-	{
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic );
+        AllPlayerPrefs.saveData = SaveData.Load();
 	}
 
 	void SetAllBonus ( )
@@ -274,13 +270,118 @@ public class GameController : ManagerParent
 			currPlayer.Life += thisItem.NombreVie;
 		}
 	}
-	#endregion
+    #endregion
+
 }
 
+#region Save
+public static class SaveData
+{
+    public static void Save(ListData p_dataSave)
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        FileStream fSave = File.Create(path1);
+        AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
+        fSave.Close();
+        Debug.Log("save");
+    }
+
+    public static ListData Load()
+    {
+        string path1 = Application.dataPath + "/Save/save.bin";
+        ListData l = new ListData();
+        if (File.Exists(path1))
+        {
+            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
+            l.listScore = fSave.Deserialize<List<DataSave>>();
+        }
+        return l;
+    }
+}
+
+[System.Serializable]
+public class DataSave
+{
+    public DataSave(int p_fs, int p_s, int p_p, float p_d)
+    {
+        finalScore = p_fs;
+        score = p_s;
+        piece = p_p;
+        distance = p_d;
+    }
+
+    public DataSave()
+    {
+        finalScore = 0;
+        score = 0;
+        piece = 0;
+        distance = 0;
+    }
+
+    public int finalScore;
+    public int score;
+    public int piece;
+    public float distance;
+
+}
+
+public class ListData
+{
+    public List<DataSave> listScore;
+    public ListData()
+    {
+        listScore = new List<DataSave>();
+    }
+    public void Tri_Insert()
+    {
+        int verif;
+        int i, j;
+        DataSave verifSave;
+        for (i = 1; i < listScore.Count; i++)
+        {
+            verif = listScore[i].finalScore;
+            verifSave = listScore[i];
+            for (j = i; j > 0 && listScore[j - 1].finalScore < verif; j--)
+            {
+                listScore[j] = listScore[j - 1];
+            }
+            listScore[j] = verifSave;
+        }
+    }
+    public void Add(DataSave p_save)
+    {
+        if (listScore.Count <= 9)
+        {
+            listScore.Add(p_save);
+            Tri_Insert();
+        }
+        else if (p_save.finalScore > listScore[listScore.Count - 1].finalScore)
+        {
+            listScore.Add(p_save);
+            Tri_Insert();
+            listScore.RemoveAt(listScore.Count - 1);
+        }
+        SaveData.Save(this);
+    }
+}
+
+public static class StreamExtensions
+{
+    public static void SerializeTo<T>(this T o, Stream stream)
+    {
+        new BinaryFormatter().Serialize(stream, o);  // serialize o not typeof(T)
+    }
+
+    public static T Deserialize<T>(this Stream stream)
+    {
+        return (T)new BinaryFormatter().Deserialize(stream);
+    }
+}
+#endregion
 
 [System.Serializable]
 public class FxList 
 {
 	public string FxName;
 	public GameObject FxObj;
-}
+}

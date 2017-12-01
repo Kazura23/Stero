@@ -77,8 +77,11 @@ public class PlayerController : MonoBehaviour
     public float delayInEndMadness = 2;
     public float slowInBeginMadness = 3;
 
+    [Tooltip("Lier au score")]
+    public float facteurMulDistance = 1;
 
-	[Header ("SphereMask")]
+
+    [Header ("SphereMask")]
 	public float Radius;
 	public float SoftNess;
 
@@ -361,6 +364,11 @@ public class PlayerController : MonoBehaviour
             return;
 		}
 
+        AllPlayerPrefs.distance = totalDis;
+        AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
+        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        
+
         DOVirtual.DelayedCall(.2f, () =>
         {
 
@@ -379,12 +387,14 @@ public class PlayerController : MonoBehaviour
         {
 
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
+            //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
+            Debug.Log("compile");
             ScreenShake.Singleton.ShakeGameOver();
 
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-		GlobalManager.GameCont.GameOver ( );
+		//GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
