@@ -77,8 +77,11 @@ public class PlayerController : MonoBehaviour
     public float delayInEndMadness = 2;
     public float slowInBeginMadness = 3;
 
+    [Tooltip("Lier au score")]
+    public float facteurMulDistance = 1;
 
-	[Header ("SphereMask")]
+
+    [Header ("SphereMask")]
 	public float Radius;
 	public float SoftNess;
 
@@ -110,7 +113,7 @@ public class PlayerController : MonoBehaviour
     [Header("GRAPH")]
     public GameObject leftHand;
     public GameObject rightHand;
-    public GameObject Plafond;
+    //public GameObject Plafond;
 
 	[HideInInspector]
 	public int currLine = 0;
@@ -220,7 +223,7 @@ public class PlayerController : MonoBehaviour
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 
-        Plafond.GetComponent<MeshRenderer>().enabled = true;
+       //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
 
 	void Update ( )
@@ -325,24 +328,10 @@ public class PlayerController : MonoBehaviour
 
 	public void GameOver ( bool forceDead = false )
 	{
-
-        GlobalManager.Ui.GameOver();
-
         if ( invDamage  && !forceDead )
 		{
 			return;
 		}
-
-
-        ScreenShake.Singleton.ShakeGameOver();
-
-        GameOverTok thisTok = new GameOverTok ( );
-		thisTok.totalDist = totalDis;
-
-        StopPlayer = true;
-
-		thisCam.GetComponent<RainbowMove>().enabled = false;
-		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
         Life--;
 
@@ -351,15 +340,30 @@ public class PlayerController : MonoBehaviour
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
 
-
             if (!playerDead)
             {
-
-                GlobalManager.Ui.StartBonusLife();
+				GlobalManager.Ui.StartBonusLife ( Life + 1 );
             }
 
             return;
 		}
+
+        AllPlayerPrefs.distance = totalDis;
+        AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
+        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        
+
+		StopPlayer = true;
+
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
+
+		GameOverTok thisTok = new GameOverTok ( );
+		thisTok.totalDist = totalDis;
+
+		ScreenShake.Singleton.ShakeGameOver();
+
+		GlobalManager.Ui.GameOver();
 
         DOVirtual.DelayedCall(.2f, () =>
         {
@@ -367,8 +371,6 @@ public class PlayerController : MonoBehaviour
             thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
             thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
-
-
 
         playerDead = true;
 
@@ -379,12 +381,14 @@ public class PlayerController : MonoBehaviour
         {
 
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
+            //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
+            Debug.Log("compile");
             ScreenShake.Singleton.ShakeGameOver();
 
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-		GlobalManager.GameCont.GameOver ( );
+		//GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
@@ -478,10 +482,7 @@ public class PlayerController : MonoBehaviour
                 }
 			}
 
-            if (Input.GetAxis("CoupDouble") < 0.02 && Input.GetAxis("CoupDouble") > 0.01 && resetAxeD && !Dash)
-            {
-            }
-                if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
+            if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 
@@ -494,13 +495,9 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log("trigger");
                 }
 
-
                 timeToDP -= getDelta;
 
-
 				getFOVDP -= calcRatio;
-
-
 
 				if ( getFOVDP > 0 )
 				{
@@ -519,13 +516,8 @@ public class PlayerController : MonoBehaviour
 					getFOVDP = FOVIncrease;
 					timeToDP = 0;
 
-
-                    Debug.Log("Not Charging");
-
-                    resetAxeD = false;
+					resetAxeD = false;
 					dpunch = true;
-
-                    
                 }
 			}
 			else
@@ -544,7 +536,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead )
+		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch )
 		{
 			Dash = true;
 		}
@@ -564,10 +556,14 @@ public class PlayerController : MonoBehaviour
 
 	void distCal ( )
 	{
-		totalDis += Vector3.Distance ( lastPos, pTrans.position );
+		if ( !inAir )
+		{
+			totalDis += Vector3.Distance ( lastPos, pTrans.position );
+		}
+
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-		Debug.Log ( maxSpeed );
+		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
@@ -638,7 +634,6 @@ public class PlayerController : MonoBehaviour
 				{
 					canSpe = true;
 				}
-
 			}
 			else
 			{
@@ -664,7 +659,7 @@ public class PlayerController : MonoBehaviour
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed;
+			getTime *= DashSpeed * 1.2f;
 		}
 
 		getTime *= ( maxSpeed / MaxSpeed );
@@ -691,7 +686,7 @@ public class PlayerController : MonoBehaviour
 
 				if ( angle < 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.2f, 0 ), Space.World );
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
 					pRig.useGravity = true;
 				}
 				else if ( angle > 0 )
@@ -993,6 +988,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 )
 		{
+			thisCam.fieldOfView = Constants.DefFov;
+
 			/*if (InMadness)
 			{
 				if (BarMadness.value - LessPointPunchInMadness < 0)
@@ -1010,6 +1007,7 @@ public class PlayerController : MonoBehaviour
 
 		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  )
         {
+			thisCam.fieldOfView = Constants.DefFov;
             resetAxeS = false;
             canPunch = false;
             propP = true;
@@ -1047,6 +1045,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
+			thisCam.fieldOfView = Constants.DefFov;
+
             playAnimator.SetBool("ChargingPunch", false);
 
             dpunch = false;
@@ -1259,7 +1259,7 @@ public class PlayerController : MonoBehaviour
         DOTween.To(() => maxSpeed,
             x => {
                 maxSpeed = x;
-                Debug.Log("val maxSpeed = "+maxSpeed);
+                //Debug.Log("val maxSpeed = "+maxSpeed);
             },
             MaxSpeed,
             delayInEndMadness
