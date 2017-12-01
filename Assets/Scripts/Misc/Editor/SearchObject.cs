@@ -6,7 +6,6 @@ using System.Collections;
 public class SearchObject : MonoBehaviour 
 {
 	#region Variables
-
 	#endregion
 
 	#region Mono
@@ -15,8 +14,19 @@ public class SearchObject : MonoBehaviour
 	#region Public Methods
 	public static IEnumerator LoadAssetsInProject ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
-		List<GameObject> asset = new List<GameObject> ( ); 
 		TypePlace currPlace = TypePlace.OnProject;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
+		List<GameObject> asset = new List<GameObject> ( ); 
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		string guid;
 		string assetPath;
@@ -39,12 +49,18 @@ public class SearchObject : MonoBehaviour
 			GUIDs = AssetDatabase.FindAssets("t:GameObject");
 		}
 
+		WindowSearchObject.AssetLoading ( true, GUIDs.Length );
+
 		for ( a = 0; a < GUIDs.Length; a++ )
 		{
+			WindowSearchObject.PlusAssetLoaded ( );
 			guid = GUIDs [ a ];
 			assetPath = AssetDatabase.GUIDToAssetPath ( guid );
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
+			yield return thisF;
 		}
+
+		WindowSearchObject.AssetLoading ( false, GUIDs.Length );
 
 		if ( asset.Count == 0 )
 		{
@@ -65,6 +81,7 @@ public class SearchObject : MonoBehaviour
 			for ( a = 0; a < asset.Count; a++ )
 			{
 				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( asset [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				yield return thisF;
 			}
 		}
 		else
@@ -74,13 +91,24 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, asset.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 
 	public static IEnumerator LoadAssetOnScenes ( List<List<GameObject>> getAllObj, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
-		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
 		TypePlace currPlace = TypePlace.OnScene;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
+		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		if ( objectList.Length == 0 )
 		{
@@ -102,6 +130,7 @@ public class SearchObject : MonoBehaviour
 			for ( a = 0; a < objectList.Length; a ++ )
 			{
 				EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, GetComponentsInChildrenOfAsset ( objectList [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				yield return thisF;
 			}
 		}
 		else
@@ -111,12 +140,24 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, objectList, thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 
 	public static IEnumerator LoadOnPrefab ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, List<GameObject> thisPref, bool getChildren, InfoResearch thisResearch )
 	{
 		TypePlace currPlace = TypePlace.OnObject;
+
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
+		{
+			if ( objComp == null )
+			{
+				WindowSearchObject.EndResearch ( currPlace );
+				yield break;
+			}
+		}
+
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
 		int a;
 
 		if ( thisPref.Count == 0 )
@@ -130,14 +171,21 @@ public class SearchObject : MonoBehaviour
 			int countMax = 0;
 			for ( a = 0; a < thisPref.Count; a++ )
 			{
-				countMax += GetComponentsInChildrenOfAsset ( thisPref [ a ] ).Length;
+				if ( thisPref [ a ] != null )
+				{
+					countMax += GetComponentsInChildrenOfAsset ( thisPref [ a ] ).Length;
+				}
 			}
 
 			WindowSearchObject.MaxCount ( countMax, currPlace );
 
 			for ( a = 0; a < thisPref.Count; a++ )
 			{
-				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisResearch ), currPlace );
+				if ( thisPref [ a ] != null )
+				{
+					EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisResearch ), currPlace );
+					yield return thisF;
+				}
 			}
 		}
 		else 
@@ -147,7 +195,7 @@ public class SearchObject : MonoBehaviour
 			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, thisPref.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		yield return new WaitForEndOfFrame ( );
+		yield return thisF;
 	}
 	#endregion
 
@@ -170,15 +218,8 @@ public class SearchObject : MonoBehaviour
 		string getCompName;
 		bool checkRef;
 
-		if ( thisType == ResearcheType.SamePref || thisType == ResearcheType.SearchRef )
+		if ( thisType == ResearcheType.Object_Prefab || thisType == ResearcheType.Reference )
 		{
-			if ( objComp == null )
-			{
-				WindowSearchObject.EndResearch ( thisPlace );
-
-				yield break;
-			}
-
 			getProper = thisResearch.TryGetProperty;
 
 			try
@@ -186,7 +227,8 @@ public class SearchObject : MonoBehaviour
 				getPref = ( GameObject ) objComp;
 				componentsPref = getPref.GetComponents<Component> ( );
 			}
-			catch{
+			catch
+			{
 				getPref = null;
 				componentsPref = null;
 			}
@@ -263,7 +305,7 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
-			case ResearcheType.SearchRef:
+			case ResearcheType.Reference:
 				components = objectList [ a ].GetComponents<Component> ( );
 
 				for ( b = 0; b < components.Length; b++ )
@@ -322,7 +364,6 @@ public class SearchObject : MonoBehaviour
 						{
 							try 
 							{
-								
 								if ( field.GetValue ( components [ b ], null ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
@@ -336,7 +377,7 @@ public class SearchObject : MonoBehaviour
 					}
 				}
 				break;
-			case ResearcheType.SamePref:
+			case ResearcheType.Object_Prefab:
 				components = objectList [ a ].GetComponents<Component> ( );
 
 				if ( objectList [ a ].Equals ( getPref ) )
@@ -388,4 +429,11 @@ public class SearchObject : MonoBehaviour
 		}
 	}
 	#endregion
+}
+
+
+public class EnumByType 
+{
+	public IEnumerator ThisEnum;
+	public TypePlace ThisPlace;
 }

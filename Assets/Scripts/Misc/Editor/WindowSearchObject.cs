@@ -5,13 +5,13 @@ using System.Collections;
 
 public enum ResearcheType 
 {
+	Object_Prefab,
+	Component,
+	Reference,
+	MissingComp,
 	Tag,
 	Layer,
-	Name,
-	Component,
-	SamePref,
-	MissingComp,
-	SearchRef
+	Name
 }
 
 public enum TypePlace
@@ -26,11 +26,12 @@ public class WindowSearchObject : EditorWindow
 	ResearcheType thisType;
 
 	string thisStringSearch;
-	string SpecificPath;
 	string specName;
 	int thisNbr;
 	int compDiff;
 	int childDiff;
+	bool CanRemove;
+	bool DisplayOtherParent;
 
 	int nbrObjProj;
 	int aPageProj;
@@ -40,6 +41,8 @@ public class WindowSearchObject : EditorWindow
 	static bool endSearchProj;
 	static int MaxCountProj;
 	static int CurrCountProj;
+	static int MaxAssetToLoad;
+	static int NbrAssetLoad;
 
 	int nbrObjScene;
 	int aPageScene;
@@ -65,8 +68,10 @@ public class WindowSearchObject : EditorWindow
 	bool getProper;
 	//bool foldComp;
 	bool apply;
+	static bool assetLoading;
 	//bool replace;
 
+	Object SpecificPath;
 	Object objComp;
 	List<GameObject> thispref;
 	Vector2 scrollPosProj;
@@ -82,10 +87,10 @@ public class WindowSearchObject : EditorWindow
 
 	void OnEnable ()
 	{
-		thisType = ResearcheType.Tag;
+		thisType = ResearcheType.Object_Prefab;
 
 		thisStringSearch = string.Empty;
-		SpecificPath = string.Empty;
+		SpecificPath = null;
 		specName = string.Empty;
 
 		objComp = null;
@@ -95,6 +100,7 @@ public class WindowSearchObject : EditorWindow
 		childProj = true;
 		childScene = true;
 		childPref = true;
+		DisplayOtherParent = true;
 
 		endSearchProj = true;
 		endSearchScene = true;
@@ -102,10 +108,11 @@ public class WindowSearchObject : EditorWindow
 
 		foldListPref = true;
 		getProper = false;
-	
+		CanRemove = true;
 
 		//foldComp = false;
 		apply = false;
+		assetLoading = false;
 		//replace = true;
 
 		aPageProj = 0;
@@ -151,7 +158,7 @@ public class WindowSearchObject : EditorWindow
 	{
 		EditorWindow.GetWindow ( typeof( WindowSearchObject ) );
 	}
-
+		
 	void OnGUI()
 	{
 #region Research Config
@@ -170,6 +177,8 @@ public class WindowSearchObject : EditorWindow
 		int getPourcVal;
 		int a; 
 		float sizeX = position.width;
+		float currSize;
+		bool cutSize;
 		GUILayout.Label ("Get object(s)", EditorStyles.boldLabel);
 
 		EditorGUILayout.BeginVertical ( );
@@ -177,19 +186,18 @@ public class WindowSearchObject : EditorWindow
 
 		EditorGUI.BeginChangeCheck ( );
 
-		thisType = ( ResearcheType ) EditorGUILayout.EnumPopup ( "Research Type:", thisType, GUILayout.Width ( sizeX / 2 ) );
-
-		var buttonStyle = new GUIStyle( EditorStyles.miniButton );
-
-		if ( getChildren )
+		if ( sizeX < 700 )
 		{
-			buttonStyle.normal.textColor = Color.green;
+			currSize = sizeX;
+			cutSize = true;
 		}
 		else
 		{
-			buttonStyle.normal.textColor = Color.red;
+			cutSize = false;
+			currSize = sizeX / 2;
 		}
 
+		thisType = ( ResearcheType ) EditorGUILayout.EnumPopup ( "Research Type:", thisType, GUILayout.Width ( currSize ) );
 		if ( EditorGUI.EndChangeCheck ( ) )
 		{
 			StopAll ( );
@@ -213,6 +221,10 @@ public class WindowSearchObject : EditorWindow
 			nbrObjScene = 0;
 			nbrObjPref = 0;
 
+			endSearchProj = true;
+			endSearchObj = true;
+			endSearchScene = true;
+
 			MaxCountScene = 0;
 			CurrCountScene = 0;
 
@@ -221,12 +233,37 @@ public class WindowSearchObject : EditorWindow
 
 			MaxCountProj = 0;
 			CurrCountProj = 0;
+			assetLoading = false;
+
+			switch (thisType) 
+			{
+			case ResearcheType.Tag:
+				CanRemove = false;
+				DisplayOtherParent = false;
+				break;
+			case ResearcheType.Layer:
+				CanRemove = false;
+				DisplayOtherParent = false;
+				break;
+			case ResearcheType.Name:
+				CanRemove = false;
+				DisplayOtherParent = false;
+				break;
+			case ResearcheType.Component:
+				CanRemove = false;
+				DisplayOtherParent = false;
+				break;
+			case ResearcheType.Reference:
+				CanRemove = false;
+				DisplayOtherParent = true;
+				break;
+			case ResearcheType.Object_Prefab:
+				CanRemove = true;
+				DisplayOtherParent = true;
+				break;
+			}
 		}
 
-		if ( GUILayout.Button ( "Search On Children", buttonStyle, GUILayout.Width ( sizeX / 6 ) ) )
-		{
-			getChildren = !getChildren;
-		}
 		EditorGUILayout.EndHorizontal ( );
 
 		EditorGUI.indentLevel = 1;
@@ -234,29 +271,25 @@ public class WindowSearchObject : EditorWindow
 		switch (thisType) 
 		{
 		case ResearcheType.Tag:
-			thisStringSearch = EditorGUILayout.TagField ( "This Tag :", thisStringSearch, GUILayout.Width ( sizeX / 2 ) );
+			thisStringSearch = EditorGUILayout.TagField ( "This Tag :", thisStringSearch, GUILayout.Width ( currSize ) );
 			break;
 		case ResearcheType.Layer:
-			thisNbr = EditorGUILayout.LayerField ( "This Num Layer :", thisNbr, GUILayout.Width ( sizeX / 2 ) );
+			thisNbr = EditorGUILayout.LayerField ( "This Num Layer :", thisNbr, GUILayout.Width ( currSize ) );
 			thisStringSearch = thisNbr.ToString ( );
 			break;
 		case ResearcheType.Name:
-			thisStringSearch = EditorGUILayout.TextField ( "This Name :", thisStringSearch, GUILayout.Width ( sizeX / 2 ) );
+			thisStringSearch = EditorGUILayout.TextField ( "This Name :", thisStringSearch, GUILayout.Width ( currSize ) );
 			break;
 		case ResearcheType.Component:
-			objComp = EditorGUILayout.ObjectField ( "This component", objComp, typeof( Object ), true, GUILayout.Width ( sizeX / 2 ) );
+			objComp = EditorGUILayout.ObjectField ( "This component", objComp, typeof( Object ), true, GUILayout.Width ( currSize ) );
 			break;
-		case ResearcheType.SearchRef:
-			EditorGUILayout.BeginHorizontal ( );
-			objComp = EditorGUILayout.ObjectField ( "This Object ref", objComp, typeof( Object ), true, GUILayout.Width ( sizeX / 2 ) );
-			getProper = EditorGUILayout.Toggle ( "Search on Properties", getProper ); 
-			EditorGUILayout.EndHorizontal ( );
+		case ResearcheType.Reference:
+			objComp = EditorGUILayout.ObjectField ( "This Object ref", objComp, typeof( Object ), true, GUILayout.Width ( currSize ) );
 			break;
-		case ResearcheType.SamePref:
-			EditorGUILayout.BeginVertical ( );
+		case ResearcheType.Object_Prefab:
 			EditorGUI.BeginChangeCheck ( );
 
-			objComp = EditorGUILayout.ObjectField ( "This Object", objComp, typeof( Object ), true, GUILayout.Width ( sizeX / 2 ) );
+			objComp = EditorGUILayout.ObjectField ( "This Object", objComp, typeof( Object ), true, GUILayout.Width ( currSize ) );
 
 			if ( EditorGUI.EndChangeCheck ( ) )
 			{
@@ -280,26 +313,14 @@ public class WindowSearchObject : EditorWindow
 					}
 				}
 			}
-
-			EditorGUILayout.BeginVertical ( );
-			foldSamePref = EditorGUILayout.Foldout ( foldSamePref, "Advanced Filter" );
-
-			if ( foldSamePref )
-			{
-				EditorGUILayout.EndVertical ( );
-
-				EditorGUI.indentLevel = 2;
-				specName = EditorGUILayout.TextField ( "Other Name ?", specName, GUILayout.Width ( sizeX / 2 ) );
-
-				compDiff = ( int ) EditorGUILayout.Slider ( "Max component gap", compDiff, 0, 10, GUILayout.Width ( sizeX / 2 ) );
-				childDiff = ( int ) EditorGUILayout.Slider ( "Max child gap", childDiff, 0, 500, GUILayout.Width ( sizeX / 2 ) );
-				EditorGUI.indentLevel = 0;
-
-				EditorGUILayout.EndVertical ( );
-			}
-		
-
 			break;
+		}
+
+		foldSamePref = EditorGUILayout.Foldout ( foldSamePref, "Advanced Filter" );
+
+		if ( foldSamePref )
+		{
+			advancedFilt ( currSize );
 		}
 		EditorGUILayout.EndVertical ( );
 
@@ -309,16 +330,21 @@ public class WindowSearchObject : EditorWindow
 		currResearch.NbrCompDiff = compDiff;
 		currResearch.NbrChildDiff = childDiff;
 		currResearch.OtherName = specName;
-		currResearch.FolderProject = SpecificPath;
 
+		if ( SpecificPath != null )
+		{
+			currResearch.FolderProject = AssetDatabase.GetAssetOrScenePath( SpecificPath );
+		}
 #endregion
 
 #region ActionResearch
-		EditorGUILayout.BeginHorizontal();
-		EditorGUILayout.BeginVertical ( );
+		EditorGUILayout.BeginHorizontal ( );
+		EditorGUILayout.BeginVertical ( GUILayout.Width ( sizeX / 3 ) );
 
-		if ( GUILayout.Button ( "Object On Scene", GUILayout.Width ( sizeX / 3 ),  GUILayout.Height ( 25 ) ) )
+		if ( GUILayout.Button ( "Object On Scene",  GUILayout.Height ( 25 ) ) )
 		{
+			StopPlace( TypePlace.OnScene );
+
 			aPageScene = 0;
 			nbrObjScene = 0;
 			MaxCountScene = 0;
@@ -331,9 +357,11 @@ public class WindowSearchObject : EditorWindow
 			childScene = getChildren;
 
 			getAllOnScene.Clear ( );
+			AllObjectScene = new List<List<GameObject>> ( );
+			getAllOnScene = AllObjectScene;
 
 			endSearchScene = false;
-			EditorCoroutine.start ( SearchObject.LoadAssetOnScenes ( AllObjectScene, thisType, objComp, getChildren, currResearch ), TypePlace.OnScene );
+			EditorCoroutine.start ( SearchObject.LoadAssetOnScenes ( getAllOnScene, thisType, objComp, getChildren, currResearch ), TypePlace.OnScene );
 		}
 
 		if ( !endSearchScene )
@@ -341,17 +369,19 @@ public class WindowSearchObject : EditorWindow
 			getPourcVal = ( int ) ( ( ( float ) CurrCountScene / ( float ) MaxCountScene ) * 100 );
 			GUILayout.HorizontalSlider( getPourcVal, 0, 100 );
 
-			if ( GUILayout.Button ( "Cancel", EditorStyles.miniButton ) )
+			if ( getAllOnScene.Count == 0 && GUILayout.Button ( "Stop search on Scene", EditorStyles.miniButton ) )
 			{
 				StopPlace( TypePlace.OnScene );
-			}
+			} 
 		}
 		EditorGUILayout.EndVertical ( );
 
-		EditorGUILayout.BeginVertical ( );
+		EditorGUILayout.BeginVertical ( GUILayout.Width ( sizeX / 3 ) );
 
-		if ( GUILayout.Button ( "Object On Project", GUILayout.Width ( sizeX / 3 ),  GUILayout.Height ( 25 ) ) )
+		if ( GUILayout.Button ( "Object On Project", GUILayout.Height ( 25 ) ) )
 		{
+			StopPlace( TypePlace.OnProject );
+
 			nbrObjProj = 0;
 			aPageProj = 0;
 			MaxCountProj = 0;
@@ -365,32 +395,48 @@ public class WindowSearchObject : EditorWindow
 			childProj = getChildren;
 
 			getAllOnProj.Clear ( );
+			AllObjectProject = new List<List<GameObject>> ( );
+			getAllOnProj = AllObjectProject;
 
 			endSearchProj = false;
-			EditorCoroutine.start  ( SearchObject.LoadAssetsInProject ( AllObjectProject, thisType, objComp, getChildren, currResearch ), TypePlace.OnProject );
+
+			EditorCoroutine.start  ( SearchObject.LoadAssetsInProject ( getAllOnProj, thisType, objComp, getChildren, currResearch ), TypePlace.OnProject );
 		}
 
-		SpecificPath = EditorGUILayout.TextField ("Specific folder :", SpecificPath, GUILayout.Width ( sizeX / 3.1f ));
+		SpecificPath = EditorGUILayout.ObjectField ("Specific folder :", SpecificPath, typeof( Object ), true, GUILayout.Width ( sizeX / 3.1f ));
 
 		if ( !endSearchProj )
 		{
-			EditorGUILayout.BeginHorizontal ( );
-			getPourcVal = ( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 );
+			EditorGUILayout.BeginHorizontal ( GUILayout.Width ( sizeX / 3.1f )  );
+			string getText;
+			if ( assetLoading )
+			{
+				getText = "Loading Asset";
+				getPourcVal = ( int ) ( ( ( float ) NbrAssetLoad / ( float ) MaxAssetToLoad ) * 100 );
+			}
+			else
+			{
+				getText = "Searching Object";
+				getPourcVal = ( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 );
+			}
+
+			EditorGUILayout.PrefixLabel ( getText );
 			GUILayout.HorizontalSlider( getPourcVal, 0, 100 );
 			//EditorGUILayout.PrefixLabel ( (( int ) ( ( ( float ) CurrCountProj / ( float ) MaxCountProj ) * 100 )).ToString()  );
 			EditorGUILayout.EndHorizontal ( );
 
-			if ( GUILayout.Button ( "Cancel", EditorStyles.miniButton ) )
+			if ( getAllOnProj.Count == 0 && GUILayout.Button ( "Stop search on Project", EditorStyles.miniButton ) )
 			{
 				StopPlace( TypePlace.OnProject );
-			}
+			} 
 		}
-
 		EditorGUILayout.EndVertical ( );
 
-		EditorGUILayout.BeginVertical ( );
-		if ( GUILayout.Button ( "On Object(s)", GUILayout.Width ( sizeX / 3.15f ),  GUILayout.Height ( 25 ) ) && thispref != null )
+		EditorGUILayout.BeginVertical ( GUILayout.Width ( sizeX / 3.15f ) );
+		if ( GUILayout.Button ( "On Object(s)",  GUILayout.Height ( 25 ) ) && thispref != null )
 		{
+			StopPlace( TypePlace.OnObject );
+
 			nbrObjPref = 0;
 			aPagePref = 0;
 			MaxCountObj = 0;
@@ -405,7 +451,7 @@ public class WindowSearchObject : EditorWindow
 			getAllOnPrefab.Clear ( );
 
 			endSearchObj = false;
-			EditorCoroutine.start  ( SearchObject.LoadOnPrefab ( InfoOnPrefab, thisType, objComp, thispref, getChildren, currResearch ), TypePlace.OnObject );
+			EditorCoroutine.start  ( SearchObject.LoadOnPrefab ( getAllOnPrefab, thisType, objComp, thispref, getChildren, currResearch ), TypePlace.OnObject );
 		}
 
 		if ( nbrObjProj < getAllOnProj.Count )
@@ -448,7 +494,7 @@ public class WindowSearchObject : EditorWindow
 		}
 
 		var list = thispref;
-		int newCount = Mathf.Max ( 0, EditorGUILayout.IntField ( "Number Ref", list.Count, GUILayout.Width ( sizeX / 3.2f ) ) );
+		int newCount = Mathf.Max ( 0, EditorGUILayout.IntField ( "Number Ref", list.Count ) );
 		while ( newCount < list.Count )
 		{
 			list.RemoveAt( list.Count - 1 );
@@ -468,7 +514,7 @@ public class WindowSearchObject : EditorWindow
 		{
 			for( a = 0; a < thispref.Count; a++)
 			{
-				thispref [ a ] = ( GameObject ) EditorGUILayout.ObjectField ( "This component", thispref [ a ], typeof( GameObject ), true, GUILayout.Width ( sizeX / 3.2f ) );
+				thispref [ a ] = ( GameObject ) EditorGUILayout.ObjectField ( "This component", thispref [ a ], typeof( GameObject ), true );
 			}
 		}
 		EditorGUILayout.EndVertical ( );
@@ -477,11 +523,10 @@ public class WindowSearchObject : EditorWindow
 			getPourcVal = ( int ) ( ( ( float ) CurrCountObj / ( float ) MaxCountObj ) * 100 );
 
 			GUILayout.HorizontalSlider( getPourcVal, 0, 10 );
-
-			if ( GUILayout.Button ( "Cancel Object", EditorStyles.miniButton ))
+			if ( getAllOnPrefab.Count == 0 && GUILayout.Button ( "Stop search on Object", EditorStyles.miniButton ) )
 			{
 				StopPlace( TypePlace.OnObject );
-			}
+			} 
 		}
 		EditorGUILayout.EndVertical ( );
 		EditorGUILayout.EndHorizontal();
@@ -491,14 +536,13 @@ public class WindowSearchObject : EditorWindow
 		EditorGUILayout.Space ( );
 		EditorGUILayout.Space ( );
 
-		if ( thisType == ResearcheType.SamePref  )
+		if ( thisType == ResearcheType.Object_Prefab  )
 		{
 			if ( apply )
 			{
 				EditorGUILayout.BeginHorizontal ( );
 				if ( GUILayout.Button ( "Confirm", EditorStyles.miniButton ) )
 				{
-					
 					modifPref ( getAllOnScene );
 					modifPref ( getAllOnProj );
 					modifPref ( getAllOnPrefab );
@@ -562,11 +606,19 @@ public class WindowSearchObject : EditorWindow
 			}
 		}
 
-		EditorGUILayout.BeginHorizontal ( );
+		if ( cutSize )
+		{
+			EditorGUILayout.BeginVertical (  GUILayout.Width ( sizeX ));
+		}
+		else
+		{
+			EditorGUILayout.BeginHorizontal (  GUILayout.Width ( sizeX ));
+		}
+
 #region Scene Layout
+		EditorGUILayout.BeginVertical( );
 		if ( getAllOnScene.Count > 0 )
 		{
-			EditorGUILayout.BeginVertical();
 
 			if ( endSearchScene )
 			{
@@ -575,20 +627,23 @@ public class WindowSearchObject : EditorWindow
 					AllObjectScene = new List<List<GameObject>> ( );
 				}
 			}
-
+			else if ( GUILayout.Button ( "Stop search on Scene", EditorStyles.miniButton ) )
+			{
+				StopPlace( TypePlace.OnScene );
+			}
+	
 			scrollPosScene = EditorGUILayout.BeginScrollView ( scrollPosScene );
 			aPageScene = LayoutSearch( getAllOnScene, bScene, fScene, aPageScene, childScene );
 
 			EditorGUILayout.EndScrollView ( );
-			EditorGUILayout.EndVertical();
 		}
+		EditorGUILayout.EndVertical();
 #endregion
 
 #region Project layout
+		EditorGUILayout.BeginVertical ( );
 		if ( getAllOnProj.Count > 0 )
 		{
-			EditorGUILayout.BeginVertical();
-
 			if ( endSearchProj )
 			{
 				if ( GUILayout.Button ( "Clear Project", EditorStyles.miniButton ) )
@@ -596,20 +651,23 @@ public class WindowSearchObject : EditorWindow
 					AllObjectProject = new List<List<GameObject>> ( );
 				}
 			}
+			else if ( GUILayout.Button ( "Stop search on Project", EditorStyles.miniButton ) )
+			{
+				StopPlace( TypePlace.OnProject );
+			} 
 
 			scrollPosProj = EditorGUILayout.BeginScrollView ( scrollPosProj );
 			aPageProj = LayoutSearch( getAllOnProj, bProj, fProj, aPageProj, childProj );
 
 			EditorGUILayout.EndScrollView ( );
-			EditorGUILayout.EndVertical();
 		}
+		EditorGUILayout.EndVertical();
 #endregion
 
 #region Pref Layout
+		EditorGUILayout.BeginVertical( );
 		if ( getAllOnPrefab.Count > 0 )
 		{
-			EditorGUILayout.BeginVertical();
-
 			if ( endSearchObj )
 			{
 				if ( GUILayout.Button ( "Clear Object", EditorStyles.miniButton ) )
@@ -617,27 +675,66 @@ public class WindowSearchObject : EditorWindow
 					InfoOnPrefab = new List<List<GameObject>> ( );
 				}
 			}
+			else if ( GUILayout.Button ( "Stop search on Object", EditorStyles.miniButton ) )
+			{
+				StopPlace( TypePlace.OnObject );
+			} 
 
 			scrollPosPref = EditorGUILayout.BeginScrollView ( scrollPosPref );
 			aPagePref = LayoutSearch( getAllOnPrefab, bPref, fPref, aPagePref, childPref );
 			EditorGUILayout.EndScrollView ( );
-			EditorGUILayout.EndVertical();
 		}
-	
+		EditorGUILayout.EndVertical();
 #endregion
-		EditorGUILayout.EndHorizontal();
+		if ( cutSize )
+		{
+			EditorGUILayout.EndVertical ( );
+		}
+		else
+		{
+			EditorGUILayout.EndHorizontal ( );
+		}
 #endregion
 	}
 
 	int LayoutSearch ( List<List<GameObject>> listSearch, List<int> bPage, List<bool> fDout, int aPage, bool ifChild )
 	{
-		int a; 
+		float sizeX = position.width;
+
+		int a = 0; 
 		int b;
 		int isParent = 0;
+		bool isOtherParent;
 		bool getParent = false;
+		bool allResearch = false;
 		int getindentLevel = 0;
 		Transform currParent;
 		Transform bigParent;
+
+		if ( sizeX > 750 )
+		{
+			if ( AllObjectProject.Count > 0 )
+			{
+				a++;
+			}
+			if ( InfoOnPrefab.Count > 0 )
+			{
+				a++;
+			}
+			if ( AllObjectScene.Count > 0 )
+			{
+				a++;
+			}
+
+			if ( sizeX / a < 750 )
+			{
+				allResearch = true;
+			}
+		}
+		else
+		{
+			allResearch = true;
+		}
 
 		if ( listSearch.Count > 11 )
 		{
@@ -676,16 +773,32 @@ public class WindowSearchObject : EditorWindow
 			if ( ifChild && listSearch [ a ] [ 0 ].transform.parent == null )
 			{
 				isParent = 1;
-				EditorGUILayout.BeginHorizontal();
+
+				if ( allResearch )
+				{
+					EditorGUILayout.BeginVertical ( );
+				}
+				else
+				{
+					EditorGUILayout.BeginHorizontal();
+				}
 
 				EditorGUILayout.ObjectField ( listSearch [ a ] [ 0 ], typeof ( GameObject ), true );
 
-				if ( thisType == ResearcheType.SamePref && GUILayout.Button ( "Remove this Liss", EditorStyles.miniButton ) )
+				if ( CanRemove && GUILayout.Button ( "Remove this Liss", EditorStyles.miniButton ) )
 				{
 					listSearch.RemoveAt ( a );
 					continue;
 				}
-				EditorGUILayout.EndHorizontal ( );
+
+				if ( allResearch )
+				{
+					EditorGUILayout.EndVertical ( );
+				}
+				else
+				{
+					EditorGUILayout.EndHorizontal ( );
+				}
 
 				getParent = true;
 				if ( listSearch [ a ].Count > 1 )
@@ -723,7 +836,16 @@ public class WindowSearchObject : EditorWindow
 					currParent = currParent.parent;
 					getindentLevel = EditorGUI.indentLevel;
 					EditorGUI.indentLevel = getindentLevel + 2;
-					EditorGUILayout.BeginHorizontal();
+
+					if ( allResearch )
+					{
+						EditorGUILayout.BeginVertical ( );
+					}
+					else
+					{
+						EditorGUILayout.BeginHorizontal();
+					}
+
 					EditorGUILayout.ObjectField ( "Parent", currParent.gameObject, typeof ( GameObject ), true );
 					bigParent = currParent;
 
@@ -737,7 +859,14 @@ public class WindowSearchObject : EditorWindow
 						EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof ( GameObject ), true );
 					}
 
-					EditorGUILayout.EndHorizontal ( );
+					if ( allResearch )
+					{
+						EditorGUILayout.EndVertical ( );
+					}
+					else
+					{
+						EditorGUILayout.EndHorizontal ( );
+					}
 					EditorGUI.indentLevel = getindentLevel;
 				}
 
@@ -763,43 +892,75 @@ public class WindowSearchObject : EditorWindow
 					}
 
 					EditorGUILayout.BeginVertical();
-					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.ObjectField ( listSearch [ a ] [ b ], typeof( GameObject ), true );
-
-					if ( thisType == ResearcheType.SamePref && GUILayout.Button ( "Remove From List", EditorStyles.miniButton ) )
-					{
-						listSearch [ a ].RemoveAt ( b );
-						continue;
-					}
-
-					EditorGUILayout.EndHorizontal ( );
+					isOtherParent = false;
 
 					if ( !getParent && currParent != listSearch [ a ] [ b ].transform.parent && listSearch [ a ] [ b ].transform.parent != null )
 					{
 						if ( b == 0 || listSearch [ a ] [ b - 1 ].transform.parent != listSearch [ a ] [ b ].transform.parent )
 						{
-							getindentLevel = EditorGUI.indentLevel;
-							EditorGUI.indentLevel = getindentLevel + 2;
-							EditorGUILayout.Space ( );
-							EditorGUILayout.Space ( );
-
-							EditorGUILayout.BeginHorizontal();
-							EditorGUILayout.ObjectField ( "OtherParent", listSearch [ a ] [ b ].transform.parent.gameObject, typeof( GameObject ), true );
-							bigParent = currParent;
-
-							while ( bigParent.parent != null )
+							if ( DisplayOtherParent )
 							{
-								bigParent = bigParent.parent;
-							}
+								bigParent = currParent;
 
-							if ( bigParent != currParent )
-							{
-								EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof ( GameObject ), true );
-							}
+								while ( bigParent.parent != null )
+								{
+									bigParent = bigParent.parent;
+								}
 
-							EditorGUILayout.EndHorizontal ( );
-							EditorGUI.indentLevel = getindentLevel;
+								isOtherParent = true;
+
+								if ( bigParent != currParent )
+								{
+									EditorGUILayout.BeginHorizontal();
+									EditorGUILayout.ObjectField ( listSearch [ a ] [ b ], typeof( GameObject ), true );
+
+									if ( CanRemove && GUILayout.Button ( "Remove From List", EditorStyles.miniButton ) )
+									{
+										listSearch [ a ].RemoveAt ( b );
+										continue;
+									}
+
+									EditorGUILayout.EndHorizontal ( );
+
+									EditorGUILayout.Space ( );
+									EditorGUILayout.Space ( );
+
+									EditorGUILayout.BeginHorizontal ( );
+									EditorGUILayout.ObjectField ( "OtherParent", listSearch [ a ] [ b ].transform.parent.gameObject, typeof( GameObject ), true );
+									EditorGUILayout.ObjectField ( "Base Parent", bigParent.gameObject, typeof( GameObject ), true );
+									EditorGUILayout.EndHorizontal ( );
+								}
+								else
+								{
+									EditorGUILayout.BeginVertical();
+									EditorGUILayout.BeginHorizontal();
+									EditorGUILayout.ObjectField ( listSearch [ a ] [ b ], typeof( GameObject ), true );
+									EditorGUILayout.ObjectField ( "OtherParent", listSearch [ a ] [ b ].transform.parent.gameObject, typeof( GameObject ), true );
+									EditorGUILayout.EndHorizontal ( );
+
+									if ( CanRemove && GUILayout.Button ( "Remove From List", EditorStyles.miniButton, GUILayout.Width ( sizeX / 2.1f ) ) )
+									{
+										listSearch [ a ].RemoveAt ( b );
+										continue;
+									}
+									EditorGUILayout.EndVertical ( );
+								}
+							}
 						}
+					}
+
+					if ( !isOtherParent )
+					{
+						EditorGUILayout.BeginHorizontal();
+						EditorGUILayout.ObjectField ( listSearch [ a ] [ b ], typeof( GameObject ), true );
+
+						if ( CanRemove && GUILayout.Button ( "Remove From List", EditorStyles.miniButton ) )
+						{
+							listSearch [ a ].RemoveAt ( b );
+							continue;
+						}
+
+						EditorGUILayout.EndHorizontal ( );
 					}
 					EditorGUILayout.EndVertical();
 
@@ -1027,6 +1188,90 @@ public class WindowSearchObject : EditorWindow
 		}
 	}
 
+	void advancedFilt ( float sizeX )
+	{
+		var buttonStyle = new GUIStyle( EditorStyles.miniButton );
+		EditorGUI.indentLevel = 2;
+
+		switch ( thisType )
+		{
+		case ResearcheType.Reference:
+			EditorGUILayout.Space ( );
+
+			if ( getProper )
+			{
+				buttonStyle.normal.textColor = Color.green;
+			}
+			else
+			{
+				buttonStyle.normal.textColor = Color.black;
+			}
+			if ( GUILayout.Button ( "Search on Properties", buttonStyle, GUILayout.Width ( sizeX / 3 ) ) )
+			{
+				getProper = !getProper;
+			}
+			break;
+		case ResearcheType.Object_Prefab:
+			EditorGUILayout.BeginVertical ( );
+
+			specName = EditorGUILayout.TextField ( "Other Name ?", specName, GUILayout.Width ( sizeX ) );
+
+			compDiff = ( int ) EditorGUILayout.Slider ( "Max component gap", compDiff, 0, 10, GUILayout.Width ( sizeX ) );
+			childDiff = ( int ) EditorGUILayout.Slider ( "Max child gap", childDiff, 0, 500, GUILayout.Width ( sizeX ) );
+			EditorGUI.indentLevel = 0;
+
+			EditorGUILayout.EndVertical ( );
+			break;
+		}
+		EditorGUILayout.Space ( );
+
+		EditorGUILayout.BeginHorizontal ( );
+		if ( getChildren )
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.black;
+		}
+
+		if ( GUILayout.Button ( "Search On Children", buttonStyle, GUILayout.Width ( sizeX / 3 ) ) )
+		{
+			getChildren = !getChildren;
+		}
+
+		if ( CanRemove )
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.black;
+		}
+
+		if ( GUILayout.Button ( "Custom List", buttonStyle, GUILayout.Width ( sizeX / 3 ) ) )
+		{
+			CanRemove = !CanRemove;
+		}
+
+		if ( DisplayOtherParent )
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.black;
+		}
+
+		if ( GUILayout.Button ( "Display all Parent", buttonStyle, GUILayout.Width ( sizeX / 3 ) ) )
+		{
+			DisplayOtherParent = !DisplayOtherParent;
+		}
+
+		EditorGUILayout.EndHorizontal ( );
+		EditorGUI.indentLevel = 0;
+	}
+
 	public static void SetCorout ( EditorCoroutine thisCorou, TypePlace thisPlace )
 	{
 		List <EditorCoroutine> getList;
@@ -1068,6 +1313,18 @@ public class WindowSearchObject : EditorWindow
 			}
 			break;
 		}
+	}
+
+	public static void AssetLoading ( bool LoadAsset, int maxToLoad )
+	{
+		NbrAssetLoad = 0;
+		MaxAssetToLoad = maxToLoad;
+		assetLoading = LoadAsset;
+	}
+
+	public static void PlusAssetLoaded ( )
+	{
+		NbrAssetLoad++;
 	}
 
 	public static void MaxCount ( int maxNbr, TypePlace thisPlace )
