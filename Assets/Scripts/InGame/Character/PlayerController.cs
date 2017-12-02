@@ -676,11 +676,11 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
-				float getDist = pTrans.position.y - thisRay.collider.transform.position.y;
 
 				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
 
-				if ( getThis.rotation.x > 0 || getThis.rotation.x == 0 && getThis.rotation.y > 0 && getThis.rotation.z > 0 )
+				Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
+				if ( getThis.rotation.x > 0 || getThis.rotation.x <= 0 && getThis.rotation.y < 0 && getThis.rotation.z > 0 )
 				{
 					angle = -angle;
 				}
