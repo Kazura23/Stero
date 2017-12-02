@@ -63,7 +63,6 @@ public class MenuShop : UiParent
 			if ( !catCurrSelected )
 			{
 				transition = false;
-				waitImpSub = false;
 				BuyItem ( );
 			}
 			else
@@ -196,11 +195,9 @@ public class MenuShop : UiParent
             switch (thisDir)
             {
                 case -1:
-                    currItemSeled = currItemSeled.LeftItem;
                     ItemLeft();
                     break;
                 case 1:
-                    currItemSeled = currItemSeled.RightItem;
                     ItemRight();
                     break;
                 case -2:
@@ -220,7 +217,13 @@ public class MenuShop : UiParent
 	public void BuyItem ( )
 	{
 		string getCons = Constants.ItemBought + currCatSeled.NameCat;
+		bool buy = false;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
+
+		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
+		{
+			return;	
+		}
 
 		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ItemName ) )
 		{
@@ -263,10 +266,7 @@ public class MenuShop : UiParent
 				getThis.GetComponent<Image> ( ).color = getThis.ColorConfirm;
 			}
 
-			if ( currCatSeled.NameCat == "ABILITIES" )
-			{
-				GlobalManager.Ui.SlowMotion.sprite = getThis.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
-			}
+			buy = true;
 
 			getAllBuy.Add ( getCons, getThis );
 		}
@@ -289,12 +289,7 @@ public class MenuShop : UiParent
 
 			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.Price )
 			{
-				Debug.Log ( "buy" );
-
-				if ( currCatSeled.NameCat == "ABILITIES" )
-				{
-					GlobalManager.Ui.SlowMotion.sprite = currIT.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
-				}
+				buy = true;
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 
@@ -312,6 +307,25 @@ public class MenuShop : UiParent
 				else
 				{
 					allTempItem.Add ( currItemSeled );
+				}
+			}
+		}
+
+		if ( buy )
+		{
+			if ( currCatSeled.NameCat == "ABILITIES" )
+			{
+				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
+			}
+			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie )
+			{
+				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+				{
+					GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+				}
+				else
+				{
+					GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
 				}
 			}
 		}
@@ -414,15 +428,19 @@ public class MenuShop : UiParent
            // thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
            // thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
 
-            DOVirtual.DelayedCall(1f, () => {
-                foreach (Transform trans in currItemSeled.transform.parent)
-                {
-                    trans.GetComponent<CanvasGroup>().DOFade(1, 0.5f);
-                    trans.DOScale(.75f, 0);
-                }
-            });
+            DOVirtual.DelayedCall(1f, () => 
+			{
+				ItemModif thisItem = currItemSeled;
 
-            
+				thisItem = thisItem.RightItem;
+				while ( thisItem != currItemSeled )
+				{
+					NewItemSelect ( thisItem, false );
+					thisItem = thisItem.RightItem;
+				}
+
+				NewItemSelect ( currItemSeled, true );
+            });
         }
 		else if ( !goItem && !catCurrSelected ) // Changement de item a cat
 		{
@@ -474,10 +492,20 @@ public class MenuShop : UiParent
             cat.GetComponent<Image>().DOFade(1, 0.1f);
         }
 
-        foreach (Transform trans in currItemSeled.transform.parent)
-        {
-            trans.GetComponent<CanvasGroup>().DOFade(0, 0);
-        }
+		ItemModif thisItem = currItemSeled;
+
+		thisItem.GetComponent<CanvasGroup> ( ).DOKill ( );
+		thisItem.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0 );
+		thisItem.ResetPos ( );
+		thisItem = thisItem.RightItem;
+
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.GetComponent<CanvasGroup> ( ).DOKill ( );
+			thisItem.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0 );
+			thisItem.ResetPos ( );
+			thisItem = thisItem.RightItem;
+		}
     }
 
 	// Selection d'une nouvelle catégorie
@@ -569,33 +597,79 @@ public class MenuShop : UiParent
 
     void ItemLeft()
     {
-        ItemModif thisItem = currItemSeled;
+		ItemModif thisItem = currItemSeled;
+		Vector3 savePos;
 
-        thisItem.LeftItem.transform.DOLocalMoveX(250, .5f);
-        thisItem.LeftItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
-        thisItem.LeftItem.transform.DOScale(.4f, .2f);
+		thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+		thisItem = thisItem.RightItem;
 
-        thisItem.transform.DOLocalMoveX(650, .5f);
-        thisItem.transform.DOScale(.75f, .2f);
-        thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+			thisItem = thisItem.RightItem;
 
+			NewItemSelect ( thisItem, false );
+		}
+
+		thisItem = currItemSeled;
+		savePos = thisItem.CurrPos;
+
+		do
+		{
+			thisItem.CurrPos = thisItem.RightItem.CurrPos;
+			thisItem = thisItem.RightItem;
+		} while ( thisItem != currItemSeled.LeftItem );
+
+		currItemSeled.LeftItem.CurrPos = savePos;
+
+		currItemSeled = currItemSeled.LeftItem;
+		NewItemSelect ( currItemSeled, true );
     }
 
     void ItemRight()
     {
-        ItemModif thisItem = currItemSeled;
+		ItemModif thisItem = currItemSeled;
+		Vector3 savePos;
+		thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+		thisItem = thisItem.LeftItem;
 
-        thisItem.RightItem.transform.DOLocalMoveX(650, .5f);
-        thisItem.RightItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
-        thisItem.LeftItem.transform.DOScale(.4f, .2f);
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+			thisItem = thisItem.LeftItem;
 
-        thisItem.transform.DOLocalMoveX(1050, .5f);
-        thisItem.transform.DOScale(.75f, .2f);
-        thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
+			NewItemSelect ( thisItem, false );
+		}
 
+		thisItem = currItemSeled;
+		savePos = thisItem.CurrPos;
+
+		do
+		{
+			thisItem.CurrPos = thisItem.LeftItem.CurrPos;
+			thisItem = thisItem.LeftItem;
+		} while ( thisItem != currItemSeled.RightItem );
+
+		currItemSeled.RightItem.CurrPos = savePos;
 
         //thisItem.transform.DOLocalMove(new Vector2(-448, 800), .5f);
+		currItemSeled = currItemSeled.RightItem;
+		NewItemSelect ( currItemSeled, true );
     }
+
+	void NewItemSelect ( ItemModif thisItem, bool selected )
+	{
+		if ( selected )
+		{
+			thisItem.GetComponent<CanvasGroup>().DOFade(1, 1);
+			thisItem.transform.DOScale(.75f, 0);
+		}
+		else
+		{
+			thisItem.GetComponent<CanvasGroup>().DOFade(0.5f, 1);
+			thisItem.transform.DOScale(.5f, 0);
+		}
+	}
 
 	// Selection d'un nouvelle item
 	void CheckSelectItem ( bool selected )
@@ -605,16 +679,6 @@ public class MenuShop : UiParent
 		if ( selected )
 		{
 			thisItem.Selected = true;
-
-            //Code du outline
-            /*
-            thisItem.GetComponent<Outline>().transform.DOScale(2, .75f).OnComplete(() => {
-                thisItem.GetComponent<Outline>().DOFade(0, .25f);
-                DOVirtual.DelayedCall(.25f, () => {
-                    thisItem.GetComponent<Outline>().DOFade(1, 0);
-                    thisItem.GetComponent<Outline>().transform.DOScale(1, 0);
-                });
-            }).SetLoops(-1,LoopType.Restart);*/
 
 			if ( thisItem.ItemBought && thisItem.UseOtherColor )
 			{

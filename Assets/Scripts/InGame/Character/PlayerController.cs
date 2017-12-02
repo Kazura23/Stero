@@ -78,8 +78,11 @@ public class PlayerController : MonoBehaviour
     public float delayInEndMadness = 2;
     public float slowInBeginMadness = 3;
 
+    [Tooltip("Lier au score")]
+    public float facteurMulDistance = 1;
 
-	[Header ("SphereMask")]
+
+    [Header ("SphereMask")]
 	public float Radius;
 	public float SoftNess;
 
@@ -326,24 +329,10 @@ public class PlayerController : MonoBehaviour
 
 	public void GameOver ( bool forceDead = false )
 	{
-
-        GlobalManager.Ui.GameOver();
-
         if ( invDamage  && !forceDead )
 		{
 			return;
 		}
-
-
-        ScreenShake.Singleton.ShakeGameOver();
-
-        GameOverTok thisTok = new GameOverTok ( );
-		thisTok.totalDist = totalDis;
-
-        StopPlayer = true;
-
-		thisCam.GetComponent<RainbowMove>().enabled = false;
-		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
         Life--;
 
@@ -352,15 +341,30 @@ public class PlayerController : MonoBehaviour
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
 
-
             if (!playerDead)
             {
-
-                GlobalManager.Ui.StartBonusLife();
+				GlobalManager.Ui.StartBonusLife ( Life + 1 );
             }
 
             return;
 		}
+
+        AllPlayerPrefs.distance = totalDis;
+        AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
+        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        
+
+		StopPlayer = true;
+
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
+
+		GameOverTok thisTok = new GameOverTok ( );
+		thisTok.totalDist = totalDis;
+
+		ScreenShake.Singleton.ShakeGameOver();
+
+		GlobalManager.Ui.GameOver();
 
         DOVirtual.DelayedCall(.2f, () =>
         {
@@ -368,8 +372,6 @@ public class PlayerController : MonoBehaviour
             thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
             thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
-
-
 
         playerDead = true;
 
@@ -380,12 +382,14 @@ public class PlayerController : MonoBehaviour
         {
 
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
+            //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
+            Debug.Log("compile");
             ScreenShake.Singleton.ShakeGameOver();
 
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
-		GlobalManager.GameCont.GameOver ( );
+		//GlobalManager.GameCont.GameOver ( );
     }
 
     public void AddSmoothCurve(float p_value)
@@ -560,7 +564,7 @@ public class PlayerController : MonoBehaviour
 
 		lastPos = pTrans.position;
 		textDist.text = "" + Mathf.RoundToInt ( totalDis );
-		Debug.Log ( maxSpeed );
+		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
 			nextIncrease += DistIncMaxSpeed;
@@ -1256,7 +1260,7 @@ public class PlayerController : MonoBehaviour
         DOTween.To(() => maxSpeed,
             x => {
                 maxSpeed = x;
-                Debug.Log("val maxSpeed = "+maxSpeed);
+                //Debug.Log("val maxSpeed = "+maxSpeed);
             },
             MaxSpeed,
             delayInEndMadness
