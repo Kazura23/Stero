@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour 
 {
+	public float TimeToFall = 0.5f;
 	#region Variables
 	[Header ("Caractéristique sur une même Lane")]
 	public float MaxSpeed = 5;
@@ -738,7 +739,7 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator waitFall ( )
 	{
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( TimeToFall );
 
 		inAir = true;
 		currWF = null;
