@@ -2,7 +2,24 @@
 
 public static class AllPlayerPrefs
 {
-   // public static int piece;
+    public static int piece;
+    public static int finalScore;
+    public static int scoreWhithoutDistance;
+    public static float distance;
+    public static ListData saveData;
+
+    public static void ResetStaticVar()
+    {
+        piece = 0;
+        finalScore = 0;
+        scoreWhithoutDistance = 0;
+        distance = 0;
+    }
+
+    public static DataSave NewData()
+    {
+        return new DataSave(finalScore, scoreWhithoutDistance, piece, distance);
+    }
 
     #region Get Methods
 	public static int GetIntValue ( string thisString )

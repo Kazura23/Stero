@@ -24,18 +24,17 @@ public class UiManager : ManagerParent
 	public Text MoneyPoints;
 
     [Header("MAIN MENU")]
-    public int MenuSelection;
+    public int MenuSelection = 1;
 
     [Header("SHOP STUFF")]
     public Image SlowMotion;
     public Image BonusLife;
+	public List<Image> ExtraHearts;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
     private Camera camTw1;
-
-
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -83,7 +82,6 @@ public class UiManager : ManagerParent
 			}
 		}
 	}
-
 
     public void MenuGlobal(int whichMenu)
     {
@@ -286,23 +284,38 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void StartBonusLife()
+	public void StartBonusLife ( int currLife )
     {
+		Image getCurrHeat;
+		if ( currLife == 3 )
+		{
+			getCurrHeat = ExtraHearts [ 1 ];
+		}
+		else if ( currLife == 2 )
+		{
+			getCurrHeat = ExtraHearts [ 0 ];
+		}
+		else
+		{
+			getCurrHeat = BonusLife;
+		}
+
+
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-        BonusLife.transform.DOLocalMove(new Vector2(960, -480), .1f);
-        BonusLife.GetComponent<RainbowScale>().enabled = false;
-        BonusLife.DOFade(0, .05f);
+		getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .1f);
+		getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+		getCurrHeat.DOFade(0, .05f);
         DOVirtual.DelayedCall(.1f, () => {
-            BonusLife.DOFade(.75f, .1f);
-            BonusLife.transform.DOScale(10, 0f);
-            BonusLife.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
+			getCurrHeat.DOFade(.75f, .1f);
+			getCurrHeat.transform.DOScale(10, 0f);
+			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
                 CircleFeel.transform.DOScale(28, .8f);
                 CircleFeel.DOFade(1, .2f).OnComplete(() => {
                     CircleFeel.DOFade(0, .4f);
                 });
-                BonusLife.transform.DOScale(40f, .5f);
-                BonusLife.DOFade(0, .5f);
+				getCurrHeat.transform.DOScale(40f, .5f);
+				getCurrHeat.DOFade(0, .5f);
             });
         });
     }
