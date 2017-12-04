@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Rewired;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
 	public float delayChocWave = 5;
+    public int debugNumTechnic = 2;
 
 	[Tooltip ("Le temps max sera delayPunch")]
 	public float TimePropulsePunch = 0.1f, TimePropulseDoublePunch = 0.2f;
@@ -139,6 +141,7 @@ public class PlayerController : MonoBehaviour
 
 	Quaternion startRotRR;
 	Vector3 startPosRM;
+    Player inputPlayer;
 
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
@@ -168,6 +171,7 @@ public class PlayerController : MonoBehaviour
 
 	int LastImp = 0;
 	int clDir = 0;
+    int debugTech = 0;
 
 	//bool canJump = true;
 	bool propP = false;
@@ -221,6 +225,7 @@ public class PlayerController : MonoBehaviour
 
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
+        inputPlayer = ReInput.players.GetPlayer(0);
 
         Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
@@ -247,13 +252,13 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
 
-        /*
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
-            sphereChocWave.enabled = true;
-            StartCoroutine(CooldownWave());
-            StartCoroutine(TimerHitbox());
-        }*/
+            debugTech++;
+            if (debugTech == debugNumTechnic)
+                debugTech = 0;
+        }
 
         SmoothBar();
 
@@ -565,7 +570,20 @@ public class PlayerController : MonoBehaviour
 
 		checkInAir ( getTime );
 
-		speAction ( getTime );
+        switch (debugTech)
+        {
+            case 0:
+                speAction(getTime);
+                break;
+            case 1:
+                if (Input.GetAxis("SpecialAction") > 0) {
+                    sphereChocWave.enabled = true;
+                    StartCoroutine(CooldownWave());
+                    StartCoroutine(TimerHitbox());
+                }
+                break;
+        }
+		
 
 		changeLine ( getTime );
 
