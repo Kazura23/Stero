@@ -248,7 +248,7 @@ public class SpawnChunks : MonoBehaviour
 			{
 				currChunk = currNbrCh;
 
-				if ( currChunk >= getThoseChunk.Count )
+				if ( getChunk.ChunkAleat || currChunk >= getThoseChunk.Count )
 				{
 					currChunk = Random.Range ( 0, getThoseChunk.Count );
 				}
@@ -261,7 +261,7 @@ public class SpawnChunks : MonoBehaviour
 				{
 					thisSpawn = getThoseChunk [ currChunk ];
 				}
-
+				Debug.Log ( currChunk );
 				if ( thisSpawn != null )
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
