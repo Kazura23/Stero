@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour 
 {
+	public float TimeToFall = 0.5f;
 	#region Variables
 	[Header ("Caractéristique sur une même Lane")]
 	public float MaxSpeed = 5;
@@ -328,24 +329,10 @@ public class PlayerController : MonoBehaviour
 
 	public void GameOver ( bool forceDead = false )
 	{
-
-        GlobalManager.Ui.GameOver();
-
         if ( invDamage  && !forceDead )
 		{
 			return;
 		}
-
-
-        ScreenShake.Singleton.ShakeGameOver();
-
-        GameOverTok thisTok = new GameOverTok ( );
-		thisTok.totalDist = totalDis;
-
-        StopPlayer = true;
-
-		thisCam.GetComponent<RainbowMove>().enabled = false;
-		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
         Life--;
 
@@ -354,11 +341,9 @@ public class PlayerController : MonoBehaviour
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
 
-
             if (!playerDead)
             {
-
-                GlobalManager.Ui.StartBonusLife();
+				GlobalManager.Ui.StartBonusLife ( Life + 1 );
             }
 
             return;
@@ -369,14 +354,24 @@ public class PlayerController : MonoBehaviour
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
         
 
+		StopPlayer = true;
+
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
+
+		GameOverTok thisTok = new GameOverTok ( );
+		thisTok.totalDist = totalDis;
+
+		ScreenShake.Singleton.ShakeGameOver();
+
+		GlobalManager.Ui.GameOver();
+
         DOVirtual.DelayedCall(.2f, () =>
         {
 
             thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
             thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
-
-
 
         playerDead = true;
 
@@ -681,11 +676,11 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
-				float getDist = pTrans.position.y - thisRay.collider.transform.position.y;
 
 				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
 
-				if ( getThis.rotation.x > 0 || getThis.rotation.x == 0 && getThis.rotation.y > 0 && getThis.rotation.z > 0 )
+				Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
+				if ( getThis.rotation.x > 0 || getThis.rotation.x <= 0 && getThis.rotation.y < 0 && getThis.rotation.z > 0 )
 				{
 					angle = -angle;
 				}
@@ -748,7 +743,7 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator waitFall ( )
 	{
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( TimeToFall );
 
 		inAir = true;
 		currWF = null;

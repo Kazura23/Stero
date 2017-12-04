@@ -267,7 +267,7 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life += thisItem.NombreVie;
+			currPlayer.Life ++;
 		}
 	}
     #endregion
