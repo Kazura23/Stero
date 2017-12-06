@@ -40,7 +40,7 @@ public class GameController : ManagerParent
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
-        if (!checkStart && isStay)
+        if (!checkStart && isStay && GameStarted)
         {
             switch (chooseOption)
             {

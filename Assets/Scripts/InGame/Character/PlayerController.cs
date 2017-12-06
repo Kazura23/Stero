@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 
-       //Plafond.GetComponent<MeshRenderer>().enabled = true;
+        //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
 
 	void Update ( )
