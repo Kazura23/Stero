@@ -36,6 +36,8 @@ public class UiManager : ManagerParent
     public GameObject TextFeelMadness;
     private Camera camTw1;
 
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
+
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 
@@ -284,7 +286,39 @@ public class UiManager : ManagerParent
         });
     }
 
-	public void StartBonusLife ( int currLife )
+    public void SelectShop()
+    {
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+        shopTw3.Kill(true);
+        shopTw4.Kill(true);
+
+
+        shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
+        CircleFeel.transform.DOScale(1, 0);
+        CircleFeel.DOColor(Color.white, 0);
+        shopTw2 = SlowMotion.DOFade(0, .05f);
+        shopTw3 = DOVirtual.DelayedCall(.1f, () => {
+            shopTw2 = SlowMotion.DOFade(1f, .1f);
+            SlowMotion.transform.DOScale(4, 0f);
+            shopTw1 = CircleFeel.transform.DOScale(25, .25f);
+            shopTw3 = CircleFeel.DOFade(.75f, .15f).OnComplete(() => {
+                shopTw3 = CircleFeel.DOFade(0, .1f);
+            });
+            shopTw4 = SlowMotion.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(0, 0), .2f);
+                shopTw2 = SlowMotion.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
+                {
+                    shopTw1 = SlowMotion.DOFade(1, .1f);
+                    shopTw2 = SlowMotion.transform.DOScale(1, 0f);
+                });
+            });
+        });
+    }
+
+    public void StartBonusLife ( int currLife )
     {
 		Image getCurrHeat;
 		if ( currLife == 3 )

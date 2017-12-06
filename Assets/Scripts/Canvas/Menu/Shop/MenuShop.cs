@@ -27,6 +27,7 @@ public class MenuShop : UiParent
     public Image moleculeCategory;
     public GameObject moleculeContainer;
     public Image backgroundColor;
+    public string[] quoteShop;
 
     public GameObject UnlockObject;
     private string itemName;
@@ -47,6 +48,8 @@ public class MenuShop : UiParent
 	Transform saveParentAb;
 	Transform saveParentBo;
 	Text moneyNumberPlayer;
+
+    Tween shopTw1, shopTw2;
 
 	bool catCurrSelected = true;
 	bool waitInputH = false;
@@ -223,6 +226,8 @@ public class MenuShop : UiParent
 
         backgroundColor.transform.SetParent(currItemSeled.transform.parent.parent);
         UnlockObject.transform.SetParent(currItemSeled.transform.parent.parent);
+        
+        currItemSeled.GetComponentsInChildren<Text>()[2].text = "SOLD!";
 
         CanInput = false;
 
@@ -270,7 +275,7 @@ public class MenuShop : UiParent
                                 text.transform.DOLocalMoveY(-100, .15f).OnComplete(() =>
                                 {
 
-                                    text.text = "HIT THEM LIKE A BOSS";
+                                    text.text = quoteShop[UnityEngine.Random.Range(0, quoteShop.Length)];
 
                                     text.transform.DOLocalMoveY(100, 0f);
                                     text.GetComponent<CanvasGroup>().DOFade(1, .15f);
@@ -327,20 +332,12 @@ public class MenuShop : UiParent
 			{
 				AllPlayerPrefs.SetStringValue ( getCons + getThis.ItemName, "ok" );
 
-                        itemIcon = getThis.GetComponentsInChildren<Image>()[4].sprite;
-
-                        itemName = getThis.GetComponentsInChildren<Text>()[0].text;
-
-                Debug.Log(getThis);
+                        
 
 
-                getThis.transform.GetChild(0).transform.DOScale(1, 0);
-                getThis.transform.GetChild(0).transform.GetComponent<Image>().DOFade(1, .1f).OnComplete(() => {
-                    getThis.transform.GetChild(0).transform.DOScale(1.4f, .4f);
-                    getThis.transform.GetChild(0).transform.GetComponent<Image>().DOFade(0, .4f);
-                }); 
 
-				if ( getThis.UseOtherSprite )
+
+                if ( getThis.UseOtherSprite )
 				{
 					getThis.GetComponent<Image> ( ).sprite = currItemSeled.BoughtSpriteUnselected;
 				}
@@ -374,7 +371,11 @@ public class MenuShop : UiParent
 
 			buy = true;
 
-			getAllBuy.Add ( getCons, getThis );
+            SelectObject();
+
+            GlobalManager.Ui.SelectShop();
+
+            getAllBuy.Add ( getCons, getThis );
 		}
 		else 
 		{
@@ -429,11 +430,15 @@ public class MenuShop : UiParent
 			{
 				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
 				{
-					GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+
+                    SelectObject();
+                    GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
 				}
 				else
 				{
-					GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
+
+                    SelectObject();
+                    GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
 				}
 			}
 		}
@@ -443,6 +448,23 @@ public class MenuShop : UiParent
 	#endregion
 
 	#region Private Methods
+
+    void SelectObject()
+    {
+        itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
+
+        itemName = currItemSeled.GetComponentsInChildren<Text>()[0].text;
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+
+        shopTw1 = currItemSeled.transform.GetChild(0).transform.DOScale(1, 0);
+        shopTw2 = currItemSeled.transform.GetChild(0).transform.GetComponent<Image>().DOFade(1, .1f).OnComplete(() => {
+            shopTw1 = currItemSeled.transform.GetChild(0).transform.DOScale(1.4f, .4f);
+            shopTw2 = currItemSeled.transform.GetChild(0).transform.GetComponent<Image>().DOFade(0, .4f);
+        });
+    }
+
 	protected override void InitializeUi()
 	{
 		currCatSeled = DefCatSelected;
