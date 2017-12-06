@@ -252,12 +252,7 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
 
         /*
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            sphereChocWave.enabled = true;
-            StartCoroutine(CooldownWave());
-            StartCoroutine(TimerHitbox());
-        }*/
+       */
 
         SmoothBar();
 
@@ -599,12 +594,12 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( Input.GetAxis ( "SpecialAction" ) > 0 && canSpe && SliderContent > 0 && !Dash )
 			{
-				Camera.main.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
+				Camera.main.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
 
 				if ( !animeSlo )
 				{
 					animeSlo = true;
-					GlobalManager.Ui.StartSlowMo();
+					GlobalManager.Ui.StartSlowMo ( );
 				}
 
 				if ( Time.timeScale > 1 / SlowMotion )
@@ -629,7 +624,7 @@ public class PlayerController : MonoBehaviour
 				animeSlo = false;
 				Time.timeScale = 1;
 				SliderContent += RecovSlider * getTime;
-				Camera.main.GetComponent<CameraFilterPack_Vision_Aura>().enabled = false;
+				Camera.main.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 
 				if ( SliderContent > 2 )
 				{
@@ -643,6 +638,12 @@ public class PlayerController : MonoBehaviour
 			}
 
 			SliderSlow.value = SliderContent;
+		}
+		else if ( ThisAct == SpecialAction.OndeChoc )
+		{
+			sphereChocWave.enabled = true;
+			StartCoroutine ( CooldownWave ( ) );
+			StartCoroutine ( TimerHitbox ( ) );
 		}
 	}
 
