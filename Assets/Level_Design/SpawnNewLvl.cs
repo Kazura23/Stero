@@ -32,16 +32,13 @@ public class SpawnNewLvl : MonoBehaviour
 			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
-			Debug.Log (1 + " / " + getPlayer.currLine );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
 			getPlayer.currLine -= OnLine;
-		
 			getPlayer.NbrLineRight =  (int)InfoChunk.NbrLaneDebut.y;
-			Debug.Log (2 + " / " + getPlayer.currLine );
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Destroy ( ToDest [ a ], 4 );
+				Destroy ( ToDest [ a ], 1 );
 			}
 		}
 	}
@@ -61,6 +58,7 @@ public class ChunkExit
 {
 	public int LaneParent = 0;
 	public int Verticalite = 0;
+	public Vector2 OtherNbrFin = new Vector2 ( -1, -1 );
 	public Transform LevelParent;
 	public ListChunkScriptable LCS;
 }

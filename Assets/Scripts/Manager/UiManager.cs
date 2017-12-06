@@ -23,14 +23,20 @@ public class UiManager : ManagerParent
 	public Text ScorePoints;
 	public Text MoneyPoints;
 
+    [Header("MAIN MENU")]
+    public int MenuSelection = 1;
+
     [Header("SHOP STUFF")]
     public Image SlowMotion;
     public Image BonusLife;
+	public List<Image> ExtraHearts;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
     private Camera camTw1;
+
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -79,9 +85,29 @@ public class UiManager : ManagerParent
 		}
 	}
 
-
-    public void SimpleCoup()
+    public void MenuGlobal(int whichMenu)
     {
+        if(whichMenu == 1)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -60, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 2)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 3)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 0, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 4)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        MenuSelection = whichMenu;
     }
 
     public void Intro()
@@ -127,12 +153,29 @@ public class UiManager : ManagerParent
         });
 
 		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(33.5f, .16f);//.SetEase(Ease.InBounce);
+		Camera.main.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
 		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
-			RedScreen.DOFade(0, .08f);
+			RedScreen.DOFade(0, .12f);
 			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
 	}
+
+    public void BloodHitDash()
+    {
+        //Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.4f, () => {
+            Time.timeScale = 1;
+            //Time.fixedDeltaTime = .02F;
+        });
+
+        float saveFov = Camera.main.fieldOfView;
+        Camera.main.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
+        RedScreen.DOFade(.4f, .1f).OnComplete(() => {
+            RedScreen.DOFade(0, .08f);
+            Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
+        });
+    }
 
     public void GameOver()
     {
@@ -243,23 +286,70 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void StartBonusLife()
+    public void SelectShop()
     {
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+        shopTw3.Kill(true);
+        shopTw4.Kill(true);
+
+
+        shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
+        CircleFeel.transform.DOScale(1, 0);
+        CircleFeel.DOColor(Color.white, 0);
+        shopTw2 = SlowMotion.DOFade(0, .05f);
+        shopTw3 = DOVirtual.DelayedCall(.1f, () => {
+            shopTw2 = SlowMotion.DOFade(1f, .1f);
+            SlowMotion.transform.DOScale(4, 0f);
+            shopTw1 = CircleFeel.transform.DOScale(25, .25f);
+            shopTw3 = CircleFeel.DOFade(.75f, .15f).OnComplete(() => {
+                shopTw3 = CircleFeel.DOFade(0, .1f);
+            });
+            shopTw4 = SlowMotion.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(0, 0), .2f);
+                shopTw2 = SlowMotion.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
+                {
+                    shopTw1 = SlowMotion.DOFade(1, .1f);
+                    shopTw2 = SlowMotion.transform.DOScale(1, 0f);
+                });
+            });
+        });
+    }
+
+    public void StartBonusLife ( int currLife )
+    {
+		Image getCurrHeat;
+		if ( currLife == 3 )
+		{
+			getCurrHeat = ExtraHearts [ 1 ];
+		}
+		else if ( currLife == 2 )
+		{
+			getCurrHeat = ExtraHearts [ 0 ];
+		}
+		else
+		{
+			getCurrHeat = BonusLife;
+		}
+
+
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-        BonusLife.transform.DOLocalMove(new Vector2(960, -480), .1f);
-        BonusLife.GetComponent<RainbowScale>().enabled = false;
-        BonusLife.DOFade(0, .05f);
+		getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .1f);
+		getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+		getCurrHeat.DOFade(0, .05f);
         DOVirtual.DelayedCall(.1f, () => {
-            BonusLife.DOFade(.75f, .1f);
-            BonusLife.transform.DOScale(10, 0f);
-            BonusLife.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
+			getCurrHeat.DOFade(.75f, .1f);
+			getCurrHeat.transform.DOScale(10, 0f);
+			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
                 CircleFeel.transform.DOScale(28, .8f);
                 CircleFeel.DOFade(1, .2f).OnComplete(() => {
                     CircleFeel.DOFade(0, .4f);
                 });
-                BonusLife.transform.DOScale(40f, .5f);
-                BonusLife.DOFade(0, .5f);
+				getCurrHeat.transform.DOScale(40f, .5f);
+				getCurrHeat.DOFade(0, .5f);
             });
         });
     }

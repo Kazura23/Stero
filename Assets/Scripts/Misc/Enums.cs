@@ -21,7 +21,8 @@ public enum MenuType
 	MenuHome,
 	Shop,
 	Pause,
-	GameOver
+	GameOver,
+    Leaderboard
 }
 
 
@@ -38,8 +39,7 @@ public enum AudioType
 	OtherMusic,
 	FxSound,
 	OtherSound,
-	Other,
-    OtherFx2
+	Other
 }
 
 public enum ResearcheType 

@@ -25,16 +25,18 @@ public class AbstractObject : MonoBehaviour
 
 	[Tooltip ("Si différent de 0 alors l'axe de rotation est freeze")]
 	public Vector3 FreezeRot = Vector3.zero;
+    [Tooltip("Lier au score")]
+    public int point = 100;
 
-	public bool useGravity = true;
+    public bool useGravity = true;
 
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
     PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
+	Rigidbody meshRigid;
 
-	List<Rigidbody> corps;
 	Vector3 projection;
 	#endregion
 
@@ -42,15 +44,20 @@ public class AbstractObject : MonoBehaviour
 	void Awake () 
 	{
 		isDead = false;
-		corps = new List<Rigidbody>();
 
 		getTrans = transform;
 
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 
-		foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody> ( ) )
+		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
+
+		if ( allRig.Length > 1 )
 		{
-			corps.Add ( thisRig );
+			meshRigid = allRig [ 1 ];
+		}
+		else
+		{
+			meshRigid = mainCorps;
 		}
 	}
 
@@ -80,20 +87,16 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-       
-        //Debug.Log(GetComponentInChildren<Animator>());
-        //Time.timeScale = 1;
+		isDead = true;
+        Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
-        getTrans.tag = Constants._ObjDeadTag;
-		for ( int i = 0; i < corps.Count; i++ )
-		{
-			corps [ i ].useGravity = true;
-		}
+        
+        int randomSong = UnityEngine.Random.Range(0, 8);
+
+		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
 
-        int randomSong = UnityEngine.Random.Range(0, 9);
-
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + randomSong,false);
+       // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
 
@@ -109,7 +112,7 @@ public class AbstractObject : MonoBehaviour
 			onEnemyDead ( getFor + getRig + getUp );
 		}
         
-		Destroy ( this.gameObject, delayDead );
+		Destroy ( gameObject, delayDead );
 	}
 
 	protected virtual void CollDetect (  )
@@ -128,6 +131,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		onEnemyDead ( forceProp );
 		StartCoroutine ( enableColl ( ) );
+		Destroy ( gameObject, delayDead );
 	}
 	#endregion
 
@@ -156,17 +160,22 @@ public class AbstractObject : MonoBehaviour
 	void onEnemyDead ( Vector3 forceProp )
 	{
 		isDead = true;
-
+        AllPlayerPrefs.scoreWhithoutDistance += point;
 
         ScreenShake.Singleton.ShakeEnemy();
 
-		var animation = GetComponentInChildren<Animator>();
-		animation.enabled = false;
 
-		getTrans.tag = Constants._ObjDeadTag;
-		for ( int i = 0; i < corps.Count; i++ )
+        int randomSongBone = UnityEngine.Random.Range(0, 4);
+
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+
+        var animation = GetComponentInChildren<Animator>();
+        if(animation)
+		    animation.enabled = false;
+
+		if ( animation != null )
 		{
-			corps [ i ].useGravity = true;
+			animation.enabled = false;
 		}
 
 		mainCorps.constraints = RigidbodyConstraints.None;
@@ -176,7 +185,18 @@ public class AbstractObject : MonoBehaviour
 			mainCorps.useGravity = true;
 		}
 
-		mainCorps.AddForce ( forceProp, ForceMode.VelocityChange );
+		if ( meshRigid.gameObject != gameObject )
+		{
+			GetComponent<BoxCollider> ( ).enabled = false;
+		}
+
+		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
+		string getObsT = Constants._ObjDeadTag;
+		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		{
+			thisRig.tag = getObsT;
+		}
+		meshRigid.tag = getObsT;
 	}
 
 	IEnumerator enableColl ( )
@@ -189,7 +209,7 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		GetComponent<BoxCollider> ( ).enabled = true;
+		//GetComponent<BoxCollider> ( ).enabled = true;
 	}
 
 	void checkConstAxe ( )
@@ -243,6 +263,16 @@ public class AbstractObject : MonoBehaviour
         //Debug.Log(Shader.GetGlobalFloat(");
         //Shader.SetGlobalFloat("highlight_amount", 0);
         //rend.material.SetFloat("highlight_amount", 0);
+
+		int a;
+		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
+		{
+			for ( a = 0; a < thisSkin.materials.Length; a++ )
+			{
+				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
+				thisSkin.materials [ a ].SetFloat ( "_highlight", 1.0f );
+			}	
+		}
     }
     #endregion
 }
