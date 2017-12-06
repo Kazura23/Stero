@@ -26,8 +26,6 @@ public class EditItemMod : Editor
 
 	SerializedProperty RightItem;
 	SerializedProperty LeftItem;
-	SerializedProperty UpItem;
-	SerializedProperty DownItem;
 
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
@@ -69,8 +67,6 @@ public class EditItemMod : Editor
 
 		RightItem = serializedObject.FindProperty("RightItem");
 		LeftItem = serializedObject.FindProperty("LeftItem");
-		UpItem = serializedObject.FindProperty("UpItem");
-		DownItem = serializedObject.FindProperty("DownItem");
 
 		SpecAction = serializedObject.FindProperty("SpecAction");
 		SlowMotion = serializedObject.FindProperty("SlowMotion");
@@ -323,8 +319,6 @@ public class EditItemMod : Editor
 		EditorGUILayout.LabelField("Around Information", EditorStyles.boldLabel);
 		EditorGUILayout.PropertyField ( RightItem );
 		EditorGUILayout.PropertyField ( LeftItem );
-		EditorGUILayout.PropertyField ( UpItem );
-		EditorGUILayout.PropertyField ( DownItem );
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
@@ -412,24 +406,6 @@ public class EditItemMod : Editor
 		{
 			myTarget.LeftItem = myTarget.GetComponent<ItemModif> ( );
 		}
-		if ( myTarget.UpItem == null )
-		{
-			myTarget.UpItem = myTarget.GetComponent<ItemModif> ( );
-		}
-		if ( myTarget.DownItem == null )
-		{
-			myTarget.DownItem = myTarget.GetComponent<ItemModif> ( );
-		}
-
-		/*
-		if ( myTarget.UpItem == null )
-		{
-			myTarget.UpItem = myTarget.GetComponent<ItemModif> ( );
-		}
-		if ( myTarget.DownItem == null )
-		{
-			myTarget.DownItem = myTarget.GetComponent<ItemModif> ( );
-		}*/
 	}
 	#endregion
 

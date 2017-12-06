@@ -36,8 +36,6 @@ public class ItemModif : MonoBehaviour
 
 	public ItemModif RightItem;
 	public ItemModif LeftItem;
-	public ItemModif UpItem;
-	public ItemModif DownItem;
 
 	public bool ModifVie;
 	public bool ModifSpecial;

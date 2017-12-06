@@ -211,14 +211,7 @@ public class MenuShop : UiParent
                 case 1:
                     ItemRight();
                     break;
-                case -2:
-                    currItemSeled = currItemSeled.DownItem;
-                    break;
-                case 2:
-                    currItemSeled = currItemSeled.UpItem;
-                    break;
             }
-
         });
 		
 		CheckSelectItem ( true );
@@ -303,15 +296,10 @@ public class MenuShop : UiParent
                                             });
                                         });
                                     });
-
-
                                 });
                             });
                         });
                     });
-
-
-
                 });
             });
         });
@@ -395,7 +383,7 @@ public class MenuShop : UiParent
 
 			if ( currCatSeled.Progression )
 			{
-				if ( currIT.UpItem.ItemBought || currIT.DownItem.ItemBought || currIT.LeftItem.ItemBought || currIT.RightItem.ItemBought )
+				if ( currIT.LeftItem.ItemBought || currIT.RightItem.ItemBought )
 				{
 					checkProg = true;
 				}
@@ -472,6 +460,7 @@ public class MenuShop : UiParent
 		ItemModif currItem;
 
 		string getCons = Constants.ItemBought;
+
 		Dictionary <string, ItemModif> getItemConf = new Dictionary<string, ItemModif> ( );
 		allTempItem = new List<ItemModif> ( );
 
@@ -501,7 +490,7 @@ public class MenuShop : UiParent
 		GlobalManager.GameCont.AllModifItem = getItemConf;
 		GlobalManager.GameCont.AllTempsItem = allTempItem;
     }
-    
+
 	//Changement de catégorie a item et inversement
 	void ChangeToItem ( bool goItem )
 	{
