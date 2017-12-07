@@ -242,6 +242,7 @@ public class MenuShop : UiParent
         icon.transform.DOScale(1, .25f);
         icon.DOFade(0, 0);
         icon.DOFade(1, .25f);
+        icon.sprite = itemIcon;
 
         DOVirtual.DelayedCall(.3f, () =>
         {
@@ -399,6 +400,10 @@ public class MenuShop : UiParent
 
 				if ( currCatSeled.BuyForLife )
 				{
+                    if (getAllBuy.TryGetValue(getCons, out getThis))
+                    {
+                        getAllBuy.Remove(getCons);
+                    }
                     ShopUnlock();
 
 					if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
@@ -432,13 +437,15 @@ public class MenuShop : UiParent
 
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+                    GlobalManager.Ui.HeartShop(1);
 				}
 				else
 				{
 
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
-				}
+                    GlobalManager.Ui.HeartShop(0);
+                }
 			}
 		}
 
@@ -522,6 +529,10 @@ public class MenuShop : UiParent
 			catCurrSelected = false;
 
             currItemSeled = thisShop.DefautItem;
+
+            itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
+
+            itemName = currItemSeled.GetComponentsInChildren<Text>()[0].text;
 
             iconCategory.DOFade(0, .1f);
             textCategory.DOFade(0, .1f);

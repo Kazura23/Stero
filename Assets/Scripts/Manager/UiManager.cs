@@ -296,16 +296,10 @@ public class UiManager : ManagerParent
 
 
         shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
-        CircleFeel.transform.DOScale(1, 0);
-        CircleFeel.DOColor(Color.white, 0);
         shopTw2 = SlowMotion.DOFade(0, .05f);
         shopTw3 = DOVirtual.DelayedCall(.1f, () => {
             shopTw2 = SlowMotion.DOFade(1f, .1f);
             SlowMotion.transform.DOScale(4, 0f);
-            shopTw1 = CircleFeel.transform.DOScale(25, .25f);
-            shopTw3 = CircleFeel.DOFade(.75f, .15f).OnComplete(() => {
-                shopTw3 = CircleFeel.DOFade(0, .1f);
-            });
             shopTw4 = SlowMotion.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
                 shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(0, 0), .2f);
                 shopTw2 = SlowMotion.DOFade(0, .05f);
@@ -313,6 +307,24 @@ public class UiManager : ManagerParent
                 {
                     shopTw1 = SlowMotion.DOFade(1, .1f);
                     shopTw2 = SlowMotion.transform.DOScale(1, 0f);
+                });
+            });
+        });
+    }
+
+    public void HeartShop(int number)
+    {
+        ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
+        DOVirtual.DelayedCall(.1f, () => {
+            ExtraHearts[number].DOFade(1f, .1f);
+            ExtraHearts[number].transform.DOScale(4, 0f);
+            ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                ExtraHearts[number].transform.DOLocalMove(new Vector2(0, 0), .2f);
+                ExtraHearts[number].DOFade(0, .05f);
+                DOVirtual.DelayedCall(.15f, () =>
+                {
+                    ExtraHearts[number].DOFade(1, .1f);
+                    ExtraHearts[number].transform.DOScale(1, 0f);
                 });
             });
         });
