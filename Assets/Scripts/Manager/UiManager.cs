@@ -317,14 +317,16 @@ public class UiManager : ManagerParent
         ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
         DOVirtual.DelayedCall(.1f, () => {
             ExtraHearts[number].DOFade(1f, .1f);
+            ExtraHearts[number].GetComponent<RainbowScale>().enabled = false;
             ExtraHearts[number].transform.DOScale(4, 0f);
             ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
-                ExtraHearts[number].transform.DOLocalMove(new Vector2(0, 0), .2f);
+                ExtraHearts[number].transform.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
                 ExtraHearts[number].DOFade(0, .05f);
                 DOVirtual.DelayedCall(.15f, () =>
                 {
                     ExtraHearts[number].DOFade(1, .1f);
                     ExtraHearts[number].transform.DOScale(1, 0f);
+                    ExtraHearts[number].GetComponent<RainbowScale>().enabled = true;
                 });
             });
         });
@@ -346,13 +348,14 @@ public class UiManager : ManagerParent
 			getCurrHeat = BonusLife;
 		}
 
+        getCurrHeat.GetComponent<RainbowScale>().enabled = false;
 
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-		getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .1f);
-		getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+
+        getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
 		getCurrHeat.DOFade(0, .05f);
-        DOVirtual.DelayedCall(.1f, () => {
+        DOVirtual.DelayedCall(.15f, () => {
 			getCurrHeat.DOFade(.75f, .1f);
 			getCurrHeat.transform.DOScale(10, 0f);
 			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
