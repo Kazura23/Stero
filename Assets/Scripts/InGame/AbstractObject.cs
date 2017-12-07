@@ -38,8 +38,6 @@ public class AbstractObject : MonoBehaviour
 	Rigidbody meshRigid;
 
 	Vector3 projection;
-
-	float distForDB = 0;
 	#endregion
 
 	#region Mono
@@ -61,14 +59,6 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
-
-		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
-		{
-			distForDB = thisEvnt.CheckDist;
-			startDeadBall ( );
-		};
-
-		GlobalManager.Event.Register ( checkDBE );
 	}
 
     void Update()
@@ -146,17 +136,6 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Private Methods
-	void startDeadBall ( )
-	{
-		if ( Vector3.Distance ( playerTrans.position, getTrans ) < distForDB )
-		{
-			projection = Vector3.zero;
-			Dead ( );
-
-			//
-		}
-	}
-
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
 		GameObject getThis = thisColl.gameObject;
@@ -169,6 +148,7 @@ public class AbstractObject : MonoBehaviour
 			{
 				//Debug.Log ( "ennemis touche" );
 			}
+
 			CollDetect ( );
 		}
 

@@ -44,6 +44,7 @@ public class ItemModif : MonoBehaviour
 	public SpecialAction SpecAction;
 
 	public bool Selected;
+	public bool AddItem;
 
 	#region SpecialSlowMot 
 	public float SlowMotion = 1;

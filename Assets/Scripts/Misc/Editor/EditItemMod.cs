@@ -27,6 +27,8 @@ public class EditItemMod : Editor
 	SerializedProperty RightItem;
 	SerializedProperty LeftItem;
 
+	SerializedProperty AddValueStat;
+
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
 	SerializedProperty SpeedDeacSM;
@@ -76,6 +78,8 @@ public class EditItemMod : Editor
 		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
 		RecovSlider = serializedObject.FindProperty("RecovSlider");
 		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
+
+		AddValueStat = serializedObject.FindProperty ( "AddItem" );
 	}
 
 	public override void OnInspectorGUI()
@@ -324,6 +328,7 @@ public class EditItemMod : Editor
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
+		EditorGUILayout.PropertyField ( AddValueStat );
 
 		EditorGUILayout.BeginHorizontal();
 
@@ -338,12 +343,12 @@ public class EditItemMod : Editor
 			buttonStyle.normal.textColor = Color.red;
 		}
 
-		if ( GUILayout.Button ( "ModifVie", buttonStyle ) )
+		if ( GUILayout.Button ( "Add One Life", buttonStyle ) )
 		{
 			myTarget.ModifVie = !myTarget.ModifVie;
 		}
 
-		if ( myTarget.ModifVie )
+		/*if ( myTarget.ModifVie )
 		{
 			myTarget.NombreVie = EditorGUILayout.IntField ( "NombreVie", myTarget.NombreVie );
 
@@ -351,7 +356,7 @@ public class EditItemMod : Editor
 			{
 				myTarget.NombreVie = 1;
 			}
-		}
+		}*/
 		EditorGUILayout.EndHorizontal ( );
 
 		buttonStyle = new GUIStyle(EditorStyles.miniButton);
