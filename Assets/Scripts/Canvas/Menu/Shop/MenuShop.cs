@@ -437,13 +437,15 @@ public class MenuShop : UiParent
 
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+                    GlobalManager.Ui.HeartShop(1);
 				}
 				else
 				{
 
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
-				}
+                    GlobalManager.Ui.HeartShop(0);
+                }
 			}
 		}
 
