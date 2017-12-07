@@ -10,6 +10,7 @@ public class GameController : ManagerParent
 {
 	#region Variables
 	public List<FxList> AllFx;
+	public List<ChunkLock> ChunkToUnLock;
 
 	public Transform GarbageTransform;
 	public MeshDesctruc MeshDest;
@@ -144,6 +145,12 @@ public class GameController : ManagerParent
         GameStarted = false;
     }   
     
+	public void UnLockChunk ( ChunksScriptable thisScript, GameObject ThisChunk )
+	{
+		thisScript.TheseChunks.Add ( ThisChunk );
+
+		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name );
+	}
     #endregion
 
     #region Private Methods
@@ -217,6 +224,30 @@ public class GameController : ManagerParent
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
+		List<ChunkLock> GetChunk = ChunkToUnLock;
+		List<NewChunk> CurrList;
+
+		int b;
+
+		for ( int a = 0; a < GetChunk.Count; a++ )
+		{
+			CurrList = GetChunk [ a ].AllUnlock;
+			for ( b = 0; b < CurrList.Count; b++ )
+			{
+				if ( AllPlayerPrefs.GetBoolValue ( Constants.ChunkUnLock + CurrList[ b ].ThisChunk.name ) )
+				{
+					UnLockChunk ( GetChunk [ a ].ThisChunk, CurrList [ b ].ThisChunk );
+					GetChunk [ a ].AllUnlock.RemoveAt ( b );
+					b--;
+				}
+			}
+
+			if ( GetChunk [ a ].AllUnlock.Count == 0 )
+			{
+				GetChunk.RemoveAt ( a );
+				a--;
+			}
+		}
 	}
 
 	void SetAllBonus ( )
@@ -384,4 +415,18 @@ public class FxList
 {
 	public string FxName;
 	public GameObject FxObj;
+}
+
+[System.Serializable]
+public class ChunkLock
+{
+	public ChunksScriptable ThisChunk;
+	public List<NewChunk> AllUnlock;
+}
+
+[System.Serializable]
+public class NewChunk 
+{
+	public GameObject ThisChunk;
+	public UnLockMethode ThisMethod;
 }

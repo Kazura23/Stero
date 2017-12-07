@@ -25,6 +25,10 @@ public enum MenuType
     Leaderboard
 }
 
+public enum UnLockMethode
+{
+	Empty
+}
 
 public enum SpecialAction
 {
