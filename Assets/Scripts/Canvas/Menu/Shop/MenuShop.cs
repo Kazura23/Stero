@@ -316,6 +316,7 @@ public class MenuShop : UiParent
 		string getCons = Constants.ItemBought + currCatSeled.NameCat;
 		bool buy = false;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
+		ItemModif getThis;
 
 		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
 		{
@@ -325,18 +326,12 @@ public class MenuShop : UiParent
 		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ItemName ) )
 		{
 			AllPlayerPrefs.SetStringValue ( getCons + currItemSeled.ItemName, "Confirm" );
-			ItemModif getThis;
 
             Debug.Log("Confirm?");
 
             if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 			{
 				AllPlayerPrefs.SetStringValue ( getCons + getThis.ItemName, "ok" );
-
-                        
-
-
-
 
                 if ( getThis.UseOtherSprite )
 				{
@@ -411,8 +406,10 @@ public class MenuShop : UiParent
                     }
                     ShopUnlock();
 
-
-
+					if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
+					{
+						getAllBuy.Remove ( getCons );
+					}
 					getAllBuy.Add ( getCons, currItemSeled );
 					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
 
