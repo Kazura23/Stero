@@ -52,6 +52,10 @@ public class ItemModif : MonoBehaviour
 	public float ReduceSlider;
 	public float RecovSlider;
 	#endregion
+
+	#region SpecialSlowMot 
+	public float DistTakeDB = 10;
+	#endregion
 	#endregion
 
 	#region updateValue

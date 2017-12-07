@@ -287,12 +287,15 @@ public class GameController : ManagerParent
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot )
 			{
-
-                currPlayer.SlowMotion = thisItem.SlowMotion;
+				currPlayer.SlowMotion = thisItem.SlowMotion;
 				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot;
 				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM;
 				currPlayer.ReduceSlider = thisItem.ReduceSlider;
 				currPlayer.RecovSlider = thisItem.RecovSlider;
+			}
+			else if ( thisItem.SpecAction == SpecialAction.DeadBall )
+			{
+				currPlayer.DistDBTake = thisItem.DistTakeDB;
 			}
 		}
 

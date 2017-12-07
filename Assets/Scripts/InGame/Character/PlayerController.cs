@@ -102,6 +102,9 @@ public class PlayerController : MonoBehaviour
 	public bool blockChangeLine = false;
 	[HideInInspector]
 	public bool InMadness = false;
+	[HideInInspector]
+	public float DistDBTake = 50;
+
 	public int Life = 1;
 	public bool StopPlayer = false;
 
@@ -644,6 +647,14 @@ public class PlayerController : MonoBehaviour
 			sphereChocWave.enabled = true;
 			StartCoroutine ( CooldownWave ( ) );
 			StartCoroutine ( TimerHitbox ( ) );
+		}
+		else if ( ThisAct == SpecialAction.DeadBall )
+		{
+			var e = new DeadBallEvent ( );
+			e.CheckDist = DistDBTake;
+			e.Raise ( );
+
+			StopPlayer = true;
 		}
 	}
 

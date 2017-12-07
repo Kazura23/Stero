@@ -34,7 +34,8 @@ public enum SpecialAction
 {
 	Nothing,
 	SlowMot,
-    OndeChoc
+    OndeChoc,
+	DeadBall
 }
 
 public enum AudioType

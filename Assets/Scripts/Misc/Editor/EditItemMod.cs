@@ -33,6 +33,7 @@ public class EditItemMod : Editor
 	SerializedProperty ReduceSlider;
 	SerializedProperty RecovSlider;
 	SerializedProperty SpeedSlowMot;
+	SerializedProperty DeadBallDist;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -74,6 +75,7 @@ public class EditItemMod : Editor
 		SpeedDeacSM = serializedObject.FindProperty("SpeedDeacSM");
 		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
 		RecovSlider = serializedObject.FindProperty("RecovSlider");
+		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
 	}
 
 	public override void OnInspectorGUI()
@@ -373,7 +375,6 @@ public class EditItemMod : Editor
 		if ( myTarget.ModifSpecial )
 		{
 			EditorGUILayout.PropertyField ( SpecAction );
-
 		}
 		else
 		{
@@ -391,6 +392,10 @@ public class EditItemMod : Editor
 			EditorGUILayout.PropertyField ( SpeedDeacSM );
 			EditorGUILayout.PropertyField ( ReduceSlider );
 			EditorGUILayout.PropertyField ( RecovSlider );
+		}
+		else if ( myTarget.SpecAction == SpecialAction.DeadBall )
+		{
+			EditorGUILayout.PropertyField ( DeadBallDist );
 		}
 		#endregion
 
