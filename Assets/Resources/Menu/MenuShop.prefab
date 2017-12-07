@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 114841578427206438}
   - component: {fileID: 225525852015578998}
   m_Layer: 5
-  m_Name: Item_Charge
+  m_Name: Item_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 114540433938508488}
   - component: {fileID: 225712015717264022}
   m_Layer: 5
-  m_Name: Item_Charge (1)
+  m_Name: Item_Cosme2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1514,7 +1514,7 @@ GameObject:
   - component: {fileID: 114343981507369710}
   - component: {fileID: 225915262049671420}
   m_Layer: 5
-  m_Name: Item_Life (1)
+  m_Name: Item_Cosme1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1633,7 +1633,7 @@ GameObject:
   - component: {fileID: 114301209842523020}
   - component: {fileID: 225101359626100708}
   m_Layer: 5
-  m_Name: Item_FleshBall
+  m_Name: Item_FleshBallUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1703,7 +1703,7 @@ GameObject:
   - component: {fileID: 114084517801229942}
   - component: {fileID: 225881852148114362}
   m_Layer: 5
-  m_Name: Item_SlowMotion
+  m_Name: Item_SlowMotionUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1739,7 +1739,7 @@ GameObject:
   - component: {fileID: 114572793328842546}
   - component: {fileID: 225904131234418224}
   m_Layer: 5
-  m_Name: Item_ShockWave
+  m_Name: Item_ShockWaveUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,7 +2162,7 @@ MonoBehaviour:
   OtherRefSprite: {fileID: 21300000, guid: 99082c0f905d6b840a1d6b9dc3e9d47a, type: 3}
   LeftCategorie: {fileID: 114087282151574038}
   RightCategorie: {fileID: 114024698903977474}
-  DefautItem: {fileID: 0}
+  DefautItem: {fileID: 114084517801229942}
 --- !u!114 &114162543841669162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2453,7 +2453,7 @@ MonoBehaviour:
   BoughtSpriteSelected: {fileID: 21300000, guid: fc88ce24a47f4014cb0ad237abc8d1dd,
     type: 3}
   RightItem: {fileID: 114841578427206438}
-  LeftItem: {fileID: 114222231240497336}
+  LeftItem: {fileID: 114841578427206438}
   ModifVie: 1
   ModifSpecial: 0
   NombreVie: 2
@@ -2968,7 +2968,7 @@ MonoBehaviour:
   OtherRefSprite: {fileID: 21300000, guid: c4d8aecd1981f66408728a6f1bc6f8e4, type: 3}
   LeftCategorie: {fileID: 114024698903977474}
   RightCategorie: {fileID: 114087282151574038}
-  DefautItem: {fileID: 0}
+  DefautItem: {fileID: 114343981507369710}
 --- !u!114 &114371958574062904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4230,7 +4230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: LEVEL 1
+  m_Text: Gives more Life to pass enemies and obstacles.
 --- !u!114 &114720883095085176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4408,11 +4408,9 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Gives an Extra Life to the Player when
-
-    he''s hit by something.'
+  m_Text: "Gives an Extra Start at \nthe beginning of a game."
 --- !u!114 &114763011981965540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4625,7 +4623,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Extra Life
+  m_Text: EXTRA LIFE
 --- !u!114 &114841578427206438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4657,7 +4655,7 @@ MonoBehaviour:
     type: 3}
   BoughtSpriteSelected: {fileID: 21300000, guid: fc88ce24a47f4014cb0ad237abc8d1dd,
     type: 3}
-  RightItem: {fileID: 114841578427206438}
+  RightItem: {fileID: 114222231240497336}
   LeftItem: {fileID: 114222231240497336}
   ModifVie: 1
   ModifSpecial: 0
@@ -4815,7 +4813,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6f08b6b6f2d6ea14c9eb9cd2d56405c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62e50b1b253c8f449ad32f63132876f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4996,7 +4994,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Extra Life
+  m_Text: EXTRA START
 --- !u!114 &114972881533772270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5823,8 +5821,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150.1, y: 0}
-  m_SizeDelta: {x: 100, y: 54}
+  m_AnchoredPosition: {x: -169.8, y: 0}
+  m_SizeDelta: {x: 100, y: 68.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224032238362415750
 RectTransform:
