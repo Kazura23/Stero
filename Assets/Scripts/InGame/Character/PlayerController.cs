@@ -412,6 +412,48 @@ public class PlayerController : MonoBehaviour
     {
         return InMadness;
     }
+
+    public void GetPunchIntro()
+    {
+        if (/*Input.GetAxis("CoupSimple") != 0 && */canPunch/* && resetAxeS*/)
+        {
+            resetAxeS = false;
+            canPunch = false;
+            propP = true;
+            timeToDP = TimeToDoublePunch;
+            if (Time.timeScale < 1)
+                Time.timeScale = 1;
+
+            //if ( !InMadness )
+            //{
+            punch.MadnessMana("Simple");
+
+            int randomSong = UnityEngine.Random.Range(0, 3);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
+            //}
+
+            ScreenShake.Singleton.ShakeHitSimple();
+
+            if (punchRight)
+            {
+                punch.RightPunch = true;
+
+                playAnimator.SetTrigger("Right");
+
+                GlobalManager.Ui.SimpleCoup();
+            }
+            else
+            {
+                punch.RightPunch = false;
+
+                playAnimator.SetTrigger("Left");
+            }
+            punchRight = !punchRight;
+            StartCoroutine(StartPunch(0));
+            propPunch = propulsePunch(TimePropulsePunch);
+            StartCoroutine(propPunch);
+        }
+    }
 	#endregion
 
 	#region Private Functions

@@ -6,10 +6,16 @@ public class SlowMotionDetection : MonoBehaviour {
 
     public float ratioSlow = 0.3f;
     public float timeSlow = 0.5f;
+    private PlayerController player;
+
+    private void Awake()
+    {
+        player = GetComponentInParent<PlayerController>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == Constants._EnnemisTag)
+        if(other.tag == Constants._EnnemisTag && !player.InMadness)
         {
             Time.timeScale = ratioSlow;
             StartCoroutine("delaySlowMotio");
