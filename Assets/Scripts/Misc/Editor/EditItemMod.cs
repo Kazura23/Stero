@@ -27,12 +27,15 @@ public class EditItemMod : Editor
 	SerializedProperty RightItem;
 	SerializedProperty LeftItem;
 
+	SerializedProperty AddValueStat;
+
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
 	SerializedProperty SpeedDeacSM;
 	SerializedProperty ReduceSlider;
 	SerializedProperty RecovSlider;
 	SerializedProperty SpeedSlowMot;
+	SerializedProperty DeadBallDist;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -74,6 +77,9 @@ public class EditItemMod : Editor
 		SpeedDeacSM = serializedObject.FindProperty("SpeedDeacSM");
 		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
 		RecovSlider = serializedObject.FindProperty("RecovSlider");
+		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
+
+		AddValueStat = serializedObject.FindProperty ( "AddItem" );
 	}
 
 	public override void OnInspectorGUI()
@@ -322,6 +328,7 @@ public class EditItemMod : Editor
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
+		EditorGUILayout.PropertyField ( AddValueStat );
 
 		EditorGUILayout.BeginHorizontal();
 
@@ -336,12 +343,12 @@ public class EditItemMod : Editor
 			buttonStyle.normal.textColor = Color.red;
 		}
 
-		if ( GUILayout.Button ( "ModifVie", buttonStyle ) )
+		if ( GUILayout.Button ( "Add One Life", buttonStyle ) )
 		{
 			myTarget.ModifVie = !myTarget.ModifVie;
 		}
 
-		if ( myTarget.ModifVie )
+		/*if ( myTarget.ModifVie )
 		{
 			myTarget.NombreVie = EditorGUILayout.IntField ( "NombreVie", myTarget.NombreVie );
 
@@ -349,7 +356,7 @@ public class EditItemMod : Editor
 			{
 				myTarget.NombreVie = 1;
 			}
-		}
+		}*/
 		EditorGUILayout.EndHorizontal ( );
 
 		buttonStyle = new GUIStyle(EditorStyles.miniButton);
@@ -373,7 +380,6 @@ public class EditItemMod : Editor
 		if ( myTarget.ModifSpecial )
 		{
 			EditorGUILayout.PropertyField ( SpecAction );
-
 		}
 		else
 		{
@@ -391,6 +397,10 @@ public class EditItemMod : Editor
 			EditorGUILayout.PropertyField ( SpeedDeacSM );
 			EditorGUILayout.PropertyField ( ReduceSlider );
 			EditorGUILayout.PropertyField ( RecovSlider );
+		}
+		else if ( myTarget.SpecAction == SpecialAction.DeadBall )
+		{
+			EditorGUILayout.PropertyField ( DeadBallDist );
 		}
 		#endregion
 

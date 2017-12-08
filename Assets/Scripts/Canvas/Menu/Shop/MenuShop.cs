@@ -242,7 +242,6 @@ public class MenuShop : UiParent
         icon.transform.DOScale(1, .25f);
         icon.DOFade(0, 0);
         icon.DOFade(1, .25f);
-        icon.sprite = itemIcon;
 
         DOVirtual.DelayedCall(.3f, () =>
         {
@@ -316,6 +315,7 @@ public class MenuShop : UiParent
 		string getCons = Constants.ItemBought + currCatSeled.NameCat;
 		bool buy = false;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
+		List<ItemModif> getTempItem = allTempItem;
 		ItemModif getThis;
 
 		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
@@ -396,14 +396,9 @@ public class MenuShop : UiParent
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 
-                AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
 
 				if ( currCatSeled.BuyForLife )
 				{
-                    if (getAllBuy.TryGetValue(getCons, out getThis))
-                    {
-                        getAllBuy.Remove(getCons);
-                    }
                     ShopUnlock();
 
 					if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
@@ -419,8 +414,23 @@ public class MenuShop : UiParent
 				}
 				else
 				{
-					allTempItem.Add ( currItemSeled );
+					getTempItem.Add ( currItemSeled );
+					int count = 0;
+					for ( int a = 0; a < getTempItem.Count; a++ )
+					{
+						if ( getTempItem [ a ] == currItemSeled )
+						{
+							count++;
+						}
+					}
+
+					if ( count > 3 )
+					{
+						return;
+					}
 				}
+
+				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
 			}
 		}
 
@@ -434,18 +444,14 @@ public class MenuShop : UiParent
 			{
 				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
 				{
-
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
-                    GlobalManager.Ui.HeartShop(1);
 				}
 				else
 				{
-
                     SelectObject();
                     GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
-                    GlobalManager.Ui.HeartShop(0);
-                }
+				}
 			}
 		}
 
@@ -529,10 +535,6 @@ public class MenuShop : UiParent
 			catCurrSelected = false;
 
             currItemSeled = thisShop.DefautItem;
-
-            itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
-
-            itemName = currItemSeled.GetComponentsInChildren<Text>()[0].text;
 
             iconCategory.DOFade(0, .1f);
             textCategory.DOFade(0, .1f);
