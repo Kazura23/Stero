@@ -5,13 +5,15 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "Chunk", menuName = "Scriptable/Chunk", order = 3)]
 public class ChunksScriptable : ScriptableObject 
 {
+	public int ChunkLevel;
+
 	[Tooltip ("Nombre de chunk pour faire un niveau")]
 	public int NbrChunkOneLvl;
-
 	public bool ChunkAleat = true;
 
 	[Header ("Chunks")]
 	public GameObject WallEndChunk;
+	public Vector2 SizeWall = new Vector2 ( 0, -3 );
 	public GameObject WallOnLastChunk;
 	public List<GameObject> TheseChunks;
 

@@ -5,20 +5,21 @@ using DG.Tweening;
 
 public class Piece : MonoBehaviour 
 {
-
+    public int point = 100;
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == Constants._PlayerTag)
         {
-            // AllPlayerPrefs.piece += piece;
 
             GlobalManager.Ui.TakeCoin();
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Coin", false);
 
             GetComponent<CapsuleCollider>().enabled = false;
 
             Debug.Log(GetComponent<MeshRenderer>().material.name);
 
-            if (GetComponent<MeshRenderer>().material.name == "gold_piece_BC")
+            if (GetComponent<MeshRenderer>().material.name == "GoldCoin (Instance)")
             { 
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 1);
                 
@@ -27,7 +28,8 @@ public class Piece : MonoBehaviour
             {
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 5);
             }
-
+            AllPlayerPrefs.scoreWhithoutDistance += point;
+            AllPlayerPrefs.piece++;
             GlobalManager.Ui.MoneyPoints.text = "" + AllPlayerPrefs.GetIntValue(Constants.Coin);
 
             transform.DOLocalRotate(new Vector3(0, 2000, 0),1f,RotateMode.FastBeyond360);
