@@ -93,6 +93,7 @@ public class GameController : ManagerParent
         Intro = true;
 
 		SetAllBonus ( );
+
 		GameStarted = true;
 		checkStart = false;
 
@@ -285,6 +286,18 @@ public class GameController : ManagerParent
 		if ( thisItem.ModifSpecial )
 		{
 			currPlayer.ThisAct = thisItem.SpecAction;
+
+			switch ( thisItem.SpecAction )
+			{
+			case SpecialAction.OndeChoc:
+				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
+				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+				break;
+
+			default:
+				currPlayer.SliderSlow.maxValue = 10;
+				break;
+			}
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 

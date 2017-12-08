@@ -63,8 +63,11 @@ public class AbstractObject : MonoBehaviour
 
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
-			distForDB = thisEvnt.CheckDist; 
-			startDeadBall ( ); 
+			if ( meshRigid != null )
+			{
+				distForDB = thisEvnt.CheckDist; 
+				startDeadBall ( ); 
+			}
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
@@ -171,10 +174,9 @@ public class AbstractObject : MonoBehaviour
 	{ 
 		if ( Vector3.Distance ( playerTrans.position, getTrans.position ) < distForDB ) 
 		{ 
-			projection = Vector3.zero; 
-			Dead ( ); 
+			onEnemyDead ( Vector3.zero ); 
 
-			// 
+			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
 	} 
 

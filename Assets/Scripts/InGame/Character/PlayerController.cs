@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public float DistDBTake = 50;
+	[HideInInspector]
+	public Slider SliderSlow;
 
 	public int Life = 1;
 	public bool StopPlayer = false;
@@ -135,7 +137,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator currWF;
 	IEnumerator propPunch;
 	Animator playAnimator;
-	Slider SliderSlow;
+
 	Camera thisCam;
 	Punch getPunch;
     CameraFilterPack_Color_YUV camMad;
@@ -185,7 +187,6 @@ public class PlayerController : MonoBehaviour
 	bool invDamage = false;
 	bool animeSlo = false;
 	bool canSpe = true;
-    bool canChocWave = true;
     [HideInInspector]
     public bool playerDead = false;
 	bool dpunch = false;
@@ -193,7 +194,7 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Start ( )
+	void Awake ( )
 	{
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
@@ -206,7 +207,6 @@ public class PlayerController : MonoBehaviour
 		thisCam = GetComponentInChildren<Camera> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
-		SliderSlow.maxValue = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
 		textCoin = GlobalManager.Ui.MoneyPoints;
@@ -319,6 +319,7 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
+
 		stopMadness ( );
 
         BarMadness.value = 80;
@@ -350,7 +351,6 @@ public class PlayerController : MonoBehaviour
         AllPlayerPrefs.distance = totalDis;
         AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
-        
 
 		StopPlayer = true;
 
@@ -642,14 +642,17 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc )
+		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
+			canSpe = false;
 			sphereChocWave.enabled = true;
+
 			StartCoroutine ( CooldownWave ( ) );
 			StartCoroutine ( TimerHitbox ( ) );
 		}
-		else if ( ThisAct == SpecialAction.DeadBall )
+		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
+			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
 			e.Raise ( );
@@ -1146,8 +1149,21 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator CooldownWave()
     {
-        yield return new WaitForSeconds(delayChocWave);
-        canChocWave = true;
+		float countTime = 0;
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
+		do
+		{
+			SliderSlow.value = countTime;
+
+			yield return thisF;
+
+			countTime += Time.deltaTime;
+		} while ( countTime < delayChocWave );
+
+		SliderSlow.value = delayChocWave;
+
+		canSpe = true;
     }
 
 	IEnumerator propulsePunch ( float thisTime )
