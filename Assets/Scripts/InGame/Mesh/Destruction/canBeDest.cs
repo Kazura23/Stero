@@ -13,7 +13,9 @@ public class canBeDest : MonoBehaviour
 		if ( collision.collider.tag == Constants._PlayerTag )
 		{
 			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc ) );
-		}
+            int randomSong = UnityEngine.Random.Range(0, 5);
+            GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Wood_" + (randomSong + 1), false);
+        }
 	}
 
     private void OnTriggerEnter(Collider other)

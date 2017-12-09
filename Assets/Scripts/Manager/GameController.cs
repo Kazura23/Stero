@@ -11,7 +11,7 @@ public class GameController : ManagerParent
 {
 	#region Variables
 	public List<FxList> AllFx;
-
+	public List<ChunkLock> ChunkToUnLock; 
 	public Transform GarbageTransform;
 	public MeshDesctruc MeshDest;
 	[HideInInspector]
@@ -59,18 +59,23 @@ public class GameController : ManagerParent
 
                 case 1: // shop
 
+                    Debug.Log("Shop");
                     break;
 
                 case 2: // quitter
 
+                    Debug.Log("Quit");
                     break;
 
-                case 3: // option
+                case 3: // highscore
 
+
+                    Debug.Log("Highscores");
                     break;
 
-                case 4: // highscore
+                case 4:  // option
 
+                    Debug.Log("Options");
                     break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -105,6 +110,7 @@ public class GameController : ManagerParent
         Intro = true;
 
 		SetAllBonus ( );
+
 		GameStarted = true;
 		checkStart = false;
 
@@ -113,6 +119,11 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
+
+		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) ) 
+		{ 
+			setMusic ( ); 
+		} 
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -172,6 +183,13 @@ public class GameController : ManagerParent
         }
         //GameStarted = false;
     }   
+    
+	public void UnLockChunk ( ChunksScriptable thisScript, GameObject ThisChunk ) 
+	{ 
+		thisScript.TheseChunks.Add ( ThisChunk ); 
+
+		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name ); 
+	} 
 
     private IEnumerator TrashFunction()
     {
@@ -182,6 +200,10 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
+	void setMusic ( ) 
+	{ 
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+	} 
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
@@ -290,6 +312,31 @@ public class GameController : ManagerParent
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
+
+		List<ChunkLock> GetChunk = ChunkToUnLock; 
+		List<NewChunk> CurrList; 
+
+		int b; 
+
+		for ( int a = 0; a < GetChunk.Count; a++ ) 
+		{ 
+			CurrList = GetChunk [ a ].AllUnlock; 
+			for ( b = 0; b < CurrList.Count; b++ ) 
+			{ 
+				if ( AllPlayerPrefs.GetBoolValue ( Constants.ChunkUnLock + CurrList[ b ].ThisChunk.name ) ) 
+				{ 
+					UnLockChunk ( GetChunk [ a ].ThisChunk, CurrList [ b ].ThisChunk ); 
+					GetChunk [ a ].AllUnlock.RemoveAt ( b ); 
+					b--; 
+				} 
+			} 
+
+			if ( GetChunk [ a ].AllUnlock.Count == 0 ) 
+			{ 
+				GetChunk.RemoveAt ( a ); 
+				a--; 
+			} 
+		} 
 	}
 
 	void SetAllBonus ( )
@@ -327,20 +374,51 @@ public class GameController : ManagerParent
 		{
 			currPlayer.ThisAct = thisItem.SpecAction;
 
-			if ( thisItem.SpecAction == SpecialAction.SlowMot )
+			switch ( thisItem.SpecAction )
 			{
+			case SpecialAction.OndeChoc:
+				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
+				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+				break;
 
-                currPlayer.SlowMotion = thisItem.SlowMotion;
-				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot;
-				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM;
-				currPlayer.ReduceSlider = thisItem.ReduceSlider;
-				currPlayer.RecovSlider = thisItem.RecovSlider;
+			default:
+				currPlayer.SliderSlow.maxValue = 10;
+				break;
 			}
+
+			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
+			{ 
+				currPlayer.SlowMotion = thisItem.SlowMotion; 
+				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot; 
+				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM; 
+				currPlayer.ReduceSlider = thisItem.ReduceSlider; 
+				currPlayer.RecovSlider = thisItem.RecovSlider; 
+			} 
+			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
+			{ 
+				currPlayer.DistDBTake = thisItem.DistTakeDB; 
+				if ( thisItem.AddItem ) 
+				{ 
+					currPlayer.SlowMotion += thisItem.SlowMotion; 
+					currPlayer.SpeedSlowMot += thisItem.SpeedSlowMot; 
+					currPlayer.SpeedDeacSM += thisItem.SpeedDeacSM; 
+					currPlayer.ReduceSlider += thisItem.ReduceSlider; 
+					currPlayer.RecovSlider += thisItem.RecovSlider; 
+				} 
+				else 
+				{ 
+					currPlayer.SlowMotion = thisItem.SlowMotion; 
+					currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot; 
+					currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM; 
+					currPlayer.ReduceSlider = thisItem.ReduceSlider; 
+					currPlayer.RecovSlider = thisItem.RecovSlider; 
+				} 
+			} 
 		}
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life += thisItem.NombreVie;
+			currPlayer.Life ++;
 		}
 	}
     #endregion
@@ -458,3 +536,18 @@ public class FxList
 	public string FxName;
 	public GameObject FxObj;
 }
+
+
+[System.Serializable] 
+public class ChunkLock 
+{ 
+	public ChunksScriptable ThisChunk; 
+	public List<NewChunk> AllUnlock; 
+} 
+
+[System.Serializable] 
+public class NewChunk  
+{ 
+	public GameObject ThisChunk; 
+	public UnLockMethode ThisMethod; 
+} 

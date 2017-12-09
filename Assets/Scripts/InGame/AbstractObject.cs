@@ -39,6 +39,7 @@ public class AbstractObject : MonoBehaviour
     private int techPunch;
 
 	Vector3 projection;
+	float distForDB = 0; 
 	#endregion
 
 	#region Mono
@@ -60,6 +61,17 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+
+		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+		{ 
+			if ( meshRigid != null )
+			{
+				distForDB = thisEvnt.CheckDist; 
+				startDeadBall ( ); 
+			}
+		}; 
+
+		GlobalManager.Event.Register ( checkDBE ); 
 	}
 
     void Update()
@@ -93,15 +105,12 @@ public class AbstractObject : MonoBehaviour
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
-        int randomSongBody = UnityEngine.Random.Range(0, 8);
+        int randomSong = UnityEngine.Random.Range(0, 8);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSongBody + 1),false);
+		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-        int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "BoneBreak_" + (randomSongBone + 1), false);
-
-        Debug.Log("BoneBreak");
+       // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
 
@@ -153,6 +162,7 @@ public class AbstractObject : MonoBehaviour
 			{
 				//Debug.Log ( "ennemis touche" );
 			}
+
 			CollDetect ( );
 		}
 
@@ -162,6 +172,16 @@ public class AbstractObject : MonoBehaviour
 		}*/
 	}
 
+	void startDeadBall ( ) 
+	{ 
+		if ( Vector3.Distance ( playerTrans.position, getTrans.position ) < distForDB ) 
+		{ 
+			onEnemyDead ( Vector3.zero ); 
+
+			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
+		} 
+	} 
+
 	void onEnemyDead ( Vector3 forceProp )
 	{
 		isDead = true;
@@ -169,7 +189,12 @@ public class AbstractObject : MonoBehaviour
 
         ScreenShake.Singleton.ShakeEnemy();
 
-		var animation = GetComponentInChildren<Animator>();
+
+        int randomSongBone = UnityEngine.Random.Range(0, 4);
+
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+
+        var animation = GetComponentInChildren<Animator>();
         if(animation)
 		    animation.enabled = false;
 
@@ -195,7 +220,12 @@ public class AbstractObject : MonoBehaviour
             meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
         }
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
-		meshRigid.tag = Constants._ObjDeadTag;
+		string getObsT = Constants._ObjDeadTag;
+		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		{
+			thisRig.tag = getObsT;
+		}
+		meshRigid.tag = getObsT;
 	}
 
 	IEnumerator enableColl ( )

@@ -26,18 +26,30 @@ public class MenuShop : UiParent
     public Image barCategory;
     public Image moleculeCategory;
     public GameObject moleculeContainer;
+    public Image backgroundColor;
+    public string[] quoteShop;
 
+    public GameObject UnlockObject;
+    private string itemName;
+    private Sprite itemIcon;
 
-	[HideInInspector]
+    [HideInInspector]
 	public CatShop currCatSeled;
 
 	[HideInInspector]
 	public ItemModif currItemSeled;
 
+    [HideInInspector]
+    public bool CanInput = true;
+
 	Dictionary <string, ItemModif> allConfirm;
 	List<ItemModif> allTempItem;
 	GameObject fixBackShop;
+	Transform saveParentAb;
+	Transform saveParentBo;
 	Text moneyNumberPlayer;
+
+    Tween shopTw1, shopTw2;
 
 	bool catCurrSelected = true;
 	bool waitInputH = false;
@@ -53,45 +65,50 @@ public class MenuShop : UiParent
 		float getH = Input.GetAxis ( "Horizontal" );
 		float getV = Input.GetAxis ( "Vertical" );
 
-		// Touche pour pouvoir selectionner les items
-		if ( Input.GetAxis ( "Submit" ) == 1 && !waitImpSub && !transition)
-		{
-            transition = true;
-            waitImpSub = true;
-			if ( !catCurrSelected )
-			{
-				BuyItem ( );
-			}
-			else
-			{
-				ChangeToItem ( true );
-			}
-		}
-		else if (  Input.GetAxis ( "Submit" ) == 0 )
-		{
-			waitImpSub = false;
-		}
+        if (CanInput)
+        {
+            // Touche pour pouvoir selectionner les items
+            if (Input.GetAxis("Submit") == 1 && !waitImpSub && !transition)
+            {
+                transition = true;
+                waitImpSub = true;
+                if (!catCurrSelected)
+                {
+                    transition = false;
+                    BuyItem();
+                }
+                else
+                {
+                    ChangeToItem(true);
+                }
+            }
+            else if (Input.GetAxis("Submit") == 0)
+            {
+                waitImpSub = false;
+            }
 
-		// Touche pour sortir des items
-		if ( Input.GetAxis ( "Cancel" ) == 1 && !waitImpCan && !transition )
-		{
-			waitImpCan = true;
-            transition = true;
+            // Touche pour sortir des items
+            if (Input.GetAxis("Cancel") == 1 && !waitImpCan && !transition)
+            {
+                waitImpCan = true;
+                transition = true;
 
-            if ( !catCurrSelected )
-			{
-				ChangeToItem ( false );
-				ChangeToCat();
-			}
-			else
-			{
-				GlobalManager.Ui.CloseThisMenu ( );
-			}
-		}
-		else if (  Input.GetAxis ( "Cancel" ) == 0 )
-		{
-			waitImpCan = false;
-		}
+                if (!catCurrSelected)
+                {
+                    ChangeToItem(false);
+                    ChangeToCat();
+                }
+                else
+                {
+                    GlobalManager.Ui.CloseThisMenu();
+                }
+            }
+            else if (Input.GetAxis("Cancel") == 0)
+            {
+                waitImpCan = false;
+            }
+        }
+
 
 		// Navigation horizontale des catégories ou items
 		if ( getH != 0 && !waitInputH && !transition )
@@ -140,6 +157,10 @@ public class MenuShop : UiParent
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
 		base.OpenThis ( GetTok );
+
+		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( transform );
+		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( transform );
+
         transition = false;
 
         fixBackShop.SetActive ( true );
@@ -151,11 +172,13 @@ public class MenuShop : UiParent
 
 		currItemSeled = currCatSeled.DefautItem;
 		CheckSelectItem ( true );
-
     }
 
 	public override void CloseThis ( )
 	{
+		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
+		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
+
         fixBackShop.SetActive ( false );
 		base.CloseThis (  );
 	}
@@ -186,42 +209,131 @@ public class MenuShop : UiParent
             switch (thisDir)
             {
                 case -1:
-                    currItemSeled = currItemSeled.LeftItem;
                     ItemLeft();
                     break;
                 case 1:
-                    currItemSeled = currItemSeled.RightItem;
                     ItemRight();
                     break;
-                case -2:
-                    currItemSeled = currItemSeled.DownItem;
-                    break;
-                case 2:
-                    currItemSeled = currItemSeled.UpItem;
-                    break;
             }
-
         });
 		
 		CheckSelectItem ( true );
 	}
 
+    public void ShopUnlock()
+    {
+        backgroundColor.DOFade(.95f, .1f);
+
+        backgroundColor.transform.SetParent(currItemSeled.transform.parent.parent);
+        UnlockObject.transform.SetParent(currItemSeled.transform.parent.parent);
+        
+        currItemSeled.GetComponentsInChildren<Text>()[2].text = "SOLD!";
+
+        CanInput = false;
+
+        Image bg = UnlockObject.GetComponentsInChildren<Image>()[0];
+        bg.DOFade(0, 0);
+        bg.DOFade(1, .25f);
+        bg.transform.DOScaleY(0, 0);
+        bg.transform.DOScaleY(1, .25f);
+
+        Image icon = UnlockObject.GetComponentsInChildren<Image>()[1];
+        icon.transform.DOScale(3, 0);
+        icon.transform.DOScale(1, .25f);
+        icon.DOFade(0, 0);
+        icon.DOFade(1, .25f);
+
+        DOVirtual.DelayedCall(.3f, () =>
+        {
+
+            Text text = UnlockObject.GetComponentsInChildren<Text>()[0];
+            text.text = itemName;
+
+            text.GetComponent<CanvasGroup>().DOFade(1, .2f);
+            text.transform.DOLocalMoveY(0, 0);
+            text.transform.DOLocalMoveX(-200, 0);
+            text.transform.DOLocalMoveX(0, .2f).OnComplete(() =>
+            {
+                DOVirtual.DelayedCall(.75f, () =>
+                {
+                    text.GetComponent<CanvasGroup>().DOFade(0, .15f);
+                    text.transform.DOLocalMoveY(-100, .15f).OnComplete(() =>
+                    {
+
+                        text.text = "UNLOCKED";
+                        text.transform.DOLocalMoveY(100, 0f);
+                        text.GetComponent<RainbowColor>().colors[1] = new Color32(0xc5, 0xcf, 0x65, 0xFF);
+                        text.GetComponent<CanvasGroup>().DOFade(1, .15f);
+                        text.transform.DOLocalMoveY(0, .15f).OnComplete(() =>
+                        {
+
+
+
+                            DOVirtual.DelayedCall(.75f, () =>
+                            {
+                                text.GetComponent<CanvasGroup>().DOFade(0, .15f);
+                                text.transform.DOLocalMoveY(-100, .15f).OnComplete(() =>
+                                {
+
+                                    text.text = quoteShop[UnityEngine.Random.Range(0, quoteShop.Length)];
+
+                                    text.transform.DOLocalMoveY(100, 0f);
+                                    text.GetComponent<CanvasGroup>().DOFade(1, .15f);
+                                    text.transform.DOLocalMoveY(0, .15f).OnComplete(() =>
+                                    {
+
+
+                                        text.GetComponent<RainbowColor>().colors[1] = new Color32(0xF4, 0x6C, 0x6E, 0xFF);
+
+                                        DOVirtual.DelayedCall(.75f, () =>
+                                        {
+                                            text.GetComponent<CanvasGroup>().DOFade(0, .15f);
+                                            text.transform.DOLocalMoveY(-100, .15f).OnComplete(() =>
+                                            {
+
+                                                backgroundColor.DOFade(0f, .3f);
+                                                bg.DOFade(0, .3f);
+                                                icon.DOFade(0, .3f).OnComplete(()=> {
+                                                    CanInput = true;
+                                                });
+
+
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
 	// achete ou confirme un item
 	public void BuyItem ( )
 	{
-		string getCons = Constants.ItemBought + currItemSeled.CatName;
+		string getCons = Constants.ItemBought + currCatSeled.NameCat;
+		bool buy = false;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
+		List<ItemModif> getTempItem = allTempItem;
+		ItemModif getThis;
+
+		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
+		{
+			return;	
+		}
 
 		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ItemName ) )
 		{
 			AllPlayerPrefs.SetStringValue ( getCons + currItemSeled.ItemName, "Confirm" );
-			ItemModif getThis;
 
-			if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
+            Debug.Log("Confirm?");
+
+            if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 			{
 				AllPlayerPrefs.SetStringValue ( getCons + getThis.ItemName, "ok" );
 
-				if ( getThis.UseOtherSprite )
+                if ( getThis.UseOtherSprite )
 				{
 					getThis.GetComponent<Image> ( ).sprite = currItemSeled.BoughtSpriteUnselected;
 				}
@@ -253,7 +365,13 @@ public class MenuShop : UiParent
 				getThis.GetComponent<Image> ( ).color = getThis.ColorConfirm;
 			}
 
-			getAllBuy.Add ( getCons, getThis );
+			buy = true;
+
+            SelectObject();
+
+            GlobalManager.Ui.SelectShop();
+
+            getAllBuy.Add ( getCons, getThis );
 		}
 		else 
 		{
@@ -262,7 +380,7 @@ public class MenuShop : UiParent
 
 			if ( currCatSeled.Progression )
 			{
-				if ( currIT.UpItem.ItemBought || currIT.DownItem.ItemBought || currIT.LeftItem.ItemBought || currIT.RightItem.ItemBought )
+				if ( currIT.LeftItem.ItemBought || currIT.RightItem.ItemBought )
 				{
 					checkProg = true;
 				}
@@ -274,27 +392,65 @@ public class MenuShop : UiParent
 
 			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.Price )
 			{
-				Debug.Log ( "buy" );
-
-
+				buy = true;
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 
-                AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
 
 				if ( currCatSeled.BuyForLife )
 				{
+                    ShopUnlock();
+
+					if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
+					{
+						getAllBuy.Remove ( getCons );
+					}
 					getAllBuy.Add ( getCons, currItemSeled );
 					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
 
                     //float ease = DOVirtual.EasedValue(0, 1,1,AnimationCurve.Linear);
                     currItemSeled.transform.GetChild(0).DOPunchScale(Vector3.one * 1.2f, .5f, 10, 1);
-                   currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
-
+                    currItemSeled.transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
 				}
 				else
 				{
-					allTempItem.Add ( currItemSeled );
+					getTempItem.Add ( currItemSeled );
+					int count = 0;
+					for ( int a = 0; a < getTempItem.Count; a++ )
+					{
+						if ( getTempItem [ a ] == currItemSeled )
+						{
+							count++;
+						}
+					}
+
+					if ( count > 3 )
+					{
+						return;
+					}
+				}
+
+				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
+			}
+		}
+
+		if ( buy )
+		{
+			if ( currCatSeled.NameCat == "ABILITIES" )
+			{
+				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
+			}
+			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie )
+			{
+				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+				{
+                    SelectObject();
+                    GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+				}
+				else
+				{
+                    SelectObject();
+                    GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
 				}
 			}
 		}
@@ -304,11 +460,30 @@ public class MenuShop : UiParent
 	#endregion
 
 	#region Private Methods
+
+    void SelectObject()
+    {
+        itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
+
+        itemName = currItemSeled.GetComponentsInChildren<Text>()[0].text;
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+
+        shopTw1 = currItemSeled.transform.GetChild(0).transform.DOScale(1, 0);
+        shopTw2 = currItemSeled.transform.GetChild(0).transform.GetComponent<Image>().DOFade(1, .1f).OnComplete(() => {
+            shopTw1 = currItemSeled.transform.GetChild(0).transform.DOScale(1.4f, .4f);
+            shopTw2 = currItemSeled.transform.GetChild(0).transform.GetComponent<Image>().DOFade(0, .4f);
+        });
+    }
+
 	protected override void InitializeUi()
 	{
 		currCatSeled = DefCatSelected;
 		currItemSeled = currCatSeled.DefautItem;
 
+		saveParentAb = GlobalManager.Ui.SlowMotion.transform.parent.parent;
+		saveParentBo = GlobalManager.Ui.BonusLife.transform.parent.parent;
 
         fixBackShop = transform.parent.Find ( "GlobalBackGround/Shop" ).gameObject;
 		moneyNumberPlayer = fixBackShop.transform.Find ( "MoneyMutation/MoneyNumber" ).GetComponent<Text> ( );
@@ -319,17 +494,18 @@ public class MenuShop : UiParent
 		ItemModif currItem;
 
 		string getCons = Constants.ItemBought;
+
 		Dictionary <string, ItemModif> getItemConf = new Dictionary<string, ItemModif> ( );
 		allTempItem = new List<ItemModif> ( );
 
 		for ( int a = 0; a < checkAllItem.Length; a++ )
 		{
-			if ( AllPlayerPrefs.GetBoolValue ( getCons + checkAllItem [ a ].CatName + checkAllItem [ a ].ItemName ) )
+			if ( AllPlayerPrefs.GetBoolValue ( getCons + currCatSeled.NameCat + checkAllItem [ a ].ItemName ) )
 			{
 				currItem = checkAllItem [ a ];
 
 				try{
-					getItemConf.Add ( getCons + checkAllItem [ a ].CatName, currItem ); 
+					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
 
 				}catch{Debug.Log("key same");}
 
@@ -348,7 +524,7 @@ public class MenuShop : UiParent
 		GlobalManager.GameCont.AllModifItem = getItemConf;
 		GlobalManager.GameCont.AllTempsItem = allTempItem;
     }
-    
+
 	//Changement de catégorie a item et inversement
 	void ChangeToItem ( bool goItem )
 	{
@@ -358,21 +534,15 @@ public class MenuShop : UiParent
 		{
 			catCurrSelected = false;
 
-
-
             currItemSeled = thisShop.DefautItem;
 
             iconCategory.DOFade(0, .1f);
             textCategory.DOFade(0, .1f);
             barCategory.DOFade(0, .1f);
-		
 
             moleculeContainer.transform.DORotate(new Vector3(moleculeContainer.transform.localEulerAngles.x, moleculeContainer.transform.localEulerAngles.y, -130),1f);
             moleculeContainer.transform.DOLocalMoveX(transform.localPosition.x -539, 1f);
             moleculeContainer.transform.DOLocalMoveY(transform.localPosition.y - 10, 1f);
-
-
-
 
             moleculeContainer.transform.DOScale(1.25f, 1f).OnComplete(()=> {
                 transition = false;
@@ -401,15 +571,19 @@ public class MenuShop : UiParent
            // thisShop.transform.GetChild(0).DOLocalMove(new Vector2(-280, 600), 0);
            // thisShop.transform.GetChild(1).DOLocalMove(new Vector2(-525, 895), 0);
 
-            DOVirtual.DelayedCall(1f, () => {
-                foreach (Transform trans in currItemSeled.transform.parent)
-                {
-                    trans.GetComponent<CanvasGroup>().DOFade(1, 0.5f);
-                    trans.DOScale(.75f, 0);
-                }
-            });
+            DOVirtual.DelayedCall(1f, () => 
+			{
+				ItemModif thisItem = currItemSeled;
 
-            
+				thisItem = thisItem.RightItem;
+				while ( thisItem != currItemSeled )
+				{
+					NewItemSelect ( thisItem, false );
+					thisItem = thisItem.RightItem;
+				}
+
+				NewItemSelect ( currItemSeled, true );
+            });
         }
 		else if ( !goItem && !catCurrSelected ) // Changement de item a cat
 		{
@@ -461,10 +635,20 @@ public class MenuShop : UiParent
             cat.GetComponent<Image>().DOFade(1, 0.1f);
         }
 
-        foreach (Transform trans in currItemSeled.transform.parent)
-        {
-            trans.GetComponent<CanvasGroup>().DOFade(0, 0);
-        }
+		ItemModif thisItem = currItemSeled;
+
+		thisItem.GetComponent<CanvasGroup> ( ).DOKill ( );
+		thisItem.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0 );
+		thisItem.ResetPos ( );
+		thisItem = thisItem.RightItem;
+
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.GetComponent<CanvasGroup> ( ).DOKill ( );
+			thisItem.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0 );
+			thisItem.ResetPos ( );
+			thisItem = thisItem.RightItem;
+		}
     }
 
 	// Selection d'une nouvelle catégorie
@@ -479,8 +663,6 @@ public class MenuShop : UiParent
 			CheckSelectItem ( true );
 			thisShop.Selected = true;
 
-            
-            
 
             DOVirtual.DelayedCall(.1f, () => {
                 iconCategory.GetComponent<Image>().DOFade(1, .1f);
@@ -558,53 +740,88 @@ public class MenuShop : UiParent
 
     void ItemLeft()
     {
-        ItemModif thisItem = currItemSeled;
+		ItemModif thisItem = currItemSeled;
+		Vector3 savePos;
 
-        thisItem.LeftItem.transform.DOLocalMoveX(250, .5f);
-        thisItem.LeftItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
-        thisItem.LeftItem.transform.DOScale(.4f, .2f);
+		thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+		thisItem = thisItem.RightItem;
 
-        thisItem.transform.DOLocalMoveX(650, .5f);
-        thisItem.transform.DOScale(.75f, .2f);
-        thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+			thisItem = thisItem.RightItem;
 
+			NewItemSelect ( thisItem, false );
+		}
+
+		thisItem = currItemSeled;
+		savePos = thisItem.CurrPos;
+
+		do
+		{
+			thisItem.CurrPos = thisItem.RightItem.CurrPos;
+			thisItem = thisItem.RightItem;
+		} while ( thisItem != currItemSeled.LeftItem );
+
+		currItemSeled.LeftItem.CurrPos = savePos;
+
+		currItemSeled = currItemSeled.LeftItem;
+		NewItemSelect ( currItemSeled, true );
     }
 
     void ItemRight()
     {
-        ItemModif thisItem = currItemSeled;
+		ItemModif thisItem = currItemSeled;
+		Vector3 savePos;
+		thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+		thisItem = thisItem.LeftItem;
 
-        thisItem.RightItem.transform.DOLocalMoveX(650, .5f);
-        thisItem.RightItem.GetComponent<CanvasGroup>().DOFade(.75f, .2f);
-        thisItem.LeftItem.transform.DOScale(.4f, .2f);
+		while ( thisItem != currItemSeled )
+		{
+			thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+			thisItem = thisItem.LeftItem;
 
-        thisItem.transform.DOLocalMoveX(1050, .5f);
-        thisItem.transform.DOScale(.75f, .2f);
-        thisItem.GetComponent<CanvasGroup>().DOFade(1, .2f);
+			NewItemSelect ( thisItem, false );
+		}
 
+		thisItem = currItemSeled;
+		savePos = thisItem.CurrPos;
+
+		do
+		{
+			thisItem.CurrPos = thisItem.LeftItem.CurrPos;
+			thisItem = thisItem.LeftItem;
+		} while ( thisItem != currItemSeled.RightItem );
+
+		currItemSeled.RightItem.CurrPos = savePos;
 
         //thisItem.transform.DOLocalMove(new Vector2(-448, 800), .5f);
+		currItemSeled = currItemSeled.RightItem;
+		NewItemSelect ( currItemSeled, true );
     }
+
+	void NewItemSelect ( ItemModif thisItem, bool selected )
+	{
+		if ( selected )
+		{
+			thisItem.GetComponent<CanvasGroup>().DOFade(1, 1);
+			thisItem.transform.DOScale(.75f, 0);
+		}
+		else
+		{
+			thisItem.GetComponent<CanvasGroup>().DOFade(0.5f, 1);
+			thisItem.transform.DOScale(.5f, 0);
+		}
+	}
 
 	// Selection d'un nouvelle item
 	void CheckSelectItem ( bool selected )
 	{
         ItemModif thisItem = currItemSeled;
 
-        if ( selected )
+		if ( selected )
 		{
 			thisItem.Selected = true;
-
-
-            //Code du outline
-            /*
-            thisItem.GetComponent<Outline>().transform.DOScale(2, .75f).OnComplete(() => {
-                thisItem.GetComponent<Outline>().DOFade(0, .25f);
-                DOVirtual.DelayedCall(.25f, () => {
-                    thisItem.GetComponent<Outline>().DOFade(1, 0);
-                    thisItem.GetComponent<Outline>().transform.DOScale(1, 0);
-                });
-            }).SetLoops(-1,LoopType.Restart);*/
 
 			if ( thisItem.ItemBought && thisItem.UseOtherColor )
 			{

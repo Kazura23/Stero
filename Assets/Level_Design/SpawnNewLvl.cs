@@ -38,7 +38,7 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Destroy ( ToDest [ a ], 4 );
+				Destroy ( ToDest [ a ], 1 );
 			}
 		}
 	}
@@ -58,6 +58,7 @@ public class ChunkExit
 {
 	public int LaneParent = 0;
 	public int Verticalite = 0;
+	public Vector2 OtherNbrFin = new Vector2 ( -1, -1 );
 	public Transform LevelParent;
 	public ListChunkScriptable LCS;
 }
