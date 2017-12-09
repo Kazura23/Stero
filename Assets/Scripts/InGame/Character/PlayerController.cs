@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
-        inputPlayer = ReInput.players.GetPlayer(0);
+        //inputPlayer = ReInput.players.GetPlayer(0);
 
         //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
@@ -438,7 +438,7 @@ public class PlayerController : MonoBehaviour
 
                 playAnimator.SetTrigger("Right");
 
-                GlobalManager.Ui.SimpleCoup();
+                //GlobalManager.Ui.SimpleCoup();
             }
             else
             {
