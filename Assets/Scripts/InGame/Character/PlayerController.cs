@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Rewired;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
 	public float delayChocWave = 5;
+    public int debugNumTechnic = 2;
 
 	[Tooltip ("Le temps max sera delayPunch")]
 	public float TimePropulsePunch = 0.1f, TimePropulseDoublePunch = 0.2f;
@@ -145,6 +147,7 @@ public class PlayerController : MonoBehaviour
 
 	Quaternion startRotRR;
 	Vector3 startPosRM;
+    Player inputPlayer;
 
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
@@ -175,6 +178,7 @@ public class PlayerController : MonoBehaviour
 
 	int LastImp = 0;
 	int clDir = 0;
+    int debugTech = 0;
 
 	//bool canJump = true;
 	bool propP = false;
@@ -226,6 +230,7 @@ public class PlayerController : MonoBehaviour
 
         /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
+        //inputPlayer = ReInput.players.GetPlayer(0);
 
         //Plafond.GetComponent<MeshRenderer>().enabled = true;
     }
@@ -254,8 +259,13 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
 
-        /*
-       */
+        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            debugTech++;
+            if (debugTech == debugNumTechnic)
+                debugTech = 0;
+        }
 
         SmoothBar();
 
@@ -399,6 +409,48 @@ public class PlayerController : MonoBehaviour
     public bool IsInMadness()
     {
         return InMadness;
+    }
+
+    public void GetPunchIntro()
+    {
+        if (/*Input.GetAxis("CoupSimple") != 0 && */canPunch/* && resetAxeS*/)
+        {
+            resetAxeS = false;
+            canPunch = false;
+            propP = true;
+            timeToDP = TimeToDoublePunch;
+            if (Time.timeScale < 1)
+                Time.timeScale = 1;
+
+            //if ( !InMadness )
+            //{
+            punch.MadnessMana("Simple");
+
+            int randomSong = UnityEngine.Random.Range(0, 3);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
+            //}
+
+            ScreenShake.Singleton.ShakeHitSimple();
+
+            if (punchRight)
+            {
+                punch.RightPunch = true;
+
+                playAnimator.SetTrigger("Right");
+
+                //GlobalManager.Ui.SimpleCoup();
+            }
+            else
+            {
+                punch.RightPunch = false;
+
+                playAnimator.SetTrigger("Left");
+            }
+            punchRight = !punchRight;
+            StartCoroutine(StartPunch(0));
+            propPunch = propulsePunch(TimePropulsePunch);
+            StartCoroutine(propPunch);
+        }
     }
 	#endregion
 
@@ -546,7 +598,20 @@ public class PlayerController : MonoBehaviour
 
 		checkInAir ( getTime );
 
-		speAction ( getTime );
+        switch (debugTech)
+        {
+            case 0:
+                speAction(getTime);
+                break;
+            case 1:
+                if (Input.GetAxis("SpecialAction") > 0) {
+                    sphereChocWave.enabled = true;
+                    StartCoroutine(CooldownWave());
+                    StartCoroutine(TimerHitbox());
+                }
+                break;
+        }
+		
 
 		changeLine ( getTime );
 

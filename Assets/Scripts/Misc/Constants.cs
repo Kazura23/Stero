@@ -5,6 +5,7 @@ public static class Constants
 {
 	#region Tag
 	public const string _PlayerTag = "Player";
+    public const string _PunchTag = "Punch";
 	public const string _NewDirec = "ModifDirect";
 	public const string _EnnemisTag = "Enemy";
 	public const string _ObjDeadTag = "ObjDead";
@@ -22,6 +23,7 @@ public static class Constants
 	public const string _SAbleCoin = "SpawnableCoin";
 	public const string _DebutFinChunk = "DebutFinChunk";
 	public const string _ObsPropSafe = "ObsPropSafe";
+    public const string _Intro = "Intro";
 	#endregion
 
 	#region PlayerPref

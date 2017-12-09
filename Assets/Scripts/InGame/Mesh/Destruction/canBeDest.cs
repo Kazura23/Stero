@@ -6,6 +6,7 @@ public class canBeDest : MonoBehaviour
 {	
 	public float ForcePropulse = 5;
 	public float DelayDestruc = 1;
+    public int nbPunchDestroy = 5;
 
 	void OnCollisionEnter ( Collision collision )
 	{
@@ -16,4 +17,16 @@ public class canBeDest : MonoBehaviour
             GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Wood_" + (randomSong + 1), false);
         }
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == Constants._PunchTag && tag == Constants._Intro)
+        {
+            nbPunchDestroy--;
+            if(nbPunchDestroy == 0)
+            {
+                GameObject.FindObjectOfType<GameController>().ActiveGame();
+            }
+        }
+    }
 }

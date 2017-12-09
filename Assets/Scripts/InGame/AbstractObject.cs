@@ -36,6 +36,7 @@ public class AbstractObject : MonoBehaviour
     protected Transform playerTrans;
     protected bool activeSlow = true;
 	Rigidbody meshRigid;
+    private int techPunch;
 
 	Vector3 projection;
 	float distForDB = 0; 
@@ -93,6 +94,7 @@ public class AbstractObject : MonoBehaviour
 		if ( !isDead )
 		{
 			projection = p_damage;
+            techPunch = p_technic;
 			Dead ( );
 		}
 	}
@@ -213,6 +215,10 @@ public class AbstractObject : MonoBehaviour
 			GetComponent<BoxCollider> ( ).enabled = false;
 		}
 
+        if (techPunch == 1)
+        {
+            meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
+        }
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 		string getObsT = Constants._ObjDeadTag;
 		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
