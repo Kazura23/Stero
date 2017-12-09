@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
 	public float delayChocWave = 5;
+	public float DelayDeadBall = 5;
     public int debugNumTechnic = 2;
 
 	[Tooltip ("Le temps max sera delayPunch")]
@@ -195,6 +196,7 @@ public class PlayerController : MonoBehaviour
     public bool playerDead = false;
 	bool dpunch = false;
     bool InBeginMadness = false;
+	bool chargeDp = false;
 	#endregion
 
 	#region Mono
@@ -537,8 +539,9 @@ public class PlayerController : MonoBehaviour
 			{
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 
+				chargeDp = true;
 
-                if ( timeToDP == TimeToDoublePunch)
+				if ( timeToDP == TimeToDoublePunch)
                 {
                     playAnimator.SetBool("ChargingPunch_verif", true);
                     playAnimator.SetBool("ChargingPunch", true);
@@ -573,6 +576,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else
 			{
+				chargeDp = false;
 				if ( !dpunch && thisCam.fieldOfView > Constants.DefFov )
 				{
 					thisCam.fieldOfView -= getDelta * 10;
@@ -723,7 +727,20 @@ public class PlayerController : MonoBehaviour
 			e.Raise ( );
 
 			StopPlayer = true;
+
+			StartCoroutine ( prepDeadBall ( ) );
 		}
+	}
+
+	IEnumerator prepDeadBall ( )
+	{
+		yield return new WaitForSeconds ( Constants.DB_Prepare );
+
+		// camera black
+
+		yield return new WaitForSeconds ( 0.1f );
+		StopPlayer = false;
+		StartCoroutine( CooldownDeadBall ( ) );
 	}
 
 	void waitInvDmg ( )
@@ -857,6 +874,10 @@ public class PlayerController : MonoBehaviour
 			GlobalManager.Ui.DashSpeedEffect ( true );
 			Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
+		else if ( chargeDp )
+		{
+			speed /= 1.75f;
+		}
 		else
 		{
 			GlobalManager.Ui.DashSpeedEffect ( false );
@@ -871,6 +892,8 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
+
+	
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
@@ -1230,6 +1253,26 @@ public class PlayerController : MonoBehaviour
 
 		canSpe = true;
     }
+
+
+	IEnumerator CooldownDeadBall()
+	{
+		float countTime = 0;
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
+		do
+		{
+			SliderSlow.value = countTime;
+
+			yield return thisF;
+
+			countTime += Time.deltaTime;
+		} while ( countTime < DelayDeadBall );
+
+		SliderSlow.value = DelayDeadBall;
+
+		canSpe = true;
+	}
 
 	IEnumerator propulsePunch ( float thisTime )
 	{

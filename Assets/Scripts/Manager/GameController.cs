@@ -36,8 +36,6 @@ public class GameController : ManagerParent
     #endregion
 
     #region Mono
-
-
     void Update ( )
 	{
 		if (Input.GetKeyDown(KeyCode.P))
@@ -244,6 +242,11 @@ public class GameController : ManagerParent
 
     private void ChooseRotate(bool p_add)
     {
+		if ( !Intro )
+		{
+			return;
+		}
+
         if (p_add)
         {
             chooseOption++;

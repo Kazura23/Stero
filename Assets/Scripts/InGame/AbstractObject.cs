@@ -40,6 +40,7 @@ public class AbstractObject : MonoBehaviour
 
 	Vector3 projection;
 	float distForDB = 0; 
+	System.Action <DeadBallEvent> checkDBE;
 	#endregion
 
 	#region Mono
@@ -62,7 +63,7 @@ public class AbstractObject : MonoBehaviour
 			meshRigid = mainCorps;
 		}
 
-		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
 			if ( meshRigid != null )
 			{
@@ -177,6 +178,15 @@ public class AbstractObject : MonoBehaviour
 		if ( Vector3.Distance ( playerTrans.position, getTrans.position ) < distForDB ) 
 		{ 
 			onEnemyDead ( Vector3.zero ); 
+			meshRigid.useGravity = false;
+
+			getTrans.DOMove ( playerTrans.position + new Vector3 ( 0, 0, Random.Range ( 3, 7 ) ), Random.Range ( 0.5f, 1.5f ), true ).OnComplete(() => {
+				meshRigid.velocity = Vector3.zero;
+			});
+
+			getTrans.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( 0.5f, 1.2f ) );
+
+			GlobalManager.Event.UnRegister ( checkDBE ); 
 
 			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
