@@ -102,6 +102,11 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
+
+		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) ) 
+		{ 
+			setMusic ( ); 
+		} 
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -155,6 +160,10 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
+	void setMusic ( ) 
+	{ 
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+	} 
 
     private IEnumerator TimerRotate()
     {
