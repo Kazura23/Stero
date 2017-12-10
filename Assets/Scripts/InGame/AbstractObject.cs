@@ -44,7 +44,7 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Awake () 
+	protected virtual void Awake () 
 	{
 		isDead = false;
 
@@ -83,9 +83,8 @@ public class AbstractObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        playerTrans = GlobalManager.GameCont.Player.transform;
-        playerCont = playerTrans.GetComponent<PlayerController>();
-
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
     }
 	#endregion
 
@@ -178,15 +177,17 @@ public class AbstractObject : MonoBehaviour
 		if ( Vector3.Distance ( playerTrans.position, getTrans.position ) < distForDB ) 
 		{ 
 			onEnemyDead ( Vector3.zero ); 
-			meshRigid.useGravity = false;
 
-			getTrans.DOMove ( playerTrans.position + new Vector3 ( 0, 0, Random.Range ( 3, 7 ) ), Random.Range ( 0.5f, 1.5f ), true ).OnComplete(() => {
+			float getConst = Constants.DB_Prepare;
+			meshRigid.useGravity = false;
+			meshRigid.velocity = Vector3.zero;
+
+			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( 0, Random.Range ( 0, 2 ), Random.Range ( 3, 6 ) ), Random.Range ( getConst / 2, getConst ), true ).OnComplete(() => {
 				meshRigid.velocity = Vector3.zero;
+				meshRigid.isKinematic = true;
 			});
 
-			getTrans.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( 0.5f, 1.2f ) );
-
-			GlobalManager.Event.UnRegister ( checkDBE ); 
+			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( getConst / 2, getConst ) );
 
 			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 

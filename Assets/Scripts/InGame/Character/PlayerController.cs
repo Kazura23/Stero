@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
 	public float BonusGrav = 0;
 	[Tooltip ("Pourcentage de ralentissement du personnage dans les airs")]
 	public float PourcRal = 50;
+	public float delayChocWave = 5;
+	public float DelayDeadBall = 15;
+	public float DistDBTake = 25;
+	public GameObject DeadBallPref;
 
 	[Header ("IncreaseSpeed")]
 	[Tooltip ("Distance a parcourir pour augmenter la vitesse Max")]
@@ -61,8 +65,6 @@ public class PlayerController : MonoBehaviour
 	public float CooldownDoublePunch = 1;
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
-	public float delayChocWave = 5;
-	public float DelayDeadBall = 5;
     public int debugNumTechnic = 2;
 
 	[Tooltip ("Le temps max sera delayPunch")]
@@ -105,8 +107,6 @@ public class PlayerController : MonoBehaviour
 	public bool blockChangeLine = false;
 	[HideInInspector]
 	public bool InMadness = false;
-	[HideInInspector]
-	public float DistDBTake = 50;
 	[HideInInspector]
 	public Slider SliderSlow;
 
@@ -738,7 +738,17 @@ public class PlayerController : MonoBehaviour
 
 		// camera black
 
-		yield return new WaitForSeconds ( 0.1f );
+		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
+		{
+			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
+			currObj.transform.position = pTrans.position + pTrans.forward * 10;
+			Rigidbody currRig = currObj.GetComponent<Rigidbody> ( );
+			currRig.velocity = pTrans.forward * 50;
+		}
+
+
+		yield return new WaitForSeconds ( 0.2f );
+
 		StopPlayer = false;
 		StartCoroutine( CooldownDeadBall ( ) );
 	}
@@ -776,7 +786,7 @@ public class PlayerController : MonoBehaviour
 
 				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
 
-				Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
+				//Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
 				if ( getThis.rotation.x > 0 || getThis.rotation.x <= 0 && getThis.rotation.y < 0 && getThis.rotation.z > 0 )
 				{
 					angle = -angle;
@@ -1389,7 +1399,7 @@ public class PlayerController : MonoBehaviour
 
     void stopMadnessLeft()
     {
-        Debug.Log("val = " + delayInEndMadness);
+        //Debug.Log("val = " + delayInEndMadness);
         InMadness = false;
         playAnimator.SetBool("InMadness", false);
         GlobalManager.Ui.CloseMadness();

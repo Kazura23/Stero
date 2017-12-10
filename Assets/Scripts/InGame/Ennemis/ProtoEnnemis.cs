@@ -21,11 +21,11 @@ public class ProtoEnnemis : AbstractObject
 	#endregion
 
 	#region Mono
-	protected override void Start ( )
+	protected override void Awake ( )
 	{
 		//parMat = getTrans.GetComponent<MeshRenderer> ( ).material;
 		//saveCol = parMat.color;
-        base.Start();
+		base.Awake();
 	}
 	#endregion
 

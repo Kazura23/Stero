@@ -383,7 +383,10 @@ public class GameController : ManagerParent
 				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
 				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
 				break;
-
+			case SpecialAction.DeadBall:
+				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
+				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
+				break;
 			default:
 				currPlayer.SliderSlow.maxValue = 10;
 				break;
