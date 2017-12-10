@@ -741,7 +741,7 @@ public class PlayerController : MonoBehaviour
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
-			currObj.transform.position = pTrans.position + pTrans.forward * 10;
+			currObj.transform.position = pTrans.position + pTrans.forward * 5;
 			Rigidbody currRig = currObj.GetComponent<Rigidbody> ( );
 			currRig.velocity = pTrans.forward * 50;
 		}
