@@ -695,7 +695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1694465618571438
 GameObject:
   m_ObjectHideFlags: 1
@@ -1972,7 +1972,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1836179023598080}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.5294118, g: 0.5294118, b: 0.5294118, a: 0}
@@ -1982,8 +1982,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 80
-  far clip plane: 100
+  near clip plane: 1
+  far clip plane: 2
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2211,12 +2211,12 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.8308824, g: 0.80324244, b: 0.7820069, a: 1}
-  m_Intensity: 1.88
-  m_Range: 22.89
+  m_Intensity: 1.9
+  m_Range: 29.27
   m_SpotAngle: 76
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -2692,7 +2692,7 @@ ReflectionProbe:
   m_Type: 0
   m_Mode: 1
   m_RefreshMode: 1
-  m_TimeSlicingMode: 1
+  m_TimeSlicingMode: 2
   m_Resolution: 16
   m_UpdateFrequency: 0
   m_BoxSize: {x: 1, y: 1, z: 1}
@@ -2709,7 +2709,7 @@ ReflectionProbe:
   m_BlendDistance: 10
   m_HDR: 1
   m_BoxProjection: 1
-  m_RenderDynamicObjects: 0
+  m_RenderDynamicObjects: 1
   m_UseOcclusionCulling: 0
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
