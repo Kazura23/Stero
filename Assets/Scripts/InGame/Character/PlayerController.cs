@@ -748,8 +748,6 @@ public class PlayerController : MonoBehaviour
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
 			currObj.transform.position = pTrans.position + pTrans.forward * 8;
-			Rigidbody currRig = currObj.GetComponent<Rigidbody> ( );
-			currRig.velocity = pTrans.forward * 75;
 		}
 
 		pRig.constraints = thisConst;

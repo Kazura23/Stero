@@ -184,7 +184,7 @@ public class AbstractObject : MonoBehaviour
 			meshRigid.useGravity = false;
 			meshRigid.velocity = Vector3.zero;
 
-			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( 0, Random.Range ( 0, 2 ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
+			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( Random.Range ( -0.6f, 0.7f ), Random.Range ( -0.6f, 0.7f ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
 				meshRigid.velocity = Vector3.zero;
 				meshRigid.constraints = RigidbodyConstraints.FreezeAll;
 
