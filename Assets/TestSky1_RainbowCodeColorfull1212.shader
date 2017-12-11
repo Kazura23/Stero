@@ -38,7 +38,7 @@ Shader "Shader Forge/TestSky1_RainbowCodeColorfull1212" {
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #pragma multi_compile_fwdbase_fullshadows
-            #pragma only_renderers d3d11 
+            #pragma only_renderers d3d11 glcore gles gles3 xboxone 
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform float4 _TimeEditor;
@@ -79,10 +79,10 @@ Shader "Shader Forge/TestSky1_RainbowCodeColorfull1212" {
                 float3 lightColor = _LightColor0.rgb;
 ////// Lighting:
 ////// Emissive:
-                float4 node_5770 = _Time + _TimeEditor;
+                float4 node_4469 = _Time + _TimeEditor;
                 float4 node_2520 = _Time + _TimeEditor;
                 float node_453 = cos((node_2520.g*_timenois));
-                float node_716_ang = node_5770.g;
+                float node_716_ang = node_4469.g;
                 float node_716_spd = (node_453*0.001);
                 float node_716_cos = cos(node_716_spd*node_716_ang);
                 float node_716_sin = sin(node_716_spd*node_716_ang);
