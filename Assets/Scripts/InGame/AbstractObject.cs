@@ -30,10 +30,11 @@ public class AbstractObject : MonoBehaviour
 
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
+    PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
+	Rigidbody meshRigid;
 
-	List<Rigidbody> corps;
 	Vector3 projection;
 	#endregion
 
@@ -41,21 +42,34 @@ public class AbstractObject : MonoBehaviour
 	void Awake () 
 	{
 		isDead = false;
-		corps = new List<Rigidbody>();
 
 		getTrans = transform;
 
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 
-		foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody> ( ) )
+		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
+
+		if ( allRig.Length > 1 )
 		{
-			corps.Add ( thisRig );
+			meshRigid = allRig [ 1 ];
+		}
+		else
+		{
+			meshRigid = mainCorps;
 		}
 	}
+
+    void Update()
+    {
+        if (playerCont.playerDead)
+            PlayerDetected(playerTrans.gameObject, false);
+    }
 
     protected virtual void Start()
     {
         playerTrans = GlobalManager.GameCont.Player.transform;
+        playerCont = playerTrans.GetComponent<PlayerController>();
+
     }
 	#endregion
 
@@ -74,34 +88,32 @@ public class AbstractObject : MonoBehaviour
 		isDead = true;
         Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
-        getTrans.tag = Constants._ObjDeadTag;
-		for ( int i = 0; i < corps.Count; i++ )
-		{
-			corps [ i ].useGravity = true;
-		}
+        
+        int randomSongBody = UnityEngine.Random.Range(0, 8);
 
-		mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
-		if ( useGravity )
-		{
-			mainCorps.useGravity = true;
-		}
+        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSongBody + 1),false);
 
-		//checkConstAxe ( );
+        int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-		if ( enemy )
+        GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "BoneBreak_" + (randomSongBone + 1), false);
+
+        Debug.Log("BoneBreak");
+
+        //checkConstAxe ( );
+
+        if ( enemy )
 		{
-			mainCorps.AddForce ( getTrans.forward * onObjForward, ForceMode.VelocityChange );
+			onEnemyDead ( getTrans.forward * onObjForward );
 		}
 		else
 		{
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
-			mainCorps.AddForce ( getFor + getRig + getUp, ForceMode.VelocityChange );
+			onEnemyDead ( getFor + getRig + getUp );
 		}
         
-		Destroy ( this.gameObject, delayDead );
+		Destroy ( gameObject, delayDead );
 	}
 
 	protected virtual void CollDetect (  )
@@ -118,23 +130,9 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void ForceProp ( Vector3 forceProp )
 	{
-		isDead = true;
-
-		getTrans.tag = Constants._ObjDeadTag;
-		for ( int i = 0; i < corps.Count; i++ )
-		{
-			corps [ i ].useGravity = true;
-		}
-
-		mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
-		if ( useGravity )
-		{
-			mainCorps.useGravity = true;
-		}
-
-		mainCorps.AddForce ( forceProp, ForceMode.VelocityChange );
+		onEnemyDead ( forceProp );
 		StartCoroutine ( enableColl ( ) );
+		Destroy ( gameObject, delayDead );
 	}
 	#endregion
 
@@ -149,7 +147,7 @@ public class AbstractObject : MonoBehaviour
 
 			if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
 			{
-				Debug.Log ( "ennemis touche" );
+				//Debug.Log ( "ennemis touche" );
 			}
 			CollDetect ( );
 		}
@@ -158,6 +156,41 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 		}*/
+	}
+
+	void onEnemyDead ( Vector3 forceProp )
+	{
+		isDead = true;
+        ScreenShake.Singleton.ShakeEnemy();
+
+		var animation = GetComponentInChildren<Animator>();
+        if(animation)
+		    animation.enabled = false;
+
+		if ( animation != null )
+		{
+			animation.enabled = false;
+		}
+
+		mainCorps.constraints = RigidbodyConstraints.None;
+		checkConstAxe ( );
+		if ( useGravity )
+		{
+			mainCorps.useGravity = true;
+		}
+
+		if ( meshRigid.gameObject != gameObject )
+		{
+			GetComponent<BoxCollider> ( ).enabled = false;
+		}
+
+		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
+		string getObsT = Constants._ObjDeadTag;
+		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		{
+			thisRig.tag = getObsT;
+		}
+		meshRigid.tag = getObsT;
 	}
 
 	IEnumerator enableColl ( )
@@ -170,7 +203,7 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		GetComponent<BoxCollider> ( ).enabled = true;
+		//GetComponent<BoxCollider> ( ).enabled = true;
 	}
 
 	void checkConstAxe ( )
@@ -217,7 +250,23 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
-		
-	}
-	#endregion
+        Renderer rend = GetComponentInChildren<Renderer>();
+        //rend.material.shader.
+        //rend.material.shader = Shader.Find("Character_toon");
+        //Debug.Log(rend);
+        //Debug.Log(Shader.GetGlobalFloat(");
+        //Shader.SetGlobalFloat("highlight_amount", 0);
+        //rend.material.SetFloat("highlight_amount", 0);
+
+		int a;
+		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
+		{
+			for ( a = 0; a < thisSkin.materials.Length; a++ )
+			{
+				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
+				thisSkin.materials [ a ].SetFloat ( "_highlight", 1.0f );
+			}	
+		}
+    }
+    #endregion
 }

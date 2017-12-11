@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RiffleMan : AbstractObject 
 {
@@ -14,6 +15,8 @@ public class RiffleMan : AbstractObject
 	public float TimeDestr = 0.4f;
 
 	Transform localShoot;
+
+    bool detected = false;
 	#endregion
 
 	#region Mono
@@ -29,11 +32,28 @@ public class RiffleMan : AbstractObject
 	{
 		base.PlayerDetected ( thisObj, isDetected );
 
-		if ( isDetected && !isDead )
+        if (!isDead)
+        {
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
+            GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
+            //Debug.Log("anime active !!!");
+        }
+
+        if ( isDetected && !isDead )
 		{
 			StartCoroutine ( shootPlayer ( new WaitForSeconds ( SpeedSpawn ), false ) );
 		}
-	}
+
+        if (!detected)
+        {
+            detected = true;
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
+            txt.transform.DOScale(Vector3.one * .15f, 0);
+            txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
+        }
+
+    }
 
 	public override void Dead ( bool enemy = false ) 
 	{
@@ -63,6 +83,7 @@ public class RiffleMan : AbstractObject
 	{
 		int a;
 		GameObject getCurr;
+
 		for ( a = 0; a < NbrBalls; a++ )
 		{
 			yield return thisF;
@@ -94,3 +115,6 @@ public class RiffleMan : AbstractObject
 	}
 	#endregion
 }
+
+
+            

@@ -112,32 +112,31 @@ public class UiManager : ManagerParent
     {
 		float saveFov = Camera.main.fieldOfView;
 
-        Camera.main.DOFieldOfView(47, .15f).OnComplete(() => {
-			Camera.main.DOFieldOfView(saveFov, .1f);
+        Camera.main.DOFieldOfView(40, .1f).OnComplete(() => {
+			Camera.main.DOFieldOfView(saveFov, .15f);
         });
     }
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0f;
-        Time.fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.1f, () => {
+		Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.03f, () => {
 			Time.timeScale = 1;
-            Time.fixedDeltaTime = .02F;
+            //Time.fixedDeltaTime = .02F;
         });
 
 		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(45, .12f);//.SetEase(Ease.InBounce);
-		RedScreen.DOFade(.4f, .12f).OnComplete(() => {
-			RedScreen.DOFade(0, .08f);
+		Camera.main.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
+		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
+			RedScreen.DOFade(0, .12f);
 			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
 	}
 
     public void GameOver()
     {
-        Debug.Log("ShakeOver");
-
+        //Debug.Log("ShakeOver");
 
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -207,7 +206,8 @@ public class UiManager : ManagerParent
 		}
 		else
 		{
-			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f); 
+			speedEffect.GetComponent<CanvasGroup>().DOFade(0, .10f);
+            //Debug.Log("DashStop");
 		}
 	}
 
@@ -313,8 +313,10 @@ public class UiManager : ManagerParent
 
         if ( PatternBackground != null )
 		{
-			PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
-				PatternBackground.transform.DOLocalMoveY(1092, 0);
+            PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
+
+            PatternBackground.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
+				PatternBackground.transform.DOLocalMoveY(1092, 0).SetEase(Ease.Linear);
 			}).SetLoops(-1, LoopType.Restart);
 		}
 	}

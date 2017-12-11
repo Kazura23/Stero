@@ -22,6 +22,7 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public List <ItemModif> AllTempsItem;
 
+    public Tween soundFootSteps;
 	bool checkStart = false;
     #endregion
 
@@ -43,6 +44,15 @@ public class GameController : ManagerParent
 				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
 				Camera.main.GetComponent<RainbowRotate>().time = .4f;
 				Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed/ GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+
+                    int randomSound = UnityEngine.Random.Range(0, 6);
+
+                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+                   // Debug.Log("Audio");
+                }).SetLoops(-1,LoopType.Restart);
 			}
 		}
 
@@ -102,7 +112,6 @@ public class GameController : ManagerParent
 					getObj = ( GameObject ) Instantiate ( getObj );
 				}
 
-
 				getObj.transform.position = thisPos;
 
 				Destroy ( getObj, timeDest );
@@ -117,6 +126,9 @@ public class GameController : ManagerParent
     public void Restart ( ) 
 	{
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+
+        GlobalManager.Ui.DashSpeedEffect(false);
+        SpawnerChunck.RemoveAll ( );
         GameStarted = false;
     }   
     
@@ -166,7 +178,8 @@ public class GameController : ManagerParent
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot )
 			{
-				currPlayer.SlowMotion = thisItem.SlowMotion;
+
+                currPlayer.SlowMotion = thisItem.SlowMotion;
 				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot;
 				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM;
 				currPlayer.ReduceSlider = thisItem.ReduceSlider;

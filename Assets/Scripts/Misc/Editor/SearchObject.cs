@@ -13,9 +13,19 @@ public class SearchObject : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-	public static List<List<GameObject>> LoadAssetsInProject(ResearcheType thisType, Object objComp, string thisStringSearch, bool getChildren, string optionalPath = "", int diffComp = 2 )
+	public static IEnumerator LoadAssetsInProject ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
+		List<GameObject> asset = new List<GameObject> ( ); 
+		TypePlace currPlace = TypePlace.OnProject;
+
+		string guid;
+		string assetPath;
+
 		string[] GUIDs;
+		string optionalPath = thisResearch.FolderProject;
+
+		int a;
+
 		if(optionalPath != "")
 		{
 			if(optionalPath.EndsWith("/"))
@@ -29,14 +39,6 @@ public class SearchObject : MonoBehaviour
 			GUIDs = AssetDatabase.FindAssets("t:GameObject");
 		}
 
-		List<List<GameObject>> objectList = new List<List<GameObject>> ( );
-		List<GameObject> asset = new List<GameObject> ( ); 
-		List<GameObject> getObj;
-
-		string guid;
-		string assetPath;
-		int a;
-
 		for ( a = 0; a < GUIDs.Length; a++ )
 		{
 			guid = GUIDs [ a ];
@@ -44,113 +46,144 @@ public class SearchObject : MonoBehaviour
 			asset.Add ( AssetDatabase.LoadAssetAtPath ( assetPath, typeof( GameObject ) ) as GameObject );
 		}
 
+		if ( asset.Count == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
+
 		if ( getChildren )
 		{
+			int countMax = 0;
 			for ( a = 0; a < asset.Count; a++ )
 			{
-				getObj = returnCurrObj ( GetComponentsInChildrenOfAsset ( asset [ a ] ), thisType, objComp, thisStringSearch, diffComp );
+				countMax += GetComponentsInChildrenOfAsset ( asset [ a ] ).Length;
+			}
 
-				if ( getObj.Count > 0 )
-				{
-					objectList.Add ( getObj );
-				}
+			WindowSearchObject.MaxCount ( countMax, currPlace );
+
+			for ( a = 0; a < asset.Count; a++ )
+			{
+				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( asset [ a ] ), thisType, objComp, thisResearch ), currPlace );
 			}
 		}
 		else
 		{
-			getObj = returnCurrObj ( asset.ToArray ( ), thisType, objComp, thisStringSearch );
-
-			if ( getObj.Count > 0 )
-			{
-				objectList.Add ( getObj );
-			}
+			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, asset.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		return objectList;
+		yield return new WaitForEndOfFrame ( );
 	}
 
-	public static List<List<GameObject>> LoadAssetOnScenes ( ResearcheType thisType, Object objComp, string thisStringSearch, bool getChildren, int diffComp = 2 )
+	public static IEnumerator LoadAssetOnScenes ( List<List<GameObject>> getAllObj, ResearcheType thisType, Object objComp, bool getChildren, InfoResearch thisResearch )
 	{
 		GameObject[] objectList = UnityEngine.SceneManagement.SceneManager.GetActiveScene ( ).GetRootGameObjects ( );
-		List<List<GameObject>> getAllObj = new List<List<GameObject>> ( );
-		List<GameObject> getObj;
+		TypePlace currPlace = TypePlace.OnScene;
+
+		if ( objectList.Length == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
 
 		if ( getChildren )
 		{
-			for ( int a = 0; a < objectList.Length; a ++)
+			int a;
+			int countMax = 0;
+			for ( a = 0; a < objectList.Length; a++ )
 			{
-				getObj = returnCurrObj ( GetComponentsInChildrenOfAsset ( objectList [ a ] ), thisType, objComp, thisStringSearch, diffComp );
+				countMax += GetComponentsInChildrenOfAsset ( objectList [ a ] ).Length;
+			}
 
-				if ( getObj.Count > 0 )
-				{
-					getAllObj.Add ( getObj );
-				}
+			WindowSearchObject.MaxCount ( countMax, currPlace );
+
+			for ( a = 0; a < objectList.Length; a ++ )
+			{
+				EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, GetComponentsInChildrenOfAsset ( objectList [ a ] ), thisType, objComp, thisResearch ), currPlace );
 			}
 		}
 		else
 		{
-			getObj = returnCurrObj ( objectList, thisType, objComp, thisStringSearch );
-
-			if ( getObj.Count > 0 )
-			{
-				getAllObj.Add ( getObj );
-			}
+			EditorCoroutine.start ( returnCurrObj ( currPlace, getAllObj, objectList, thisType, objComp, thisResearch ), currPlace );
 		}
 
-		return getAllObj;
+		yield return new WaitForEndOfFrame ( );
 	}
 
-	public static List<List<GameObject>> LoadOnPrefab ( ResearcheType thisType, Object objComp, List<GameObject> thisPref, string thisStringSearch, bool getChildren, int diffComp = 2 )
+	public static IEnumerator LoadOnPrefab ( List<List<GameObject>> objectList, ResearcheType thisType, Object objComp, List<GameObject> thisPref, bool getChildren, InfoResearch thisResearch )
 	{
-		List<List<GameObject>> objectList = new List<List<GameObject>> ( );
-		List<GameObject> getObj;
+		TypePlace currPlace = TypePlace.OnObject;
 		int a;
+
+		if ( thisPref.Count == 0 )
+		{
+			WindowSearchObject.EndResearch ( currPlace );
+			yield break;
+		}
 
 		if ( getChildren )
 		{
+			int countMax = 0;
 			for ( a = 0; a < thisPref.Count; a++ )
 			{
-				getObj = returnCurrObj ( GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisStringSearch, diffComp );
+				countMax += GetComponentsInChildrenOfAsset ( thisPref [ a ] ).Length;
+			}
 
-				if ( getObj.Count > 0 )
-				{
-					objectList.Add ( getObj );
-				}
+			WindowSearchObject.MaxCount ( countMax, currPlace );
+
+			for ( a = 0; a < thisPref.Count; a++ )
+			{
+				EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, GetComponentsInChildrenOfAsset ( thisPref [ a ] ), thisType, objComp, thisResearch ), currPlace );
 			}
 		}
 		else 
 		{
-			getObj = returnCurrObj ( thisPref.ToArray ( ), thisType, objComp, thisStringSearch );
-
-			if ( getObj.Count > 0 )
-			{
-				objectList.Add ( getObj );
-			}
+			EditorCoroutine.start ( returnCurrObj ( currPlace, objectList, thisPref.ToArray ( ), thisType, objComp, thisResearch ), currPlace );
 		}
 
-		return objectList;
-
+		yield return new WaitForEndOfFrame ( );
 	}
 	#endregion
 
 	#region Private Methods
-	static List<GameObject> returnCurrObj ( GameObject[] objectList, ResearcheType thisType, Object objComp, string thisStringSearch, int diffComp = 2 )
+	static IEnumerator returnCurrObj ( TypePlace thisPlace, List<List<GameObject>> CurrList, GameObject[] objectList, ResearcheType thisType, Object objComp, InfoResearch thisResearch )
 	{
-		List <GameObject> objTagList = new List<GameObject> ( );
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
+		List<GameObject> objTagList = new List<GameObject>();
 		Component [] components;
 		Component [] componentsPref;
 
 		GameObject getPref;
 
-		if ( thisType == ResearcheType.SamePref )
+		string thisStringSearch = thisResearch.StringSearch;
+		int diffComp = thisResearch.NbrCompDiff;
+		int diffChil = thisResearch.NbrChildDiff;
+		string OtherName = thisResearch.OtherName;
+		bool getProper = false;
+		string getCompName;
+		bool checkRef;
+
+		if ( thisType == ResearcheType.SamePref || thisType == ResearcheType.SearchRef )
 		{
 			if ( objComp == null )
 			{
-				return new List<GameObject> ( );
+				WindowSearchObject.EndResearch ( thisPlace );
+
+				yield break;
 			}
 
-			getPref = ( GameObject ) objComp;
-			componentsPref = getPref.GetComponents<Component> ( );
+			getProper = thisResearch.TryGetProperty;
+
+			try
+			{
+				getPref = ( GameObject ) objComp;
+				componentsPref = getPref.GetComponents<Component> ( );
+			}
+			catch{
+				getPref = null;
+				componentsPref = null;
+			}
 		}
 		else
 		{
@@ -162,9 +195,13 @@ public class SearchObject : MonoBehaviour
 
 		int a;
 		int b;
-
+		int c;
+		int maxNbr = objectList.Length;
 		for ( a = 0; a < objectList.Length; a++ )
 		{
+			WindowSearchObject.AddCount ( thisPlace );
+			yield return thisF;
+
 			if ( objectList [ a ] == null )
 			{
 				continue;
@@ -194,7 +231,9 @@ public class SearchObject : MonoBehaviour
 
 				if ( objComp == null )
 				{
-					return new List<GameObject> ( );
+					WindowSearchObject.EndResearch ( thisPlace );
+
+					yield break;
 				}
 
 				for ( b = 0; b < components.Length; b++ )
@@ -223,33 +262,69 @@ public class SearchObject : MonoBehaviour
 
 				for ( b = 0; b < components.Length; b++ )
 				{
-					Debug.Log ( components [ b ].GetType ( ) + " / " + components [ b ].GetType ( ).GetFields ( ).Length );
+					if ( components [ b ] == null )
+					{
+						continue;
+					}
+
+					yield return thisF;
 
 					if ( components [ b ].GetType ( ).GetFields ( ).Length > 0 )
 					{
 						foreach ( var field in components[b].GetType ( ).GetFields ( ) )
 						{
-							if ( field.GetValue ( components [ b ] ) == objComp )
+							try 
 							{
-								objTagList.Add ( objectList [ a ] );
-								break;
+								getCompName = field.GetValue ( components [ b ] ).ToString ( );
+
+								if ( field.GetValue ( components [ b ] ) == objComp )
+								{
+									objTagList.Add ( objectList [ a ] );
+									break;
+								}
+								else if ( getPref!= null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								{
+									checkRef = false;
+
+									for ( c = 0; c < componentsPref.Length; c++ )
+									{
+										if ( componentsPref [ c ].GetType ( ) == field.GetValue ( components [ b ] ).GetType() )
+										{
+											objTagList.Add ( objectList [ a ] );
+											checkRef = true;
+											break;
+										}
+									}
+
+									if ( checkRef )
+									{
+										break;
+									}
+								}
+								else if ( getPref == null && getCompName.Length >= objComp.name.Length && getCompName.Substring ( 0, objComp.name.Length ) == objComp.name )
+								{
+									objTagList.Add ( objectList [ a ] );
+								}
+							}
+							catch{
 							}
 						}
 					}
-					else
+					else if ( getProper )
 					{
 						foreach ( var field in components[b].GetType ( ).GetProperties ( ) )
 						{
 							try 
 							{
+								
 								if ( field.GetValue ( components [ b ], null ) == objComp )
 								{
 									objTagList.Add ( objectList [ a ] );
 									break;
 								}
 							}
-							catch{
-								Debug.Log ( "Property value error" );
+							catch
+							{
 							}
 						}
 					}
@@ -257,15 +332,36 @@ public class SearchObject : MonoBehaviour
 				break;
 			case ResearcheType.SamePref:
 				components = objectList [ a ].GetComponents<Component> ( );
-				if ( (componentsPref.Length - components.Length  <= diffComp ) && objectList [ a ].name.Length >= getPref.name.Length && objectList [ a ].name.Substring ( 0, getPref.name.Length ) == getPref.name )
+
+				if ( objectList [ a ].Equals ( getPref ) )
 				{
-					objTagList.Add ( objectList [ a ] );
+					break;
+				}
+
+				if ( Mathf.Abs ( componentsPref.Length - components.Length ) <= diffComp && Mathf.Abs ( GetComponentsInChildrenOfAsset( getPref ).Length - GetComponentsInChildrenOfAsset ( objectList [ a ] ).Length ) <= diffChil )
+				{
+					if ( OtherName != "" )
+					{
+						if ( objectList [ a ].name.Length >= OtherName.Length && objectList [ a ].name.Substring ( 0, OtherName.Length ) == OtherName )
+						{
+							objTagList.Add ( objectList [ a ] );
+						}
+					}
+					else if ( objectList [ a ].name.Length >= getPref.name.Length && objectList [ a ].name.Substring ( 0, getPref.name.Length ) == getPref.name )
+					{
+						objTagList.Add ( objectList [ a ] );
+					}
 				}
 				break;
 			}
 		}
 
-		return objTagList;
+		if ( objTagList.Count > 0 )
+		{
+			CurrList.Add ( objTagList );
+		}
+
+		yield return thisF;
 	}
 
 	public static GameObject[] GetComponentsInChildrenOfAsset( GameObject go  )

@@ -28,7 +28,8 @@ public enum MenuType
 public enum SpecialAction
 {
 	Nothing,
-	SlowMot
+	SlowMot,
+    OndeChoc
 }
 
 public enum AudioType
@@ -37,7 +38,8 @@ public enum AudioType
 	OtherMusic,
 	FxSound,
 	OtherSound,
-	Other
+	Other,
+    OtherFx2
 }
 
 public enum ResearcheType 

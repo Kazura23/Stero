@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnNewLvl : MonoBehaviour 
 {
 	#region Variable
-	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
-	public Vector2 NbrLaneDebut, NbrLaneFin;
-	public Transform LevelParent;
+	public NewChunkInfo InfoChunk;
+
+	[HideInInspector]
+	public List<GameObject> ToDest;
+
+	[HideInInspector]
+	public int OnLine;
 
 	bool detect = false;
 	#endregion
@@ -22,8 +28,36 @@ public class SpawnNewLvl : MonoBehaviour
 		if (other.gameObject.tag == "Player"&& !detect) 
 		{
 			detect = true;
-			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( LevelParent );
+			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
+			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+
+			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
+			getPlayer.currLine -= OnLine;
+			getPlayer.NbrLineRight =  (int)InfoChunk.NbrLaneDebut.y;
+
+			for ( int a = 0; a < ToDest.Count; a++ )
+			{
+				Destroy ( ToDest [ a ], 4 );
+			}
 		}
 	}
 	#endregion
+}
+	
+[System.Serializable]
+public class NewChunkInfo 
+{
+	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
+	public Vector2 NbrLaneDebut, NbrLaneFin;
+	public List <ChunkExit> ThoseExit;
+}
+
+[System.Serializable]
+public class ChunkExit
+{
+	public int LaneParent = 0;
+	public int Verticalite = 0;
+	public Transform LevelParent;
+	public ListChunkScriptable LCS;
 }

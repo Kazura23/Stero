@@ -7,6 +7,11 @@ public class ScreenShake : MonoBehaviour
 {
 	public static ScreenShake Singleton;
 
+    Tween punchPos;
+    Tween shakePos;
+    Tween shakeFall;
+    float dir = 1;
+
 	void Awake ()
 	{
 		if (ScreenShake.Singleton == null) {
@@ -21,16 +26,23 @@ public class ScreenShake : MonoBehaviour
 	{
         if (Input.GetKeyDown(KeyCode.H))
         {
-            ShakeMad();
+            ShakeFall();
         }
 	}
 
+    public void ShakeFall()
+    {
+        shakeFall = transform.DOPunchPosition(new Vector3(1 * 2, 1, 0), .9f, 10, 1.5f);
+    }
+
 	public void ShakeHitSimple ()
 	{
-        //transform.DOKill(true);
+        punchPos.Kill(true);
+
+        dir *= -1; 
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
-        transform.DOPunchPosition(new Vector3(1 * .5f, 0, 1 * .5f), .15f, 2, 1);
+        punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
     }
 
     public void ShakeHitDouble()
@@ -46,10 +58,13 @@ public class ScreenShake : MonoBehaviour
 
     public void ShakeEnemy()
     {
-        //transform.DOKill(true);
+        punchPos.Kill(true);
+        shakePos.Kill(true);
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
-        transform.DOPunchPosition(new Vector3(1*.15f, 0, 1*.15f), .15f, 4, 1);
+
+        shakePos = transform.DOShakePosition(.15f, .15f, 12, 180);
+        //transform.DOPunchPosition(new Vector3(1*1.5f, 0, 1*.5f), .25f, 4, 1);
     }
 
     public void ShakeMad()
