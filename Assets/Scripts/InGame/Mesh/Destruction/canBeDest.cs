@@ -25,7 +25,7 @@ public class canBeDest : MonoBehaviour
             nbPunchDestroy--;
             if(nbPunchDestroy == 0)
             {
-                GameObject.FindObjectOfType<GameController>().ActiveGame();
+				GlobalManager.GameCont.ActiveGame ( );
             }
         }
     }

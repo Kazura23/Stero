@@ -174,7 +174,9 @@ public class AbstractObject : MonoBehaviour
 
 	void startDeadBall ( ) 
 	{ 
-		if ( Vector3.Distance ( playerTrans.position, getTrans.position ) < distForDB ) 
+		float getDist = Vector3.Distance ( playerTrans.position, getTrans.position );
+		
+		if ( getDist < distForDB ) 
 		{ 
 			onEnemyDead ( Vector3.zero ); 
 
@@ -182,12 +184,17 @@ public class AbstractObject : MonoBehaviour
 			meshRigid.useGravity = false;
 			meshRigid.velocity = Vector3.zero;
 
-			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( 0, Random.Range ( 0, 2 ), Random.Range ( 3, 6 ) ), Random.Range ( getConst / 2, getConst ), true ).OnComplete(() => {
+			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( 0, Random.Range ( 0, 2 ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
 				meshRigid.velocity = Vector3.zero;
-				meshRigid.isKinematic = true;
+				meshRigid.constraints = RigidbodyConstraints.FreezeAll;
+
+				foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+				{
+					thisRig.constraints = RigidbodyConstraints.FreezeAll;
+				}
 			});
 
-			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( getConst / 2, getConst ) );
+			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( getConst * 0.25f, getConst ) );
 
 			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 

@@ -734,20 +734,20 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator prepDeadBall ( )
 	{
-		yield return new WaitForSeconds ( Constants.DB_Prepare );
+		yield return new WaitForSeconds ( Constants.DB_Prepare  );
 
 		// camera black
+
+
+		yield return new WaitForSeconds ( 0.2f );
 
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
-			currObj.transform.position = pTrans.position + pTrans.forward * 5;
+			currObj.transform.position = pTrans.position + pTrans.forward * 8;
 			Rigidbody currRig = currObj.GetComponent<Rigidbody> ( );
-			currRig.velocity = pTrans.forward * 50;
+			currRig.velocity = pTrans.forward * 75;
 		}
-
-
-		yield return new WaitForSeconds ( 0.2f );
 
 		StopPlayer = false;
 		StartCoroutine( CooldownDeadBall ( ) );
@@ -886,7 +886,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( chargeDp )
 		{
-			speed /= 1.75f;
+			speed /= 1.60f;
 		}
 		else
 		{
