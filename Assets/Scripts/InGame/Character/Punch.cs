@@ -29,6 +29,7 @@ public class Punch : MonoBehaviour {
     {
 		control = GlobalManager.GameCont.Player.GetComponent<PlayerController>();
         barMadness = control.BarMadness;
+        barMadness.value = 0;
     }
 
     void OnTriggerEnter(Collider other)
@@ -63,8 +64,10 @@ public class Punch : MonoBehaviour {
 			}
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
-            
-            Debug.Log("song");
+
+            GlobalManager.Ui.BloodHit();
+
+           // Debug.Log("song");
             Vector3 getProj = projection_basic;
             switch (numTechnic)
             {

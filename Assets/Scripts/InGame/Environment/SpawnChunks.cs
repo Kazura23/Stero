@@ -265,6 +265,7 @@ public class SpawnChunks : MonoBehaviour
 						getNewChunk.Add ( new VertNCSI ( ) );
 						getInd = getNewChunk.Count - 1;
 						getNewChunk [ getInd ].AllInfNewChunk = new List<NewChunkSaveInf> ( );
+						getNewChunk [ getInd ].Vert = vertChunk;
 					}
 
 					getCurrNew = getNewChunk [ getInd ].AllInfNewChunk;
@@ -406,7 +407,8 @@ public class SpawnChunks : MonoBehaviour
 							diffLine++;
 						}
 					}
-					else if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
+
+					if ( b == getNewChunk [ a ].AllInfNewChunk.Count - 1 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.NbrLaneFin.x );
 						diffLine = -diffLine;
