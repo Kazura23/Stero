@@ -34,6 +34,9 @@ public class LevelManager : ManagerParent
 			{
 				GlobalManager.GameCont.StartGame ( );
 			}
+
+			GlobalManager.Ui.lauchGame = false;
+
 			break;
 		case "HomeMenu":
 			e.onMenuHome = true;
