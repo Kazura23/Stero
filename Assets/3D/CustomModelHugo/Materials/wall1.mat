@@ -18,8 +18,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Alpha_clip_detail1:
+        m_Texture: {fileID: 2800000, guid: e73082258250c434abafddb6a7a4e4f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 1}
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_Normal:
+        m_Texture: {fileID: 2800000, guid: 74c1ee61dcf91a740bd2687b9b4b4ffa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_RM:
+        m_Texture: {fileID: 2800000, guid: deea7d39cb9e66b44b07b8f3e5697544, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_color:
+        m_Texture: {fileID: 2800000, guid: ba9862ee3d9a0d247b8e10a0c56df5a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -39,17 +55,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainNormal:
-        m_Texture: {fileID: 2800000, guid: 5cfc73c810b3dc64e8c79d85c80f8ed3, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0, y: 0.65}
+        m_Texture: {fileID: 2800000, guid: b157447fa7d59d6418114150c531ac4f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainRM:
-        m_Texture: {fileID: 2800000, guid: 93a9c0b25c7ddde44880aa3e8d229da5, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0, y: 0.65}
+        m_Texture: {fileID: 2800000, guid: 306488e726d1c5444bdc1b84defcf9d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8decc604cbe626d45910fc0ca943c3ca, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0, y: 0.65}
+        m_Texture: {fileID: 2800000, guid: c2bc4bb8844d59a48bc99b9498e996c1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -100,7 +116,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _COlorforce: 0.53
     - _Cutoff: 0.5
+    - _Detail1_rotation: -1.55
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
@@ -110,7 +128,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Rotation: -7.87
+    - _Rotation: -1.6
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -119,3 +137,4 @@ Material:
     m_Colors:
     - _Color: {r: 0.051948052, g: 0.051948052, b: 0.051948052, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MAinColor: {r: 0.8315684, g: 0.8101752, b: 0.99264705, a: 1}
