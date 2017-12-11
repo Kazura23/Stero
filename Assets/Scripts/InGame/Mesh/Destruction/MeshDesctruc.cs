@@ -16,7 +16,7 @@ public class MeshDesctruc : MonoBehaviour
 		//stockElem = new List<GameObject> ( );
 	}
 
-	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 10, bool little = false )    
+	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 10, bool little = false, bool explos = false )    
 	{
 		WaitForEndOfFrame thisFrame = new WaitForEndOfFrame ( );
 
@@ -191,7 +191,14 @@ public class MeshDesctruc : MonoBehaviour
 				GO.transform.position = getTrans.position;
 				GO.transform.rotation = getTrans.rotation;
 
-				GO.GetComponent<Rigidbody> ( ).AddForce ( ( new Vector3 ( Random.Range ( -matCD, matCD ), Random.Range ( 0, matCD ), Random.Range ( -matCD, matCD ) ) + calDir ) * Random.Range ( forcePro / 10, forcePro ), ForceMode.VelocityChange );
+				if ( !explos )
+				{
+					GO.GetComponent<Rigidbody> ( ).AddForce ( ( new Vector3 ( Random.Range ( -matCD, matCD ), Random.Range ( 0, matCD ), Random.Range ( -matCD, matCD ) ) + calDir ) * Random.Range ( forcePro / 10, forcePro ), ForceMode.VelocityChange );
+				}
+				else
+				{
+					GO.GetComponent<Rigidbody> ( ).AddExplosionForce ( forcePro, GO.transform.position, forcePro / 2 );
+				}
 
 				GO.GetComponent<TimeToDisable> ( ).DisableThis ( deleayDest + Random.Range ( 0.0f, deleayDest ) );
 			}

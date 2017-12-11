@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
 	public int currLine = 0;
     Transform pTrans;
 	Rigidbody pRig;
+	RigidbodyConstraints thisConst;
 
 	Direction currentDir = Direction.North;
 	Direction newDir = Direction.North;
@@ -273,6 +274,7 @@ public class PlayerController : MonoBehaviour
 	{
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
+		thisConst =	pRig.constraints;
 		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
 		sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
@@ -721,6 +723,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
+			pRig.constraints = RigidbodyConstraints.FreezeAll;
+
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
@@ -749,6 +753,7 @@ public class PlayerController : MonoBehaviour
 			currRig.velocity = pTrans.forward * 75;
 		}
 
+		pRig.constraints = thisConst;
 		StopPlayer = false;
 		StartCoroutine( CooldownDeadBall ( ) );
 	}
@@ -795,11 +800,14 @@ public class PlayerController : MonoBehaviour
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
+					pRig.constraints = RigidbodyConstraints.FreezeAll;
+
 					pRig.useGravity = true;
 				}
 				else if ( angle > 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
+					pRig.constraints = thisConst;
 					pRig.useGravity = false;
 				}
 			}

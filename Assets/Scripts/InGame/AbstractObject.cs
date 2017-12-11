@@ -207,7 +207,6 @@ public class AbstractObject : MonoBehaviour
 
         ScreenShake.Singleton.ShakeEnemy();
 
-
         int randomSongBone = UnityEngine.Random.Range(0, 4);
 
         GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
