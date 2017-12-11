@@ -738,12 +738,11 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator prepDeadBall ( )
 	{
-		yield return new WaitForSeconds ( Constants.DB_Prepare  );
+		yield return new WaitForSeconds ( Constants.DB_Prepare );
 
 		// camera black
 
-
-		yield return new WaitForSeconds ( 0.2f );
+		yield return new WaitForSeconds ( 0.3f );
 
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
@@ -800,15 +799,14 @@ public class PlayerController : MonoBehaviour
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
-					pRig.constraints = RigidbodyConstraints.FreezeAll;
-
+					pRig.constraints = thisConst;
 					pRig.useGravity = true;
 				}
 				else if ( angle > 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
-					pRig.constraints = thisConst;
 					pRig.useGravity = false;
+					pRig.constraints = RigidbodyConstraints.FreezeAll;
 				}
 			}
 		}
