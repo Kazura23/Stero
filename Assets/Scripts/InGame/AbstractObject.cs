@@ -36,12 +36,15 @@ public class AbstractObject : MonoBehaviour
     protected Transform playerTrans;
     protected bool activeSlow = true;
 	Rigidbody meshRigid;
+    private int techPunch;
 
 	Vector3 projection;
+	float distForDB = 0; 
+	System.Action <DeadBallEvent> checkDBE;
 	#endregion
 
 	#region Mono
-	void Awake () 
+	protected virtual void Awake () 
 	{
 		isDead = false;
 
@@ -59,6 +62,17 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+
+		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+		{ 
+			if ( meshRigid != null )
+			{
+				distForDB = thisEvnt.CheckDist; 
+				startDeadBall ( ); 
+			}
+		}; 
+
+		GlobalManager.Event.Register ( checkDBE ); 
 	}
 
     void Update()
@@ -69,9 +83,8 @@ public class AbstractObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        playerTrans = GlobalManager.GameCont.Player.transform;
-        playerCont = playerTrans.GetComponent<PlayerController>();
-
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
     }
 	#endregion
 
@@ -81,6 +94,7 @@ public class AbstractObject : MonoBehaviour
 		if ( !isDead )
 		{
 			projection = p_damage;
+            techPunch = p_technic;
 			Dead ( );
 		}
 	}
@@ -148,6 +162,7 @@ public class AbstractObject : MonoBehaviour
 			{
 				//Debug.Log ( "ennemis touche" );
 			}
+
 			CollDetect ( );
 		}
 
@@ -156,6 +171,34 @@ public class AbstractObject : MonoBehaviour
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 		}*/
 	}
+
+	void startDeadBall ( ) 
+	{ 
+		float getDist = Vector3.Distance ( playerTrans.position, getTrans.position );
+		
+		if ( getDist < distForDB ) 
+		{ 
+			onEnemyDead ( Vector3.zero ); 
+
+			float getConst = Constants.DB_Prepare;
+			meshRigid.useGravity = false;
+			meshRigid.velocity = Vector3.zero;
+
+			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( 0, Random.Range ( 0, 2 ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
+				meshRigid.velocity = Vector3.zero;
+				meshRigid.constraints = RigidbodyConstraints.FreezeAll;
+
+				foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+				{
+					thisRig.constraints = RigidbodyConstraints.FreezeAll;
+				}
+			});
+
+			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( getConst * 0.25f, getConst ) );
+
+			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
+		} 
+	} 
 
 	void onEnemyDead ( Vector3 forceProp )
 	{
@@ -190,6 +233,10 @@ public class AbstractObject : MonoBehaviour
 			GetComponent<BoxCollider> ( ).enabled = false;
 		}
 
+        if (techPunch == 1)
+        {
+            meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
+        }
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 		string getObsT = Constants._ObjDeadTag;
 		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())

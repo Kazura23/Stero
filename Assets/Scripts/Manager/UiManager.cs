@@ -36,6 +36,8 @@ public class UiManager : ManagerParent
     public GameObject TextFeelMadness;
     private Camera camTw1;
 
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
+
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
 
@@ -228,7 +230,7 @@ public class UiManager : ManagerParent
         //Camera.main.DOKill(true);
 
 		Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
-        Debug.Log("CloseMad");
+       // Debug.Log("CloseMad");
         //Camera.main.GetComponent<RainbowRotate>().enabled = true;
 
        //Camera.main.transform.GetComponent<RainbowMove>().enabled = true;
@@ -284,7 +286,53 @@ public class UiManager : ManagerParent
         });
     }
 
-	public void StartBonusLife ( int currLife )
+    public void SelectShop()
+    {
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+        shopTw3.Kill(true);
+        shopTw4.Kill(true);
+
+
+        shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
+        shopTw2 = SlowMotion.DOFade(0, .05f);
+        shopTw3 = DOVirtual.DelayedCall(.1f, () => {
+            shopTw2 = SlowMotion.DOFade(1f, .1f);
+            SlowMotion.transform.DOScale(4, 0f);
+            shopTw4 = SlowMotion.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(0, 0), .2f);
+                shopTw2 = SlowMotion.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
+                {
+                    shopTw1 = SlowMotion.DOFade(1, .1f);
+                    shopTw2 = SlowMotion.transform.DOScale(1, 0f);
+                });
+            });
+        });
+    }
+
+    public void HeartShop(int number)
+    {
+        ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
+        DOVirtual.DelayedCall(.1f, () => {
+            ExtraHearts[number].DOFade(1f, .1f);
+            ExtraHearts[number].GetComponent<RainbowScale>().enabled = false;
+            ExtraHearts[number].transform.DOScale(4, 0f);
+            ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                ExtraHearts[number].transform.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
+                ExtraHearts[number].DOFade(0, .05f);
+                DOVirtual.DelayedCall(.15f, () =>
+                {
+                    ExtraHearts[number].DOFade(1, .1f);
+                    ExtraHearts[number].transform.DOScale(1, 0f);
+                    ExtraHearts[number].GetComponent<RainbowScale>().enabled = true;
+                });
+            });
+        });
+    }
+
+    public void StartBonusLife ( int currLife )
     {
 		Image getCurrHeat;
 		if ( currLife == 3 )
@@ -300,13 +348,14 @@ public class UiManager : ManagerParent
 			getCurrHeat = BonusLife;
 		}
 
+        getCurrHeat.GetComponent<RainbowScale>().enabled = false;
 
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-		getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .1f);
-		getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+
+        getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
 		getCurrHeat.DOFade(0, .05f);
-        DOVirtual.DelayedCall(.1f, () => {
+        DOVirtual.DelayedCall(.15f, () => {
 			getCurrHeat.DOFade(.75f, .1f);
 			getCurrHeat.transform.DOScale(10, 0f);
 			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {

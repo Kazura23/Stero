@@ -7,6 +7,7 @@ public static class AllPlayerPrefs
     public static int scoreWhithoutDistance;
     public static float distance;
     public static ListData saveData;
+    public static bool relance;
 
     public static void ResetStaticVar()
     {

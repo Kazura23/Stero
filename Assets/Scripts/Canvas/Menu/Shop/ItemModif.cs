@@ -36,8 +36,6 @@ public class ItemModif : MonoBehaviour
 
 	public ItemModif RightItem;
 	public ItemModif LeftItem;
-	public ItemModif UpItem;
-	public ItemModif DownItem;
 
 	public bool ModifVie;
 	public bool ModifSpecial;
@@ -46,6 +44,7 @@ public class ItemModif : MonoBehaviour
 	public SpecialAction SpecAction;
 
 	public bool Selected;
+	public bool AddItem;
 
 	#region SpecialSlowMot 
 	public float SlowMotion = 1;
@@ -53,6 +52,10 @@ public class ItemModif : MonoBehaviour
 	public float SpeedDeacSM = 3;
 	public float ReduceSlider;
 	public float RecovSlider;
+	#endregion
+
+	#region SpecialSlowMot 
+	public float DistTakeDB = 10;
 	#endregion
 	#endregion
 
