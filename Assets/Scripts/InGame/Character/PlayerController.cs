@@ -200,43 +200,6 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Awake ( )
-	{
-		pTrans = transform;
-		pRig = gameObject.GetComponent<Rigidbody> ( );
-		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
-        sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
-        punch = pTrans.GetChild(0).GetComponent<Punch>();
-        canPunch = true; 
-		punchRight = true;
-		getPunch = GetComponentInChildren<Punch> ( );
-		thisCam = GetComponentInChildren<Camera> ( );
-		SliderSlow = GlobalManager.Ui.MotionSlider;
-		SliderContent = 10;
-		lastPos = pTrans.position;
-		textDist = GlobalManager.Ui.ScorePoints;
-		textCoin = GlobalManager.Ui.MoneyPoints;
-		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
-		impulsionCL = ImpulsionCL;
-		decelerationCL = DecelerationCL;
-		playAnimator = GetComponentInChildren<Animator> ( );
-        camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
-        saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
-        
-		startRotRR = thisCam.transform.localRotation;
-		startPosRM = thisCam.transform.localPosition;
-
-        /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
-		preparPunch = null;*/
-        //inputPlayer = ReInput.players.GetPlayer(0);
-
-        //Plafond.GetComponent<MeshRenderer>().enabled = true;
-    }
-
 	void Update ( )
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
@@ -306,6 +269,43 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
+	public void InitPlayer ( )
+	{
+		pTrans = transform;
+		pRig = gameObject.GetComponent<Rigidbody> ( );
+		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
+		sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
+		punch = pTrans.GetChild(0).GetComponent<Punch>();
+		canPunch = true; 
+		punchRight = true;
+		getPunch = GetComponentInChildren<Punch> ( );
+		thisCam = GetComponentInChildren<Camera> ( );
+		SliderSlow = GlobalManager.Ui.MotionSlider;
+		SliderContent = 10;
+		lastPos = pTrans.position;
+		textDist = GlobalManager.Ui.ScorePoints;
+		textCoin = GlobalManager.Ui.MoneyPoints;
+		nextIncrease = DistIncMaxSpeed;
+		maxSpeed = MaxSpeed;
+		maxSpeedCL = MaxSpeedCL;
+		accelerationCL = AccelerationCL;
+		acceleration = Acceleration;
+		impulsionCL = ImpulsionCL;
+		decelerationCL = DecelerationCL;
+		playAnimator = GetComponentInChildren<Animator> ( );
+		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
+		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
+
+		startRotRR = thisCam.transform.localRotation;
+		startPosRM = thisCam.transform.localPosition;
+
+		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
+		preparPunch = null;*/
+		//inputPlayer = ReInput.players.GetPlayer(0);
+
+		//Plafond.GetComponent<MeshRenderer>().enabled = true;
+	}
+
 	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
 	{
 		//NbrLineLeft = NbrLineL 

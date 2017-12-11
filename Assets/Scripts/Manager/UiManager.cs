@@ -393,14 +393,19 @@ public class UiManager : ManagerParent
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
 
-		#if UNITY_EDITOR
 		if ( !lauchGame )
 		{
 			OpenThisMenu ( MenuType.MenuHome );
 		}
-		#else
-		OpenThisMenu ( MenuType.MenuHome );
-		#endif
+		else
+		{
+
+			if ( GlobalManager.GameCont.Player != null )
+			{
+				GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+			}
+			GlobalManager.GameCont.StartGame ( );
+		}
 	}
 
 	void InieUI ( )

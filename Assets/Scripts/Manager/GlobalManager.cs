@@ -49,10 +49,10 @@ public class GlobalManager : MonoBehaviour
 	void InitializeManagers()
 	{
 		InitializeManager ( ref evnt );
+		InitializeManager ( ref mAudio );
 		InitializeManager ( ref gCont );
 		InitializeManager ( ref ui );
 		InitializeManager ( ref scene );
-		InitializeManager ( ref mAudio );
 		InitializeManager ( ref dialMa);
     }
 
