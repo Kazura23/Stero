@@ -845,7 +845,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4003771612952752}
-  - component: {fileID: 20593872679520924}
   m_Layer: 11
   m_Name: GameObject
   m_TagString: Untagged
@@ -1965,6 +1964,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!23 &23314236454899272
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1974,7 +1974,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1990,7 +1989,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2008,7 +2006,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2024,7 +2021,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2042,7 +2038,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2058,7 +2053,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2267,18 +2261,18 @@ MonoBehaviour:
   m_Z: 1
   m_NearClip: 5
   m_FarClipMax: 39.14
-  m_GlobalDensityMult: 2.73
-  m_ConstantFog: 11.5
-  m_HeightFogAmount: 0
+  m_GlobalDensityMult: 4
+  m_ConstantFog: 8
+  m_HeightFogAmount: 0.06
   m_HeightFogExponent: 0
   m_HeightFogOffset: 0
-  m_NoiseFogAmount: 0.37
-  m_NoiseFogScale: 0.07
+  m_NoiseFogAmount: 0.63
+  m_NoiseFogScale: 0.12
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.37
-  m_GlobalIntensityMult: 3.24
-  m_AmbientLightIntensity: 2.37
-  m_AmbientLightColor: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 1}
+  m_GlobalIntensityMult: 8
+  m_AmbientLightIntensity: 1
+  m_AmbientLightColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2584,8 +2578,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
+  m_MotionVectors: 0
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
@@ -2600,7 +2593,6 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2610,9 +2602,9 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
+  m_Quality: 2
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: 4300000, guid: be42b738a6a2b104485d644a92a6ad1a, type: 3}
   m_Bones:
   - {fileID: 4407840915068848}
