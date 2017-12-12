@@ -125,7 +125,7 @@ public class SpawnChunks : MonoBehaviour
 
 		spawnAfterThis ( sourceSpawn );
 
-		if ( getSpc.Count > 3 )
+		if ( getSpc.Count > 2 )
 		{
 			Destroy ( getSpc [ 0 ] );
 			getSpc.RemoveAt ( 0 );
