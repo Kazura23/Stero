@@ -21,13 +21,14 @@ public class ShieldMan : AbstractObject {
     #endregion
 
     #region Mono
-    protected override void Start()
+    protected override void Awake()
     {
+		base.Awake();
+
         shieldActive = true;
         move = new Vector3();
 		parMat = getTrans.GetComponent<MeshRenderer>().material;
         saveCol = parMat.color;
-        base.Start();
     }
     #endregion
 
@@ -116,6 +117,9 @@ public class ShieldMan : AbstractObject {
 				getTrans.DOMoveZ(move.z, delay);
 				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay / 2));
 
+                int randomSong = UnityEngine.Random.Range(0, 3);
+
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "MetalHit_" + (randomSong + 1), false);
 
                 GameObject[] listKnight = GameObject.FindGameObjectsWithTag("Knighty");
 
@@ -123,6 +127,9 @@ public class ShieldMan : AbstractObject {
                 {
                     Destroy(trans);
                 }
+
+
+
                 //animation shield destroy
             }
             else

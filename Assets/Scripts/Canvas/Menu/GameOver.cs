@@ -24,8 +24,13 @@ public class GameOver : UiParent
 	{
 		if ( Input.GetAxis("CoupSimple") != 0 )
 		{
-			GlobalManager.GameCont.Restart ( );
-		}
+            AllPlayerPrefs.relance = true;
+			GlobalManager.GameCont.Restart ();
+		}else if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            AllPlayerPrefs.relance = false;
+            GlobalManager.GameCont.Restart();
+        }
 	}
 	#endregion
 
