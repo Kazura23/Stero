@@ -6,22 +6,38 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Porte_Intro
-  m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
-  m_ShaderKeywords: _HIGHLIGHT_ON
-  m_LightmapFlags: 0
+  m_Name: m_Middle_fight3L1
+  m_Shader: {fileID: 4800000, guid: f10f574eec864464cbcb2c7fd366c05b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Alpha_clip_detail1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 80a6980c04e47354680ddb9a3466f9b2, type: 3}
-        m_Scale: {x: 12, y: 16}
-        m_Offset: {x: 0.2, y: 0}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_Normal:
+        m_Texture: {fileID: 2800000, guid: 27d2b2f0ee1042340bebc69340fc181a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_RM:
+        m_Texture: {fileID: 2800000, guid: deea7d39cb9e66b44b07b8f3e5697544, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail1_color:
+        m_Texture: {fileID: 2800000, guid: ba9862ee3d9a0d247b8e10a0c56df5a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -34,27 +50,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Diffuse:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MSEO:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+    - _MainNormal:
+        m_Texture: {fileID: 2800000, guid: 9f7dbabd22d81c94ab76b90b6ae0c0e8, type: 3}
+        m_Scale: {x: 3, y: 3}
+        m_Offset: {x: 0, y: 0}
+    - _MainRM:
+        m_Texture: {fileID: 2800000, guid: 7f88327b549c98c409bf16a68c7d911c, type: 3}
+        m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9e8ecf28345d6f44d9386600ea414f4d, type: 3}
-        m_Scale: {x: 2, y: 2}
+        m_Texture: {fileID: 2800000, guid: 7f4c11ef2c92eaa4dbeefca2be1815ce, type: 3}
+        m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Normal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -66,41 +78,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RMA:
-        m_Texture: {fileID: 2800000, guid: 33903e8575421724faeb7f4fe941addd, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _texcoord:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _COlorforce: 0.97
     - _Cutoff: 0.5
+    - _Detail1_rotation: -1.55
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.754
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 1
+    - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Rotation: -1.55
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - __dirty: 1
-    - _distanceratio: 0.3
-    - _emisive_force: 0
-    - _emissive: 0
-    - _highlight: 1
-    - _highlight__force: 0.28
-    - _highlight_amount: 2.4
-    - _highlight_speed: 1.21
-    - _outline_basevalue: 0.5
     m_Colors:
-    - _Color: {r: 0.14705884, g: 0.14705884, b: 0.14705884, a: 1}
+    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _highlight_Color: {r: 0.47794116, g: 0.2354563, b: 0.2354563, a: 1}
+    - _MAinColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
