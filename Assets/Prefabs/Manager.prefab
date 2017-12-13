@@ -3803,13 +3803,27 @@ MonoBehaviour:
     FxObj: {fileID: 0}
   - FxName: 
     FxObj: {fileID: 0}
+  ChunkToUnLock: []
   GarbageTransform: {fileID: 4602389968245894}
   MeshDest: {fileID: 114930067391110948}
   Player: {fileID: 0}
   SpawnerChunck: {fileID: 114434075597277522}
-  GameStarted: 0
   Intro: 0
   AllTempsItem: []
+  moveRotate:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  tabGameObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  delayRotate: 5
+  textMeshs: {fileID: 0}
 --- !u!114 &114930067391110948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3896,7 +3910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71689b57fff68f04687c75602937c21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lauchGame: 0
+  lauchGame: 1
   MotionSlider: {fileID: 114002586270133342}
   Madness: {fileID: 114754949826948980}
   RedScreen: {fileID: 114959568330275056}

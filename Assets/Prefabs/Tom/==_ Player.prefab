@@ -695,7 +695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1694465618571438
 GameObject:
   m_ObjectHideFlags: 1
@@ -845,8 +845,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4003771612952752}
+  - component: {fileID: 20528256867032478}
   m_Layer: 11
-  m_Name: GameObject
+  m_Name: Skycamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1937,7 +1938,7 @@ Camera:
   m_GameObject: {fileID: 1140545502523876}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -1961,6 +1962,42 @@ Camera:
   m_HDR: 0
   m_AllowMSAA: 0
   m_ForceIntoRT: 1
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!20 &20528256867032478
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836179023598080}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 10
+  far clip plane: 50
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -0.7
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 0
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -2174,9 +2211,9 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.8308824, g: 0.80324244, b: 0.7820069, a: 1}
-  m_Intensity: 1.9
-  m_Range: 29.27
-  m_SpotAngle: 76
+  m_Intensity: 3
+  m_Range: 32
+  m_SpotAngle: 72
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
