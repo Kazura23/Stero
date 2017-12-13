@@ -837,6 +837,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1836179023598080
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4003771612952752}
+  - component: {fileID: 20528256867032478}
+  m_Layer: 11
+  m_Name: Skycamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1860777717124590
 GameObject:
   m_ObjectHideFlags: 1
@@ -1005,6 +1021,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4003771612952752
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836179023598080}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4127382660493280}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4007549327231970
 Transform:
   m_ObjectHideFlags: 1
@@ -1198,6 +1227,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4003771612952752}
   - {fileID: 4906462964085586}
   - {fileID: 4447915022298502}
   m_Father: {fileID: 4278773356282524}
@@ -1473,7 +1503,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4127382660493280}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4484988436419728
 Transform:
@@ -1830,7 +1860,7 @@ Transform:
   - {fileID: 4756352250632554}
   - {fileID: 4269740380791886}
   m_Father: {fileID: 4127382660493280}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -3.5830002, y: 9.398001, z: -0.69500005}
 --- !u!4 &4914748263052972
 Transform:
@@ -1908,7 +1938,7 @@ Camera:
   m_GameObject: {fileID: 1140545502523876}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -1916,8 +1946,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.03
-  far clip plane: 1000
+  near clip plane: 0.02
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1935,6 +1965,43 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!20 &20528256867032478
+Camera:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836179023598080}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 10
+  far clip plane: 50
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -0.7
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!23 &23314236454899272
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1944,7 +2011,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1960,7 +2026,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1978,7 +2043,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1994,7 +2058,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2012,7 +2075,6 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2028,7 +2090,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2150,17 +2211,17 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.8308824, g: 0.80324244, b: 0.7820069, a: 1}
-  m_Intensity: 6
-  m_Range: 22.89
-  m_SpotAngle: 76
+  m_Intensity: 3
+  m_Range: 32
+  m_SpotAngle: 72
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.16
-    m_NormalBias: 0.73
+    m_Bias: 0.04
+    m_NormalBias: 0.21
     m_NearPlane: 5.7
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
@@ -2237,18 +2298,18 @@ MonoBehaviour:
   m_Z: 1
   m_NearClip: 5
   m_FarClipMax: 39.14
-  m_GlobalDensityMult: 2.73
-  m_ConstantFog: 11.5
-  m_HeightFogAmount: 0
+  m_GlobalDensityMult: 4
+  m_ConstantFog: 8
+  m_HeightFogAmount: 0.06
   m_HeightFogExponent: 0
   m_HeightFogOffset: 0
-  m_NoiseFogAmount: 0.37
-  m_NoiseFogScale: 0.07
+  m_NoiseFogAmount: 0.63
+  m_NoiseFogScale: 0.12
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.37
-  m_GlobalIntensityMult: 3.24
-  m_AmbientLightIntensity: 2.37
-  m_AmbientLightColor: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 1}
+  m_GlobalIntensityMult: 8
+  m_AmbientLightIntensity: 1
+  m_AmbientLightColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2554,8 +2615,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
+  m_MotionVectors: 0
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
@@ -2570,7 +2630,6 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2580,9 +2639,9 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
+  m_Quality: 2
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: 4300000, guid: be42b738a6a2b104485d644a92a6ad1a, type: 3}
   m_Bones:
   - {fileID: 4407840915068848}
@@ -2640,7 +2699,7 @@ ReflectionProbe:
   m_Type: 0
   m_Mode: 1
   m_RefreshMode: 1
-  m_TimeSlicingMode: 1
+  m_TimeSlicingMode: 2
   m_Resolution: 16
   m_UpdateFrequency: 0
   m_BoxSize: {x: 1, y: 1, z: 1}
@@ -2657,7 +2716,7 @@ ReflectionProbe:
   m_BlendDistance: 10
   m_HDR: 1
   m_BoxProjection: 1
-  m_RenderDynamicObjects: 0
+  m_RenderDynamicObjects: 1
   m_UseOcclusionCulling: 0
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}

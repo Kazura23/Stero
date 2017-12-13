@@ -1,0 +1,329 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Stero
+  m_Shaders:
+    data:
+      first: {fileID: 19, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: DIRECTIONAL _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            _SPECULARHIGHLIGHTS_OFF
+          passType: 4
+        - keywords: SHADOWS_DEPTH
+          passType: 8
+        - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
+          passType: 10
+    data:
+      first: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: DIRECTIONAL
+          passType: 4
+        - keywords: DIRECTIONAL _EMISSION
+          passType: 4
+        - keywords: DIRECTIONAL _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            _SPECULARHIGHLIGHTS_OFF
+          passType: 4
+        - keywords: DIRECTIONAL
+          passType: 5
+        - keywords: SHADOWS_DEPTH
+          passType: 8
+        - keywords: 
+          passType: 10
+        - keywords: _EMISSION
+          passType: 10
+        - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
+          passType: 10
+        - keywords: 
+          passType: 11
+    data:
+      first: {fileID: 74, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+        - keywords: UNITY_HDR_ON
+          passType: 0
+    data:
+      first: {fileID: 69, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+        - keywords: SPOT
+          passType: 0
+        - keywords: POINT
+          passType: 0
+        - keywords: SHADOWS_DEPTH SPOT
+          passType: 0
+        - keywords: SPOT UNITY_HDR_ON
+          passType: 0
+        - keywords: POINT UNITY_HDR_ON
+          passType: 0
+        - keywords: SHADOWS_DEPTH SPOT UNITY_HDR_ON
+          passType: 0
+    data:
+      first: {fileID: 75, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+        - keywords: 
+          passType: 12
+    data:
+      first: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: SOFTPARTICLES_ON
+          passType: 0
+    data:
+      first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 15104, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 15105, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 15106, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 6f73df8e11615074dbf62a3a384af521, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 0d8afcb51cc9f0349a6d190da929b838, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 1ace800f36a74434eb032633c1dddd4e, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 2c459b89a7c8b1a4fbefe0d81341651c, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 382151503e2a43a4ebb7366d1632731d, type: 3}
+      second:
+        variants:
+        - keywords: BLOOM COLOR_GRADING_HDR_3D GRAIN VIGNETTE
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 4bf4cff0d0bac3d43894e2e8839feb40, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 553a1b303c82ed146a5db0afc709ddbe, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 5bb6ef6f3e1b20348b4fdb01e4c404e2, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 67f9497810829eb4791ec19e95781e51, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: 6965bbb2a8213d040954e22cecd055e3, type: 3}
+      second:
+        variants:
+        - keywords: SHADOWS_DEPTH
+          passType: 0
+        - keywords: DIRECTIONAL
+          passType: 4
+        - keywords: DIRECTIONAL
+          passType: 5
+        - keywords: POINT
+          passType: 5
+        - keywords: SHADOWS_DEPTH SPOT
+          passType: 5
+    data:
+      first: {fileID: 4800000, guid: 81af42a93ade3dd46a9b583d4eec76d6, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: aabfc9e5ec0b19947a8846f4313085d2, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
+      second:
+        variants:
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SHADOWS_DEPTH
+          passType: 0
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+          passType: 0
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON
+          passType: 4
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 4
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SPOT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON POINT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SHADOWS_DEPTH SPOT
+          passType: 5
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF POINT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+            SPOT
+          passType: 5
+    data:
+      first: {fileID: 4800000, guid: bef5efb43454b224e9557610787ae98c, type: 3}
+      second:
+        variants:
+        - keywords: DIRECTIONAL
+          passType: 4
+    data:
+      first: {fileID: 4800000, guid: c1e1d3119c6fd4646aea0b4b74cacc1a, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: cdbdb71de5f9c454b980f6d0e87f0afb, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: da8b2c76553d84049b74e6fc68c42285, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: de7f3ac52268a194383c7d62c2a343c1, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: f75014305794b3948a3c6d5ccd550e05, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: f10f574eec864464cbcb2c7fd366c05b, type: 3}
+      second:
+        variants:
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SHADOWS_DEPTH
+          passType: 0
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+          passType: 0
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON
+          passType: 4
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 4
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF VERTEXLIGHT_ON
+          passType: 4
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SPOT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON POINT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON SHADOWS_DEPTH SPOT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SPOT
+          passType: 5
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF POINT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+            SPOT
+          passType: 5
+        - keywords: SHADOWS_DEPTH
+          passType: 8
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
+          passType: 11
+    data:
+      first: {fileID: 4800000, guid: ad040239ea287774db8d069ef8d1d3e7, type: 3}
+      second:
+        variants:
+        - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON
+          passType: 4

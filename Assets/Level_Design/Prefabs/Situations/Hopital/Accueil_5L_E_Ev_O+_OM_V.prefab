@@ -19687,6 +19687,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1959872570130038
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4840910966806966}
+  - component: {fileID: 33314128596335394}
+  - component: {fileID: 23039138414971682}
+  - component: {fileID: 64483599719915756}
+  m_Layer: 0
+  m_Name: Floor_Exit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1961241360608046
 GameObject:
   m_ObjectHideFlags: 1
@@ -33984,6 +34002,7 @@ Transform:
   - {fileID: 4684560285890004}
   - {fileID: 4358576811636732}
   - {fileID: 4021885112068374}
+  - {fileID: 4840910966806966}
   m_Father: {fileID: 4275170210976652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -34480,6 +34499,19 @@ Transform:
   - {fileID: 4138463957803862}
   m_Father: {fileID: 4439635003628048}
   m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4840910966806966
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1959872570130038}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 6, z: 221.5}
+  m_LocalScale: {x: 1, y: 1, z: 0.14999999}
+  m_Children: []
+  m_Father: {fileID: 4812110907121274}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4843250064837664
 Transform:
@@ -37843,6 +37875,40 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953517310154692}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 7a42db2402ab33346b4119289d4594d9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!23 &23039138414971682
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1959872570130038}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -60363,6 +60429,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1740160710659818}
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
+--- !u!33 &33314128596335394
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1959872570130038}
+  m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
 --- !u!33 &33317001963155270
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -69242,6 +69315,20 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
+--- !u!64 &64483599719915756
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1959872570130038}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
 --- !u!64 &64484503179072932
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -76499,6 +76586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114014771995262826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76585,6 +76673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114045196881272068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76598,6 +76687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114046520479070578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76611,6 +76701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114052488861087956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76719,6 +76810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114070428402263358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76778,6 +76870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114090699207393198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -76998,6 +77091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114152899767917730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77056,6 +77150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114178423396950502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77088,6 +77183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114186274252825116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77118,6 +77214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114200234758881466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77197,6 +77294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114223967040236068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77255,6 +77353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114232911096395102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77313,6 +77412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114262353099380104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77340,6 +77440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114270280925746120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77370,6 +77471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114276023499292858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77472,6 +77574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114306304959808730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77850,6 +77953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114420713291297786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77894,6 +77998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114439652619204260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78050,6 +78155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114514030929711738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78113,6 +78219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114530386487980596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78157,6 +78264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114538551591828326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78182,6 +78290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114547033662006018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78214,6 +78323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114550524170192242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78305,6 +78415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114573899733247944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78335,6 +78446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114593483558302936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78458,6 +78570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114625239965986666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78535,6 +78648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114646200802052490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78568,6 +78682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114653568953176212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78581,6 +78696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114664239668239886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78594,6 +78710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114667218546669250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78654,6 +78771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114712284566535540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78722,6 +78840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114718137419071970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78735,6 +78854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114723421294460612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78800,6 +78920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114750038547230126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78861,6 +78982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114774195601398820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78945,6 +79067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114802429482838268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78975,6 +79098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114817094339226382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78988,6 +79112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114820313405580290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79001,6 +79126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114826044575551812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79077,6 +79203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114853792050956600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79090,6 +79217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114863012175118554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79228,6 +79356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114893193881936860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79241,6 +79370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114895969610855334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79340,6 +79470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114928703036434626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79401,6 +79532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!114 &114950592498244092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79443,6 +79575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
 --- !u!114 &114960469726284720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79630,6 +79763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
 --- !u!135 &135017740761112352
 SphereCollider:
   m_ObjectHideFlags: 1
