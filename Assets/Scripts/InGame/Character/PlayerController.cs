@@ -766,6 +766,7 @@ public class PlayerController : MonoBehaviour
 	{
 		RaycastHit[] allHit;
 		bool checkAir = true;
+		bool checkAngle = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
@@ -803,11 +804,17 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( angle > 0 )
 				{
+					checkAngle = false;
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
 					pRig.useGravity = false;
 					pRig.constraints = RigidbodyConstraints.FreezeAll;
 				}
 			}
+		}
+
+		if ( checkAngle )
+		{
+			pRig.useGravity = true;
 		}
 
 		if ( checkAir )
@@ -829,7 +836,6 @@ public class PlayerController : MonoBehaviour
 
 			if ( inAir )
 			{
-				pRig.useGravity = true;
 
 				if ( pTrans.position.y < checkDistY )
 				{
@@ -841,7 +847,6 @@ public class PlayerController : MonoBehaviour
         }
 		else if ( !checkAir && getCamRM )
         {
-			pRig.useGravity = false;
 			checkDistY = pTrans.position.y - 1000;
 
 			if ( currWF != null )
