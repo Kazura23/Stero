@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Alpha_clip_detail1:
-        m_Texture: {fileID: 2800000, guid: df1df03d5d80ff44686f19ea1281b19a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -27,15 +27,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Detail1_Normal:
-        m_Texture: {fileID: 2800000, guid: b157447fa7d59d6418114150c531ac4f, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: -0.82}
     - _Detail1_RM:
-        m_Texture: {fileID: 2800000, guid: 306488e726d1c5444bdc1b84defcf9d0, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: -0.82}
     - _Detail1_color:
-        m_Texture: {fileID: 2800000, guid: 1ea4ece5769bd404c89528d0ef094b69, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: -0.82}
     - _DetailAlbedoMap:
@@ -55,16 +55,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainNormal:
-        m_Texture: {fileID: 2800000, guid: a02f578e58544a9499c38c174300c19c, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 4bfe8cad9c6eb3249a6342f52c1cd1da, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - _MainRM:
-        m_Texture: {fileID: 2800000, guid: d8a9cf4f976f50c419f747efa9cc912a, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 66d00cf019ae40c4288d6fef0e046726, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9d6de9883a7df554497558d04a16797a, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: f76f062dbaaa609448dccfd588af5859, type: 3}
+        m_Scale: {x: 2, y: 4}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -116,7 +116,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _COlorforce: 1
+    - _COlorforce: 0.4
     - _Cutoff: 0.5
     - _Detail1_rotation: 0
     - _DetailNormalMapScale: 1
@@ -127,6 +127,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Outlinewidth: 0
     - _Parallax: 0.02
     - _Rotation: 0
     - _SmoothnessTextureChannel: 0
