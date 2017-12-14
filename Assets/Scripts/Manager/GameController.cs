@@ -364,6 +364,8 @@ public class GameController : ManagerParent
 		ItemModif thisItem;
 		List<string> getKey = new List<string> ( );
 
+		SpawnerChunck.EndLevel = 1;
+
 		if ( getMod != null )
 		{
 			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
@@ -438,7 +440,13 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life ++;
+			currPlayer.Life++;
+		}
+
+		if ( thisItem.StartBonus )
+		{
+			SpawnerChunck.StartBonus = true;
+			SpawnerChunck.EndLevel++;
 		}
 	}
     #endregion

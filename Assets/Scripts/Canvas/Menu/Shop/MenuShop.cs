@@ -395,8 +395,6 @@ public class MenuShop : UiParent
 				buy = true;
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
-
-
 				if ( currCatSeled.BuyForLife )
 				{
                     ShopUnlock();
@@ -414,7 +412,6 @@ public class MenuShop : UiParent
 				}
 				else
 				{
-					getTempItem.Add ( currItemSeled );
 					int count = 0;
 					for ( int a = 0; a < getTempItem.Count; a++ )
 					{
@@ -428,6 +425,8 @@ public class MenuShop : UiParent
 					{
 						return;
 					}
+
+					getTempItem.Add ( currItemSeled );
 				}
 
 				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
