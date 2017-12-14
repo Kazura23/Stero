@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 startPosRM;
     Player inputPlayer;
 
+	float checkDistY = -100;
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
 	float accelerationCL = 0;
@@ -828,11 +829,21 @@ public class PlayerController : MonoBehaviour
 
 			if ( inAir )
 			{
+				pRig.useGravity = true;
+
+				if ( pTrans.position.y < checkDistY )
+				{
+					GameOver ( true );
+				}
+
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
 		else if ( !checkAir && getCamRM )
         {
+			pRig.useGravity = false;
+			checkDistY = pTrans.position.y - 1000;
+
 			if ( currWF != null )
 			{
 				StopCoroutine ( currWF );
