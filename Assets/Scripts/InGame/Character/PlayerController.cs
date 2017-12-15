@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 startPosRM;
     Player inputPlayer;
 
+	float checkDistY = -100;
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
 	float accelerationCL = 0;
@@ -765,11 +766,12 @@ public class PlayerController : MonoBehaviour
 	{
 		RaycastHit[] allHit;
 		bool checkAir = true;
+		bool checkAngle = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed * 1.2f;
+			getTime *= DashSpeed * 1.1f;
 		}
 
 		getTime *= ( maxSpeed / MaxSpeed );
@@ -802,11 +804,18 @@ public class PlayerController : MonoBehaviour
 				}
 				else if ( angle > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
+					checkAngle = false;
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
 					pRig.useGravity = false;
 					pRig.constraints = RigidbodyConstraints.FreezeAll;
 				}
 			}
+		}
+
+		if ( checkAngle )
+		{
+			pRig.useGravity = true;
+			pRig.constraints = thisConst;
 		}
 
 		if ( checkAir )
@@ -828,11 +837,19 @@ public class PlayerController : MonoBehaviour
 
 			if ( inAir )
 			{
+
+				if ( pTrans.position.y < checkDistY )
+				{
+					GameOver ( true );
+				}
+
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
 		else if ( !checkAir && getCamRM )
         {
+			checkDistY = pTrans.position.y - 1000;
+
 			if ( currWF != null )
 			{
 				StopCoroutine ( currWF );
