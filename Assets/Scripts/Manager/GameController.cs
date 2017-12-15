@@ -17,7 +17,6 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
-    public bool GameStarted;
     public bool Intro;
 
 	[HideInInspector]
@@ -33,6 +32,8 @@ public class GameController : ManagerParent
     public GameObject[] tabGameObject = new GameObject[5];
     public float delayRotate = 5;
     public Transform textMeshs;
+
+	bool GameStarted = false;
     #endregion
 
     #region Mono
@@ -102,9 +103,15 @@ public class GameController : ManagerParent
 	{
         Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
-		Player = GameObject.FindGameObjectWithTag("Player");
+		if ( Player == null )
+		{
+			Player = GameObject.FindGameObjectWithTag("Player");
+			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+		}
+
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
+	
         Intro = true;
 
 		SetAllBonus ( );
@@ -312,6 +319,8 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
+		Player = GameObject.FindGameObjectWithTag("Player");
+
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
@@ -340,6 +349,11 @@ public class GameController : ManagerParent
 				a--; 
 			} 
 		} 
+
+		if ( GameStarted )
+		{
+			StartGame ( );
+		}
 	}
 
 	void SetAllBonus ( )
@@ -349,6 +363,8 @@ public class GameController : ManagerParent
 		List <ItemModif> AllTI = AllTempsItem;
 		ItemModif thisItem;
 		List<string> getKey = new List<string> ( );
+
+		SpawnerChunck.EndLevel = 1;
 
 		if ( getMod != null )
 		{
@@ -424,7 +440,13 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life ++;
+			currPlayer.Life++;
+		}
+
+		if ( thisItem.StartBonus )
+		{
+			SpawnerChunck.StartBonus = true;
+			SpawnerChunck.EndLevel++;
 		}
 	}
     #endregion

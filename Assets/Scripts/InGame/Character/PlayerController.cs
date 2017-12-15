@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
 	public int currLine = 0;
     Transform pTrans;
 	Rigidbody pRig;
+	RigidbodyConstraints thisConst;
 
 	Direction currentDir = Direction.North;
 	Direction newDir = Direction.North;
@@ -150,6 +151,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 startPosRM;
     Player inputPlayer;
 
+	float checkDistY = -100;
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
 	float accelerationCL = 0;
@@ -200,43 +202,6 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Mono
-	void Awake ( )
-	{
-		pTrans = transform;
-		pRig = gameObject.GetComponent<Rigidbody> ( );
-		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
-        sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
-        punch = pTrans.GetChild(0).GetComponent<Punch>();
-        canPunch = true; 
-		punchRight = true;
-		getPunch = GetComponentInChildren<Punch> ( );
-		thisCam = GetComponentInChildren<Camera> ( );
-		SliderSlow = GlobalManager.Ui.MotionSlider;
-		SliderContent = 10;
-		lastPos = pTrans.position;
-		textDist = GlobalManager.Ui.ScorePoints;
-		textCoin = GlobalManager.Ui.MoneyPoints;
-		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
-		impulsionCL = ImpulsionCL;
-		decelerationCL = DecelerationCL;
-		playAnimator = GetComponentInChildren<Animator> ( );
-        camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
-        saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
-        
-		startRotRR = thisCam.transform.localRotation;
-		startPosRM = thisCam.transform.localPosition;
-
-        /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
-		preparPunch = null;*/
-        //inputPlayer = ReInput.players.GetPlayer(0);
-
-        //Plafond.GetComponent<MeshRenderer>().enabled = true;
-    }
-
 	void Update ( )
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
@@ -306,6 +271,44 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
+	public void InitPlayer ( )
+	{
+		pTrans = transform;
+		pRig = gameObject.GetComponent<Rigidbody> ( );
+		thisConst =	pRig.constraints;
+		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
+		sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
+		punch = pTrans.GetChild(0).GetComponent<Punch>();
+		canPunch = true; 
+		punchRight = true;
+		getPunch = GetComponentInChildren<Punch> ( );
+		thisCam = GetComponentInChildren<Camera> ( );
+		SliderSlow = GlobalManager.Ui.MotionSlider;
+		SliderContent = 10;
+		lastPos = pTrans.position;
+		textDist = GlobalManager.Ui.ScorePoints;
+		textCoin = GlobalManager.Ui.MoneyPoints;
+		nextIncrease = DistIncMaxSpeed;
+		maxSpeed = MaxSpeed;
+		maxSpeedCL = MaxSpeedCL;
+		accelerationCL = AccelerationCL;
+		acceleration = Acceleration;
+		impulsionCL = ImpulsionCL;
+		decelerationCL = DecelerationCL;
+		playAnimator = GetComponentInChildren<Animator> ( );
+		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
+		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
+
+		startRotRR = thisCam.transform.localRotation;
+		startPosRM = thisCam.transform.localPosition;
+
+		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
+		preparPunch = null;*/
+		//inputPlayer = ReInput.players.GetPlayer(0);
+
+		//Plafond.GetComponent<MeshRenderer>().enabled = true;
+	}
+
 	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
 	{
 		//NbrLineLeft = NbrLineL 
@@ -721,6 +724,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
+			pRig.constraints = RigidbodyConstraints.FreezeAll;
+
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
@@ -734,21 +739,19 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator prepDeadBall ( )
 	{
-		yield return new WaitForSeconds ( Constants.DB_Prepare  );
+		yield return new WaitForSeconds ( Constants.DB_Prepare );
 
 		// camera black
 
-
-		yield return new WaitForSeconds ( 0.2f );
+		yield return new WaitForSeconds ( 0.3f );
 
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
 			currObj.transform.position = pTrans.position + pTrans.forward * 8;
-			Rigidbody currRig = currObj.GetComponent<Rigidbody> ( );
-			currRig.velocity = pTrans.forward * 75;
 		}
 
+		pRig.constraints = thisConst;
 		StopPlayer = false;
 		StartCoroutine( CooldownDeadBall ( ) );
 	}
@@ -763,11 +766,12 @@ public class PlayerController : MonoBehaviour
 	{
 		RaycastHit[] allHit;
 		bool checkAir = true;
+		bool checkAngle = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 		if ( Dash || InMadness )
 		{
-			getTime *= DashSpeed * 1.2f;
+			getTime *= DashSpeed * 1.1f;
 		}
 
 		getTime *= ( maxSpeed / MaxSpeed );
@@ -795,14 +799,23 @@ public class PlayerController : MonoBehaviour
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
+					pRig.constraints = thisConst;
 					pRig.useGravity = true;
 				}
 				else if ( angle > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime, 0 ), Space.World );
+					checkAngle = false;
+					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
 					pRig.useGravity = false;
+					pRig.constraints = RigidbodyConstraints.FreezeAll;
 				}
 			}
+		}
+
+		if ( checkAngle )
+		{
+			pRig.useGravity = true;
+			pRig.constraints = thisConst;
 		}
 
 		if ( checkAir )
@@ -824,11 +837,19 @@ public class PlayerController : MonoBehaviour
 
 			if ( inAir )
 			{
+
+				if ( pTrans.position.y < checkDistY )
+				{
+					GameOver ( true );
+				}
+
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
 		else if ( !checkAir && getCamRM )
         {
+			checkDistY = pTrans.position.y - 1000;
+
 			if ( currWF != null )
 			{
 				StopCoroutine ( currWF );
