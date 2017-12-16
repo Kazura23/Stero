@@ -282,7 +282,7 @@ public class GameController : ManagerParent
                 GlobalManager.Ui.Intro();
 
                 checkStart = true;
-                Debug.Log("player = " + Player);
+                //Debug.Log("player = " + Player);
                 Player.GetComponent<PlayerController>().StopPlayer = false;
                 Camera.main.GetComponent<RainbowRotate>().time = .4f;
                 Camera.main.GetComponent<RainbowMove>().time = .2f;

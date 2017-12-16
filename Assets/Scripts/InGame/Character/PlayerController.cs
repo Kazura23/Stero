@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
 	float nextIncrease = 0;
 	float befRot = 0;
 	float SliderContent;
-	float totalDis = 0;
+	public float totalDis = 0;
     float rationUse = 1;
 	//float calPos = 0;
 
@@ -302,12 +302,12 @@ public class PlayerController : MonoBehaviour
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 
-		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
+        /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
-		//inputPlayer = ReInput.players.GetPlayer(0);
+        //inputPlayer = ReInput.players.GetPlayer(0);
 
-		//Plafond.GetComponent<MeshRenderer>().enabled = true;
-	}
+        //Plafond.GetComponent<MeshRenderer>().enabled = true;
+    }
 
 	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
 	{
@@ -341,7 +341,18 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	public void GameOver ( bool forceDead = false )
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+
+            totalDis += 20000;
+            Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
+
+        }
+    }
+
+    public void GameOver ( bool forceDead = false )
 	{
         if ( invDamage  && !forceDead )
 		{
