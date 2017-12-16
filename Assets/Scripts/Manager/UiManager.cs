@@ -385,8 +385,8 @@ public class UiManager : ManagerParent
 		{
 			thisMenu = (GameObject) Instantiate ( getAllMenu [ a ], MenuParent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
+			thisUi.Initialize ( );
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
-			InitializeUI ( ref thisUi );
 		}
 
 		AllMenu = setAllMenu;
@@ -443,31 +443,6 @@ public class UiManager : ManagerParent
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
-	}
-
-	void InitializeUI<T>(ref T manager) where T : UiParent
-	{
-		//Debug.Log("Initializing managers");
-		T[] managers = GetComponentsInChildren<T>();
-
-		if(managers.Length == 0)
-		{
-			//Debug.LogError("No manager of type: " + typeof(T) + " found.");
-			return;
-		}
-
-		//Set to first manager
-		manager = managers[0];
-		manager.Initialize();
-
-		if(managers.Length > 1) //Too many managers
-		{
-			//Debug.LogError("Found " + managers.Length + " UI of type " + typeof(T));
-			for(int i = 1; i < managers.Length; i++)
-			{
-				Destroy(managers[i].gameObject);
-			}
-		} 
 	}
 	#endregion
 }
