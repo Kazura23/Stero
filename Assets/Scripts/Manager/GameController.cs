@@ -45,37 +45,36 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
+			if ( Input.GetKey ( KeyCode.B ) )
+			{
+				GlobalManager.Ui.OpenThisMenu ( MenuType.Shop );
+			}
             switch (chooseOption)
             {
-                case 0: // start game
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        isStay = false;
-                        AnimationStartGame();
-                    }
-                    //GameStartedUpdate();
-                    break;
+            case 0: // start game
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    isStay = false;
+                    AnimationStartGame();
+                }
+                //GameStartedUpdate();
+                break;
 
-                case 1: // shop
+			case 1: // shop
+                Debug.Log("Shop");
+                break;
 
-                    Debug.Log("Shop");
-                    break;
+            case 2: // quitter
+                Debug.Log("Quit");
+                break;
+		
+			case 3: // highscore
+                Debug.Log("Highscores");
+                break;
 
-                case 2: // quitter
-
-                    Debug.Log("Quit");
-                    break;
-
-                case 3: // highscore
-
-
-                    Debug.Log("Highscores");
-                    break;
-
-                case 4:  // option
-
-                    Debug.Log("Options");
-                    break;
+            case 4:  // option
+                Debug.Log("Options");
+                break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
             {
