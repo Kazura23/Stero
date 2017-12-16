@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Lampe1
-  m_Shader: {fileID: 4800000, guid: f10f574eec864464cbcb2c7fd366c05b, type: 3}
-  m_ShaderKeywords: _DISTANCEBASEDOUTLINE_ON
+  m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
+  m_ShaderKeywords: _DISTANCEBASEDOUTLINE_ON _EMISSIVE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -78,6 +78,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RMA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _COlorforce: 0.506115
@@ -100,9 +104,18 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _distanceratio: 0.208
+    - _emisive_force: 0.265
+    - _emissive: 1
+    - _highlight: 0
+    - _highlight__force: 0
+    - _highlight_amount: 5
+    - _highlight_speed: 1
     - _node_9809: 0
     - _out: 0.04
+    - _outline_basevalue: 0.278
     m_Colors:
-    - _Color: {r: 0.09558821, g: 0.09558821, b: 0.09558821, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MAinColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _highlight_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
