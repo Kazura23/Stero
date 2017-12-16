@@ -54,6 +54,7 @@ public class GameController : ManagerParent
             case 0: // start game
                 if (Input.GetKeyDown(KeyCode.W))
                 {
+					StartGame ( );
                     isStay = false;
                     AnimationStartGame();
                 }
@@ -348,11 +349,6 @@ public class GameController : ManagerParent
 				a--; 
 			} 
 		} 
-
-		if ( GameStarted )
-		{
-			StartGame ( );
-		}
 	}
 
 	void SetAllBonus ( )
