@@ -71,7 +71,7 @@ public class ScreenShake : MonoBehaviour
 
     public void ShakeIntro()
     {
-        transform.GetComponent<RainbowRotate>().enabled = false;
+        //transform.GetComponent<RainbowRotate>().enabled = false;
         punchPos.Kill(true);
         shakePos.Kill(true);
 
