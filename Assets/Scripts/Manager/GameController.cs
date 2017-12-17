@@ -45,7 +45,7 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
-			if ( Input.GetKey ( KeyCode.B ) )
+			if ( Input.GetKeyDown ( KeyCode.B ) )
 			{
 				GlobalManager.Ui.OpenThisMenu ( MenuType.Shop );
 			}
