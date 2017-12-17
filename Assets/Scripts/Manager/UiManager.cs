@@ -64,6 +64,7 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
+            OpenShop();
 		}
 	}
 
@@ -77,6 +78,7 @@ public class UiManager : ManagerParent
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
 			menuOpen = MenuType.Nothing;
+            CloseShop();
 
 			if ( onMainScene && !openNew )
 			{
@@ -310,6 +312,17 @@ public class UiManager : ManagerParent
                 });
             });
         });
+    }
+
+    public void OpenShop()
+    {
+        Camera.main.DOFieldOfView(15, .5f);
+        //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
+    }
+
+    public void CloseShop()
+    {
+        Camera.main.DOFieldOfView(60, .3f);
     }
 
     public void HeartShop(int number)
