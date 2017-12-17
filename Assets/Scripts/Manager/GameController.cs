@@ -56,14 +56,14 @@ public class GameController : ManagerParent
             {
             case 0: // Options
 
-                    Debug.Log("Options");
+                    //Debug.Log("Options");
 
                 
                 //GameStartedUpdate();
                 break;
 
 			case 1: // Leaderboards
-                Debug.Log("Leaderboards");
+                //Debug.Log("Leaderboards");
 
                     break;
 
@@ -81,14 +81,14 @@ public class GameController : ManagerParent
                     break;
 		
 			case 3: // Shop
-                Debug.Log("Shop");
+                //Debug.Log("Shop");
 
                     if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
                         GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
                     break;
 
             case 4:  // Quitter
-                Debug.Log("Quit");
+                //Debug.Log("Quit");
                 break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -103,8 +103,7 @@ public class GameController : ManagerParent
             Player.GetComponent<PlayerController>().GetPunchIntro();
             Debug.Log("PunchIntro");
         }
-
-        Debug.Log(introFinished);
+        
 	}
 
 
@@ -254,7 +253,7 @@ public class GameController : ManagerParent
                                 isReady = true;
                                 isStay = true;
                                 //Player.GetComponent<PlayerController>().StopPlayer = false;
-                                Debug.Log("anime fonctionnelle");
+                                //Debug.Log("anime fonctionnelle");
                             });
                         });
                     });

@@ -52,7 +52,7 @@ public class UiManager : ManagerParent
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
 		UiParent thisUi;
-		Debug.Log ( "open " + thisType );
+		//Debug.Log ( "open " + thisType );
 
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
@@ -81,7 +81,6 @@ public class UiManager : ManagerParent
 
 		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
 		{
-			Debug.Log ( "close " + thisUi.ThisMenu );
 
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
