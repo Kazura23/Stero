@@ -50,7 +50,7 @@ public class UiManager : ManagerParent
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
 		UiParent thisUi;
-		Debug.Log ( "open " + thisType );
+		//Debug.Log ( "open " + thisType );
 
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
@@ -79,7 +79,6 @@ public class UiManager : ManagerParent
 
 		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
 		{
-			Debug.Log ( "close " + thisUi.ThisMenu );
 
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
@@ -133,11 +132,17 @@ public class UiManager : ManagerParent
                 Camera.main.DOFieldOfView(4, .25f);
                 DOVirtual.DelayedCall(.25f, () =>
                 {
-                    Camera.main.DOFieldOfView(100, .15f);
-                    GlobalManager.GameCont.introFinished = true;
-                    Camera.main.transform.DOKill(true);
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3), 0);
+                Camera.main.DOFieldOfView(100, .15f);
+                GlobalManager.GameCont.introFinished = true;
+
+                Camera.main.transform.DOKill(true);
+                Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                DOVirtual.DelayedCall(.75f,()=>{
+
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                     Camera.main.GetComponent<RainbowRotate>().enabled = true;
+                   // Camera.main.GetComponent<RainbowRotate>().reStart();
+                });
                     DOVirtual.DelayedCall(2f, () =>
                     {
 						Camera.main.DOFieldOfView(saveFov, .25f).OnComplete(()=> {

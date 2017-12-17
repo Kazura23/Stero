@@ -25,7 +25,7 @@ public class RainbowRotate : MonoBehaviour
 		startRot = transform.localRotation;
         Next();
         //transform.DOMoveY(LocalY, 0);
-        //Debug.Log(LocalY);
+        //Debug.Log("yo");
     }
 
     void Next()
@@ -40,7 +40,7 @@ public class RainbowRotate : MonoBehaviour
 
     void OnDisable()
     {
-		currT.DOKill();
+		currT.DOKill(true);
 
 		currT.localRotation = startRot;
     }

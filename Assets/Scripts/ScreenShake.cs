@@ -39,7 +39,7 @@ public class ScreenShake : MonoBehaviour
 	{
         punchPos.Kill(true);
 
-        Debug.Log("ShakeHit");
+        //Debug.Log("ShakeHit");
 
         dir *= -1; 
         //side = UnityEngine.Random.RandomRange(-2, 2);
@@ -71,7 +71,7 @@ public class ScreenShake : MonoBehaviour
 
     public void ShakeIntro()
     {
-        transform.GetComponent<RainbowRotate>().enabled = false;
+        //transform.GetComponent<RainbowRotate>().enabled = false;
         punchPos.Kill(true);
         shakePos.Kill(true);
 
