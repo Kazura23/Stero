@@ -98,7 +98,7 @@ public class GameController : ManagerParent
             {
                 ChooseRotate(true);
             }
-        }else if (isReady && Input.GetKeyDown(KeyCode.W) && !AllPlayerPrefs.relance && isStay)
+        }else if (isReady && Input.GetKeyDown(KeyCode.W) && !AllPlayerPrefs.relance && isStay )
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
             Debug.Log("PunchIntro");
