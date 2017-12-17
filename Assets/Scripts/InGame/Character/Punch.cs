@@ -65,6 +65,9 @@ public class Punch : MonoBehaviour {
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
 
+            int rdmValue = UnityEngine.Random.Range(0, 5);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Kill_" + rdmValue, false);
+
             GlobalManager.Ui.BloodHit();
 
            // Debug.Log("song");

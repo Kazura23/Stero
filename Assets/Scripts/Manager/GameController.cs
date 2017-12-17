@@ -27,13 +27,19 @@ public class GameController : ManagerParent
     public Tween soundFootSteps;
 	bool checkStart = false;
     bool isStay = true, isReady = false, relance = false;
-    private int chooseOption = 0;
+    [HideInInspector]
+    public bool introFinished;
+    private int chooseOption = 2;
     public Vector3[] moveRotate = new Vector3[5];
     public GameObject[] tabGameObject = new GameObject[5];
     public float delayRotate = 5;
     public Transform textMeshs;
 
-	bool GameStarted = false;
+
+
+    public bool canOpenShop = true;
+
+    bool GameStarted = false;
     #endregion
 
     #region Mono
@@ -45,36 +51,44 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
-			if ( Input.GetKeyDown ( KeyCode.B ) )
-			{
-				GlobalManager.Ui.OpenThisMenu ( MenuType.Shop );
-			}
+			
             switch (chooseOption)
             {
-            case 0: // start game
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-					StartGame ( );
-                    isStay = false;
-                    AnimationStartGame();
-                }
+            case 0: // Options
+
+                    Debug.Log("Options");
+
+                
                 //GameStartedUpdate();
                 break;
 
-			case 1: // shop
-                Debug.Log("Shop");
-                break;
+			case 1: // Leaderboards
+                Debug.Log("Leaderboards");
 
-            case 2: // quitter
-                Debug.Log("Quit");
-                break;
+                    break;
+
+            case 2: //Start game
+
+                   //Debug.Log("Start");
+
+                    if (Input.GetKeyDown(KeyCode.W))
+                    {
+                        StartGame();
+                        isStay = false;
+                        AnimationStartGame();
+                    }
+
+                    break;
 		
-			case 3: // highscore
-                Debug.Log("Highscores");
-                break;
+			case 3: // Shop
+                Debug.Log("Shop");
 
-            case 4:  // option
-                Debug.Log("Options");
+                    if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
+                        GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
+                    break;
+
+            case 4:  // Quitter
+                Debug.Log("Quit");
                 break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -87,7 +101,10 @@ public class GameController : ManagerParent
         }else if (isReady && Input.GetKeyDown(KeyCode.W) && !AllPlayerPrefs.relance && isStay)
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
+            Debug.Log("PunchIntro");
         }
+
+        Debug.Log(introFinished);
 	}
 
 
@@ -101,7 +118,7 @@ public class GameController : ManagerParent
 
     public void StartGame ( )
 	{
-        Debug.Log("Start");
+        //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
 		if ( Player == null )
 		{
@@ -225,9 +242,13 @@ public class GameController : ManagerParent
                     //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
                     Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
                     {
+                        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
                         Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
                         {
                             //Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+
                             Player.transform.DOMoveZ(3, 1).OnComplete(() =>
                             {
                                 isReady = true;
@@ -277,9 +298,10 @@ public class GameController : ManagerParent
         {*/
             if (GameStarted && !checkStart)
             {
-                Debug.Log("Demarrage");
+                //Debug.Log("Demarrage");
 
                 GlobalManager.Ui.Intro();
+                isStay = false;
 
                 checkStart = true;
                 //Debug.Log("player = " + Player);
@@ -288,12 +310,12 @@ public class GameController : ManagerParent
                 Camera.main.GetComponent<RainbowMove>().time = .2f;
 
                 soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
-                    Debug.Log("here");
+                    //Debug.Log("here");
                     int randomSound = UnityEngine.Random.Range(0, 6);
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    Debug.Log("Audio");
+                    //Debug.Log("Audio");
                 }).SetLoops(-1, LoopType.Restart);
             }
             /*else

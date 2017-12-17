@@ -136,9 +136,14 @@ public class UiManager : ManagerParent
                 DOVirtual.DelayedCall(.25f, () =>
                 {
                     Camera.main.DOFieldOfView(100, .15f);
+                    GlobalManager.GameCont.introFinished = true;
+                    Camera.main.transform.DOKill(true);
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3), 0);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
                     DOVirtual.DelayedCall(2f, () =>
                     {
-						Camera.main.DOFieldOfView(saveFov, .25f);
+						Camera.main.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
+                        });
                     });
                 });
             });
@@ -202,6 +207,9 @@ public class UiManager : ManagerParent
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
             RedScreen.DOFade(0, .0f);
         });
+
+        int rdmValue = UnityEngine.Random.Range(0, 4);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Death_" + rdmValue, false);
     }
 
     public void OpenMadness()
@@ -211,6 +219,9 @@ public class UiManager : ManagerParent
 
         Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
         GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+
+        int rdmValue = UnityEngine.Random.Range(0, 3);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
         //textMad.GetComponentInChildren<TextMesh>().text = 
         //Camera.main.transform.GetComponent<RainbowMove>().enabled = false;
 
@@ -222,7 +233,7 @@ public class UiManager : ManagerParent
                 Camera.main.transform.DOLocalMoveY(.9f, .1f);
             });
         }).SetLoops(-1,LoopType.Yoyo);*/
-        
+
         /*
         Camera.main.DOFieldOfView(40, .35f).OnComplete(() => {
             Camera.main.DOFieldOfView(60, .35f);
@@ -270,6 +281,10 @@ public class UiManager : ManagerParent
         MoneyPoints.transform.DOScale(1.5f, .1f).SetEase(Ease.InBounce).OnComplete(() => {
             MoneyPoints.transform.DOScale(1f, .05f).SetEase(Ease.InBounce);
         });
+
+
+        int rdmValue = UnityEngine.Random.Range(0, 4);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false);
     }
 
 	public void StartSlowMo()
@@ -325,7 +340,7 @@ public class UiManager : ManagerParent
 
 	public void OpenShop()
     {
-        Camera.main.DOFieldOfView(15, .5f);
+        Camera.main.DOFieldOfView(10, .05f);
         //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
     }
 
