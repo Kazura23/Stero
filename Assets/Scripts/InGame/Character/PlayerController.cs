@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetPunchIntro()
     {
-        if (/*Input.GetAxis("CoupSimple") != 0 && */canPunch/* && resetAxeS*/)
+		if (StopPlayer && /*Input.GetAxis("CoupSimple") != 0 && */canPunch /* && resetAxeS*/)
         {
             resetAxeS = false;
             canPunch = false;
@@ -520,7 +520,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
-			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash)
+			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash )
 			{
 				resetAxeS = true;
 			}
@@ -605,7 +605,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch )
+		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
 		{
 			Dash = true;
 		}
@@ -1151,7 +1151,7 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  )
+		if( Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash )
         {
 			thisCam.fieldOfView = Constants.DefFov;
             resetAxeS = false;
