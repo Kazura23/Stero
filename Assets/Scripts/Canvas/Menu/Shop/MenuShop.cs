@@ -156,27 +156,31 @@ public class MenuShop : UiParent
 	#region Public Methods
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
-		base.OpenThis ( GetTok );
+        if (GlobalManager.GameCont.canOpenShop)
+        {
+            GlobalManager.GameCont.canOpenShop = false;
+            base.OpenThis(GetTok);
 
-		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( transform );
-		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( transform );
+            GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
+            GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
 
-        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
-        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .5f);
+            //GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
+            GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
 
-        GlobalManager.Ui.OpenShop();
+            GlobalManager.Ui.OpenShop();
 
-        transition = false;
+            transition = false;
 
-        fixBackShop.SetActive ( true );
-		currCatSeled = DefCatSelected;
-		if ( currItemSeled != currCatSeled.DefautItem )
-		{
-			CheckSelectItem ( false );
-		}
+            fixBackShop.SetActive(true);
+            currCatSeled = DefCatSelected;
+            if (currItemSeled != currCatSeled.DefautItem)
+            {
+                CheckSelectItem(false);
+            }
 
-		currItemSeled = currCatSeled.DefautItem;
-		CheckSelectItem ( true );
+            currItemSeled = currCatSeled.DefautItem;
+            CheckSelectItem(true);
+        }
     }
 
 	public override void CloseThis ( )
@@ -189,6 +193,8 @@ public class MenuShop : UiParent
         GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete(()=> {
 
             fixBackShop.SetActive(false);
+
+            GlobalManager.GameCont.canOpenShop = true;
 
             base.CloseThis();
 
@@ -520,7 +526,9 @@ public class MenuShop : UiParent
 				try{
 					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
 
-				}catch{Debug.Log("key same");}
+				}catch{
+                    //Debug.Log("key same");
+                }
 
 				currItem.GetComponent<Image> ( ).sprite = currItem.SpriteConfirm;
 

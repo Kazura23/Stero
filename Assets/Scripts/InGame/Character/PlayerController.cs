@@ -361,7 +361,9 @@ public class PlayerController : MonoBehaviour
 
         Life--;
 
-		if ( Life > 0 || playerDead )
+        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 1);
+
+        if ( Life > 0 || playerDead )
 		{
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
@@ -443,11 +445,13 @@ public class PlayerController : MonoBehaviour
             //{
             punch.MadnessMana("Simple");
 
-            int randomSong = UnityEngine.Random.Range(0, 3);
-            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
+            ScreenShake.Singleton.ShakeIntro();
+            
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
+
             //}
 
-            ScreenShake.Singleton.ShakeHitSimple();
+            //ScreenShake.Singleton.ShakeHitSimple();
 
             if (punchRight)
             {
@@ -914,6 +918,8 @@ public class PlayerController : MonoBehaviour
 			speed *= DashSpeed;
 
 			GlobalManager.Ui.DashSpeedEffect ( true );
+            int rdmValue = UnityEngine.Random.Range(0, 3);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Acceleration_" + rdmValue, false);
 			Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
@@ -1151,9 +1157,10 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  )
+		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  && GlobalManager.GameCont.introFinished)
         {
-			thisCam.fieldOfView = Constants.DefFov;
+            thisCam.fieldOfView = Constants.DefFov;
+            Debug.Log("IntroFInished");
             resetAxeS = false;
             canPunch = false;
             propP = true;
@@ -1167,6 +1174,9 @@ public class PlayerController : MonoBehaviour
 
             int randomSong = UnityEngine.Random.Range(0, 3);
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
+
+            int rdmValue = UnityEngine.Random.Range(0, 10);
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Punch_" + rdmValue, false);
             //}
 
             ScreenShake.Singleton.ShakeHitSimple();
