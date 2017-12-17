@@ -154,7 +154,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
+		if ( getThis.tag == Constants._EnnemisTag && gameObject.tag != Constants._ObsSafe || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
@@ -205,7 +205,10 @@ public class AbstractObject : MonoBehaviour
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
 
-        ScreenShake.Singleton.ShakeEnemy();
+		if ( !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).StopPlayer )
+		{
+			ScreenShake.Singleton.ShakeEnemy();
+		}
 
         int randomSongBone = UnityEngine.Random.Range(0, 4);
 

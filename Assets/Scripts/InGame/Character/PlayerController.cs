@@ -432,7 +432,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetPunchIntro()
     {
-        if (/*Input.GetAxis("CoupSimple") != 0 && */canPunch/* && resetAxeS*/)
+		if (StopPlayer && /*Input.GetAxis("CoupSimple") != 0 && */canPunch /* && resetAxeS*/)
         {
             resetAxeS = false;
             canPunch = false;
@@ -447,7 +447,7 @@ public class PlayerController : MonoBehaviour
 
             ScreenShake.Singleton.ShakeIntro();
             
-            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
+			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false );
 
             //}
 
@@ -524,7 +524,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
-			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash)
+			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash )
 			{
 				resetAxeS = true;
 			}
@@ -609,8 +609,14 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch )
+		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
 		{
+			if ( !Dash )
+			{
+				Debug.Log ( "SON DASH" );
+				int rdmValue = UnityEngine.Random.Range(0, 3);
+				GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
+			}
 			Dash = true;
 		}
 		else
@@ -918,8 +924,7 @@ public class PlayerController : MonoBehaviour
 			speed *= DashSpeed;
 
 			GlobalManager.Ui.DashSpeedEffect ( true );
-            int rdmValue = UnityEngine.Random.Range(0, 3);
-            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Acceleration_" + rdmValue, false);
+           
 			Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
@@ -1047,6 +1052,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
+
 				canChange = false;
 				currLine++;
 				LastImp = 1;
@@ -1157,7 +1163,7 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  && GlobalManager.GameCont.introFinished)
+		if( Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash )
         {
             thisCam.fieldOfView = Constants.DefFov;
             Debug.Log("IntroFInished");
@@ -1173,10 +1179,10 @@ public class PlayerController : MonoBehaviour
 				punch.MadnessMana("Simple");
 
             int randomSong = UnityEngine.Random.Range(0, 3);
-            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false);
+			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false );
 
             int rdmValue = UnityEngine.Random.Range(0, 10);
-            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Punch_" + rdmValue, false);
+			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_Punch_" + rdmValue, false, null, true );
             //}
 
             ScreenShake.Singleton.ShakeHitSimple();

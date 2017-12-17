@@ -9,9 +9,7 @@ using UnityEngine.EventSystems;
 public class UiManager : ManagerParent
 {
 	#region Variables
-	#if UNITY_EDITOR
-	public bool lauchGame = false;
-	#endif
+	public bool lauchGame = true;
 	public Slider MotionSlider;
     public Slider Madness;
 	public Image RedScreen;
