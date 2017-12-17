@@ -44,7 +44,10 @@ public enum AudioType
 	OtherMusic,
 	FxSound,
 	OtherSound,
-	Other
+	Other,
+	Acceleration,
+	SteroKill,
+	PunchVoice
 }
 
 public enum ResearcheType 

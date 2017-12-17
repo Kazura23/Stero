@@ -76,8 +76,8 @@ public class GameOver : UiParent
 					});
 					PointsGameOver.transform.DOScale(1, .25f);
 
-                    Debug.Log(distPlayer);
-                    Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
+                    //Debug.Log(distPlayer);
+                    //Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
 
                     if (AllPlayerPrefs.finalScore >= AllPlayerPrefs.saveData.listScore[0].finalScore)
                     {
