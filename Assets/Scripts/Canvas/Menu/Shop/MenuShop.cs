@@ -161,6 +161,11 @@ public class MenuShop : UiParent
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( transform );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( transform );
 
+        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
+        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .5f);
+
+        GlobalManager.Ui.OpenShop();
+
         transition = false;
 
         fixBackShop.SetActive ( true );
@@ -179,9 +184,18 @@ public class MenuShop : UiParent
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
 
-        fixBackShop.SetActive ( false );
-		base.CloseThis (  );
-	}
+        GlobalManager.Ui.CloseShop();
+
+        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete(()=> {
+
+            fixBackShop.SetActive(false);
+
+            base.CloseThis();
+
+        });
+
+
+    }
 
 	// Nouvelle selection de catégorie
 	public void NextCat ( bool right )

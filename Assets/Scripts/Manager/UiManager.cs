@@ -52,9 +52,15 @@ public class UiManager : ManagerParent
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
 		UiParent thisUi;
+		Debug.Log ( "open " + thisType );
 
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
+			if ( menuOpen == thisType )
+			{
+				return;
+			}
+
 			InGame.SetActive ( false );
 			if ( menuOpen != MenuType.Nothing )
 			{
@@ -64,19 +70,24 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
+            OpenShop();
 		}
 	}
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
+
 		UiParent thisUi;
 
 		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
 		{
+			Debug.Log ( "close " + thisUi.ThisMenu );
+
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
 			menuOpen = MenuType.Nothing;
+            CloseShop();
 
 			if ( onMainScene && !openNew )
 			{
@@ -312,6 +323,17 @@ public class UiManager : ManagerParent
         });
     }
 
+	public void OpenShop()
+    {
+        Camera.main.DOFieldOfView(15, .5f);
+        //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
+    }
+
+    public void CloseShop()
+    {
+        Camera.main.DOFieldOfView(60, .3f);
+    }
+
     public void HeartShop(int number)
     {
         ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
@@ -385,8 +407,8 @@ public class UiManager : ManagerParent
 		{
 			thisMenu = (GameObject) Instantiate ( getAllMenu [ a ], MenuParent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
+			thisUi.Initialize ( );
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
-			InitializeUI ( ref thisUi );
 		}
 
 		AllMenu = setAllMenu;
@@ -443,31 +465,6 @@ public class UiManager : ManagerParent
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
-	}
-
-	void InitializeUI<T>(ref T manager) where T : UiParent
-	{
-		//Debug.Log("Initializing managers");
-		T[] managers = GetComponentsInChildren<T>();
-
-		if(managers.Length == 0)
-		{
-			//Debug.LogError("No manager of type: " + typeof(T) + " found.");
-			return;
-		}
-
-		//Set to first manager
-		manager = managers[0];
-		manager.Initialize();
-
-		if(managers.Length > 1) //Too many managers
-		{
-			//Debug.LogError("Found " + managers.Length + " UI of type " + typeof(T));
-			for(int i = 1; i < managers.Length; i++)
-			{
-				Destroy(managers[i].gameObject);
-			}
-		} 
 	}
 	#endregion
 }

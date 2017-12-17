@@ -194,7 +194,7 @@ public class AbstractObject : MonoBehaviour
 				}
 			});
 
-			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ), Random.Range ( 0.2f, 0.7f ) ), Random.Range ( getConst * 0.25f, getConst ) );
+			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.5f, 1 ), Random.Range ( 0.5f, 1 ), Random.Range ( 0.5f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
 
 			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
