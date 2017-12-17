@@ -398,6 +398,7 @@ public class PlayerController : MonoBehaviour
         });
 
         playerDead = true;
+		thisCam.fieldOfView = Constants.DefFov;
 
         GlobalManager.GameCont.soundFootSteps.Kill();
 
@@ -475,7 +476,6 @@ public class PlayerController : MonoBehaviour
 	{
         if ( playerDead || StopPlayer )
 		{
-			thisCam.fieldOfView = Constants.DefFov;
 			return;
 		}
 		float getDelta = Time.deltaTime;

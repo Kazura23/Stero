@@ -52,9 +52,15 @@ public class UiManager : ManagerParent
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
 		UiParent thisUi;
+		Debug.Log ( "open " + thisType );
 
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
+			if ( menuOpen == thisType )
+			{
+				return;
+			}
+
 			InGame.SetActive ( false );
 			if ( menuOpen != MenuType.Nothing )
 			{
@@ -70,10 +76,13 @@ public class UiManager : ManagerParent
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
+
 		UiParent thisUi;
 
 		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
 		{
+			Debug.Log ( "close " + thisUi.ThisMenu );
+
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
@@ -314,7 +323,7 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void OpenShop()
+	public void OpenShop()
     {
         Camera.main.DOFieldOfView(15, .5f);
         //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
