@@ -39,6 +39,8 @@ public class ScreenShake : MonoBehaviour
 	{
         punchPos.Kill(true);
 
+        //Debug.Log("ShakeHit");
+
         dir *= -1; 
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
@@ -65,6 +67,22 @@ public class ScreenShake : MonoBehaviour
 
         shakePos = transform.DOShakePosition(.15f, .15f, 12, 180);
         //transform.DOPunchPosition(new Vector3(1*1.5f, 0, 1*.5f), .25f, 4, 1);
+    }
+
+    public void ShakeIntro()
+    {
+        //transform.GetComponent<RainbowRotate>().enabled = false;
+        punchPos.Kill(true);
+        shakePos.Kill(true);
+
+       // float rdmRot = UnityEngine.Random.Range(-60, 60);
+       // transform.DOLocalRotate(new Vector3(0, 0, rdmRot), 0.05f);
+
+        dir *= -1;
+        punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
+        shakePos = transform.DOShakeRotation(.5f, 35f, 25, 120);
+        //punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
+        //punchPos = transform.DOShakePosition(.5f, 1.5f, 15, 150);
     }
 
     public void ShakeMad()

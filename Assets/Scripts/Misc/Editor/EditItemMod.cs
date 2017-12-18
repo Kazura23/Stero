@@ -348,6 +348,20 @@ public class EditItemMod : Editor
 			myTarget.ModifVie = !myTarget.ModifVie;
 		}
 
+		if ( myTarget.StartBonus )
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.red;
+		}
+
+		if ( GUILayout.Button ( "StartBonus", buttonStyle ) )
+		{
+			myTarget.StartBonus = !myTarget.StartBonus;
+		}
+
 		/*if ( myTarget.ModifVie )
 		{
 			myTarget.NombreVie = EditorGUILayout.IntField ( "NombreVie", myTarget.NombreVie );

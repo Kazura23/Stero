@@ -156,22 +156,31 @@ public class MenuShop : UiParent
 	#region Public Methods
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
-		base.OpenThis ( GetTok );
+        if (GlobalManager.GameCont.canOpenShop)
+        {
+            GlobalManager.GameCont.canOpenShop = false;
+            base.OpenThis(GetTok);
 
-		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( transform );
-		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( transform );
+            GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
+            GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
 
-        transition = false;
+            //GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
+            GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
 
-        fixBackShop.SetActive ( true );
-		currCatSeled = DefCatSelected;
-		if ( currItemSeled != currCatSeled.DefautItem )
-		{
-			CheckSelectItem ( false );
-		}
+            GlobalManager.Ui.OpenShop();
 
-		currItemSeled = currCatSeled.DefautItem;
-		CheckSelectItem ( true );
+            transition = false;
+
+            fixBackShop.SetActive(true);
+            currCatSeled = DefCatSelected;
+            if (currItemSeled != currCatSeled.DefautItem)
+            {
+                CheckSelectItem(false);
+            }
+
+            currItemSeled = currCatSeled.DefautItem;
+            CheckSelectItem(true);
+        }
     }
 
 	public override void CloseThis ( )
@@ -179,9 +188,20 @@ public class MenuShop : UiParent
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
 
-        fixBackShop.SetActive ( false );
-		base.CloseThis (  );
-	}
+        GlobalManager.Ui.CloseShop();
+
+        GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete(()=> {
+
+            fixBackShop.SetActive(false);
+
+            GlobalManager.GameCont.canOpenShop = true;
+
+            base.CloseThis();
+
+        });
+
+
+    }
 
 	// Nouvelle selection de catégorie
 	public void NextCat ( bool right )
@@ -395,8 +415,6 @@ public class MenuShop : UiParent
 				buy = true;
 
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
-
-
 				if ( currCatSeled.BuyForLife )
 				{
                     ShopUnlock();
@@ -414,7 +432,6 @@ public class MenuShop : UiParent
 				}
 				else
 				{
-					getTempItem.Add ( currItemSeled );
 					int count = 0;
 					for ( int a = 0; a < getTempItem.Count; a++ )
 					{
@@ -428,6 +445,8 @@ public class MenuShop : UiParent
 					{
 						return;
 					}
+
+					getTempItem.Add ( currItemSeled );
 				}
 
 				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
@@ -507,7 +526,9 @@ public class MenuShop : UiParent
 				try{
 					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
 
-				}catch{Debug.Log("key same");}
+				}catch{
+                    //Debug.Log("key same");
+                }
 
 				currItem.GetComponent<Image> ( ).sprite = currItem.SpriteConfirm;
 
