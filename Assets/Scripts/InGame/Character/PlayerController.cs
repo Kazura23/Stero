@@ -523,6 +523,11 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
+            /*
+            if( Input.GetAxis ( "SpecialAction" ) == 0){
+
+            }*/
+
 			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash )
 			{
 				resetAxeS = true;
@@ -734,7 +739,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
+		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) == 1 && canSpe )
 		{
 
             Camera.main.GetComponent<RainbowMove>().enabled = false;
@@ -743,9 +748,12 @@ public class PlayerController : MonoBehaviour
 
                     transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
 
-                        
+                        Debug.Log("OndeLancée");
                         Camera.main.GetComponent<RainbowMove>().enabled = true;
                         canSpe = false;
+
+                        ScreenShake.Singleton.ShakeFall();
+
                         sphereChocWave.enabled = true;
                         StartCoroutine(CooldownWave());
                         StartCoroutine(TimerHitbox());
