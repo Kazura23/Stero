@@ -410,7 +410,7 @@ public class PlayerController : MonoBehaviour
 
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
             //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
-            Debug.Log("compile");
+            //Debug.Log("compile");
             ScreenShake.Singleton.ShakeGameOver();
 
         });
@@ -1163,10 +1163,10 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if( Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash )
+		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  && GlobalManager.GameCont.introFinished && !Dash)
         {
             thisCam.fieldOfView = Constants.DefFov;
-            Debug.Log("IntroFInished");
+            //Debug.Log("IntroFInished");
             resetAxeS = false;
             canPunch = false;
             propP = true;
