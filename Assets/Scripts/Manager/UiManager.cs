@@ -37,7 +37,7 @@ public class UiManager : ManagerParent
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
-	MenuType menuOpen;
+	public MenuType menuOpen;
 
 	GameObject InGame;
 	bool onMainScene = true;
@@ -166,7 +166,7 @@ public class UiManager : ManagerParent
 	{
 		Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.03f, () => {
+        DOVirtual.DelayedCall(.05f, () => {
 			Time.timeScale = 1;
             //Time.fixedDeltaTime = .02F;
         });
@@ -181,6 +181,7 @@ public class UiManager : ManagerParent
 
     public void BloodHitDash()
     {
+        Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.4f, () => {
