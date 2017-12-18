@@ -305,17 +305,22 @@ public class GameController : ManagerParent
 			return;
 		}
 
-        if (p_add)
+        if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {
+            Debug.Log("Rotate");
             chooseOption++;
             if (chooseOption == moveRotate.Length)
                 chooseOption = 0;
         }
-        else
+        else 
         {
-            chooseOption--;
-            if (chooseOption == -1)
-                chooseOption = moveRotate.Length - 1;
+            if(GlobalManager.Ui.menuOpen == MenuType.Nothing)
+            {
+                chooseOption--;
+                if (chooseOption == -1)
+                    chooseOption = moveRotate.Length - 1;
+
+            }
         }
         isStay = false;
         StartCoroutine(TimerRotate());

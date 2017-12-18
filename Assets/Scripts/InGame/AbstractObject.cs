@@ -103,7 +103,7 @@ public class AbstractObject : MonoBehaviour
 	public virtual void Dead ( bool enemy = false )
 	{
 		isDead = true;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
         int randomSong = UnityEngine.Random.Range(0, 8);
