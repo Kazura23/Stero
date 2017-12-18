@@ -737,18 +737,24 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
-			canSpe = false;
-			sphereChocWave.enabled = true;
 
-            transform.DOLocalMoveY(4, .25f).SetEase(Ease.InSine).OnComplete(() => {
-            DOVirtual.DelayedCall(.5f,()=>{
+            Camera.main.GetComponent<RainbowMove>().enabled = false;
+            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
+            DOVirtual.DelayedCall(.6f,()=>{
 
-                    transform.DOLocalMoveY(1.5f, .15f);
+                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
+
+                        
+                        Camera.main.GetComponent<RainbowMove>().enabled = true;
+                        canSpe = false;
+                        sphereChocWave.enabled = true;
+                        StartCoroutine(CooldownWave());
+                        StartCoroutine(TimerHitbox());
+                    });
+
                 });
             });
 
-			StartCoroutine ( CooldownWave ( ) );
-			StartCoroutine ( TimerHitbox ( ) );
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
