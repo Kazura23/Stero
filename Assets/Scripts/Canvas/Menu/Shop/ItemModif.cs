@@ -38,6 +38,7 @@ public class ItemModif : MonoBehaviour
 	public ItemModif LeftItem;
 
 	public bool ModifVie;
+	public bool StartBonus;
 	public bool ModifSpecial;
 
 	public int NombreVie;

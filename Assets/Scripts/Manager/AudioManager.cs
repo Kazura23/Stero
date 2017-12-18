@@ -17,7 +17,7 @@ public class AudioManager : ManagerParent
 	#endregion
 		
 	#region Public
-	public void OpenAudio ( AudioType thisType, string thisName = "", bool loopAudio = false, System.Action thisAct = null )
+	public void OpenAudio ( AudioType thisType, string thisName = "", bool loopAudio = false, System.Action thisAct = null, bool playIfEmpty = false )
 	{
 		AudioSource thisSource;
 
@@ -80,6 +80,19 @@ public class AudioManager : ManagerParent
 							}
 							else
 							{
+								int d;
+
+								if ( playIfEmpty )
+								{
+									for ( d = 0; d < getAC.Count; d++ )
+									{
+										if ( getAC [ d ].ThisType == thisType && getAC [ d ].ThoseSource.Count > 0 )
+										{
+											return;
+										}
+									}
+								}
+
 								thisSource.loop = false;
 
 								AudioSource getAud = thisSource.gameObject.AddComponent<AudioSource> ( );
@@ -91,7 +104,6 @@ public class AudioManager : ManagerParent
 								getAud.clip = getAllAudio [ c ].Audio;
 								getAud.Play ( );
 
-								int d;
 								for ( d = 0; d < getAC.Count; d++ )
 								{
 									if ( getAC [ d ].ThisType == thisType )
@@ -220,6 +232,9 @@ public class AudioManager : ManagerParent
 		setDict.Add ( AudioType.OtherSound, currT.Find ( "OtherFx" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.Other, currT.Find ( "Other" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.MusicBackGround, currT.Find ( "Music" ).GetComponent<AudioSource> ( ) );
+		setDict.Add ( AudioType.Acceleration, currT.Find ( "Acceleration" ).GetComponent<AudioSource> ( ) );
+		setDict.Add ( AudioType.SteroKill, currT.Find ( "SteroKill" ).GetComponent<AudioSource> ( ) );
+		setDict.Add ( AudioType.PunchVoice, currT.Find ( "PunchVoice" ).GetComponent<AudioSource> ( ) );
 
 		AudioType[] getTypes = ( AudioType[] ) System.Enum.GetValues ( typeof( AudioType ) );
 
