@@ -155,7 +155,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._EnnemisTag && gameObject.tag != Constants._ObsSafe || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
+		if ( getThis.tag == Constants._EnnemisTag || ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe ) || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 

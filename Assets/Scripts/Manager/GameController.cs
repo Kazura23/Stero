@@ -71,7 +71,7 @@ public class GameController : ManagerParent
 
                    //Debug.Log("Start");
 
-				if (Input.GetKeyDown(KeyCode.W)&& ! restartGame)
+				if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
                 {
                     StartGame();
                     isStay = false;
@@ -98,15 +98,9 @@ public class GameController : ManagerParent
             {
                 ChooseRotate(true);
             }
-        }else if (isReady && Input.GetKeyDown(KeyCode.W) && isStay )
+		}else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
-
-			if ( restartGame )
-			{
-				Player.GetComponent<PlayerController>().StopPlayer = false;
-				restartGame = false;
-			}
 
             Debug.Log("PunchIntro");
         }
@@ -135,13 +129,19 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 		Intro = true;
+		isStay = true;
 
 		if ( restartGame )
 		{
-			Player.transform.DOMoveZ(3, 1).OnComplete(() =>
+			isStay = false;
+			Intro = false;
+
+			Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
 			{
-				isStay = true;
-				Intro = false;
+
+				Player.GetComponent<PlayerController>().GetPunchIntro();
+				Player.GetComponent<PlayerController>( ).StopPlayer = false;
+				restartGame = false;
 			});
 		}
 

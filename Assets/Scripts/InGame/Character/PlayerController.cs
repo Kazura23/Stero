@@ -741,7 +741,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) == 1 && canSpe )
 		{
-
+			canSpe = false;
             Camera.main.GetComponent<RainbowMove>().enabled = false;
             transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
             DOVirtual.DelayedCall(.6f,()=>{
@@ -750,7 +750,6 @@ public class PlayerController : MonoBehaviour
 
                         Debug.Log("OndeLancée");
                         Camera.main.GetComponent<RainbowMove>().enabled = true;
-                        canSpe = false;
 
                         ScreenShake.Singleton.ShakeFall();
 

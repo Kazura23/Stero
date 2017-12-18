@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: be42b738a6a2b104485d644a92a6ad1a
-timeCreated: 1509814473
+timeCreated: 1513611804
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -291,13 +291,14 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftUpperLeg' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -395,16 +396,16 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
-    weldVertices: 1
+    weldVertices: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -419,8 +420,1020 @@ ModelImporter:
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
-    human: []
-    skeleton: []
+    human:
+    - boneName: Mr_steroid_Reference
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_Hips
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_Spine
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandThumb3
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandMiddle1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandMiddle2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandMiddle3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandRing1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandRing2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandRing3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandPinky1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandPinky2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_LeftHandPinky3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandThumb1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandThumb2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandThumb3
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandIndex1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandIndex2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandIndex3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandMiddle1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandMiddle2
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandMiddle3
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandRing1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandRing2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandRing3
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandPinky1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandPinky2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_RightHandPinky3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Mr_steroid_Spine1
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: stero(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mr_steroid:polySurface1
+      parentName: stero(Clone)
+      position: {x: -0, y: 0, z: -0.028346416}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: polySurface3
+      parentName: mr_steroid:polySurface1
+      position: {x: -0.0000032043456, y: 0, z: -0.19408917}
+      rotation: {x: 6.123234e-17, y: 1, z: -6.123234e-17, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Reference
+      parentName: stero(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_ChestEndEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.009200694, y: 1.5085634, z: 0.07963923}
+      rotation: {x: 0.0691864, y: -0.18332092, z: -0.005098223, w: 0.9806022}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_ChestOriginEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.0041298023, y: 1.1151549, z: 0.037741788}
+      rotation: {x: 0.035978884, y: -0.05712325, z: 0.0029695737, w: 0.9977142}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_HeadEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.012028231, y: 1.6909066, z: 0.104959816}
+      rotation: {x: 0.06917106, y: -0.18332157, z: -0.005100348, w: 0.98060316}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Hips
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.0032524061, y: 0.9989273, z: 0.030683551}
+      rotation: {x: 0.03045619, y: -0.043314748, z: 0.0024516734, w: 0.99859416}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftUpLeg
+      parentName: Mr_steroid_Ctrl_Hips
+      position: {x: -0.0891, y: -0.06270004, z: 0}
+      rotation: {x: -0.03851907, y: 0.000058845275, z: -0.0006750226, w: 0.9992577}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftLeg
+      parentName: Mr_steroid_Ctrl_LeftUpLeg
+      position: {x: -0, y: -0.44878638, z: 0}
+      rotation: {x: 0.040516287, y: 0.02596126, z: 0.0010520126, w: 0.998841}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftFoot
+      parentName: Mr_steroid_Ctrl_LeftLeg
+      position: {x: -0, y: -0.4070096, z: 0}
+      rotation: {x: -0.032435644, y: 0.017298501, z: -0.0027065056, w: 0.99932045}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftToeBase
+      parentName: Mr_steroid_Ctrl_LeftFoot
+      position: {x: -0.000000085830685, y: -0.06262317, z: 0.12954721}
+      rotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightUpLeg
+      parentName: Mr_steroid_Ctrl_Hips
+      position: {x: 0.0891, y: -0.06270004, z: 0}
+      rotation: {x: -0.0128888665, y: 0.00004247395, z: -0.0010675795, w: 0.9999164}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightLeg
+      parentName: Mr_steroid_Ctrl_RightUpLeg
+      position: {x: -0, y: -0.44878638, z: 0}
+      rotation: {x: 0.005584215, y: 0.025968196, z: 0.00014596136, w: 0.9996472}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightFoot
+      parentName: Mr_steroid_Ctrl_RightLeg
+      position: {x: -0, y: -0.4070096, z: 0}
+      rotation: {x: -0.02317351, y: 0.017262857, z: -0.0016950752, w: 0.999581}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightToeBase
+      parentName: Mr_steroid_Ctrl_RightFoot
+      position: {x: 0.000000085830685, y: -0.06262317, z: 0.12954721}
+      rotation: {x: 3.469142e-32, y: -0, z: -1.2246467e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Spine
+      parentName: Mr_steroid_Ctrl_Hips
+      position: {x: -0, y: 0.11644493, z: 0}
+      rotation: {x: 0.005530314, y: -0.013824976, z: 0.0007006703, w: 0.9998889}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Spine1
+      parentName: Mr_steroid_Ctrl_Spine
+      position: {x: -0, y: 0.18999992, z: 0}
+      rotation: {x: 0.032911655, y: -0.12727556, z: -0.00535501, w: 0.9913068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftShoulder
+      parentName: Mr_steroid_Ctrl_Spine1
+      position: {x: -0.07, y: 0.20588547, z: 0}
+      rotation: {x: 0.000000026636526, y: -0.00000025378432, z: 6.760574e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftArm
+      parentName: Mr_steroid_Ctrl_LeftShoulder
+      position: {x: -0.13652802, y: 0.000001373291, z: 0}
+      rotation: {x: -0.47457844, y: -0.046138857, z: 0.050461266, w: 0.8775535}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftForeArm
+      parentName: Mr_steroid_Ctrl_LeftArm
+      position: {x: -0.22822598, y: -0.2415316, z: 0}
+      rotation: {x: -0.22451568, y: 0.7289311, z: 0.09291708, w: 0.64001447}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHand
+      parentName: Mr_steroid_Ctrl_LeftForeArm
+      position: {x: -0.1535591, y: -0.1778392, z: 0.15177578}
+      rotation: {x: -0.32772452, y: -0.16017288, z: 0.14093678, w: 0.9203685}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandIndex1
+      parentName: Mr_steroid_Ctrl_LeftHand
+      position: {x: -0.055720404, y: -0.09231964, z: 0.0826918}
+      rotation: {x: 0.2397008, y: 0.14199443, z: 0.40022084, w: 0.8730432}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandIndex2
+      parentName: Mr_steroid_Ctrl_LeftHandIndex1
+      position: {x: -0.0035177611, y: -0.04843811, z: 0.01039814}
+      rotation: {x: 0.006733631, y: -0.03600225, z: 0.65051955, w: 0.75860584}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandIndex3
+      parentName: Mr_steroid_Ctrl_LeftHandIndex2
+      position: {x: 0.008655052, y: -0.046300888, z: -0.0026519776}
+      rotation: {x: -0.01531662, y: 0.092222944, z: -0.35597104, w: 0.92980915}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandMiddle1
+      parentName: Mr_steroid_Ctrl_LeftHand
+      position: {x: -0.07037281, y: -0.098019406, z: 0.051534116}
+      rotation: {x: 0.2534405, y: 0.11799525, z: 0.3394656, w: 0.89811367}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandMiddle2
+      parentName: Mr_steroid_Ctrl_LeftHandMiddle1
+      position: {x: -0.008274155, y: -0.052195128, z: 0.013269424}
+      rotation: {x: 0.0027639947, y: -0.008817075, z: 0.5676077, w: 0.8232473}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandMiddle3
+      parentName: Mr_steroid_Ctrl_LeftHandMiddle2
+      position: {x: 0.018942794, y: -0.060523298, z: -0.0010323143}
+      rotation: {x: -0.019428438, y: 0.06358905, z: -0.26831105, w: 0.96103495}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandPinky1
+      parentName: Mr_steroid_Ctrl_LeftHand
+      position: {x: -0.06750584, y: -0.10116768, z: -0.008723698}
+      rotation: {x: 0.17651707, y: -0.004706507, z: 0.69177854, w: 0.70018715}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandPinky2
+      parentName: Mr_steroid_Ctrl_LeftHandPinky1
+      position: {x: -0.007505722, y: -0.0375399, z: 0.009861164}
+      rotation: {x: 0.024457293, y: -0.0066869203, z: 0.7576815, w: 0.6521318}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandPinky3
+      parentName: Mr_steroid_Ctrl_LeftHandPinky2
+      position: {x: 0.0055927276, y: -0.041637573, z: 0.0051177787}
+      rotation: {x: 0.031281292, y: -0.035630632, z: -0.25258437, w: 0.9664125}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandRing1
+      parentName: Mr_steroid_Ctrl_LeftHand
+      position: {x: -0.068147086, y: -0.1003833, z: 0.021663342}
+      rotation: {x: 0.24364331, y: 0.101320885, z: 0.43924427, w: 0.8587413}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandRing2
+      parentName: Mr_steroid_Ctrl_LeftHandRing1
+      position: {x: -0.008289642, y: -0.051149826, z: 0.0068665314}
+      rotation: {x: 0.0022305083, y: -0.006572568, z: 0.5479209, w: 0.83650136}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandRing3
+      parentName: Mr_steroid_Ctrl_LeftHandRing2
+      position: {x: 0.01766983, y: -0.0521299, z: -0.00069709774}
+      rotation: {x: -0.010974847, y: 0.03417215, z: -0.2753023, w: 0.9606875}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandThumb1
+      parentName: Mr_steroid_Ctrl_LeftHand
+      position: {x: -0.0013094711, y: -0.07494659, z: 0.07494167}
+      rotation: {x: 0.18088743, y: -0.26005578, z: 0.31233215, w: 0.8956}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandThumb2
+      parentName: Mr_steroid_Ctrl_LeftHandThumb1
+      position: {x: -0.004248428, y: -0.025949784, z: 0.021188965}
+      rotation: {x: 0.40704426, y: 0.23658335, z: -0.29189417, w: 0.832551}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandThumb3
+      parentName: Mr_steroid_Ctrl_LeftHandThumb2
+      position: {x: -0.008227539, y: -0.038461074, z: 0.005416622}
+      rotation: {x: -0.048687816, y: 0.009788949, z: 0.0862196, w: 0.9950377}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Neck
+      parentName: Mr_steroid_Ctrl_Spine1
+      position: {x: -0, y: 0.19, z: 0}
+      rotation: {x: -0.000015461226, y: -0.0000007495279, z: 0.00000078074066, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_Head
+      parentName: Mr_steroid_Ctrl_Neck
+      position: {x: -0, y: 0.19999999, z: 0}
+      rotation: {x: -0.000000042987256, y: 0.000000066760734, z: 2.9420908e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightShoulder
+      parentName: Mr_steroid_Ctrl_Spine1
+      position: {x: 0.07, y: 0.20588547, z: 0}
+      rotation: {x: 0.0000002183918, y: 2.1967324e-12, z: -4.7890133e-19, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightArm
+      parentName: Mr_steroid_Ctrl_RightShoulder
+      position: {x: 0.13652802, y: 0.000001373291, z: 0}
+      rotation: {x: -0.21123904, y: 0.20021887, z: 0.12309661, w: 0.9487559}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightForeArm
+      parentName: Mr_steroid_Ctrl_RightArm
+      position: {x: 0.22822598, y: -0.2415316, z: 0}
+      rotation: {x: -0.15465738, y: -0.55236024, z: 0.028660787, w: 0.8186317}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHand
+      parentName: Mr_steroid_Ctrl_RightForeArm
+      position: {x: 0.1535591, y: -0.1778392, z: 0.15177578}
+      rotation: {x: -0.3576036, y: 0.28471565, z: -0.24642698, w: 0.8545937}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandIndex1
+      parentName: Mr_steroid_Ctrl_RightHand
+      position: {x: 0.055720404, y: -0.09231964, z: 0.0826918}
+      rotation: {x: 0.012678589, y: -0.15924889, z: -0.39649436, w: 0.9040306}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandIndex2
+      parentName: Mr_steroid_Ctrl_RightHandIndex1
+      position: {x: 0.0035177611, y: -0.04843811, z: 0.01039814}
+      rotation: {x: 0.10598237, y: -0.15463747, z: -0.6058928, w: 0.7731423}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandIndex3
+      parentName: Mr_steroid_Ctrl_RightHandIndex2
+      position: {x: -0.008655052, y: -0.046300888, z: -0.0026519776}
+      rotation: {x: 0.0024189528, y: 0.031339604, z: -0.3700981, w: 0.9284608}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandMiddle1
+      parentName: Mr_steroid_Ctrl_RightHand
+      position: {x: 0.07037281, y: -0.098019406, z: 0.051534116}
+      rotation: {x: 0.032790598, y: -0.11221836, z: -0.43322417, w: 0.89367145}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandMiddle2
+      parentName: Mr_steroid_Ctrl_RightHandMiddle1
+      position: {x: 0.008274155, y: -0.052195128, z: 0.013269424}
+      rotation: {x: 0.12392642, y: -0.1529303, z: -0.5288289, w: 0.8255874}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandMiddle3
+      parentName: Mr_steroid_Ctrl_RightHandMiddle2
+      position: {x: -0.018942794, y: -0.060523298, z: -0.0010323143}
+      rotation: {x: 0.0012969112, y: 0.009592816, z: -0.4232875, w: 0.9059437}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandPinky1
+      parentName: Mr_steroid_Ctrl_RightHand
+      position: {x: 0.06750584, y: -0.10116768, z: -0.008723698}
+      rotation: {x: -0.0029045604, y: -0.13399751, z: -0.49410382, w: 0.85900974}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandPinky2
+      parentName: Mr_steroid_Ctrl_RightHandPinky1
+      position: {x: 0.007505722, y: -0.0375399, z: 0.009861164}
+      rotation: {x: 0.115203194, y: -0.19224334, z: -0.60929585, w: 0.7606112}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandPinky3
+      parentName: Mr_steroid_Ctrl_RightHandPinky2
+      position: {x: -0.0055927276, y: -0.041637573, z: 0.0051177787}
+      rotation: {x: -0.020185824, y: 0.04622627, z: -0.38125083, w: 0.9230945}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandRing1
+      parentName: Mr_steroid_Ctrl_RightHand
+      position: {x: 0.068147086, y: -0.1003833, z: 0.021663342}
+      rotation: {x: 0.03490558, y: -0.08977357, z: -0.47404057, w: 0.87521875}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandRing2
+      parentName: Mr_steroid_Ctrl_RightHandRing1
+      position: {x: 0.008289642, y: -0.051149826, z: 0.0068665314}
+      rotation: {x: 0.112509474, y: -0.16095588, z: -0.58666056, w: 0.78566164}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandRing3
+      parentName: Mr_steroid_Ctrl_RightHandRing2
+      position: {x: -0.01766983, y: -0.0521299, z: -0.00069709774}
+      rotation: {x: -0.002571231, y: 0.04065326, z: -0.38951394, w: 0.92011935}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandThumb1
+      parentName: Mr_steroid_Ctrl_RightHand
+      position: {x: 0.0013094711, y: -0.07494659, z: 0.07494167}
+      rotation: {x: -0.03396688, y: -0.059999913, z: -0.3530396, w: 0.9330645}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandThumb2
+      parentName: Mr_steroid_Ctrl_RightHandThumb1
+      position: {x: 0.004248428, y: -0.025949784, z: 0.021188965}
+      rotation: {x: 0.45325613, y: 0.13898592, z: 0.29840192, w: 0.82837075}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandThumb3
+      parentName: Mr_steroid_Ctrl_RightHandThumb2
+      position: {x: 0.008227539, y: -0.038461074, z: 0.005416622}
+      rotation: {x: -0.22169437, y: -0.010354252, z: -0.14595285, w: 0.9640758}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_HipsEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.0027800368, y: 0.93634427, z: 0.026883025}
+      rotation: {x: 0.030456197, y: -0.04331476, z: 0.0024516738, w: 0.99859416}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftAnkleEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.08909932, y: 0.08126667, z: -0.000005509853}
+      rotation: {x: -5.1200844e-16, y: -0.0000000017991865, z: -1.8840988e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftElbowEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.47030348, y: 1.3372625, z: 0.085844725}
+      rotation: {x: -0.45010668, y: 0.56124496, z: -0.29507104, w: 0.6287616}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftFootEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.08909944, y: 0.018643502, z: 0.1295417}
+      rotation: {x: 3.945416e-32, y: -0.000000001799186, z: -1.2246467e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandIndexEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.22407362, y: 1.4503698, z: 0.33153757}
+      rotation: {x: 0.10127315, y: 0.8506362, z: 0.2772211, w: 0.43509817}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandMiddleEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.23259571, y: 1.4212984, z: 0.35124442}
+      rotation: {x: 0.04461349, y: 0.8386628, z: 0.25230864, w: 0.48061904}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandPinkyEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.2824677, y: 1.4384876, z: 0.37461758}
+      rotation: {x: 0.568473, y: 0.6495557, z: 0.47566372, w: 0.16929254}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandRingEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.25762388, y: 1.404982, z: 0.3599534}
+      rotation: {x: 0.113326445, y: 0.8331587, z: 0.28145573, w: 0.46237049}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHandThumbEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.1988061, y: 1.432437, z: 0.36193797}
+      rotation: {x: -0.09097286, y: 0.72416633, z: -0.16723612, w: 0.66282666}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftHipEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.0915447, y: 0.9361431, z: 0.019161878}
+      rotation: {x: -0.008002239, y: -0.043297704, z: 0.00010912831, w: 0.9990302}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftKneeEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.09175775, y: 0.48741376, z: 0.026341733}
+      rotation: {x: 0.032435644, y: -0.017298605, z: 0.0027065082, w: 0.99932045}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftShoulderEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.20183653, y: 1.5158687, z: 0.0055320594}
+      rotation: {x: -0.41414365, y: -0.20718972, z: -0.045184, w: 0.8851643}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_LeftWristEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: -0.32908306, y: 1.4326515, z: 0.3076574}
+      rotation: {x: -0.58848697, y: 0.5759802, z: 0.07307019, w: 0.5626639}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightAnkleEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.08910007, y: 0.081467204, z: -0.0000016391277}
+      rotation: {x: 0.0000000011053155, y: -0.00004727606, z: -0.000022853268, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightElbowEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.4521388, y: 1.3162588, z: 0.21697177}
+      rotation: {x: -0.23470043, y: -0.53972983, z: 0.19502373, w: 0.7845847}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightFootEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.08908504, y: 0.018844018, z: 0.12954555}
+      rotation: {x: 0.0000000021668833, y: -0.000047275895, z: -0.000022853605, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandIndexEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.27586, y: 1.2775497, z: 0.54535234}
+      rotation: {x: -0.45153183, y: 0.6579589, z: 0.5815414, w: 0.15817295}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandMiddleEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.29017112, y: 1.250755, z: 0.5311141}
+      rotation: {x: -0.44467223, y: 0.63005745, z: 0.6147119, w: 0.1656004}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandPinkyEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.31893831, y: 1.2089791, z: 0.5273286}
+      rotation: {x: -0.46981505, y: 0.62730455, z: 0.556579, w: 0.27564943}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandRingEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.3088862, y: 1.2283998, z: 0.526196}
+      rotation: {x: -0.46880922, y: 0.5928788, z: 0.6151132, w: 0.22438473}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHandThumbEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.2516863, y: 1.2797734, z: 0.5613684}
+      rotation: {x: -0.16747066, y: -0.48663813, z: -0.30201286, w: 0.80244946}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightHipEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.08598463, y: 0.93654555, z: 0.03460417}
+      rotation: {x: 0.017629031, y: -0.043267794, z: 0.0008284052, w: 0.9989076}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightKneeEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.087411985, y: 0.4880378, z: 0.018830141}
+      rotation: {x: 0.023173098, y: -0.017310642, z: 0.0016733254, w: 0.9995802}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightShoulderEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.18343528, y: 1.5012608, z: 0.15374675}
+      rotation: {x: -0.1630457, y: 0.014968556, z: 0.09099981, w: 0.98229885}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Ctrl_RightWristEffector
+      parentName: Mr_steroid_Ctrl_Reference
+      position: {x: 0.37148124, y: 1.2813816, z: 0.48252994}
+      rotation: {x: -0.4036661, y: -0.3654439, z: -0.28650898, w: 0.7883001}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Reference
+      parentName: stero(Clone)
+      position: {x: 0.009200737, y: -1.4439414, z: -0.07963919}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Hips
+      parentName: Mr_steroid_Reference
+      position: {x: -0.0032524632, y: 0.9989273, z: 0.030683551}
+      rotation: {x: 0.030456197, y: -0.04331476, z: 0.0024516738, w: 0.99859416}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftUpLeg
+      parentName: Mr_steroid_Hips
+      position: {x: -0.08910012, y: -0.06270008, z: 0.0000000060339014}
+      rotation: {x: -0.03851717, y: 0.00005885487, z: -0.0006749334, w: 0.99925774}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftLeg
+      parentName: Mr_steroid_LeftUpLeg
+      position: {x: 0.000000022131966, y: -0.44878632, z: -0.00000005937042}
+      rotation: {x: 0.040512335, y: 0.025961284, z: 0.0010518888, w: 0.99884117}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftFoot
+      parentName: Mr_steroid_LeftLeg
+      position: {x: -0.0000000018961768, y: -0.40701002, z: 0.00000006784778}
+      rotation: {x: -0.032433596, y: 0.017298482, z: -0.0027064306, w: 0.9993205}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftToeBase
+      parentName: Mr_steroid_LeftFoot
+      position: {x: -0.000000079232066, y: -0.062623166, z: 0.1295472}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_RightUpLeg
+      parentName: Mr_steroid_Hips
+      position: {x: 0.0891, y: -0.06270001, z: -0.0000000032532266}
+      rotation: {x: -0.012851834, y: 0.000042436488, z: -0.0010676085, w: 0.99991685}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_RightLeg
+      parentName: Mr_steroid_RightUpLeg
+      position: {x: 0.00000003580206, y: -0.44878733, z: -0.000000035853084}
+      rotation: {x: 0.0055062743, y: 0.02596826, z: 0.00014398366, w: 0.9996476}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_RightFoot
+      parentName: Mr_steroid_RightLeg
+      position: {x: 0.0000000051995444, y: -0.40700933, z: -0.0000000489151}
+      rotation: {x: -0.023132693, y: 0.017262839, z: -0.0016922659, w: 0.99958193}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_RightToeBase
+      parentName: Mr_steroid_RightFoot
+      position: {x: 0.00000008007568, y: -0.06262317, z: 0.12954722}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Spine
+      parentName: Mr_steroid_Hips
+      position: {x: 5.2513046e-11, y: 0.116445, z: -4.614761e-10}
+      rotation: {x: 0.005530303, y: -0.013824927, z: 0.00070067594, w: 0.9998889}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Spine1
+      parentName: Mr_steroid_Spine
+      position: {x: -6.1223837e-10, y: 0.18999995, z: 0.0000000040926844}
+      rotation: {x: 0.032911655, y: -0.1272756, z: -0.0053550093, w: 0.9913068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Neck
+      parentName: Mr_steroid_Spine1
+      position: {x: -0.0000000031810066, y: 0.19000007, z: -0.000000024181317}
+      rotation: {x: -0.00001554703, y: -0.00000079804556, z: 0.0000008131732, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_Head
+      parentName: Mr_steroid_Neck
+      position: {x: 0.000000012110714, y: 0.19999997, z: 0.000000050704656}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftShoulder
+      parentName: Mr_steroid_Spine1
+      position: {x: -0.07, y: 0.20588557, z: -0.000000022313676}
+      rotation: {x: -0.06918639, y: 0.18332088, z: 0.005098216, w: 0.98060226}
+      scale: {x: 0.99999994, y: 0.9999997, z: 1}
+    - name: Mr_steroid_LeftArm
+      parentName: Mr_steroid_LeftShoulder
+      position: {x: -0.13652818, y: 0.0000013622375, z: -0.00000005763627}
+      rotation: {x: 0.00000046938646, y: -0.00000023841852, z: -0.38533902, w: 0.9227751}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Mr_steroid_LeftForeArm
+      parentName: Mr_steroid_LeftArm
+      position: {x: -0.22823057, y: -0.24152783, z: 0.0000003112898}
+      rotation: {x: 0.20386903, y: -0.1601264, z: -0.009493183, w: 0.9657675}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Mr_steroid_LeftHand
+      parentName: Mr_steroid_LeftForeArm
+      position: {x: -0.15355918, y: -0.17783923, z: 0.1517761}
+      rotation: {x: -0.17205572, y: 0.11959044, z: -0.12766095, w: 0.96943164}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000005}
+    - name: Mr_steroid_LeftHandThumb1
+      parentName: Mr_steroid_LeftHand
+      position: {x: -0.0013094553, y: -0.07494661, z: 0.07494165}
+      rotation: {x: -0.21696927, y: -0.018621525, z: -0.06630945, w: 0.97374564}
+      scale: {x: 1.0000001, y: 1.0000004, z: 0.99999994}
+    - name: Mr_steroid_LeftHandThumb2
+      parentName: Mr_steroid_LeftHandThumb1
+      position: {x: -0.0042484314, y: -0.02594981, z: 0.021188926}
+      rotation: {x: -0.23301613, y: 0.052285448, z: 0.017313387, w: 0.970912}
+      scale: {x: 1.0000005, y: 1, z: 1.0000008}
+    - name: Mr_steroid_LeftHandThumb3
+      parentName: Mr_steroid_LeftHandThumb2
+      position: {x: -0.008227571, y: -0.03846105, z: 0.0054166187}
+      rotation: {x: -0, y: -0.000000014901163, z: 4.440892e-14, w: 1}
+      scale: {x: 1.0000002, y: 0.99999976, z: 1.0000005}
+    - name: Mr_steroid_LeftHandIndex1
+      parentName: Mr_steroid_LeftHand
+      position: {x: -0.055720404, y: -0.092319645, z: 0.08269182}
+      rotation: {x: -0.08749141, y: -0.032607127, z: -0.181494, w: 0.97894937}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mr_steroid_LeftHandIndex2
+      parentName: Mr_steroid_LeftHandIndex1
+      position: {x: -0.003517751, y: -0.048438173, z: 0.010398112}
+      rotation: {x: -0.10806139, y: -0.0142976865, z: -0.10313512, w: 0.98867667}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
+    - name: Mr_steroid_LeftHandIndex3
+      parentName: Mr_steroid_LeftHandIndex2
+      position: {x: 0.008655014, y: -0.046300907, z: -0.0026520644}
+      rotation: {x: -0.00000004470341, y: 0.000021338457, z: -0.00000003538984, w: 1}
+      scale: {x: 1.0000007, y: 1.0000002, z: 1.0000006}
+    - name: Mr_steroid_LeftHandMiddle1
+      parentName: Mr_steroid_LeftHand
+      position: {x: -0.07037283, y: -0.09801938, z: 0.051534176}
+      rotation: {x: -0.06798228, y: -0.024830705, z: -0.14006218, w: 0.987494}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Mr_steroid_LeftHandMiddle2
+      parentName: Mr_steroid_LeftHandMiddle1
+      position: {x: -0.0082741575, y: -0.052195206, z: 0.013269401}
+      rotation: {x: -0.113928534, y: -0.032280143, z: -0.19801432, w: 0.9730203}
+      scale: {x: 1.0000008, y: 1.0000002, z: 1.0000007}
+    - name: Mr_steroid_LeftHandMiddle3
+      parentName: Mr_steroid_LeftHandMiddle2
+      position: {x: 0.018942807, y: -0.060523283, z: -0.0010323215}
+      rotation: {x: 1.7763568e-15, y: -0.000000029802322, z: 0.000000022351934, w: 1}
+      scale: {x: 1.0000006, y: 1.0000004, z: 1.0000007}
+    - name: Mr_steroid_LeftHandRing1
+      parentName: Mr_steroid_LeftHand
+      position: {x: -0.068147056, y: -0.10038333, z: 0.021663308}
+      rotation: {x: -0.106544994, y: -0.0030404092, z: -0.15127599, w: 0.9827281}
+      scale: {x: 1.0000004, y: 1, z: 1}
+    - name: Mr_steroid_LeftHandRing2
+      parentName: Mr_steroid_LeftHandRing1
+      position: {x: -0.008289641, y: -0.051149752, z: 0.006866571}
+      rotation: {x: -0.062245995, y: -0.018273735, z: -0.21127012, w: 0.97527254}
+      scale: {x: 0.99999964, y: 1.0000005, z: 1}
+    - name: Mr_steroid_LeftHandRing3
+      parentName: Mr_steroid_LeftHandRing2
+      position: {x: 0.017669758, y: -0.052129924, z: -0.0006971319}
+      rotation: {x: 0.000000007450581, y: -0.00000004470348, z: 0.000000022351742,
+        w: 1}
+      scale: {x: 1.0000004, y: 0.99999994, z: 1.0000001}
+    - name: Mr_steroid_LeftHandPinky1
+      parentName: Mr_steroid_LeftHand
+      position: {x: -0.067505784, y: -0.101167716, z: -0.008723738}
+      rotation: {x: -0.06179116, y: -0.019607153, z: -0.12167264, w: 0.990451}
+      scale: {x: 1.0000008, y: 1.0000002, z: 1.0000005}
+    - name: Mr_steroid_LeftHandPinky2
+      parentName: Mr_steroid_LeftHandPinky1
+      position: {x: -0.0075057093, y: -0.03753986, z: 0.009861173}
+      rotation: {x: -0.05322698, y: -0.022794286, z: -0.127287, w: 0.9901744}
+      scale: {x: 0.99999964, y: 1.0000014, z: 1.000001}
+    - name: Mr_steroid_LeftHandPinky3
+      parentName: Mr_steroid_LeftHandPinky2
+      position: {x: 0.005592677, y: -0.041637555, z: 0.00511778}
+      rotation: {x: -0.000000044703704, y: 5.6621417e-15, z: 0.000000022351736, w: 1}
+      scale: {x: 1.0000005, y: 0.9999998, z: 1.0000004}
+    - name: Mr_steroid_RightShoulder
+      parentName: Mr_steroid_Spine1
+      position: {x: 0.07, y: 0.20588554, z: -0.00000001715831}
+      rotation: {x: -0.06918639, y: 0.18332088, z: 0.005098216, w: 0.98060226}
+      scale: {x: 0.99999994, y: 0.9999997, z: 1}
+    - name: Mr_steroid_RightArm
+      parentName: Mr_steroid_RightShoulder
+      position: {x: 0.13652821, y: 0.0000014071018, z: 0.000000020257115}
+      rotation: {x: 0.0000003129243, y: 0.000000014901158, z: 0.3853474, w: 0.9227716}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Mr_steroid_RightForeArm
+      parentName: Mr_steroid_RightArm
+      position: {x: 0.22822607, y: -0.24153179, z: 0.000000063069656}
+      rotation: {x: 0.2038719, y: 0.16012259, z: 0.009485291, w: 0.9657676}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000002}
+    - name: Mr_steroid_RightHand
+      parentName: Mr_steroid_RightForeArm
+      position: {x: 0.15355925, y: -0.17783928, z: 0.15177597}
+      rotation: {x: -0.17205815, y: -0.11958819, z: 0.12766153, w: 0.96943134}
+      scale: {x: 1, y: 1, z: 0.9999998}
+    - name: Mr_steroid_RightHandThumb1
+      parentName: Mr_steroid_RightHand
+      position: {x: 0.0013094211, y: -0.07494659, z: 0.07494165}
+      rotation: {x: -0.21696651, y: 0.01862095, z: 0.06630851, w: 0.97374636}
+      scale: {x: 1.0000006, y: 1, z: 1.0000004}
+    - name: Mr_steroid_RightHandThumb2
+      parentName: Mr_steroid_RightHandThumb1
+      position: {x: 0.0042484314, y: -0.025949756, z: 0.021189004}
+      rotation: {x: -0.2330184, y: -0.052284885, z: -0.017311871, w: 0.9709115}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+    - name: Mr_steroid_RightHandThumb3
+      parentName: Mr_steroid_RightHandThumb2
+      position: {x: 0.008227529, y: -0.038461063, z: 0.0054166294}
+      rotation: {x: 0.000000014901159, y: -0.000000029802319, z: -3.8413713e-14, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 0.99999976}
+    - name: Mr_steroid_RightHandIndex1
+      parentName: Mr_steroid_RightHand
+      position: {x: 0.05572035, y: -0.09231957, z: 0.08269188}
+      rotation: {x: -0.0874914, y: 0.032606803, z: 0.18149342, w: 0.9789496}
+      scale: {x: 1.000001, y: 1.0000002, z: 1.0000006}
+    - name: Mr_steroid_RightHandIndex2
+      parentName: Mr_steroid_RightHandIndex1
+      position: {x: 0.0035177532, y: -0.048438128, z: 0.010398115}
+      rotation: {x: -0.10806022, y: 0.014287394, z: 0.1031391, w: 0.98867655}
+      scale: {x: 1.0000005, y: 1.0000008, z: 1.0000008}
+    - name: Mr_steroid_RightHandIndex3
+      parentName: Mr_steroid_RightHandIndex2
+      position: {x: -0.008655082, y: -0.046300877, z: -0.0026518833}
+      rotation: {x: 1.1723952e-13, y: 0.000021278853, z: 0.000000022352106, w: 1}
+      scale: {x: 1.0000013, y: 1.0000012, z: 1.0000011}
+    - name: Mr_steroid_RightHandMiddle1
+      parentName: Mr_steroid_RightHand
+      position: {x: 0.0703728, y: -0.0980194, z: 0.051534127}
+      rotation: {x: -0.06798117, y: 0.024830686, z: 0.14006078, w: 0.98749435}
+      scale: {x: 1.0000008, y: 1.0000002, z: 1.0000005}
+    - name: Mr_steroid_RightHandMiddle2
+      parentName: Mr_steroid_RightHandMiddle1
+      position: {x: 0.008274142, y: -0.05219513, z: 0.013269481}
+      rotation: {x: -0.11392903, y: 0.03227547, z: 0.19801591, w: 0.9730202}
+      scale: {x: 1.0000005, y: 1.0000008, z: 1.0000008}
+    - name: Mr_steroid_RightHandMiddle3
+      parentName: Mr_steroid_RightHandMiddle2
+      position: {x: -0.01894279, y: -0.060523294, z: -0.0010321765}
+      rotation: {x: 0.000000007450579, y: 0.000021278853, z: -9.307811e-10, w: 1}
+      scale: {x: 1.0000006, y: 1.0000007, z: 1.0000006}
+    - name: Mr_steroid_RightHandRing1
+      parentName: Mr_steroid_RightHand
+      position: {x: 0.06814704, y: -0.1003833, z: 0.02166342}
+      rotation: {x: -0.10654523, y: 0.0030403943, z: 0.15127623, w: 0.982728}
+      scale: {x: 1.0000006, y: 1, z: 1.0000002}
+    - name: Mr_steroid_RightHandRing2
+      parentName: Mr_steroid_RightHandRing1
+      position: {x: 0.008289633, y: -0.05114983, z: 0.006866508}
+      rotation: {x: -0.062244713, y: 0.018268479, z: 0.21127206, w: 0.9752723}
+      scale: {x: 1.0000004, y: 1.0000007, z: 1.0000004}
+    - name: Mr_steroid_RightHandRing3
+      parentName: Mr_steroid_RightHandRing2
+      position: {x: -0.01766986, y: -0.05212988, z: -0.00069691916}
+      rotation: {x: -0.000000029802246, y: 0.000021308655, z: -0.0000000353898, w: 1}
+      scale: {x: 1.0000005, y: 1.0000008, z: 1.0000006}
+    - name: Mr_steroid_RightHandPinky1
+      parentName: Mr_steroid_RightHand
+      position: {x: 0.06750583, y: -0.10116761, z: -0.008723565}
+      rotation: {x: -0.061791077, y: 0.019606218, z: 0.121670656, w: 0.9904512}
+      scale: {x: 1.0000011, y: 1.0000006, z: 1.0000006}
+    - name: Mr_steroid_RightHandPinky2
+      parentName: Mr_steroid_RightHandPinky1
+      position: {x: 0.007505729, y: -0.037539925, z: 0.00986113}
+      rotation: {x: -0.053224698, y: 0.022789719, z: 0.12729022, w: 0.9901742}
+      scale: {x: 1, y: 1.0000006, z: 1.0000004}
+    - name: Mr_steroid_RightHandPinky3
+      parentName: Mr_steroid_RightHandPinky2
+      position: {x: -0.005592676, y: -0.041637596, z: 0.005117889}
+      rotation: {x: 0.00000001490137, y: 0.000021308655, z: -0.000000044702944, w: 1}
+      scale: {x: 1.0000008, y: 1.0000007, z: 1.0000004}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -434,7 +1447,7 @@ ModelImporter:
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
