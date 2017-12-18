@@ -36,7 +36,7 @@ public class GameController : ManagerParent
     public Transform textMeshs;
 
 
-
+	bool restartGame = false;
     public bool canOpenShop = true;
 
     bool GameStarted = false;
@@ -71,14 +71,14 @@ public class GameController : ManagerParent
 
                    //Debug.Log("Start");
 
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        StartGame();
-                        isStay = false;
-                        AnimationStartGame();
-                    }
+				if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
+                {
+                    StartGame();
+                    isStay = false;
+                    AnimationStartGame();
+                }
 
-                    break;
+                break;
 		
 			case 3: // Shop
                 //Debug.Log("Shop");
@@ -98,9 +98,10 @@ public class GameController : ManagerParent
             {
                 ChooseRotate(true);
             }
-        }else if (isReady && Input.GetKeyDown(KeyCode.W) && !AllPlayerPrefs.relance && isStay )
+		}else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
+
             Debug.Log("PunchIntro");
         }
         
@@ -127,8 +128,23 @@ public class GameController : ManagerParent
 
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
-	
-        Intro = true;
+		Intro = true;
+		isStay = true;
+
+		if ( restartGame )
+		{
+			isStay = false;
+			Intro = false;
+
+			Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+			{
+
+				Player.GetComponent<PlayerController>().GetPunchIntro();
+				Player.GetComponent<PlayerController>( ).StopPlayer = false;
+				restartGame = false;
+			});
+		}
+
 
 		SetAllBonus ( );
 
@@ -187,12 +203,27 @@ public class GameController : ManagerParent
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         checkStart = false;
+
         if (AllPlayerPrefs.relance)
         {
+			restartGame = true;
             isReady = true;
             GameStarted = true;
+
+			Player.GetComponent<PlayerController>().StopPlayer = false;
+			Camera.main.GetComponent<RainbowRotate>().time = .4f;
+			Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+			soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+				//Debug.Log("here");
+				int randomSound = UnityEngine.Random.Range(0, 6);
+
+				GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+				//J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+				//Debug.Log("Audio");
+			}).SetLoops(-1, LoopType.Restart);
             //GameStartedUpdate();
-            StartCoroutine(TrashFunction());
+           // StartCoroutine(TrashFunction());
         }
         else
         {
@@ -214,7 +245,7 @@ public class GameController : ManagerParent
 
     private IEnumerator TrashFunction()
     {
-        yield return new WaitForSeconds(5); //=> attendre 0.5 seconde ok (mais code deguelasse)
+        yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
         GameStartedUpdate();
     }
 

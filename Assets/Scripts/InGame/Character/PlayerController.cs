@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public Slider BarMadness;
-	[HideInInspector]
 	public SpecialAction ThisAct;
 	[HideInInspector]
 	public int NbrLineRight = 1;
@@ -524,6 +523,11 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
+            /*
+            if( Input.GetAxis ( "SpecialAction" ) == 0){
+
+            }*/
+
 			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash )
 			{
 				resetAxeS = true;
@@ -609,7 +613,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
+		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
 		{
 			if ( !Dash )
 			{
@@ -735,20 +739,28 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
+		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) == 1 && canSpe )
 		{
 			canSpe = false;
-			sphereChocWave.enabled = true;
+            Camera.main.GetComponent<RainbowMove>().enabled = false;
+            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
+            DOVirtual.DelayedCall(.6f,()=>{
 
-            transform.DOLocalMoveY(4, .25f).SetEase(Ease.InSine).OnComplete(() => {
-            DOVirtual.DelayedCall(.5f,()=>{
+                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
 
-                    transform.DOLocalMoveY(1.5f, .15f);
+                        Debug.Log("OndeLancée");
+                        Camera.main.GetComponent<RainbowMove>().enabled = true;
+
+                        ScreenShake.Singleton.ShakeFall();
+
+                        sphereChocWave.enabled = true;
+                        StartCoroutine(CooldownWave());
+                        StartCoroutine(TimerHitbox());
+                    });
+
                 });
             });
 
-			StartCoroutine ( CooldownWave ( ) );
-			StartCoroutine ( TimerHitbox ( ) );
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
@@ -777,6 +789,10 @@ public class PlayerController : MonoBehaviour
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
 			currObj.transform.position = pTrans.position + pTrans.forward * 8;
+
+			var e = new DeadBallParent ( );
+			e.NewParent = currObj.transform;
+			e.Raise ( );
 		}
 
 		pRig.constraints = thisConst;
@@ -952,8 +968,6 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
-
-	
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 

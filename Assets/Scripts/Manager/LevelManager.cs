@@ -24,23 +24,20 @@ public class LevelManager : ManagerParent
 
 	private void checkSceneLoaded(Scene scene, LoadSceneMode mode) 
 	{
-		var e = new HomeEvent ( );
+		//var e = new HomeEvent ( );
 		switch ( scene.name )
 		{
 		case "ProtoAlex":
-			e.onMenuHome = false;
-			e.Raise ( );
-			if ( !GlobalManager.Ui.lauchGame )
-			{
-				GlobalManager.GameCont.StartGame ( );
-			}
+			//e.onMenuHome = false;
+			//e.Raise ( );
+		
+			GlobalManager.GameCont.StartGame ( );
 
-			GlobalManager.Ui.lauchGame = false;
-
+				
 			break;
 		case "HomeMenu":
-			e.onMenuHome = true;
-			e.Raise ( );
+			//e.onMenuHome = true;
+			//e.Raise ( );
 
 			GlobalManager.Ui.OpenThisMenu ( MenuType.MenuHome );
 			break;

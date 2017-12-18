@@ -198,14 +198,15 @@ public class MeshDesctruc : MonoBehaviour
 				else
 				{
 					GO.transform.localPosition += new Vector3 ( Random.Range ( -2, 3 ), Random.Range ( -2, 3 ), Random.Range ( -2, 3 ) );
-					GO.GetComponent<Rigidbody> ( ).AddExplosionForce ( forcePro, GO.transform.position, 0 );
+					GO.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( Random.Range ( -forcePro, forcePro ), Random.Range ( -forcePro, forcePro ), Random.Range ( -forcePro, forcePro ) ), ForceMode.VelocityChange );
 				}
 
 				GO.GetComponent<TimeToDisable> ( ).DisableThis ( deleayDest + Random.Range ( 0.0f, deleayDest ) );
 			}
 		}
 			
-		Destroy ( objSource );
+
+		Destroy ( objSource, 10 );
 	}
 
 	/*public void ReAddObj ( GameObject thisObj )
