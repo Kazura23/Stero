@@ -26,12 +26,14 @@ public class ScreenShake : MonoBehaviour
 	{
         if (Input.GetKeyDown(KeyCode.H))
         {
+            AllPlayerPrefs.SetIntValue(Constants.Coin,100000);
             ShakeFall();
         }
 	}
 
     public void ShakeFall()
     {
+        shakeFall.Kill(true);
         shakeFall = transform.DOPunchPosition(new Vector3(1 * 2, 1, 0), .9f, 10, 1.5f);
     }
 
@@ -97,7 +99,7 @@ public class ScreenShake : MonoBehaviour
         //transform.DOKill(false);
 
         //transform.DOShakeRotation(1f, 2f, 22, 90);
-        transform.DOShakePosition(1f, 2f, 22, 90);
+        shakePos = transform.DOShakePosition(1f, 2f, 22, 90);
     }
 
 }

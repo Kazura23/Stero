@@ -613,7 +613,7 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( !Dash )
 			{
-				Debug.Log ( "SON DASH" );
+				//Debug.Log ( "SON DASH" );
 				int rdmValue = UnityEngine.Random.Range(0, 3);
 				GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
 			}
@@ -739,6 +739,13 @@ public class PlayerController : MonoBehaviour
 		{
 			canSpe = false;
 			sphereChocWave.enabled = true;
+
+            transform.DOLocalMoveY(4, .25f).SetEase(Ease.InSine).OnComplete(() => {
+            DOVirtual.DelayedCall(.5f,()=>{
+
+                    transform.DOLocalMoveY(1.5f, .15f);
+                });
+            });
 
 			StartCoroutine ( CooldownWave ( ) );
 			StartCoroutine ( TimerHitbox ( ) );
@@ -1386,7 +1393,7 @@ public class PlayerController : MonoBehaviour
             if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
 			{
 
-               // Debug.Log("Dasj2");
+                // Debug.Log("Dasj2");
                 //GlobalManager.Ui.BloodHit ( );
 
                 /*Vector3 getProj = getPunch.projection_basic;
@@ -1399,6 +1406,9 @@ public class PlayerController : MonoBehaviour
 				{
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}*/
+                GlobalManager.Ui.BloodHitDash();
+                int rdmValue = UnityEngine.Random.Range(0, 3);
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
                 thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
 				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
