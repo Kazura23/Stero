@@ -71,14 +71,14 @@ public class GameController : ManagerParent
 
                    //Debug.Log("Start");
 
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        StartGame();
-                        isStay = false;
-                        AnimationStartGame();
-                    }
+				if (Input.GetKeyDown(KeyCode.W)&& ! restartGame)
+                {
+                    StartGame();
+                    isStay = false;
+                    AnimationStartGame();
+                }
 
-                    break;
+                break;
 		
 			case 3: // Shop
                 //Debug.Log("Shop");
