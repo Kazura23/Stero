@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 public class UiManager : ManagerParent
 {
 	#region Variables
-	public bool lauchGame = true;
 	public Slider MotionSlider;
     public Slider Madness;
 	public Image RedScreen;
@@ -85,11 +84,6 @@ public class UiManager : ManagerParent
 			thisUi.CloseThis ( );
 			menuOpen = MenuType.Nothing;
             CloseShop();
-
-			if ( onMainScene && !openNew )
-			{
-				OpenThisMenu ( MenuType.MenuHome );
-			}
 		}
 	}
 
@@ -433,19 +427,12 @@ public class UiManager : ManagerParent
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
 
-		if ( !lauchGame )
-		{
-			OpenThisMenu ( MenuType.MenuHome );
-		}
-		else
-		{
 
-			if ( GlobalManager.GameCont.Player != null )
-			{
-				GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
-			}
-			GlobalManager.GameCont.StartGame ( );
+		if ( GlobalManager.GameCont.Player != null )
+		{
+			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 		}
+		GlobalManager.GameCont.StartGame ( );
 	}
 
 	void InieUI ( )

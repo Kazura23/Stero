@@ -51,7 +51,6 @@ public class AbstractObject : MonoBehaviour
 		getTrans = transform;
 
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
-
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
 		if ( allRig.Length > 1 )
@@ -62,6 +61,7 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 
 		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
