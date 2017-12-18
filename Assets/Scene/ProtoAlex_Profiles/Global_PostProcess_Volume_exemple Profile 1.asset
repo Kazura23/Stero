@@ -30,28 +30,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 0.57
+    value: 4.22
   threshold:
     overrideState: 1
-    value: 1.17
+    value: 0.57
   softKnee:
     overrideState: 1
-    value: 0.31
+    value: 0.21
   diffusion:
     overrideState: 1
-    value: 3.4
+    value: 5.5
   anamorphicRatio:
     overrideState: 1
-    value: 0.04
+    value: 0.75
   color:
     overrideState: 1
-    value: {r: 0.6838235, g: 0.6838235, b: 0.6838235, a: 1}
+    value: {r: 1, g: 1, b: 1, a: 1}
   mobileOptimized:
     overrideState: 0
     value: 0
@@ -81,13 +81,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.56
+    value: 0.97
   color:
     overrideState: 1
-    value: {r: 0.12262113, g: 0.14651893, b: 0.1544118, a: 1}
+    value: {r: 0.004000869, g: 0.012048095, b: 0.014705896, a: 1}
   ambientOnly:
     overrideState: 1
-    value: 1
+    value: 0
   noiseFilterTolerance:
     overrideState: 1
     value: 0
@@ -99,13 +99,13 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 1.83
+    value: 5.06
   directLightingStrength:
     overrideState: 1
     value: 0
   radius:
     overrideState: 1
-    value: 0.25
+    value: 0.71
   quality:
     overrideState: 1
     value: 2
@@ -126,10 +126,10 @@ MonoBehaviour:
     value: 1
   spectralLut:
     overrideState: 1
-    value: {fileID: 2800000, guid: cb4e6ded6d2e7c349a9591b2acfcaa3a, type: 3}
+    value: {fileID: 2800000, guid: f551c265ffa3cad4089616e1ef840290, type: 3}
   intensity:
     overrideState: 1
-    value: 0.32
+    value: 0.09
   mobileOptimized:
     overrideState: 0
     value: 0
@@ -231,22 +231,22 @@ MonoBehaviour:
     value: 0
   colorFilter:
     overrideState: 1
-    value: {r: 0.44117647, g: 0.44117647, b: 0.44117647, a: 1}
+    value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     overrideState: 1
     value: 0
   saturation:
     overrideState: 1
-    value: 25
+    value: 7
   brightness:
     overrideState: 1
     value: 0
   postExposure:
     overrideState: 1
-    value: 0.45
+    value: 0.5
   contrast:
     overrideState: 1
-    value: 18
+    value: 16
   mixerRedOutRedIn:
     overrideState: 1
     value: 100
@@ -275,14 +275,14 @@ MonoBehaviour:
     overrideState: 1
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0.06339144}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: 0.17473271}
   gamma:
     overrideState: 1
-    value: {x: 0.96869296, y: 1, z: 0.91616184, w: -0.23450744}
+    value: {x: 0.96869296, y: 1, z: 0.91616184, w: 0.051020417}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0.19017431}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: -0.58412915}
   masterCurve:
     overrideState: 1
     value:
@@ -444,10 +444,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 280
+    value: 100
   sampleCount:
     overrideState: 1
-    value: 12
+    value: 4
 --- !u!114 &114414976782090556
 MonoBehaviour:
   m_ObjectHideFlags: 3

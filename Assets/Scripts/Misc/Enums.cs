@@ -21,15 +21,21 @@ public enum MenuType
 	MenuHome,
 	Shop,
 	Pause,
-	GameOver
+	GameOver,
+    Leaderboard
 }
 
+public enum UnLockMethode
+{
+	Empty
+}
 
 public enum SpecialAction
 {
 	Nothing,
 	SlowMot,
-    OndeChoc
+    OndeChoc,
+	DeadBall
 }
 
 public enum AudioType
@@ -38,7 +44,10 @@ public enum AudioType
 	OtherMusic,
 	FxSound,
 	OtherSound,
-	Other
+	Other,
+	Acceleration,
+	SteroKill,
+	PunchVoice
 }
 
 public enum ResearcheType 

@@ -26,8 +26,8 @@ public class EditItemMod : Editor
 
 	SerializedProperty RightItem;
 	SerializedProperty LeftItem;
-	SerializedProperty UpItem;
-	SerializedProperty DownItem;
+
+	SerializedProperty AddValueStat;
 
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
@@ -35,6 +35,7 @@ public class EditItemMod : Editor
 	SerializedProperty ReduceSlider;
 	SerializedProperty RecovSlider;
 	SerializedProperty SpeedSlowMot;
+	SerializedProperty DeadBallDist;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -69,8 +70,6 @@ public class EditItemMod : Editor
 
 		RightItem = serializedObject.FindProperty("RightItem");
 		LeftItem = serializedObject.FindProperty("LeftItem");
-		UpItem = serializedObject.FindProperty("UpItem");
-		DownItem = serializedObject.FindProperty("DownItem");
 
 		SpecAction = serializedObject.FindProperty("SpecAction");
 		SlowMotion = serializedObject.FindProperty("SlowMotion");
@@ -78,6 +77,9 @@ public class EditItemMod : Editor
 		SpeedDeacSM = serializedObject.FindProperty("SpeedDeacSM");
 		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
 		RecovSlider = serializedObject.FindProperty("RecovSlider");
+		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
+
+		AddValueStat = serializedObject.FindProperty ( "AddItem" );
 	}
 
 	public override void OnInspectorGUI()
@@ -88,8 +90,6 @@ public class EditItemMod : Editor
 		serializedObject.Update ( );
 		EditorGUILayout.PropertyField ( ItemName );
 		EditorGUILayout.PropertyField ( Price );
-
-		myTarget.CatName = myTarget.transform.parent.GetComponent<CatShop> ( ).NameCat;
 
 		#region MainButton
 
@@ -325,11 +325,10 @@ public class EditItemMod : Editor
 		EditorGUILayout.LabelField("Around Information", EditorStyles.boldLabel);
 		EditorGUILayout.PropertyField ( RightItem );
 		EditorGUILayout.PropertyField ( LeftItem );
-		EditorGUILayout.PropertyField ( UpItem );
-		EditorGUILayout.PropertyField ( DownItem );
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
+		EditorGUILayout.PropertyField ( AddValueStat );
 
 		EditorGUILayout.BeginHorizontal();
 
@@ -344,12 +343,26 @@ public class EditItemMod : Editor
 			buttonStyle.normal.textColor = Color.red;
 		}
 
-		if ( GUILayout.Button ( "ModifVie", buttonStyle ) )
+		if ( GUILayout.Button ( "Add One Life", buttonStyle ) )
 		{
 			myTarget.ModifVie = !myTarget.ModifVie;
 		}
 
-		if ( myTarget.ModifVie )
+		if ( myTarget.StartBonus )
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.red;
+		}
+
+		if ( GUILayout.Button ( "StartBonus", buttonStyle ) )
+		{
+			myTarget.StartBonus = !myTarget.StartBonus;
+		}
+
+		/*if ( myTarget.ModifVie )
 		{
 			myTarget.NombreVie = EditorGUILayout.IntField ( "NombreVie", myTarget.NombreVie );
 
@@ -357,7 +370,7 @@ public class EditItemMod : Editor
 			{
 				myTarget.NombreVie = 1;
 			}
-		}
+		}*/
 		EditorGUILayout.EndHorizontal ( );
 
 		buttonStyle = new GUIStyle(EditorStyles.miniButton);
@@ -381,7 +394,6 @@ public class EditItemMod : Editor
 		if ( myTarget.ModifSpecial )
 		{
 			EditorGUILayout.PropertyField ( SpecAction );
-
 		}
 		else
 		{
@@ -400,6 +412,10 @@ public class EditItemMod : Editor
 			EditorGUILayout.PropertyField ( ReduceSlider );
 			EditorGUILayout.PropertyField ( RecovSlider );
 		}
+		else if ( myTarget.SpecAction == SpecialAction.DeadBall )
+		{
+			EditorGUILayout.PropertyField ( DeadBallDist );
+		}
 		#endregion
 
 		serializedObject.ApplyModifiedProperties ( );
@@ -414,24 +430,6 @@ public class EditItemMod : Editor
 		{
 			myTarget.LeftItem = myTarget.GetComponent<ItemModif> ( );
 		}
-		if ( myTarget.UpItem == null )
-		{
-			myTarget.UpItem = myTarget.GetComponent<ItemModif> ( );
-		}
-		if ( myTarget.DownItem == null )
-		{
-			myTarget.DownItem = myTarget.GetComponent<ItemModif> ( );
-		}
-
-		/*
-		if ( myTarget.UpItem == null )
-		{
-			myTarget.UpItem = myTarget.GetComponent<ItemModif> ( );
-		}
-		if ( myTarget.DownItem == null )
-		{
-			myTarget.DownItem = myTarget.GetComponent<ItemModif> ( );
-		}*/
 	}
 	#endregion
 

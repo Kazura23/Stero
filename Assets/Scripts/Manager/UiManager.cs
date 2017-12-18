@@ -9,9 +9,7 @@ using UnityEngine.EventSystems;
 public class UiManager : ManagerParent
 {
 	#region Variables
-	#if UNITY_EDITOR
-	public bool lauchGame = false;
-	#endif
+	public bool lauchGame = true;
 	public Slider MotionSlider;
     public Slider Madness;
 	public Image RedScreen;
@@ -23,14 +21,20 @@ public class UiManager : ManagerParent
 	public Text ScorePoints;
 	public Text MoneyPoints;
 
+    [Header("MAIN MENU")]
+    public int MenuSelection = 1;
+
     [Header("SHOP STUFF")]
     public Image SlowMotion;
     public Image BonusLife;
+	public List<Image> ExtraHearts;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
     private Camera camTw1;
+
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	MenuType menuOpen;
@@ -46,9 +50,15 @@ public class UiManager : ManagerParent
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
 		UiParent thisUi;
+		//Debug.Log ( "open " + thisType );
 
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
+			if ( menuOpen == thisType )
+			{
+				return;
+			}
+
 			InGame.SetActive ( false );
 			if ( menuOpen != MenuType.Nothing )
 			{
@@ -58,19 +68,23 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
+            OpenShop();
 		}
 	}
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
+
 		UiParent thisUi;
 
 		if ( menuOpen != MenuType.Nothing && AllMenu.TryGetValue ( menuOpen, out thisUi ) )
 		{
+
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
 			menuOpen = MenuType.Nothing;
+            CloseShop();
 
 			if ( onMainScene && !openNew )
 			{
@@ -79,9 +93,29 @@ public class UiManager : ManagerParent
 		}
 	}
 
-
-    public void SimpleCoup()
+    public void MenuGlobal(int whichMenu)
     {
+        if(whichMenu == 1)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -60, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 2)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, -30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 3)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 0, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        if (whichMenu == 4)
+        {
+            GlobalManager.GameCont.Player.transform.DORotate(new Vector3(0, 30, 0), .5f, RotateMode.WorldAxisAdd);
+        }
+
+        MenuSelection = whichMenu;
     }
 
     public void Intro()
@@ -98,10 +132,21 @@ public class UiManager : ManagerParent
                 Camera.main.DOFieldOfView(4, .25f);
                 DOVirtual.DelayedCall(.25f, () =>
                 {
-                    Camera.main.DOFieldOfView(100, .15f);
+                Camera.main.DOFieldOfView(100, .15f);
+                GlobalManager.GameCont.introFinished = true;
+
+                Camera.main.transform.DOKill(true);
+                Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                DOVirtual.DelayedCall(.75f,()=>{
+
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
+                   // Camera.main.GetComponent<RainbowRotate>().reStart();
+                });
                     DOVirtual.DelayedCall(2f, () =>
                     {
-						Camera.main.DOFieldOfView(saveFov, .25f);
+						Camera.main.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
+                        });
                     });
                 });
             });
@@ -134,6 +179,23 @@ public class UiManager : ManagerParent
 		});
 	}
 
+    public void BloodHitDash()
+    {
+        //Time.timeScale = 0.0f;
+        //fixedDeltaTime = 0.02F * Time.timeScale;
+        DOVirtual.DelayedCall(.4f, () => {
+            Time.timeScale = 1;
+            //Time.fixedDeltaTime = .02F;
+        });
+
+        float saveFov = Camera.main.fieldOfView;
+        Camera.main.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
+        RedScreen.DOFade(.4f, .1f).OnComplete(() => {
+            RedScreen.DOFade(0, .08f);
+            Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
+        });
+    }
+
     public void GameOver()
     {
         //Debug.Log("ShakeOver");
@@ -148,6 +210,9 @@ public class UiManager : ManagerParent
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
             RedScreen.DOFade(0, .0f);
         });
+
+        int rdmValue = UnityEngine.Random.Range(0, 4);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Death_" + rdmValue, false);
     }
 
     public void OpenMadness()
@@ -157,6 +222,9 @@ public class UiManager : ManagerParent
 
         Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
         GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+
+        int rdmValue = UnityEngine.Random.Range(0, 3);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
         //textMad.GetComponentInChildren<TextMesh>().text = 
         //Camera.main.transform.GetComponent<RainbowMove>().enabled = false;
 
@@ -168,7 +236,7 @@ public class UiManager : ManagerParent
                 Camera.main.transform.DOLocalMoveY(.9f, .1f);
             });
         }).SetLoops(-1,LoopType.Yoyo);*/
-        
+
         /*
         Camera.main.DOFieldOfView(40, .35f).OnComplete(() => {
             Camera.main.DOFieldOfView(60, .35f);
@@ -187,7 +255,7 @@ public class UiManager : ManagerParent
         //Camera.main.DOKill(true);
 
 		Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
-        Debug.Log("CloseMad");
+       // Debug.Log("CloseMad");
         //Camera.main.GetComponent<RainbowRotate>().enabled = true;
 
        //Camera.main.transform.GetComponent<RainbowMove>().enabled = true;
@@ -216,6 +284,10 @@ public class UiManager : ManagerParent
         MoneyPoints.transform.DOScale(1.5f, .1f).SetEase(Ease.InBounce).OnComplete(() => {
             MoneyPoints.transform.DOScale(1f, .05f).SetEase(Ease.InBounce);
         });
+
+
+        int rdmValue = UnityEngine.Random.Range(0, 4);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false);
     }
 
 	public void StartSlowMo()
@@ -243,23 +315,96 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void StartBonusLife()
+    public void SelectShop()
     {
+
+        shopTw1.Kill(true);
+        shopTw2.Kill(true);
+        shopTw3.Kill(true);
+        shopTw4.Kill(true);
+
+
+        shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
+        shopTw2 = SlowMotion.DOFade(0, .05f);
+        shopTw3 = DOVirtual.DelayedCall(.1f, () => {
+            shopTw2 = SlowMotion.DOFade(1f, .1f);
+            SlowMotion.transform.DOScale(4, 0f);
+            shopTw4 = SlowMotion.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(0, 0), .2f);
+                shopTw2 = SlowMotion.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
+                {
+                    shopTw1 = SlowMotion.DOFade(1, .1f);
+                    shopTw2 = SlowMotion.transform.DOScale(1, 0f);
+                });
+            });
+        });
+    }
+
+	public void OpenShop()
+    {
+        Camera.main.DOFieldOfView(10, .05f);
+        //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
+    }
+
+    public void CloseShop()
+    {
+        Camera.main.DOFieldOfView(60, .3f);
+    }
+
+    public void HeartShop(int number)
+    {
+        ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
+        DOVirtual.DelayedCall(.1f, () => {
+            ExtraHearts[number].DOFade(1f, .1f);
+            ExtraHearts[number].GetComponent<RainbowScale>().enabled = false;
+            ExtraHearts[number].transform.DOScale(4, 0f);
+            ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                ExtraHearts[number].transform.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
+                ExtraHearts[number].DOFade(0, .05f);
+                DOVirtual.DelayedCall(.15f, () =>
+                {
+                    ExtraHearts[number].DOFade(1, .1f);
+                    ExtraHearts[number].transform.DOScale(1, 0f);
+                    ExtraHearts[number].GetComponent<RainbowScale>().enabled = true;
+                });
+            });
+        });
+    }
+
+    public void StartBonusLife ( int currLife )
+    {
+		Image getCurrHeat;
+		if ( currLife == 3 )
+		{
+			getCurrHeat = ExtraHearts [ 1 ];
+		}
+		else if ( currLife == 2 )
+		{
+			getCurrHeat = ExtraHearts [ 0 ];
+		}
+		else
+		{
+			getCurrHeat = BonusLife;
+		}
+
+        getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-        BonusLife.transform.DOLocalMove(new Vector2(960, -480), .1f);
-        BonusLife.GetComponent<RainbowScale>().enabled = false;
-        BonusLife.DOFade(0, .05f);
-        DOVirtual.DelayedCall(.1f, () => {
-            BonusLife.DOFade(.75f, .1f);
-            BonusLife.transform.DOScale(10, 0f);
-            BonusLife.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
+
+        getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
+		getCurrHeat.DOFade(0, .05f);
+        DOVirtual.DelayedCall(.15f, () => {
+			getCurrHeat.DOFade(.75f, .1f);
+			getCurrHeat.transform.DOScale(10, 0f);
+			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
                 CircleFeel.transform.DOScale(28, .8f);
                 CircleFeel.DOFade(1, .2f).OnComplete(() => {
                     CircleFeel.DOFade(0, .4f);
                 });
-                BonusLife.transform.DOScale(40f, .5f);
-                BonusLife.DOFade(0, .5f);
+				getCurrHeat.transform.DOScale(40f, .5f);
+				getCurrHeat.DOFade(0, .5f);
             });
         });
     }
@@ -280,22 +425,27 @@ public class UiManager : ManagerParent
 		{
 			thisMenu = (GameObject) Instantiate ( getAllMenu [ a ], MenuParent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
+			thisUi.Initialize ( );
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
-			InitializeUI ( ref thisUi );
 		}
 
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
 
-		#if UNITY_EDITOR
 		if ( !lauchGame )
 		{
 			OpenThisMenu ( MenuType.MenuHome );
 		}
-		#else
-		OpenThisMenu ( MenuType.MenuHome );
-		#endif
+		else
+		{
+
+			if ( GlobalManager.GameCont.Player != null )
+			{
+				GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+			}
+			GlobalManager.GameCont.StartGame ( );
+		}
 	}
 
 	void InieUI ( )
@@ -333,31 +483,6 @@ public class UiManager : ManagerParent
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
-	}
-
-	void InitializeUI<T>(ref T manager) where T : UiParent
-	{
-		//Debug.Log("Initializing managers");
-		T[] managers = GetComponentsInChildren<T>();
-
-		if(managers.Length == 0)
-		{
-			//Debug.LogError("No manager of type: " + typeof(T) + " found.");
-			return;
-		}
-
-		//Set to first manager
-		manager = managers[0];
-		manager.Initialize();
-
-		if(managers.Length > 1) //Too many managers
-		{
-			//Debug.LogError("Found " + managers.Length + " UI of type " + typeof(T));
-			for(int i = 1; i < managers.Length; i++)
-			{
-				Destroy(managers[i].gameObject);
-			}
-		} 
 	}
 	#endregion
 }
