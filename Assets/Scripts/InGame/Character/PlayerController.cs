@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public Slider BarMadness;
-	[HideInInspector]
 	public SpecialAction ThisAct;
 	[HideInInspector]
 	public int NbrLineRight = 1;
@@ -609,7 +608,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
+		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
 		{
 			if ( !Dash )
 			{
@@ -770,6 +769,10 @@ public class PlayerController : MonoBehaviour
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
 			currObj.transform.position = pTrans.position + pTrans.forward * 8;
+
+			var e = new DeadBallParent ( );
+			e.NewParent = currObj.transform;
+			e.Raise ( );
 		}
 
 		pRig.constraints = thisConst;
@@ -945,8 +948,6 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
-
-	
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
