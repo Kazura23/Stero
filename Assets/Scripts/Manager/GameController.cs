@@ -101,6 +101,13 @@ public class GameController : ManagerParent
         }else if (isReady && Input.GetKeyDown(KeyCode.W) && isStay )
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
+
+			if ( restartGame )
+			{
+				Player.GetComponent<PlayerController>().StopPlayer = false;
+				restartGame = false;
+			}
+
             Debug.Log("PunchIntro");
         }
         
@@ -127,18 +134,17 @@ public class GameController : ManagerParent
 
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
+		Intro = true;
 
 		if ( restartGame )
 		{
 			Player.transform.DOMoveZ(3, 1).OnComplete(() =>
 			{
 				isStay = true;
+				Intro = false;
 			});
-
-			restartGame = false;
 		}
 
-        Intro = true;
 
 		SetAllBonus ( );
 
