@@ -16,6 +16,7 @@ public class ChunksScriptable : ScriptableObject
 	public Vector2 SizeWall = new Vector2 ( 0, -3 );
 	public GameObject WallOnLastChunk;
 	public List<GameObject> TheseChunks;
+	public List<ChunksScriptable> TransitionChunks;
 
 	[Header ("Prefabs d'objet à instancier aléatoirement")]
 
