@@ -700,14 +700,20 @@ public class PlayerController : MonoBehaviour
 			pRig.useGravity = false;
 			StopPlayer = true;
 
-			DOVirtual.DelayedCall ( .1f, ( ) =>
+			DOVirtual.DelayedCall ( .35f, ( ) =>
 			{ 
 				onAnimeAir = true;
 			} );
 
-			pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
+            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+
+            transform.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+            pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
 				pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 10 - pTrans.up * 2, .2f).SetEase(Ease.Linear).OnComplete(() => {
-					onAnimeAir = false;
+                    transform.DOLocalRotate((new Vector3(25, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
+                        transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                    });
+                    onAnimeAir = false;
 					pRig.useGravity = true;
 					StopPlayer = false;
 					pRig.AddForce ( Vector3.down * 10, ForceMode.VelocityChange );
