@@ -1160,7 +1160,7 @@ public class PlayerController : MonoBehaviour
 
 	void playerFight ( )
 	{
-		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 )
+		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 && !Dash )
 		{
 			thisCam.fieldOfView = Constants.DefFov;
 
@@ -1179,7 +1179,7 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  && GlobalManager.GameCont.introFinished && !Dash)
+		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash && GlobalManager.GameCont.introFinished )
         {
             thisCam.fieldOfView = Constants.DefFov;
             //Debug.Log("IntroFInished");
@@ -1221,7 +1221,7 @@ public class PlayerController : MonoBehaviour
             propPunch = propulsePunch(TimePropulsePunch);
             StartCoroutine(propPunch);
 		}
-		else if( dpunch && canPunch )
+		else if( dpunch && canPunch && !Dash )
         {
 			thisCam.fieldOfView = Constants.DefFov;
 
