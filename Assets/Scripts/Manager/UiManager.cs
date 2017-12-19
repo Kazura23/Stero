@@ -129,8 +129,11 @@ public class UiManager : ManagerParent
                 Camera.main.DOFieldOfView(100, .15f);
                 GlobalManager.GameCont.introFinished = true;
 
-                Camera.main.transform.DOKill(true);
-                Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+
+                    Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                    Camera.main.GetComponent<RainbowMove>().time = .2f;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                 DOVirtual.DelayedCall(.75f,()=>{
 
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
@@ -143,6 +146,35 @@ public class UiManager : ManagerParent
                         });
                     });
                 });
+            });
+        });
+    }
+
+    public void IntroRestart()
+    {
+        Time.timeScale = .05f;
+
+        DOVirtual.DelayedCall(.35f, () => {
+            Time.timeScale = .0f;
+            DOVirtual.DelayedCall(.1f, () =>
+            {
+                Time.timeScale = 1f;
+                GlobalManager.GameCont.Intro = false;
+                {
+                    GlobalManager.GameCont.introFinished = true;
+
+
+                    Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                    Camera.main.GetComponent<RainbowMove>().time = .2f;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    DOVirtual.DelayedCall(.75f, () =>
+                    {
+
+                    });
+                }
             });
         });
     }

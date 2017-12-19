@@ -142,6 +142,7 @@ public class GameController : ManagerParent
 				Player.GetComponent<PlayerController>().GetPunchIntro();
 				Player.GetComponent<PlayerController>( ).StopPlayer = false;
 				restartGame = false;
+                GlobalManager.Ui.IntroRestart();
 			});
 		}
 
@@ -203,7 +204,7 @@ public class GameController : ManagerParent
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         checkStart = false;
-
+        
         if (AllPlayerPrefs.relance)
         {
 			restartGame = true;
@@ -341,8 +342,8 @@ public class GameController : ManagerParent
                 checkStart = true;
                 //Debug.Log("player = " + Player);
                 Player.GetComponent<PlayerController>().StopPlayer = false;
-                Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                Camera.main.GetComponent<RainbowMove>().time = .2f;
+                //Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                //Camera.main.GetComponent<RainbowMove>().time = .2f;
 
                 soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
                     //Debug.Log("here");
