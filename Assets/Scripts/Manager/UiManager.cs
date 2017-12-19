@@ -207,7 +207,7 @@ public class UiManager : ManagerParent
 
     public void BloodHitDash()
     {
-        Debug.Log("HitDash");
+        //Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.4f, () => {

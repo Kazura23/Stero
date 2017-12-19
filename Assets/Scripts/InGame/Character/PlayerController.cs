@@ -739,13 +739,12 @@ public class PlayerController : MonoBehaviour
 			canSpe = false;
             Camera.main.GetComponent<RainbowMove>().enabled = false;
             transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
-            DOVirtual.DelayedCall(.6f,()=>{
 
                     transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
 
                         
                         Camera.main.GetComponent<RainbowMove>().enabled = true;
-
+                        Debug.Log("Onde");
                         ScreenShake.Singleton.ShakeFall();
 
                         sphereChocWave.enabled = true;
@@ -754,7 +753,6 @@ public class PlayerController : MonoBehaviour
                     });
 
                 });
-            });
 
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
@@ -1269,7 +1267,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        Shader.SetGlobalFloat("_saturation", BarMadness.value);
+        //Shader.SetGlobalFloat("_Saturation", -BarMadness.value / 20);
+
+        Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 
