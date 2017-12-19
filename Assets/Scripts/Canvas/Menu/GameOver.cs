@@ -26,7 +26,7 @@ public class GameOver : UiParent
 		{
             AllPlayerPrefs.relance = true;
 			GlobalManager.GameCont.Restart ();
-		}else if (Input.GetKeyDown(KeyCode.Backspace))
+		}else if (Input.GetKeyDown(KeyCode.Escape))
         {
             AllPlayerPrefs.relance = false;
             GlobalManager.GameCont.Restart();

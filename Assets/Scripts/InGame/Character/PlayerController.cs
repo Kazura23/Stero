@@ -203,7 +203,14 @@ public class PlayerController : MonoBehaviour
 	#region Mono
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+        //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MaxSpeed = 1f;
+            acceleration = 1;
+        }
+            
 
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -738,14 +745,24 @@ public class PlayerController : MonoBehaviour
 		{
 			canSpe = false;
             Camera.main.GetComponent<RainbowMove>().enabled = false;
-            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
-            DOVirtual.DelayedCall(.6f,()=>{
+            MaxSpeed = .5f;
+            Acceleration = .5f;
+            float savedSpeed = MaxSpeed;
+            float savedAcce = Acceleration;
 
-                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
+            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+            transform.DOLocalMoveY(1, .35f).SetEase(Ease.InSine).OnComplete(()=> {
+                transform.DOLocalRotate((new Vector3(-25, 0, 0)), .45f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
 
-                        
+                    transform.DOLocalMoveY(1.5f, .13f).SetEase(Ease.OutSine).OnComplete(() => {
+                        transform.DOLocalRotate((new Vector3(25, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(()=> {
+                            transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                        });
+                        MaxSpeed = savedSpeed;
+                        Acceleration = savedAcce;
                         Camera.main.GetComponent<RainbowMove>().enabled = true;
-
+                        Debug.Log("Onde");
                         ScreenShake.Singleton.ShakeFall();
 
                         sphereChocWave.enabled = true;
@@ -1160,7 +1177,7 @@ public class PlayerController : MonoBehaviour
 
 	void playerFight ( )
 	{
-		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 )
+		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 && !Dash )
 		{
 			thisCam.fieldOfView = Constants.DefFov;
 
@@ -1179,7 +1196,7 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS  && GlobalManager.GameCont.introFinished && !Dash)
+		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash && GlobalManager.GameCont.introFinished )
         {
             thisCam.fieldOfView = Constants.DefFov;
             //Debug.Log("IntroFInished");
@@ -1221,7 +1238,7 @@ public class PlayerController : MonoBehaviour
             propPunch = propulsePunch(TimePropulsePunch);
             StartCoroutine(propPunch);
 		}
-		else if( dpunch && canPunch )
+		else if( dpunch && canPunch && !Dash )
         {
 			thisCam.fieldOfView = Constants.DefFov;
 
@@ -1269,7 +1286,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        Shader.SetGlobalFloat("_saturation", BarMadness.value);
+        //Shader.SetGlobalFloat("_Saturation", -BarMadness.value / 20);
+
+        Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 
