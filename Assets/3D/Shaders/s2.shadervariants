@@ -32,6 +32,9 @@ ShaderVariantCollection:
         - keywords: DIRECTIONAL _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             _SPECULARHIGHLIGHTS_OFF
           passType: 4
+        - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON _GLOSSYREFLECTIONS_OFF
+            _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
+          passType: 4
         - keywords: SPOT _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
           passType: 5
         - keywords: DIRECTIONAL _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
@@ -63,11 +66,20 @@ ShaderVariantCollection:
         variants:
         - keywords: DIRECTIONAL
           passType: 4
+        - keywords: DIRECTIONAL LIGHTMAP_ON
+          passType: 4
         - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON
           passType: 4
         - keywords: DIRECTIONAL _EMISSION
           passType: 4
         - keywords: DIRECTIONAL LIGHTMAP_ON _EMISSION
+          passType: 4
+        - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON _EMISSION
+          passType: 4
+        - keywords: DIRECTIONAL _EMISSION _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
+          passType: 4
+        - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON _EMISSION _GLOSSYREFLECTIONS_OFF
+            _SPECULARHIGHLIGHTS_OFF
           passType: 4
         - keywords: DIRECTIONAL _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             _SPECULARHIGHLIGHTS_OFF
@@ -78,11 +90,30 @@ ShaderVariantCollection:
           passType: 4
         - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON _ALPHAPREMULTIPLY_ON
           passType: 4
+        - keywords: DIRECTIONAL _ALPHAPREMULTIPLY_ON _EMISSION
+          passType: 4
+        - keywords: DIRECTIONAL LIGHTMAP_ON _ALPHAPREMULTIPLY_ON _EMISSION
+          passType: 4
+        - keywords: DIRECTIONAL DYNAMICLIGHTMAP_ON LIGHTMAP_ON _ALPHAPREMULTIPLY_ON
+            _EMISSION
+          passType: 4
         - keywords: SPOT
           passType: 5
         - keywords: DIRECTIONAL
           passType: 5
         - keywords: SHADOWS_DEPTH SPOT
+          passType: 5
+        - keywords: SHADOWS_DEPTH SHADOWS_SOFT SPOT
+          passType: 5
+        - keywords: POINT SHADOWS_CUBE SHADOWS_SOFT
+          passType: 5
+        - keywords: SPOT _SPECULARHIGHLIGHTS_OFF
+          passType: 5
+        - keywords: DIRECTIONAL _SPECULARHIGHLIGHTS_OFF
+          passType: 5
+        - keywords: SHADOWS_DEPTH SHADOWS_SOFT SPOT _SPECULARHIGHLIGHTS_OFF
+          passType: 5
+        - keywords: POINT SHADOWS_CUBE SHADOWS_SOFT _SPECULARHIGHLIGHTS_OFF
           passType: 5
         - keywords: DIRECTIONAL _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
           passType: 5
@@ -98,6 +129,8 @@ ShaderVariantCollection:
           passType: 8
         - keywords: SHADOWS_DEPTH _ALPHAPREMULTIPLY_ON
           passType: 8
+        - keywords: SHADOWS_CUBE _ALPHAPREMULTIPLY_ON
+          passType: 8
         - keywords: 
           passType: 10
         - keywords: LIGHTMAP_ON
@@ -105,6 +138,8 @@ ShaderVariantCollection:
         - keywords: DYNAMICLIGHTMAP_ON LIGHTMAP_ON
           passType: 10
         - keywords: _EMISSION
+          passType: 10
+        - keywords: LIGHTMAP_ON _EMISSION
           passType: 10
         - keywords: UNITY_HDR_ON
           passType: 10
@@ -117,6 +152,14 @@ ShaderVariantCollection:
         - keywords: LIGHTMAP_ON UNITY_HDR_ON _EMISSION
           passType: 10
         - keywords: DYNAMICLIGHTMAP_ON LIGHTMAP_ON UNITY_HDR_ON _EMISSION
+          passType: 10
+        - keywords: LIGHTMAP_ON _EMISSION _SPECULARHIGHLIGHTS_OFF
+          passType: 10
+        - keywords: UNITY_HDR_ON _EMISSION _SPECULARHIGHLIGHTS_OFF
+          passType: 10
+        - keywords: LIGHTMAP_ON UNITY_HDR_ON _EMISSION _SPECULARHIGHLIGHTS_OFF
+          passType: 10
+        - keywords: DYNAMICLIGHTMAP_ON LIGHTMAP_ON UNITY_HDR_ON _EMISSION _SPECULARHIGHLIGHTS_OFF
           passType: 10
         - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
           passType: 10
@@ -131,6 +174,12 @@ ShaderVariantCollection:
       second:
         variants:
         - keywords: DIRECTIONAL
+          passType: 0
+    data:
+      first: {fileID: 64, guid: 0000000000000000f000000000000000, type: 0}
+      second:
+        variants:
+        - keywords: SHADOWS_SPLIT_SPHERES
           passType: 0
     data:
       first: {fileID: 62, guid: 0000000000000000f000000000000000, type: 0}
@@ -154,15 +203,25 @@ ShaderVariantCollection:
           passType: 0
         - keywords: SPOT
           passType: 0
+        - keywords: DIRECTIONAL
+          passType: 0
         - keywords: POINT
           passType: 0
         - keywords: SHADOWS_DEPTH SPOT
           passType: 0
         - keywords: SPOT UNITY_HDR_ON
           passType: 0
+        - keywords: DIRECTIONAL UNITY_HDR_ON
+          passType: 0
+        - keywords: DIRECTIONAL_COOKIE UNITY_HDR_ON
+          passType: 0
         - keywords: POINT UNITY_HDR_ON
           passType: 0
         - keywords: SHADOWS_DEPTH SPOT UNITY_HDR_ON
+          passType: 0
+        - keywords: DIRECTIONAL SHADOWS_SCREEN UNITY_HDR_ON
+          passType: 0
+        - keywords: DIRECTIONAL_COOKIE SHADOWS_SCREEN UNITY_HDR_ON
           passType: 0
         - keywords: SHADOWS_DEPTH SHADOWS_SOFT SPOT UNITY_HDR_ON
           passType: 0
@@ -180,6 +239,8 @@ ShaderVariantCollection:
       first: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
       second:
         variants:
+        - keywords: 
+          passType: 0
         - keywords: SOFTPARTICLES_ON
           passType: 0
     data:
@@ -302,6 +363,8 @@ ShaderVariantCollection:
         variants:
         - keywords: BLOOM COLOR_GRADING_HDR_3D GRAIN VIGNETTE
           passType: 0
+        - keywords: BLOOM CHROMATIC_ABERRATION COLOR_GRADING_HDR_3D VIGNETTE
+          passType: 0
         - keywords: BLOOM CHROMATIC_ABERRATION COLOR_GRADING_HDR_3D GRAIN VIGNETTE
           passType: 0
     data:
@@ -396,6 +459,8 @@ ShaderVariantCollection:
           passType: 0
         - keywords: DIRECTIONAL
           passType: 4
+        - keywords: DIRECTIONAL SHADOWS_SCREEN
+          passType: 4
         - keywords: DIRECTIONAL VERTEXLIGHT_ON
           passType: 4
         - keywords: SPOT
@@ -410,6 +475,10 @@ ShaderVariantCollection:
           passType: 5
         - keywords: POINT SHADOWS_CUBE SHADOWS_SOFT
           passType: 5
+        - keywords: SHADOWS_DEPTH
+          passType: 8
+        - keywords: SHADOWS_CUBE
+          passType: 8
     data:
       first: {fileID: 4800000, guid: 6cba38a71cbe5294fb1130d36e8d4c79, type: 3}
       second:
@@ -501,6 +570,12 @@ ShaderVariantCollection:
         - keywords: 
           passType: 0
     data:
+      first: {fileID: 4800000, guid: a91ebb4beb222f540b8354d9fdae0630, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
       first: {fileID: 4800000, guid: aabfc9e5ec0b19947a8846f4313085d2, type: 3}
       second:
         variants:
@@ -525,6 +600,8 @@ ShaderVariantCollection:
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_ON
           passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 4
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_SCREEN
           passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF VERTEXLIGHT_ON
           passType: 4
@@ -570,6 +647,10 @@ ShaderVariantCollection:
         - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF POINT SHADOWS_CUBE
             SHADOWS_SOFT
           passType: 5
+        - keywords: SHADOWS_DEPTH
+          passType: 8
+        - keywords: SHADOWS_CUBE
+          passType: 8
         - keywords: DYNAMICLIGHTMAP_ON LIGHTMAP_ON
           passType: 10
     data:
@@ -648,13 +729,13 @@ ShaderVariantCollection:
           passType: 0
         - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_DEPTH
           passType: 0
-        - keywords: DIRECTIONAL VERTEXLIGHT_ON
-          passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_ON LIGHTMAP_ON
           passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_ON
           passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF
+          passType: 4
+        - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF SHADOWS_SCREEN
           passType: 4
         - keywords: DIRECTIONAL DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_OFF VERTEXLIGHT_ON
           passType: 4
@@ -671,6 +752,8 @@ ShaderVariantCollection:
             SHADOWS_SOFT
           passType: 5
         - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_ON SPOT
+          passType: 5
+        - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_ON POINT
           passType: 5
         - keywords: DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF LIGHTMAP_ON SHADOWS_DEPTH
             SPOT
@@ -700,8 +783,6 @@ ShaderVariantCollection:
           passType: 6
         - keywords: UNITY_HDR_ON
           passType: 7
-        - keywords: SHADOWS_CUBE
-          passType: 8
         - keywords: 
           passType: 11
     data:
@@ -724,3 +805,23 @@ ShaderVariantCollection:
           passType: 10
         - keywords: SHADOWS_DEPTH UNITY_HDR_ON
           passType: 10
+    data:
+      first: {fileID: 4800000, guid: c2282c5842bb6d74d999852919953d40, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: d297a5d5cdd4e7f469b33e9f468e00d1, type: 3}
+      second:
+        variants:
+        - keywords: 
+          passType: 0
+    data:
+      first: {fileID: 4800000, guid: f1531a9bd4087ff468de8de09f6ba126, type: 3}
+      second:
+        variants:
+        - keywords: HEIGHT_FOG
+          passType: 0
+        - keywords: DIRECTIONAL_COOKIE HEIGHT_FOG SHADOWS_DEPTH
+          passType: 0
