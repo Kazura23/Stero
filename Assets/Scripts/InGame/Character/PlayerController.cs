@@ -205,7 +205,6 @@ public class PlayerController : MonoBehaviour
 	{
 		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
-
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
 
@@ -659,7 +658,7 @@ public class PlayerController : MonoBehaviour
 		{
 			nextIncrease += DistIncMaxSpeed;
 
-			if ( MaxSpeedInc > maxSpeed - MaxSpeed )
+			if ( MaxSpeedInc > maxSpeed - MaxSpeed || InMadness )
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
@@ -669,7 +668,7 @@ public class PlayerController : MonoBehaviour
 				maxSpeed = MaxSpeed + MaxSpeedInc;
 			}
 
-			if ( MaxCLInc > maxSpeedCL - MaxSpeedCL )
+			if ( MaxCLInc > maxSpeedCL - MaxSpeedCL || InMadness)
 			{
 				maxSpeedCL += CLSpeedIncrease;
 				accelerationCL += AcceleraCLInc;
@@ -808,10 +807,11 @@ public class PlayerController : MonoBehaviour
 		bool checkAngle = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
-		if ( Dash || InMadness )
+		if ( Dash )
 		{
 			getTime *= DashSpeed * 1.1f;
 		}
+
 
 		getTime *= ( maxSpeed / MaxSpeed );
 

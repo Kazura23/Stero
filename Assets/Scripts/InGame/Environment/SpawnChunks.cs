@@ -29,6 +29,7 @@ public class SpawnChunks : MonoBehaviour
 	int CurrRandLvl = 0;
 	int saveLvlForStart = 0;
 	bool randAllChunk = false;
+	bool transitChunk = false;
 	#endregion
 	
 	#region Mono
@@ -234,13 +235,24 @@ public class SpawnChunks : MonoBehaviour
 			thisObj.transform.localPosition += thisObj.transform.up * thisObj.GetComponent<MeshRenderer> ( ).bounds.size.y / 2;
 		}
 
-		currLevel++;
 
-		if ( currLevel >= LvlChunksInfo.Count || randAllChunk )
+		if ( getCunk.TransitionChunks.Count == 0 )
 		{
-			randAllChunk = true;
+			transitChunk = false;
+			currLevel++;
 
-			currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+			if ( currLevel >= LvlChunksInfo.Count || randAllChunk )
+			{
+				randAllChunk = true;
+
+				currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+			}
+
+			CurrRandLvl = Random.Range ( 0, LvlChunksInfo [ currLevel ].ChunkScript.Count );
+		}
+		else
+		{
+			transitChunk = true;
 		}
 
 		currNbrCh = 0;
@@ -251,11 +263,24 @@ public class SpawnChunks : MonoBehaviour
 		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
 		GameObject thisSpawn;
 		Transform getChunkT;
+		ChunksScriptable getChunk;
+		GetSpawnable getSble;
 
-		CurrRandLvl = Random.Range ( 0, chunkOrder [ currLevel ].ChunkScript.Count );
+		if ( !transitChunk )
+		{
+			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
+			getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
+		}
+		else
+		{
+			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ].TransitionChunks [ Random.Range ( 0, chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ].TransitionChunks.Count ) ];
+			getSble = new GetSpawnable ( );
 
-		ChunksScriptable getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
-		GetSpawnable getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
+			getSble.getEnnemySpawnable.CopyTo ( getChunk.EnnemySpawnable.ToArray ( ) );
+			getSble.getObstacleSpawnable.CopyTo ( getChunk.ObstacleSpawnable.ToArray ( ) );
+			getSble.getObstacleDestrucSpawnable.CopyTo ( getChunk.ObstacleDestrucSpawnable.ToArray ( ) );
+			getSble.getCoinSpawnable.CopyTo ( getChunk.CoinSpawnable.ToArray ( ) );
+		}
 
 		thisChunk = getChunk;
 
