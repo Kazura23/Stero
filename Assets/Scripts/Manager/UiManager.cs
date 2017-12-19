@@ -314,7 +314,7 @@ public class UiManager : ManagerParent
 
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
-        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
 	public void StartSlowMo()
