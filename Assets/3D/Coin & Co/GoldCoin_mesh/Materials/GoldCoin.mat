@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: GoldCoin
   m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _EMISSIVE_ON _HIGHLIGHT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -90,18 +90,20 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _distanceratio: 0.1
-    - _emissive: 0
+    - _distanceratio: 0.135
+    - _emisive_force: 0.624
+    - _emissive: 1
     - _gloss: 0.598
     - _gloss_color: 1.64
-    - _highlight: 0
-    - _highlight__force: 2
+    - _highlight: 1
+    - _highlight__force: 0.48
     - _highlight_amount: 2
-    - _highlight_speed: 1
-    - _outline_basevalue: 0.1
+    - _highlight_speed: 1.18
+    - _outline_basevalue: 0.225
+    - _roughForce: 0.119
     - _saturation: 1.8
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _highlight_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _highlight_Color: {r: 0.875, g: 0.6858012, b: 0.34742647, a: 1}
     - _shadow_color: {r: 0.2289405, g: 0.11624135, b: 0.36764705, a: 1}
