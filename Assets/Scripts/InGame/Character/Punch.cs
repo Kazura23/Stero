@@ -63,14 +63,16 @@ public class Punch : MonoBehaviour {
 				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
 			}
 
-			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false );
+            if(other.gameObject.tag == Constants._EnnemisTag)
+            {
+                int rdmValue = UnityEngine.Random.Range(0, 5);
+                GlobalManager.AudioMa.OpenAudio(AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true);
+                GlobalManager.Ui.BloodHit();
+            }
 
-            int rdmValue = UnityEngine.Random.Range(0, 5);
-			GlobalManager.AudioMa.OpenAudio ( AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true );
 
-            GlobalManager.Ui.BloodHit();
-
-           // Debug.Log("song");
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
+            // Debug.Log("song");
             Vector3 getProj = projection_basic;
             switch (numTechnic)
             {

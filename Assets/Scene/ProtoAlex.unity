@@ -78,15 +78,17 @@ LightmapSettings:
     m_PVRDirectSampleCount: 128
     m_PVRSampleCount: 1200
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 2
     m_PVRCulling: 0
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 3
     m_PVRFilteringGaussRadiusAO: 1
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 112000308, guid: c9e79d108ac4a4f4792545608a68127a,
     type: 2}
   m_UseShadowmask: 0
@@ -395,10 +397,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.8
   colors:
-  - {r: 0.4611026, g: 0.86764705, b: 0.3317474, a: 0.1764706}
-  - {r: 0.9044118, g: 0.9044118, b: 0.9044118, a: 0.1764706}
-  - {r: 0.8152607, g: 0.8235294, b: 0.22404847, a: 0.1764706}
-  - {r: 0.9852941, g: 0.35499567, b: 0.35499567, a: 0.1764706}
+  - {r: 0.4611026, g: 0.86764705, b: 0.3317474, a: 0.834}
+  - {r: 0.9044118, g: 0.9044118, b: 0.9044118, a: 0.884}
+  - {r: 0.8152607, g: 0.8235294, b: 0.22404847, a: 0.841}
+  - {r: 0.9852941, g: 0.35499567, b: 0.35499567, a: 0.891}
   ComponentType: 0
 --- !u!114 &68271534
 MonoBehaviour:
