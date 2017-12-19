@@ -203,7 +203,14 @@ public class PlayerController : MonoBehaviour
 	#region Mono
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+        //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MaxSpeed = 1f;
+            acceleration = 1;
+        }
+            
 
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -738,11 +745,22 @@ public class PlayerController : MonoBehaviour
 		{
 			canSpe = false;
             Camera.main.GetComponent<RainbowMove>().enabled = false;
-            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
+            MaxSpeed = .5f;
+            Acceleration = .5f;
+            float savedSpeed = MaxSpeed;
+            float savedAcce = Acceleration;
 
-                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
+            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+            transform.DOLocalMoveY(1, .35f).SetEase(Ease.InSine).OnComplete(()=> {
+                transform.DOLocalRotate((new Vector3(-25, 0, 0)), .45f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
 
-                        
+                    transform.DOLocalMoveY(1.5f, .13f).SetEase(Ease.OutSine).OnComplete(() => {
+                        transform.DOLocalRotate((new Vector3(25, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(()=> {
+                            transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                        });
+                        MaxSpeed = savedSpeed;
+                        Acceleration = savedAcce;
                         Camera.main.GetComponent<RainbowMove>().enabled = true;
                         Debug.Log("Onde");
                         ScreenShake.Singleton.ShakeFall();
@@ -753,6 +771,7 @@ public class PlayerController : MonoBehaviour
                     });
 
                 });
+            });
 
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
