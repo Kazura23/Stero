@@ -39,7 +39,7 @@ public class AbstractObject : MonoBehaviour
     private int techPunch;
 
 	Vector3 projection;
-	float distForDB = 0; 
+	float distForDB = 0;
 	System.Action <DeadBallEvent> checkDBE;
 	#endregion
 
@@ -51,7 +51,6 @@ public class AbstractObject : MonoBehaviour
 		getTrans = transform;
 
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
-
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
 		if ( allRig.Length > 1 )
@@ -62,6 +61,7 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 
 		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
@@ -73,6 +73,7 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
+
 	}
 
     void Update()
@@ -102,7 +103,7 @@ public class AbstractObject : MonoBehaviour
 	public virtual void Dead ( bool enemy = false )
 	{
 		isDead = true;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
         int randomSong = UnityEngine.Random.Range(0, 8);
@@ -154,7 +155,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._EnnemisTag && gameObject.tag != Constants._ObsSafe || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
+		if ( getThis.tag == Constants._EnnemisTag || ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe ) || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
@@ -185,18 +186,33 @@ public class AbstractObject : MonoBehaviour
 			meshRigid.velocity = Vector3.zero;
 
 			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( Random.Range ( -0.6f, 0.7f ), Random.Range ( -0.6f, 0.7f ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
-				meshRigid.velocity = Vector3.zero;
-				meshRigid.constraints = RigidbodyConstraints.FreezeAll;
 
-				foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+				foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody>())
 				{
-					thisRig.constraints = RigidbodyConstraints.FreezeAll;
+					thisRig.constraints = RigidbodyConstraints.FreezePosition;
+					thisRig.useGravity = false;
 				}
+
+				System.Action <DeadBallParent> SetParent = delegate ( DeadBallParent thisEvnt ) 
+				{ 
+					foreach(Collider thisColl in gameObject.GetComponentsInChildren<Collider>())
+					{
+						thisColl.enabled = false;
+					}
+
+					getTrans.SetParent ( thisEvnt.NewParent );
+					getTrans.localPosition = new Vector3 ( Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ) );
+					getTrans.localRotation = new Quaternion ( Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), 0 );
+					meshRigid.transform.position = getTrans.position;
+
+				}; 
+
+				GlobalManager.Event.Register ( SetParent ); 
 			});
 
-			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.5f, 1 ), Random.Range ( 0.5f, 1 ), Random.Range ( 0.5f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
+			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
 
-			Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
+			//Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
 	} 
 

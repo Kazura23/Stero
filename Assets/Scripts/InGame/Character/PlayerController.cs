@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public Slider BarMadness;
-	[HideInInspector]
 	public SpecialAction ThisAct;
 	[HideInInspector]
 	public int NbrLineRight = 1;
@@ -337,7 +336,7 @@ public class PlayerController : MonoBehaviour
 
 		stopMadness ( );
 
-        BarMadness.value = 80;
+        BarMadness.value = 0;
 
 	}
 
@@ -609,11 +608,11 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && newH == 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
+		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
 		{
 			if ( !Dash )
 			{
-				Debug.Log ( "SON DASH" );
+				//Debug.Log ( "SON DASH" );
 				int rdmValue = UnityEngine.Random.Range(0, 3);
 				GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
 			}
@@ -738,10 +737,25 @@ public class PlayerController : MonoBehaviour
 		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
 			canSpe = false;
-			sphereChocWave.enabled = true;
+            Camera.main.GetComponent<RainbowMove>().enabled = false;
+            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
+            DOVirtual.DelayedCall(.6f,()=>{
 
-			StartCoroutine ( CooldownWave ( ) );
-			StartCoroutine ( TimerHitbox ( ) );
+                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
+
+                        
+                        Camera.main.GetComponent<RainbowMove>().enabled = true;
+
+                        ScreenShake.Singleton.ShakeFall();
+
+                        sphereChocWave.enabled = true;
+                        StartCoroutine(CooldownWave());
+                        StartCoroutine(TimerHitbox());
+                    });
+
+                });
+            });
+
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
 		{
@@ -770,6 +784,10 @@ public class PlayerController : MonoBehaviour
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
 			currObj.transform.position = pTrans.position + pTrans.forward * 8;
+
+			var e = new DeadBallParent ( );
+			e.NewParent = currObj.transform;
+			e.Raise ( );
 		}
 
 		pRig.constraints = thisConst;
@@ -945,8 +963,6 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
-
-	
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
@@ -1386,7 +1402,7 @@ public class PlayerController : MonoBehaviour
             if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
 			{
 
-               // Debug.Log("Dasj2");
+                // Debug.Log("Dasj2");
                 //GlobalManager.Ui.BloodHit ( );
 
                 /*Vector3 getProj = getPunch.projection_basic;
@@ -1399,6 +1415,9 @@ public class PlayerController : MonoBehaviour
 				{
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}*/
+                GlobalManager.Ui.BloodHitDash();
+                int rdmValue = UnityEngine.Random.Range(0, 3);
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
                 thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
 				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );

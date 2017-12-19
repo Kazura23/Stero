@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 public class UiManager : ManagerParent
 {
 	#region Variables
-	public bool lauchGame = true;
 	public Slider MotionSlider;
     public Slider Madness;
 	public Image RedScreen;
@@ -37,7 +36,7 @@ public class UiManager : ManagerParent
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
-	MenuType menuOpen;
+	public MenuType menuOpen;
 
 	GameObject InGame;
 	bool onMainScene = true;
@@ -85,11 +84,6 @@ public class UiManager : ManagerParent
 			thisUi.CloseThis ( );
 			menuOpen = MenuType.Nothing;
             CloseShop();
-
-			if ( onMainScene && !openNew )
-			{
-				OpenThisMenu ( MenuType.MenuHome );
-			}
 		}
 	}
 
@@ -135,8 +129,11 @@ public class UiManager : ManagerParent
                 Camera.main.DOFieldOfView(100, .15f);
                 GlobalManager.GameCont.introFinished = true;
 
-                Camera.main.transform.DOKill(true);
-                Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+
+                    Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                    Camera.main.GetComponent<RainbowMove>().time = .2f;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                 DOVirtual.DelayedCall(.75f,()=>{
 
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
@@ -149,6 +146,35 @@ public class UiManager : ManagerParent
                         });
                     });
                 });
+            });
+        });
+    }
+
+    public void IntroRestart()
+    {
+        Time.timeScale = .05f;
+
+        DOVirtual.DelayedCall(.35f, () => {
+            Time.timeScale = .0f;
+            DOVirtual.DelayedCall(.1f, () =>
+            {
+                Time.timeScale = 1f;
+                GlobalManager.GameCont.Intro = false;
+                {
+                    GlobalManager.GameCont.introFinished = true;
+
+
+                    Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                    Camera.main.GetComponent<RainbowMove>().time = .2f;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
+                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    DOVirtual.DelayedCall(.75f, () =>
+                    {
+
+                    });
+                }
             });
         });
     }
@@ -166,7 +192,7 @@ public class UiManager : ManagerParent
 	{
 		Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
-        DOVirtual.DelayedCall(.03f, () => {
+        DOVirtual.DelayedCall(.05f, () => {
 			Time.timeScale = 1;
             //Time.fixedDeltaTime = .02F;
         });
@@ -181,6 +207,7 @@ public class UiManager : ManagerParent
 
     public void BloodHitDash()
     {
+        Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.4f, () => {
@@ -433,19 +460,12 @@ public class UiManager : ManagerParent
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
 
-		if ( !lauchGame )
-		{
-			OpenThisMenu ( MenuType.MenuHome );
-		}
-		else
-		{
 
-			if ( GlobalManager.GameCont.Player != null )
-			{
-				GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
-			}
-			GlobalManager.GameCont.StartGame ( );
+		if ( GlobalManager.GameCont.Player != null )
+		{
+			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 		}
+		GlobalManager.GameCont.StartGame ( );
 	}
 
 	void InieUI ( )
