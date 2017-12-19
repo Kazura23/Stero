@@ -120,6 +120,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1130310394680326
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4026158725621412}
+  - component: {fileID: 259926839582429632}
+  m_Layer: 0
+  m_Name: SteroProxyVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1131659026261318
 GameObject:
   m_ObjectHideFlags: 1
@@ -611,6 +627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4906462964085586}
   - component: {fileID: 95222254347309296}
+  - component: {fileID: 215073215248435130}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -1076,6 +1093,19 @@ Transform:
   m_Father: {fileID: 4183611375568460}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -1.347659, y: -21.570492, z: -75.913246}
+--- !u!4 &4026158725621412
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1130310394680326}
+  m_LocalRotation: {x: -0, y: -0.0000000074505797, z: -6.984919e-10, w: -1}
+  m_LocalPosition: {x: -0.030000005, y: 1.3200002, z: -0.008346436}
+  m_LocalScale: {x: 1.7780038, y: 1.7780044, z: 1.7780043}
+  m_Children: []
+  m_Father: {fileID: 4906462964085586}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4035475228068982
 Transform:
   m_ObjectHideFlags: 1
@@ -1272,7 +1302,7 @@ Transform:
   m_Children:
   - {fileID: 4536742121428290}
   m_Father: {fileID: 4906462964085586}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4271487149306492
 Transform:
@@ -1327,7 +1357,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710701008349626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.33, y: 1.51, z: 0.98}
+  m_LocalPosition: {x: 0, y: 1.51, z: 0.98}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 4266573813347160}
@@ -1731,7 +1761,7 @@ Transform:
   m_Children:
   - {fileID: 4659201663227790}
   m_Father: {fileID: 4906462964085586}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4756485767694848
 Transform:
@@ -1827,6 +1857,7 @@ Transform:
   m_LocalPosition: {x: -0.03, y: -0.59, z: -0.099999905}
   m_LocalScale: {x: 1, y: 0.3355096, z: 0.9978238}
   m_Children:
+  - {fileID: 4026158725621412}
   - {fileID: 4756352250632554}
   - {fileID: 4269740380791886}
   m_Father: {fileID: 4127382660493280}
@@ -2201,8 +2232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resolution: 1
-  DefaultSpotCookie: {fileID: 2800000, guid: 3a5a96df060a5cf4a9cc0c59e13486b7, type: 3}
+  Resolution: 2
+  DefaultSpotCookie: {fileID: 2800000, guid: 1e1ae8a8637880241a6eea3f1cbbcc7e, type: 3}
 --- !u!114 &114096383040500484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2243,20 +2274,20 @@ MonoBehaviour:
   m_Noise: {fileID: 2800000, guid: 35eb47181d630134c97488476efbda59, type: 3}
   m_Debug: 0
   m_Z: 1
-  m_NearClip: 5.81
-  m_FarClipMax: 72
-  m_GlobalDensityMult: 8
-  m_ConstantFog: 8
+  m_NearClip: 10.83
+  m_FarClipMax: 72.08
+  m_GlobalDensityMult: 4.99
+  m_ConstantFog: 8.5
   m_HeightFogAmount: 0.54
   m_HeightFogExponent: 0
   m_HeightFogOffset: 0
-  m_NoiseFogAmount: 0.455
+  m_NoiseFogAmount: 0.551
   m_NoiseFogScale: 0.18
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.37
-  m_GlobalIntensityMult: 8
-  m_AmbientLightIntensity: 0.88
-  m_AmbientLightColor: {r: 0.29519898, g: 0.38235295, b: 0.30661917, a: 1}
+  m_GlobalIntensityMult: 5.24
+  m_AmbientLightIntensity: 0.65
+  m_AmbientLightColor: {r: 0.36391655, g: 0.3897059, b: 0.36729583, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2403,7 +2434,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140545502523876}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4becb0c3db066d3489124665ba71e544, type: 3}
   m_Name: 
@@ -2564,7 +2595,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 2
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: d9c8f1aa6b8309142a17243d2fc531b5, type: 2}
@@ -2573,7 +2604,7 @@ SkinnedMeshRenderer:
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 1130310394680326}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -2636,3 +2667,53 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.025633037, y: -0.16238926, z: 0.097285286}
     m_Extent: {x: 0.70584565, y: 0.38163328, z: 0.484905}
   m_DirtyAABB: 0
+--- !u!215 &215073215248435130
+ReflectionProbe:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653938153768386}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 1
+  m_RefreshMode: 1
+  m_TimeSlicingMode: 0
+  m_Resolution: 16
+  m_UpdateFrequency: 0
+  m_BoxSize: {x: 10, y: 10, z: 10}
+  m_BoxOffset: {x: 0, y: 0, z: 0}
+  m_NearClip: 1
+  m_FarClip: 10
+  m_ShadowDistance: 100
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IntensityMultiplier: 0.32
+  m_BlendDistance: 10
+  m_HDR: 1
+  m_BoxProjection: 1
+  m_RenderDynamicObjects: 1
+  m_UseOcclusionCulling: 0
+  m_Importance: 0
+  m_CustomBakedTexture: {fileID: 8900000, guid: 1cc80957dce17e9498c296cdffce7166,
+    type: 3}
+--- !u!259 &259926839582429632
+LightProbeProxyVolume:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1130310394680326}
+  m_Enabled: 1
+  m_BoundingBoxMode: 0
+  m_ResolutionX: 2
+  m_ResolutionY: 2
+  m_ResolutionZ: 2
+  m_ResolutionProbesPerUnit: 0.16
+  m_BoundingBoxSize: {x: Infinity, y: Infinity, z: Infinity}
+  m_BoundingBoxOrigin: {x: 0, y: 0, z: 0}
+  m_ResolutionMode: 1
+  m_ProbePositionMode: 1
+  m_RefreshMode: 1
