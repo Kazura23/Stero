@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
 	bool dpunch = false;
     bool InBeginMadness = false;
 	bool chargeDp = false;
+	bool canUseDash = true;
 	#endregion
 
 	#region Mono
@@ -522,16 +523,15 @@ public class PlayerController : MonoBehaviour
 
 		if ( !playerDead && !InBeginMadness)
 		{
-			if ( Input.GetAxis ( "CoupSimple" ) == 0 && !Dash )
+			if ( Input.GetAxis ( "CoupSimple" ) == 0 )
 			{
 				resetAxeS = true;
 			}
 
-			if ( Input.GetAxis ( "CoupDouble" ) == 0 && !Dash )
+			if ( Input.GetAxis ( "CoupDouble" ) == 0 )
 			{
 				resetAxeD = true;
 				getFOVDP = FOVIncrease;
-
 
                 if ( timeToDP < TimeToDoublePunch * 0.75f )
 				{
@@ -551,8 +551,9 @@ public class PlayerController : MonoBehaviour
                 }
 			}
 
-            if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD && !Dash )
+            if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
 			{
+				Dash = false;
 				float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
 
 				chargeDp = true;
@@ -607,7 +608,7 @@ public class PlayerController : MonoBehaviour
             playerFight ( );
 		}
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp )
+		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !InBeginMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{
 			if ( !Dash )
 			{
@@ -615,10 +616,13 @@ public class PlayerController : MonoBehaviour
 				int rdmValue = UnityEngine.Random.Range(0, 3);
 				GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
 			}
+
 			Dash = true;
+			canUseDash = false;
 		}
-		else
+		else if ( Input.GetAxis ( "Dash" ) == 0 )
 		{
+			canUseDash = true;
 			Dash = false;
 		}
 
@@ -684,11 +688,22 @@ public class PlayerController : MonoBehaviour
 
 	void speAction ( float getTime )
 	{
+		if ( Input.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
+		{
+			if ( ThisAct == SpecialAction.SlowMot && Input.GetAxis ( "SpecialAction" ) == 0 )
+			{
+				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+				animeSlo = false;
+			}
+			return;
+		}
+		Dash = false;
+
 		if ( ThisAct == SpecialAction.SlowMot )
 		{
-			if ( Input.GetAxis ( "SpecialAction" ) > 0 && canSpe && SliderContent > 0 && !Dash )
+			if ( SliderContent > 0 )
 			{
-				Camera.main.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
+				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
 
 				if ( !animeSlo )
 				{
@@ -718,7 +733,7 @@ public class PlayerController : MonoBehaviour
 				animeSlo = false;
 				Time.timeScale = 1;
 				SliderContent += RecovSlider * getTime;
-				Camera.main.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 
 				if ( SliderContent > 2 )
 				{
@@ -733,33 +748,33 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
+		else if ( ThisAct == SpecialAction.OndeChoc )
 		{
 			canSpe = false;
-            Camera.main.GetComponent<RainbowMove>().enabled = false;
-            transform.DOLocalMoveY(7, .45f).SetEase(Ease.Linear).OnComplete(() => {
-            DOVirtual.DelayedCall(.6f,()=>{
+			StopPlayer = true;
+			pRig.useGravity = false;
+			thisCam.GetComponent<RainbowMove>().enabled = false;
 
-                    transform.DOLocalMoveY(1.5f, .2f).SetEase(Ease.Linear).OnComplete(()=> {
+			pTrans.DOLocalMoveY(7, .3f).SetEase(Ease.Linear).OnComplete(() => {
 
-                        
-                        Camera.main.GetComponent<RainbowMove>().enabled = true;
+					pTrans.DOLocalMoveY(1.5f, .15f).SetEase(Ease.Linear).OnComplete(()=> {
+						thisCam.GetComponent<RainbowMove>().enabled = true;
 
                         ScreenShake.Singleton.ShakeFall();
+						StopPlayer = false;
+						pRig.useGravity = true;
 
                         sphereChocWave.enabled = true;
                         StartCoroutine(CooldownWave());
                         StartCoroutine(TimerHitbox());
                     });
 
-                });
             });
 
 		}
-		else if ( ThisAct == SpecialAction.DeadBall && Input.GetAxis ( "SpecialAction" ) > 0 && canSpe )
+		else if ( ThisAct == SpecialAction.DeadBall )
 		{
 			pRig.constraints = RigidbodyConstraints.FreezeAll;
-
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
@@ -943,7 +958,7 @@ public class PlayerController : MonoBehaviour
 
 			GlobalManager.Ui.DashSpeedEffect ( true );
            
-			Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
 		{
@@ -952,7 +967,7 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			GlobalManager.Ui.DashSpeedEffect ( false );
-			Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole>().enabled = false;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole>().enabled = false;
 
 			if ( propP )
 			{
@@ -1160,27 +1175,9 @@ public class PlayerController : MonoBehaviour
 
 	void playerFight ( )
 	{
-		if ( Input.anyKeyDown && Input.GetAxis ( "SpecialAction" ) == 0 && Input.GetAxis ( "Horizontal" ) == 0 && !Dash )
-		{
-			thisCam.fieldOfView = Constants.DefFov;
-
-			/*if (InMadness)
-			{
-				if (BarMadness.value - LessPointPunchInMadness < 0)
-				{
-					BarMadness.value = 0;
-				}
-				else
-				{
-					BarMadness.value -= LessPointPunchInMadness;
-                    ScreenShake.Singleton.ShakeMad();
-                    Camera.main.GetComponent<CameraFilterPack_Distortion_Dream2>().Distortion = (BarMadness.value/10);
-                }
-			}*/
-		}
-
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && !Dash && GlobalManager.GameCont.introFinished )
+		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
         {
+			Dash = false;
             thisCam.fieldOfView = Constants.DefFov;
             //Debug.Log("IntroFInished");
             resetAxeS = false;
@@ -1221,8 +1218,9 @@ public class PlayerController : MonoBehaviour
             propPunch = propulsePunch(TimePropulsePunch);
             StartCoroutine(propPunch);
 		}
-		else if( dpunch && canPunch && !Dash )
+		else if( dpunch && canPunch )
         {
+			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
             playAnimator.SetBool("ChargingPunch", false);
