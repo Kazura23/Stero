@@ -336,7 +336,7 @@ public class PlayerController : MonoBehaviour
 
 		stopMadness ( );
 
-        BarMadness.value = 80;
+        BarMadness.value = 0;
 
 	}
 
