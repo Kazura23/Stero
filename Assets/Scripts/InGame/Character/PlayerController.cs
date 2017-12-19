@@ -203,7 +203,15 @@ public class PlayerController : MonoBehaviour
 	#region Mono
 	void Update ( )
 	{
-		Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+        //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MaxSpeed = 1f;
+            acceleration = 1;
+        }
+            
+
 
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
@@ -1272,7 +1280,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        Shader.SetGlobalFloat("_saturation", BarMadness.value);
+        //Shader.SetGlobalFloat("_Saturation", -BarMadness.value / 20);
+
+        Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 

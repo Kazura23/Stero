@@ -207,7 +207,7 @@ public class UiManager : ManagerParent
 
     public void BloodHitDash()
     {
-        Debug.Log("HitDash");
+        //Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.4f, () => {
@@ -314,7 +314,7 @@ public class UiManager : ManagerParent
 
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
-        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false);
+        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
 	public void StartSlowMo()
