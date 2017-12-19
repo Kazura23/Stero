@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 114413078506810834}
   - component: {fileID: 114577942667652742}
   - component: {fileID: 114170213738010420}
+  - component: {fileID: 114093049653860012}
   m_Layer: 11
   m_Name: => Main Camera
   m_TagString: MainCamera
@@ -1916,7 +1917,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.02
-  far clip plane: 150
+  far clip plane: 400
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2189,6 +2190,19 @@ MonoBehaviour:
   _CenterY: 0.5
   _AlphaBlur: 0.768
   _AlphaBlurInside: 0.075
+--- !u!114 &114093049653860012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140545502523876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Resolution: 1
+  DefaultSpotCookie: {fileID: 2800000, guid: 3a5a96df060a5cf4a9cc0c59e13486b7, type: 3}
 --- !u!114 &114096383040500484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2229,20 +2243,20 @@ MonoBehaviour:
   m_Noise: {fileID: 2800000, guid: 35eb47181d630134c97488476efbda59, type: 3}
   m_Debug: 0
   m_Z: 1
-  m_NearClip: 5
-  m_FarClipMax: 39.14
-  m_GlobalDensityMult: 4
+  m_NearClip: 5.81
+  m_FarClipMax: 72
+  m_GlobalDensityMult: 8
   m_ConstantFog: 8
-  m_HeightFogAmount: 0.06
+  m_HeightFogAmount: 0.54
   m_HeightFogExponent: 0
   m_HeightFogOffset: 0
-  m_NoiseFogAmount: 0.63
-  m_NoiseFogScale: 0.12
+  m_NoiseFogAmount: 0.455
+  m_NoiseFogScale: 0.18
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.37
   m_GlobalIntensityMult: 8
-  m_AmbientLightIntensity: 1
-  m_AmbientLightColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 1}
+  m_AmbientLightIntensity: 0.88
+  m_AmbientLightColor: {r: 0.29519898, g: 0.38235295, b: 0.30661917, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
   m_ObjectHideFlags: 1
