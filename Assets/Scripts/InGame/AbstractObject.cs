@@ -62,19 +62,10 @@ public class AbstractObject : MonoBehaviour
 			meshRigid = mainCorps;
 		}
 
-		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
-		{ 
-			if ( meshRigid != null )
-			{
-				distForDB = thisEvnt.CheckDist; 
-				startDeadBall ( ); 
-			}
-		}; 
-
-		GlobalManager.Event.Register ( checkDBE ); 
+		
 	}
 
-    void Update()
+    protected virtual void Update()
     {
         if (playerCont.playerDead)
             PlayerDetected(playerTrans.gameObject, false);
@@ -84,7 +75,16 @@ public class AbstractObject : MonoBehaviour
     {
         playerTrans = GlobalManager.GameCont.Player.transform;
         playerCont = playerTrans.GetComponent<PlayerController>();
+        System.Action<DeadBallEvent> checkDBE = delegate (DeadBallEvent thisEvnt)
+        {
+            if (meshRigid != null)
+            {
+                distForDB = thisEvnt.CheckDist;
+                startDeadBall();
+            }
+        };
 
+        GlobalManager.Event.Register(checkDBE);
     }
 	#endregion
 
