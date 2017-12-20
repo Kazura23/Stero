@@ -231,7 +231,8 @@ public class GameController : ManagerParent
 
     public void Restart () 
 	{
-        
+        Time.timeScale = 1;
+
         AllPlayerPrefs.ResetStaticVar();
 		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
 

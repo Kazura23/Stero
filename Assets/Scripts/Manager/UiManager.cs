@@ -27,6 +27,7 @@ public class UiManager : ManagerParent
     public Image SlowMotion;
     public Image BonusLife;
 	public List<Image> ExtraHearts;
+    public Sprite[] AbilitiesSprite;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
@@ -329,8 +330,17 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSlowMo()
+	public void StartSpecialAction(string type)
     {
+        if (type == "SlowMot")
+            SlowMotion.sprite = AbilitiesSprite[0];
+
+        if (type == "OndeChoc")
+            SlowMotion.sprite = AbilitiesSprite[1];
+
+        if (type == "DeadBall")
+            SlowMotion.sprite = AbilitiesSprite[2];
+
         SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(Color.white, 0);
