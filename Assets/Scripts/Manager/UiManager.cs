@@ -261,7 +261,10 @@ public class UiManager : ManagerParent
         Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
         Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
-        GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+        GameObject textMadness;
+        textMadness = GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+
+        Destroy(textMadness, 3);
 
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);

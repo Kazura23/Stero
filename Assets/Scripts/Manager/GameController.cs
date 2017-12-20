@@ -37,6 +37,7 @@ public class GameController : ManagerParent
     public Transform[] textIntroTransform;
     public string[] textIntroText;
     public Tween colorTw;
+    public GameObject musicObject;
 
 
     bool restartGame = false;
@@ -150,6 +151,11 @@ public class GameController : ManagerParent
         GameStartedUpdate();
     }
 
+    private void Awake()
+    { 
+        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+    }
+
     public void StartGame ( )
 	{
         //Debug.Log("Start");
@@ -164,6 +170,7 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 		Intro = true;
 		isStay = true;
+
 
 		if ( restartGame )
 		{
@@ -192,6 +199,7 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
 
+        
 		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) ) 
 		{ 
 			setMusic ( ); 
@@ -288,10 +296,14 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
-	void setMusic ( ) 
+	void setMusic () 
 	{ 
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
-	} 
+        if(restartGame)
+		    GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+
+        else
+            GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "Menu",true,null);
+    } 
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
@@ -308,7 +320,14 @@ public class GameController : ManagerParent
                     //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
                     Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
                     {
+                        // Cri de Mr S après avoir pris sa dose
                         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+                        // Démarrage de la musique du Hub amplifiée après Stéro
+                        musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+                        musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+                        musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
 
                         Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
                         {
@@ -378,6 +397,12 @@ public class GameController : ManagerParent
 
                 GlobalManager.Ui.Intro();
                 isStay = false;
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+
+            musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+                musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
+
 
                 checkStart = true;
                 //Debug.Log("player = " + Player);
