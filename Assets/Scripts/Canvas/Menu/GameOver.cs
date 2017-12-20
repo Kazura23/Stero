@@ -16,7 +16,7 @@ public class GameOver : UiParent
 	}
 
 	public GameObject PatternGameOver, BarGameOver;
-	public Text YouGameOver, MadeGameOver, PointsGameOver, PressGameOver, Highscore, newScore, quoteScore;
+	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
 	#endregion
 
 	#region Mono
@@ -26,7 +26,7 @@ public class GameOver : UiParent
 		{
             AllPlayerPrefs.relance = true;
 			GlobalManager.GameCont.Restart ();
-		}else if (Input.GetKeyDown(KeyCode.Backspace))
+		}else if (Input.GetKeyDown(KeyCode.Escape))
         {
             AllPlayerPrefs.relance = false;
             GlobalManager.GameCont.Restart();
@@ -52,7 +52,10 @@ public class GameOver : UiParent
 		YouGameOver.DOFade(0, 0);
 		MadeGameOver.DOFade(0, 0);
 		PointsGameOver.DOFade(0, 0);
-		YouGameOver.transform.DOScale(5, 0);
+        quoteScore.DOFade(0, 0);
+        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(0, 0);
+        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(0, 0);
+        YouGameOver.transform.DOScale(5, 0);
 		MadeGameOver.transform.DOScale(5, 0);
 		PointsGameOver.transform.DOScale(5, 0);
 		BarGameOver.transform.DOScaleY(0, 0);
@@ -93,8 +96,9 @@ public class GameOver : UiParent
                         });*/
                     }
 
-					DOVirtual.DelayedCall(2.5f, () => {
-						PressGameOver.GetComponent<CanvasGroup>().DOFade(1, .5f);
+					DOVirtual.DelayedCall(1f, () => {
+                        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
                         quoteScore.DOFade(1, 2f);
 					});
 				});
