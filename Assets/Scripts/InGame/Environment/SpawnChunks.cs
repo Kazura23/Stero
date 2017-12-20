@@ -29,7 +29,8 @@ public class SpawnChunks : MonoBehaviour
 	int CurrRandLvl = 0;
 	int saveLvlForStart = 0;
 	bool randAllChunk = false;
-	bool transitChunk = true;
+	bool transitChunk = false;
+	int minLevel = 0;
 	#endregion
 	
 	#region Mono
@@ -132,6 +133,8 @@ public class SpawnChunks : MonoBehaviour
 			}
 		}
 
+		minLevel = currLevel;
+
 		CurrRandLvl = Random.Range ( 0, chunkOrder [ currLevel ].ChunkScript.Count );
 
 		thisChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
@@ -177,7 +180,7 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( !StartBonus )
 		{
-			currLevel = 1;
+			currLevel = minLevel;
 		}
 
 		while ( getSpc.Count > 0 )
@@ -235,8 +238,7 @@ public class SpawnChunks : MonoBehaviour
 			thisObj.transform.localPosition += thisObj.transform.up * thisObj.GetComponent<MeshRenderer> ( ).bounds.size.y / 2;
 		}
 
-
-		if ( getCunk.TransitionChunks.Count == 0 )
+		if ( getCunk.TransitionChunks.Count == 0 || transitChunk )
 		{
 			transitChunk = false;
 			currLevel++;
@@ -601,7 +603,8 @@ public class SpawnChunks : MonoBehaviour
 	void spawnElements ( List<GameObject> spawnerElem, List<GameObject> elemSpawnable )
 	{
 		GameObject thisObj;
-		int rand = LvlChunksInfo [ currLevel ].ChunkScript [ currChunk ].PourcSpawn;
+		int rand = thisChunk.PourcSpawn;
+
 		int a;
 
 		for ( a = 0; a < spawnerElem.Count; a++ )
