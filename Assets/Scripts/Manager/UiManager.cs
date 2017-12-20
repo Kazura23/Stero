@@ -27,6 +27,7 @@ public class UiManager : ManagerParent
     public Image SlowMotion;
     public Image BonusLife;
 	public List<Image> ExtraHearts;
+    public Sprite[] AbilitiesSprite;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
@@ -124,21 +125,28 @@ public class UiManager : ManagerParent
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
                 Camera.main.DOFieldOfView(4, .25f);
-                DOVirtual.DelayedCall(.25f, () =>
+                DOVirtual.DelayedCall(1f, () =>
                 {
+                    GlobalManager.GameCont.introFinished = true;
+                });
                 Camera.main.DOFieldOfView(100, .15f);
-                GlobalManager.GameCont.introFinished = true;
 
-
+                DOVirtual.DelayedCall(.25f, () => { 
                     Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().enabled = false;
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
                     Camera.main.GetComponent<RainbowRotate>().time = .4f;
                     Camera.main.GetComponent<RainbowMove>().time = .2f;
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                 DOVirtual.DelayedCall(.75f,()=>{
 
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
-                   // Camera.main.GetComponent<RainbowRotate>().reStart();
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
+                    // Camera.main.GetComponent<RainbowRotate>().reStart();
                 });
                     DOVirtual.DelayedCall(2f, () =>
                     {
@@ -160,19 +168,24 @@ public class UiManager : ManagerParent
             {
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
+                DOVirtual.DelayedCall(1f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
-
-
+                });
+                {
                     Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().enabled = false;
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
                     Camera.main.GetComponent<RainbowRotate>().time = .4f;
                     Camera.main.GetComponent<RainbowMove>().time = .2f;
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                     DOVirtual.DelayedCall(.75f, () =>
                     {
-
+                        Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
                     });
                 }
             });
@@ -317,8 +330,17 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSlowMo()
+	public void StartSpecialAction(string type)
     {
+        if (type == "SlowMot")
+            SlowMotion.sprite = AbilitiesSprite[0];
+
+        if (type == "OndeChoc")
+            SlowMotion.sprite = AbilitiesSprite[1];
+
+        if (type == "DeadBall")
+            SlowMotion.sprite = AbilitiesSprite[2];
+
         SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(Color.white, 0);
