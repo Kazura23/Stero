@@ -21,6 +21,9 @@ GameObject:
   - component: {fileID: 4281323560310956}
   - component: {fileID: 33330726796912142}
   - component: {fileID: 23288148744120304}
+  - component: {fileID: 64348982108160144}
+  - component: {fileID: 114444036799371012}
+  - component: {fileID: 205645691758311846}
   m_Layer: 0
   m_Name: Chair_02 (1)
   m_TagString: Untagged
@@ -34,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1305529572717562}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 1.23, z: 52.34}
-  m_LocalScale: {x: 0.5234196, y: 0.5234197, z: 0.5234197}
+  m_LocalRotation: {x: -0, y: 0.91222215, z: -0, w: 0.4096961}
+  m_LocalPosition: {x: 28.217731, y: 1.15, z: 37.92356}
+  m_LocalScale: {x: 1.0468173, y: 0.83644116, z: 0.83644116}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 131.62901, z: 0}
 --- !u!23 &23288148744120304
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -80,3 +83,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1305529572717562}
   m_Mesh: {fileID: 4300000, guid: 4694d7c52133543459e0404254353a92, type: 3}
+--- !u!64 &64348982108160144
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305529572717562}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 4694d7c52133543459e0404254353a92, type: 3}
+--- !u!114 &114444036799371012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305529572717562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7f872dd3672684392c2e835fd52299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForcePropulse: 5
+  DelayDestruc: 1
+  nbPunchDestroy: 2
+--- !u!205 &205645691758311846
+LODGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305529572717562}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 2.70929
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05072202
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 23288148744120304}
+  m_Enabled: 1
