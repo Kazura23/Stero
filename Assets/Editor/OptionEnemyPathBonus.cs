@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ZigZagEnemi))]
-public class OptionZigzagEnemi : Editor {
+[CustomEditor(typeof(EnemyPathBonus))]
+public class OptionEnemyPathBonus : Editor {
 
     public override void OnInspectorGUI()
     {
-        ZigZagEnemi mytarget = (ZigZagEnemi)target;
+        EnemyPathBonus mytarget = (EnemyPathBonus)target;
         DrawDefaultInspector();
 
         if(GUILayout.Button("Add new position"))
@@ -23,7 +23,7 @@ public class OptionZigzagEnemi : Editor {
 
     public void OnSceneGUI()
     {
-        ZigZagEnemi mytarget = (ZigZagEnemi)target;
+        EnemyPathBonus mytarget = (EnemyPathBonus)target;
         if (mytarget.tabPath.Count > 0)
         {
             var paths = mytarget.transform.parent.GetChild(1);
@@ -39,7 +39,7 @@ public class OptionZigzagEnemi : Editor {
 
                 Handles.DrawBezier(paths.GetChild(i).position, paths.GetChild(i + 1).position, S, S + AI, Color.red, null, 1);*/
 
-                Handles.DrawBezier(paths.GetChild(i).position, paths.GetChild(i + 1).position, paths.GetChild(i).position, paths.GetChild(i + 1).position, Color.red, null, 1);
+                Handles.DrawBezier(paths.GetChild(i).position, paths.GetChild(i + 1).position, paths.GetChild(i).position, paths.GetChild(i + 1).position, Color.red, null, 3);
             }
         }
     }
