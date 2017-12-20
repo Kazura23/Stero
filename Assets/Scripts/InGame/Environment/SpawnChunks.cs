@@ -29,7 +29,7 @@ public class SpawnChunks : MonoBehaviour
 	int CurrRandLvl = 0;
 	int saveLvlForStart = 0;
 	bool randAllChunk = false;
-	bool transitChunk = false;
+	bool transitChunk = true;
 	#endregion
 	
 	#region Mono
