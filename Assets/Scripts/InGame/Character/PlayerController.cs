@@ -653,7 +653,7 @@ public class PlayerController : MonoBehaviour
                 if (!animeSlo)
                 {
                     animeSlo = true;
-                    GlobalManager.Ui.StartSlowMo();
+                    GlobalManager.Ui.StartSpecialAction("SlowMot");
                 }
 
                 if (Time.timeScale > 1 / SlowMotion)
@@ -700,31 +700,41 @@ public class PlayerController : MonoBehaviour
 			pRig.useGravity = false;
 			StopPlayer = true;
 
-			DOVirtual.DelayedCall ( .35f, ( ) =>
-			{ 
-				onAnimeAir = true;
-			} );
+            GlobalManager.Ui.StartSpecialAction("OndeChoc");
 
-            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+            //MR S S'ABAISSE
+            pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
+            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
-            transform.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
-            pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
-				pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 10 - pTrans.up * 2, .2f).SetEase(Ease.Linear).OnComplete(() => {
-                    transform.DOLocalRotate((new Vector3(25, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
-                        transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                onAnimeAir = true;
+
+                //MR S SAUTE
+                transform.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
+
+                    //MR S RETOMBE
+                    pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
+
+                        transform.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
+                            transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                        });
+                        onAnimeAir = false;
+                        pRig.useGravity = true;
+                        StopPlayer = false;
+                        pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+                        inAir = true;
+                        StartCoroutine(groundAfterChoc());
                     });
-                    onAnimeAir = false;
-					pRig.useGravity = true;
-					StopPlayer = false;
-					pRig.AddForce ( Vector3.down * 10, ForceMode.VelocityChange );
-					inAir = true;
-					StartCoroutine ( groundAfterChoc ( ) );	
-				});
+                });
             });
+
 		}
 		else if ( ThisAct == SpecialAction.DeadBall )
 		{
-			pRig.constraints = RigidbodyConstraints.FreezeAll;
+
+            GlobalManager.Ui.StartSpecialAction("DeadBall");
+
+            pRig.constraints = RigidbodyConstraints.FreezeAll;
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
