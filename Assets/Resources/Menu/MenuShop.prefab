@@ -556,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1389160343530108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,6 +1427,9 @@ GameObject:
   - component: {fileID: 222691228712182028}
   - component: {fileID: 114146923325066034}
   - component: {fileID: 114227476113059484}
+  - component: {fileID: 102723642917853676}
+  - component: {fileID: 23792363435702774}
+  - component: {fileID: 114021146375796830}
   m_Layer: 5
   m_Name: Icon_Cat
   m_TagString: Untagged
@@ -1762,6 +1765,59 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!23 &23792363435702774
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820952721086248}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!102 &102723642917853676
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820952721086248}
+  m_Text: 
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!114 &114009686680618348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1822,6 +1878,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114021146375796830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820952721086248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43e4a3d5e997e447a9e98b9ce20e434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114024698903977474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1935,15 +2002,18 @@ MonoBehaviour:
   RightItem: {fileID: 114301209842523020}
   LeftItem: {fileID: 114572793328842546}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
   SpecAction: 1
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114087282151574038
 MonoBehaviour:
@@ -2411,15 +2481,18 @@ MonoBehaviour:
   RightItem: {fileID: 114454900713898154}
   LeftItem: {fileID: 114293985590383526}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
   SpecAction: 1
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114222231240497336
 MonoBehaviour:
@@ -2455,15 +2528,18 @@ MonoBehaviour:
   RightItem: {fileID: 114841578427206438}
   LeftItem: {fileID: 114841578427206438}
   ModifVie: 1
+  StartBonus: 0
   ModifSpecial: 0
   NombreVie: 2
   SpecAction: 0
   Selected: 0
+  AddItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114227476113059484
 MonoBehaviour:
@@ -2759,15 +2835,18 @@ MonoBehaviour:
   RightItem: {fileID: 114218943045458366}
   LeftItem: {fileID: 114454900713898154}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
   SpecAction: 2
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114301209842523020
 MonoBehaviour:
@@ -2801,17 +2880,20 @@ MonoBehaviour:
   BoughtSpriteSelected: {fileID: 21300000, guid: fc88ce24a47f4014cb0ad237abc8d1dd,
     type: 3}
   RightItem: {fileID: 114572793328842546}
-  LeftItem: {fileID: 114218943045458366}
+  LeftItem: {fileID: 114084517801229942}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
   SpecAction: 1
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114311073628782050
 MonoBehaviour:
@@ -2907,15 +2989,18 @@ MonoBehaviour:
   RightItem: {fileID: 114540433938508488}
   LeftItem: {fileID: 114343981507369710}
   ModifVie: 1
+  StartBonus: 0
   ModifSpecial: 0
   NombreVie: 2
   SpecAction: 0
   Selected: 0
+  AddItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114356815263673642
 MonoBehaviour:
@@ -3396,15 +3481,18 @@ MonoBehaviour:
   RightItem: {fileID: 114293985590383526}
   LeftItem: {fileID: 114218943045458366}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
-  SpecAction: 1
+  SpecAction: 3
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 50
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114460097276511374
 MonoBehaviour:
@@ -3700,15 +3788,18 @@ MonoBehaviour:
   RightItem: {fileID: 114540433938508488}
   LeftItem: {fileID: 114343981507369710}
   ModifVie: 1
+  StartBonus: 0
   ModifSpecial: 0
   NombreVie: 2
   SpecAction: 0
   Selected: 0
+  AddItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114572793328842546
 MonoBehaviour:
@@ -3741,18 +3832,21 @@ MonoBehaviour:
     type: 3}
   BoughtSpriteSelected: {fileID: 21300000, guid: fc88ce24a47f4014cb0ad237abc8d1dd,
     type: 3}
-  RightItem: {fileID: 114218943045458366}
+  RightItem: {fileID: 114084517801229942}
   LeftItem: {fileID: 114301209842523020}
   ModifVie: 0
+  StartBonus: 0
   ModifSpecial: 1
   NombreVie: 1
   SpecAction: 2
   Selected: 0
+  AddItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114596985051185922
 MonoBehaviour:
@@ -4657,16 +4751,19 @@ MonoBehaviour:
     type: 3}
   RightItem: {fileID: 114222231240497336}
   LeftItem: {fileID: 114222231240497336}
-  ModifVie: 1
+  ModifVie: 0
+  StartBonus: 1
   ModifSpecial: 0
   NombreVie: 2
   SpecAction: 0
   Selected: 0
+  AddItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
+  DistTakeDB: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114861043411945430
 MonoBehaviour:

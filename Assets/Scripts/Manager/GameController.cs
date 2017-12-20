@@ -17,7 +17,6 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
-    public bool GameStarted;
     public bool Intro;
 
 	[HideInInspector]
@@ -28,16 +27,25 @@ public class GameController : ManagerParent
     public Tween soundFootSteps;
 	bool checkStart = false;
     bool isStay = true, isReady = false, relance = false;
-    private int chooseOption = 0;
+    [HideInInspector]
+    public bool introFinished;
+    private int chooseOption = 2;
     public Vector3[] moveRotate = new Vector3[5];
     public GameObject[] tabGameObject = new GameObject[5];
     public float delayRotate = 5;
-    public Transform textMeshs;
+    public GameObject textIntroObject;
+    public Transform[] textIntroTransform;
+    public string[] textIntroText;
+    public Tween colorTw;
+
+
+    bool restartGame = false;
+    public bool canOpenShop = true;
+
+    bool GameStarted = false;
     #endregion
 
     #region Mono
-
-
     void Update ( )
 	{
 		if (Input.GetKeyDown(KeyCode.P))
@@ -46,51 +54,93 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
+
             switch (chooseOption)
             {
-                case 0: // start game
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        isStay = false;
-                        AnimationStartGame();
-                    }
+
+            case 0: // Options
+
+                    //Debug.Log("Options");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
+                    
+
                     //GameStartedUpdate();
                     break;
 
-                case 1: // shop
-
-                    Debug.Log("Shop");
+			case 1: // Leaderboards
+                    //Debug.Log("Leaderboards");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
+                    
                     break;
 
-                case 2: // quitter
+            case 2: //Start game
 
-                    Debug.Log("Quit");
+                    //Debug.Log("Start");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
+                    
+                    if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
+                {
+                    StartGame();
+                    isStay = false;
+                    AnimationStartGame();
+                }
+
+                break;
+		
+			case 3: // Shop
+                    //Debug.Log("Shop");
+
+
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
+
+                    ActiveTextIntro();
+
+                    if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
+                        GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
                     break;
 
-                case 3: // highscore
-
-
-                    Debug.Log("Highscores");
-                    break;
-
-                case 4:  // option
-
-                    Debug.Log("Options");
+            case 4:  // Quitter
+                     //Debug.Log("Quit");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
+                    
                     break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                ActiveTextIntro();
                 ChooseRotate(false);
             }else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
             {
+                ActiveTextIntro();
                 ChooseRotate(true);
             }
-        }else if (isReady && Input.GetKeyDown(KeyCode.W) && !AllPlayerPrefs.relance && isStay)
+		}else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
         {
             Player.GetComponent<PlayerController>().GetPunchIntro();
+
+            Debug.Log("PunchIntro");
         }
+        
 	}
 
+    void ActiveTextIntro()
+    {
+        colorTw = DOVirtual.DelayedCall(.2f, () => {
+            Color alph = textIntroObject.GetComponent<TextMesh>().color;
+            alph.a = 1;
+            textIntroObject.GetComponent<TextMesh>().color = alph;
+        });
+    }
 
     #endregion
 
@@ -102,12 +152,34 @@ public class GameController : ManagerParent
 
     public void StartGame ( )
 	{
-        Debug.Log("Start");
+        //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
-		Player = GameObject.FindGameObjectWithTag("Player");
+		if ( Player == null )
+		{
+			Player = GameObject.FindGameObjectWithTag("Player");
+			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+		}
+
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
-        Intro = true;
+		Intro = true;
+		isStay = true;
+
+		if ( restartGame )
+		{
+			isStay = false;
+			Intro = false;
+
+			Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+			{
+
+				Player.GetComponent<PlayerController>().GetPunchIntro();
+				Player.GetComponent<PlayerController>( ).StopPlayer = false;
+				restartGame = false;
+                GlobalManager.Ui.IntroRestart();
+			});
+		}
+
 
 		SetAllBonus ( );
 
@@ -166,12 +238,27 @@ public class GameController : ManagerParent
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         checkStart = false;
+        
         if (AllPlayerPrefs.relance)
         {
+			restartGame = true;
             isReady = true;
             GameStarted = true;
+
+			Player.GetComponent<PlayerController>().StopPlayer = false;
+			Camera.main.GetComponent<RainbowRotate>().time = .4f;
+			Camera.main.GetComponent<RainbowMove>().time = .2f;
+
+			soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+				//Debug.Log("here");
+				int randomSound = UnityEngine.Random.Range(0, 6);
+
+				GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+				//J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+				//Debug.Log("Audio");
+			}).SetLoops(-1, LoopType.Restart);
             //GameStartedUpdate();
-            StartCoroutine(TrashFunction());
+           // StartCoroutine(TrashFunction());
         }
         else
         {
@@ -193,7 +280,7 @@ public class GameController : ManagerParent
 
     private IEnumerator TrashFunction()
     {
-        yield return new WaitForSeconds(5); //=> attendre 0.5 seconde ok (mais code deguelasse)
+        yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
         GameStartedUpdate();
     }
 
@@ -220,15 +307,19 @@ public class GameController : ManagerParent
                     //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
                     Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
                     {
+                        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
                         Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
                         {
                             //Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+
                             Player.transform.DOMoveZ(3, 1).OnComplete(() =>
                             {
                                 isReady = true;
                                 isStay = true;
                                 //Player.GetComponent<PlayerController>().StopPlayer = false;
-                                Debug.Log("anime fonctionnelle");
+                                //Debug.Log("anime fonctionnelle");
                             });
                         });
                     });
@@ -244,17 +335,32 @@ public class GameController : ManagerParent
 
     private void ChooseRotate(bool p_add)
     {
-        if (p_add)
+		if ( !Intro )
+		{
+			return;
+		}
+        //colorTw.Kill(true);
+
+        Color alphachg = textIntroObject.GetComponent<TextMesh>().color;
+        alphachg.a = 0;
+        textIntroObject.GetComponent<TextMesh>().color = alphachg;
+
+        if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {
+            Debug.Log("Rotate");
             chooseOption++;
             if (chooseOption == moveRotate.Length)
                 chooseOption = 0;
         }
-        else
+        else 
         {
-            chooseOption--;
-            if (chooseOption == -1)
-                chooseOption = moveRotate.Length - 1;
+            if(GlobalManager.Ui.menuOpen == MenuType.Nothing)
+            {
+                chooseOption--;
+                if (chooseOption == -1)
+                    chooseOption = moveRotate.Length - 1;
+
+            }
         }
         isStay = false;
         StartCoroutine(TimerRotate());
@@ -267,23 +373,24 @@ public class GameController : ManagerParent
         {*/
             if (GameStarted && !checkStart)
             {
-                Debug.Log("Demarrage");
+                //Debug.Log("Demarrage");
 
                 GlobalManager.Ui.Intro();
+                isStay = false;
 
                 checkStart = true;
-                Debug.Log("player = " + Player);
+                //Debug.Log("player = " + Player);
                 Player.GetComponent<PlayerController>().StopPlayer = false;
-                Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                Camera.main.GetComponent<RainbowMove>().time = .2f;
+                //Camera.main.GetComponent<RainbowRotate>().time = .4f;
+                //Camera.main.GetComponent<RainbowMove>().time = .2f;
 
                 soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
-                    Debug.Log("here");
+                    //Debug.Log("here");
                     int randomSound = UnityEngine.Random.Range(0, 6);
 
                     GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
                     //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    Debug.Log("Audio");
+                    //Debug.Log("Audio");
                 }).SetLoops(-1, LoopType.Restart);
             }
             /*else
@@ -309,6 +416,8 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
+		Player = GameObject.FindGameObjectWithTag("Player");
+
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
@@ -347,6 +456,8 @@ public class GameController : ManagerParent
 		ItemModif thisItem;
 		List<string> getKey = new List<string> ( );
 
+		SpawnerChunck.EndLevel = 1;
+
 		if ( getMod != null )
 		{
 			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
@@ -380,7 +491,10 @@ public class GameController : ManagerParent
 				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
 				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
 				break;
-
+			case SpecialAction.DeadBall:
+				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
+				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
+				break;
 			default:
 				currPlayer.SliderSlow.maxValue = 10;
 				break;
@@ -418,7 +532,13 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life ++;
+			currPlayer.Life++;
+		}
+
+		if ( thisItem.StartBonus )
+		{
+			SpawnerChunck.StartBonus = true;
+			SpawnerChunck.EndLevel++;
 		}
 	}
     #endregion

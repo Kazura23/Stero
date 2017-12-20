@@ -16,7 +16,7 @@ public class GameOver : UiParent
 	}
 
 	public GameObject PatternGameOver, BarGameOver;
-	public Text YouGameOver, MadeGameOver, PointsGameOver, PressGameOver;
+	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
 	#endregion
 
 	#region Mono
@@ -26,7 +26,7 @@ public class GameOver : UiParent
 		{
             AllPlayerPrefs.relance = true;
 			GlobalManager.GameCont.Restart ();
-		}else if (Input.GetKeyDown(KeyCode.Backspace))
+		}else if (Input.GetKeyDown(KeyCode.Escape))
         {
             AllPlayerPrefs.relance = false;
             GlobalManager.GameCont.Restart();
@@ -39,13 +39,23 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
-		Debug.Log("GameOver");
+        float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
+
+
+
+
+        Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+
+        Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
 		YouGameOver.DOFade(0, 0);
 		MadeGameOver.DOFade(0, 0);
 		PointsGameOver.DOFade(0, 0);
-		YouGameOver.transform.DOScale(5, 0);
+        quoteScore.DOFade(0, 0);
+        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(0, 0);
+        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(0, 0);
+        YouGameOver.transform.DOScale(5, 0);
 		MadeGameOver.transform.DOScale(5, 0);
 		PointsGameOver.transform.DOScale(5, 0);
 		BarGameOver.transform.DOScaleY(0, 0);
@@ -69,8 +79,27 @@ public class GameOver : UiParent
 					});
 					PointsGameOver.transform.DOScale(1, .25f);
 
-					DOVirtual.DelayedCall(1.5f, () => {
-						PressGameOver.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                    //Debug.Log(distPlayer);
+                    //Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
+
+                    if (AllPlayerPrefs.finalScore >= AllPlayerPrefs.saveData.listScore[0].finalScore)
+                    {
+                        newScore.transform.DOScale(5, 0);
+                        newScore.transform.DOScale(1, .3f);
+                        newScore.GetComponent<CanvasGroup>().DOFade(0, 0);
+                        newScore.GetComponent<CanvasGroup>().DOFade(1, .3f);
+                        /*
+                        DOVirtual.DelayedCall(1, () =>
+                        {
+                            newScore.transform.DOScale(5, .2f);
+                            newScore.GetComponent<CanvasGroup>().DOFade(0, .2f);
+                        });*/
+                    }
+
+					DOVirtual.DelayedCall(1f, () => {
+                        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                        quoteScore.DOFade(1, 2f);
 					});
 				});
 			});

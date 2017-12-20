@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: charlotte_corpus
   m_Shader: {fileID: 4800000, guid: 6965bbb2a8213d040954e22cecd055e3, type: 3}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
+  m_ShaderKeywords: _EMISSIVE_ON _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -116,6 +116,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Saturation: -0.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -123,15 +124,15 @@ Material:
     - _ZWrite: 1
     - _attenuation_shadow: 1
     - _diffuseforce: 2
-    - _distanceratio: 0.145
-    - _emisive_force: 0.24
-    - _emissive: 0
+    - _distanceratio: 0.26
+    - _emisive_force: 0.63
+    - _emissive: 1
     - _gloss: 0.444
     - _gloss_color: 1.66
     - _highlight: 0
-    - _highlight__force: 1.48
-    - _highlight_amount: 2
-    - _highlight_speed: 3
+    - _highlight__force: 0.55
+    - _highlight_amount: 4.11
+    - _highlight_speed: 1.2
     - _light_force: 0
     - _node_1265: 0
     - _node_2055: 0
@@ -140,15 +141,15 @@ Material:
     - _node_5354: 0
     - _node_9512: 1
     - _normal_force: 38.1
-    - _outline_basevalue: 0.5
+    - _outline_basevalue: 0.38
     - _posterize: 0.6
     - _posterizeshadow: 1.08
     - _saturation: 0.38
     - _shadow_posterization: -7.27
     - _shadowforce: 0.1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _highlight_Color: {r: 0.9485294, g: 0.013948975, b: 0.013948975, a: 1}
+    - _highlight_Color: {r: 0.86764705, g: 0.17352943, b: 0.12759517, a: 1}
     - _shadow_color: {r: 0.25724858, g: 0.19923228, b: 0.4044118, a: 1}
     - _shadowcolor: {r: 0.011870602, g: 0.006001304, b: 0.022058845, a: 1}
