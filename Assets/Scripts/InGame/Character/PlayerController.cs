@@ -1284,9 +1284,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        Shader.SetGlobalFloat("Saturation", 5);
+        Shader.SetGlobalFloat("_Saturation", 5);
 
-        Debug.Log(-BarMadness.value / 20);
+        //Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 

@@ -124,21 +124,28 @@ public class UiManager : ManagerParent
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
                 Camera.main.DOFieldOfView(4, .25f);
-                DOVirtual.DelayedCall(.25f, () =>
+                DOVirtual.DelayedCall(1f, () =>
                 {
+                    GlobalManager.GameCont.introFinished = true;
+                });
                 Camera.main.DOFieldOfView(100, .15f);
-                GlobalManager.GameCont.introFinished = true;
 
-
+                DOVirtual.DelayedCall(.25f, () => { 
                     Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().enabled = false;
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
                     Camera.main.GetComponent<RainbowRotate>().time = .4f;
                     Camera.main.GetComponent<RainbowMove>().time = .2f;
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                 DOVirtual.DelayedCall(.75f,()=>{
 
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
-                   // Camera.main.GetComponent<RainbowRotate>().reStart();
+                    Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
+                    // Camera.main.GetComponent<RainbowRotate>().reStart();
                 });
                     DOVirtual.DelayedCall(2f, () =>
                     {
@@ -160,19 +167,24 @@ public class UiManager : ManagerParent
             {
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
+                DOVirtual.DelayedCall(1f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
-
-
+                });
+                {
                     Camera.main.transform.DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowMove>().enabled = false;
+                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
+                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
+                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
                     Camera.main.GetComponent<RainbowRotate>().time = .4f;
                     Camera.main.GetComponent<RainbowMove>().time = .2f;
                     Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = true;
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                     DOVirtual.DelayedCall(.75f, () =>
                     {
-
+                        Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
                     });
                 }
             });
