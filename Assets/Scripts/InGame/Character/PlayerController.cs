@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
+	bool playerInv = false;
 	#endregion
 
 	#region Mono
@@ -283,7 +284,7 @@ public class PlayerController : MonoBehaviour
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
 		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
-		sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
+		sphereChocWave = pTrans.Find("ChocWave").GetComponent<SphereCollider>();
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
@@ -696,6 +697,7 @@ public class PlayerController : MonoBehaviour
 		else if ( ThisAct == SpecialAction.OndeChoc && canChange )
 		{
 			canSpe = false;
+			playerInv = true;
 			thisCam.GetComponent<RainbowMove>().enabled = false;
 			pRig.useGravity = false;
 			StopPlayer = true;
@@ -704,23 +706,23 @@ public class PlayerController : MonoBehaviour
 
             //MR S S'ABAISSE
             pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
-            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
-
-                onAnimeAir = true;
+			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
                 //MR S SAUTE
-                transform.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
                 pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
+					onAnimeAir = true;
 
                     //MR S RETOMBE
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
 
-                        transform.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
-                            transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
+							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
                         });
+
+						StopPlayer = false;
                         onAnimeAir = false;
                         pRig.useGravity = true;
-                        StopPlayer = false;
                         pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
                         inAir = true;
                         StartCoroutine(groundAfterChoc());
@@ -731,10 +733,9 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.DeadBall )
 		{
-
+			pRig.constraints = RigidbodyConstraints.FreezeAll;
+			StopPlayer = true;
             GlobalManager.Ui.StartSpecialAction("DeadBall");
-
-            pRig.constraints = RigidbodyConstraints.FreezeAll;
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
@@ -756,9 +757,18 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
 		sphereChocWave.enabled = true;
+
 		StartCoroutine(CooldownWave());
 		StartCoroutine(TimerHitbox());
+		StartCoroutine(waitInvPlayer());
 	}
+
+	IEnumerator waitInvPlayer ( )
+	{
+		yield return new WaitForSeconds ( 0.5f );
+		playerInv = false;
+	}
+
 
 	IEnumerator prepDeadBall ( )
 	{
@@ -1431,9 +1441,8 @@ public class PlayerController : MonoBehaviour
 		{
 			GameOver ( true );
 		}
-		if ( Dash || InMadness )
+		if ( Dash || InMadness || playerInv )
 		{
-
             if (getObj.tag == Constants._EnnemisTag)
             {
                 GlobalManager.Ui.BloodHitDash();

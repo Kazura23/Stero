@@ -142,9 +142,9 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	public virtual void ForceProp ( Vector3 forceProp )
+	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true )
 	{
-		onEnemyDead ( forceProp );
+		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
 		Destroy ( gameObject, delayDead );
 	}
@@ -171,6 +171,14 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 		}*/
+	}
+
+	protected virtual void OnTriggerEnter ( Collider thisColl )
+	{
+		if ( thisColl.tag == Constants._ChocWave )
+		{
+			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 75, false );
+		}
 	}
 
 	void startDeadBall ( ) 
@@ -216,7 +224,7 @@ public class AbstractObject : MonoBehaviour
 		} 
 	} 
 
-	void onEnemyDead ( Vector3 forceProp )
+	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
@@ -240,7 +248,13 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
+
+		if ( checkConst )
+		{
+			checkConstAxe ( );
+		}
+
+
 		if ( useGravity )
 		{
 			mainCorps.useGravity = true;
