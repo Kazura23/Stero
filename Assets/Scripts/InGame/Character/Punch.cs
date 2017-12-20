@@ -55,7 +55,7 @@ public class Punch : MonoBehaviour {
             }
         }
 
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
@@ -86,11 +86,26 @@ public class Punch : MonoBehaviour {
 					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
 				}
 
-				tryGet.Degat ( getProj, numTechnic );
+				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				{
+					tryGet.Degat ( getProj, numTechnic );
+				}
+				else
+				{
+					//other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * GlobalManager.GameCont.Player.transform.forward, ForceMode.VelocityChange );
+				}
+
 				break;
 			case (int)Technic.double_punch:
 				//Debug.Log ( pourcPunch );
-				tryGet.Degat ( projection_double/* * pourcPunch*/, numTechnic );
+				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				{
+					tryGet.Degat ( projection_double/* * pourcPunch*/, numTechnic );
+				}
+				else
+				{
+					//other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * GlobalManager.GameCont.Player.transform.forward, ForceMode.VelocityChange );
+				}
            	 	break;
             }
             MadnessMana("Double");

@@ -30,7 +30,7 @@ public class DeadBall : MonoBehaviour
 
 	void OnCollisionEnter ( Collision collision )
 	{
-		if ( collision.collider.tag == Constants._EnnemisTag || collision.collider.tag == Constants._ElemDash || collision.collider.tag == Constants._PlayerTag || collision.collider.tag == Constants._ObsTag )
+		if ( collision.collider.tag != Constants._UnTagg && collision.collider.tag != Constants._DebrisEnv && collision.collider.tag != Constants._ObjDeadTag )
 		{
 			WaitForSeconds thisSec = new WaitForSeconds ( 0.1f );
 			foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody>())
@@ -41,6 +41,11 @@ public class DeadBall : MonoBehaviour
 				StartCoroutine ( waitCol ( thisRig.GetComponent<Collider> ( ), thisSec ) );
 			}
 
+			AbstractObject thisObj = collision.gameObject.GetComponentInChildren<AbstractObject> ( );
+			if ( thisObj != null )
+			{
+				thisObj.Dead ( true );
+			}
 			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForceProp, DelayDestruc, 100, false, true ) );
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
@@ -51,14 +56,6 @@ public class DeadBall : MonoBehaviour
 	{
 		yield return thisSec;
 		thisColl.enabled = true;
-	}
-
-	private void OnTriggerEnter ( Collider other )
-	{
-		if ( other.tag == Constants._PunchTag )
-		{
-			getRirig.AddForce ( GlobalManager.GameCont.Player.transform.forward * Acceleration, ForceMode.VelocityChange );
-		}
 	}
 	#endregion
 		
