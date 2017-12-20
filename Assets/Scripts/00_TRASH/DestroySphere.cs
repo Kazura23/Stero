@@ -10,4 +10,9 @@ public class DestroySphere : AbstarctDestinationInterrupt
     {
         Destroy(this.gameObject);
     }
+
+    private void Start()
+    {
+        Debug.Log(Application.dataPath);
+    }
 }

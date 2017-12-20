@@ -64,7 +64,7 @@ public class AbstractObject : MonoBehaviour
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
-    void Update()
+    protected virtual void Update()
     {
         if (playerCont.playerDead)
             PlayerDetected(playerTrans.gameObject, false);
