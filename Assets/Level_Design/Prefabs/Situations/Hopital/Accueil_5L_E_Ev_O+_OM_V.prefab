@@ -2425,6 +2425,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &1216118172828968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4803163841087744}
+  - component: {fileID: 259232501713603204}
+  m_Layer: 0
+  m_Name: LightProbesVolume (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
 --- !u!1 &1218681190643710
 GameObject:
   m_ObjectHideFlags: 1
@@ -14450,6 +14466,7 @@ Transform:
   - {fileID: 4335720824632016}
   - {fileID: 4937342858646454}
   - {fileID: 4238384125538918}
+  - {fileID: 4803163841087744}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18843,6 +18860,19 @@ Transform:
   m_Father: {fileID: 4958941012206024}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 153.254, y: 87.648994, z: 39.37599}
+--- !u!4 &4803163841087744
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1216118172828968}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 4.699997, z: 123.95101}
+  m_LocalScale: {x: 36.982357, y: 29.244614, z: 260.8019}
+  m_Children: []
+  m_Father: {fileID: 4275170210976652}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4803455546474286
 Transform:
   m_ObjectHideFlags: 1
@@ -50144,3 +50174,20 @@ LightProbeGroup:
   - {x: -7.4352264, y: -6.4842834, z: 194.5969}
   - {x: -7.41333, y: -8.484283, z: 196.5969}
   - {x: -7.546219, y: -8.484283, z: 194.5969}
+--- !u!259 &259232501713603204
+LightProbeProxyVolume:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1216118172828968}
+  m_Enabled: 1
+  m_BoundingBoxMode: 0
+  m_ResolutionX: 2
+  m_ResolutionY: 2
+  m_ResolutionZ: 2
+  m_ResolutionProbesPerUnit: 0.02
+  m_BoundingBoxSize: {x: Infinity, y: Infinity, z: Infinity}
+  m_BoundingBoxOrigin: {x: 0, y: 0, z: 0}
+  m_ResolutionMode: 0
+  m_ProbePositionMode: 1
+  m_RefreshMode: 1
