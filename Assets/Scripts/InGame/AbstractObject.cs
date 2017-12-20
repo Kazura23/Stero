@@ -62,18 +62,6 @@ public class AbstractObject : MonoBehaviour
 			meshRigid = mainCorps;
 		}
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
-
-		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
-		{ 
-			if ( meshRigid != null )
-			{
-				distForDB = thisEvnt.CheckDist; 
-				startDeadBall ( ); 
-			}
-		}; 
-
-		GlobalManager.Event.Register ( checkDBE ); 
-
 	}
 
     void Update()
@@ -86,6 +74,18 @@ public class AbstractObject : MonoBehaviour
     {
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
+
+
+		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+		{ 
+			if ( meshRigid != null )
+			{
+				distForDB = thisEvnt.CheckDist; 
+				startDeadBall ( ); 
+			}
+		}; 
+
+		GlobalManager.Event.Register ( checkDBE ); 
     }
 	#endregion
 
@@ -258,7 +258,7 @@ public class AbstractObject : MonoBehaviour
 			mainCorps.useGravity = true;
 		}
 
-		if ( meshRigid.gameObject != gameObject )
+		if ( meshRigid.gameObject != gameObject && GetComponent<BoxCollider> ( ) != null )
 		{
 			GetComponent<BoxCollider> ( ).enabled = false;
 		}

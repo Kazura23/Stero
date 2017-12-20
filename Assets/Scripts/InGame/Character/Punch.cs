@@ -9,7 +9,7 @@ public class Punch : MonoBehaviour {
     public float addPointBarByPunchDouble = 5;
     public float puissanceOnde = 15;
     private PlayerController control;
-
+	Transform getPlayer;
     private enum Technic
     {
         basic_punch,
@@ -19,7 +19,10 @@ public class Punch : MonoBehaviour {
 		
     private int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
-    public Vector3 projection_basic, projection_double, projection_dash;
+	public float projection_basic = 50;
+	public float projection_double = 100;
+	public float projection_dash = 150;
+
     public float facteurVitesseRenvoie = 1.5f;
 	public bool RightPunch = false;
 
@@ -27,7 +30,8 @@ public class Punch : MonoBehaviour {
 	//float pourcPunch = 100;
     void Start()
     {
-		control = GlobalManager.GameCont.Player.GetComponent<PlayerController>();
+		getPlayer = GlobalManager.GameCont.Player.transform;
+		control = getPlayer.GetComponent<PlayerController>();
         barMadness = control.BarMadness;
         barMadness.value = 0;
     }
@@ -73,26 +77,26 @@ public class Punch : MonoBehaviour {
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
             // Debug.Log("song");
-            Vector3 getProj = projection_basic;
+			Vector3 getProj = getPlayer.forward + getPlayer.right;
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
 				if ( RightPunch )
 				{
-					getProj.x *= Random.Range ( -getProj.x, -getProj.x / 2 );
+					getProj += getPlayer.right * Random.Range ( 0.2f, 1f );
 				}
 				else
 				{
-					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
+					getProj -= getPlayer.right * Random.Range ( 0.2f, 1f );
 				}
 
 				if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
-					tryGet.Degat ( getProj, numTechnic );
+					tryGet.Degat ( getProj * projection_basic, numTechnic );
 				}
 				else
 				{
-					//other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * GlobalManager.GameCont.Player.transform.forward, ForceMode.VelocityChange );
+					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
 				}
 
 				break;
@@ -100,11 +104,11 @@ public class Punch : MonoBehaviour {
 				//Debug.Log ( pourcPunch );
 				if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
-					tryGet.Degat ( projection_double/* * pourcPunch*/, numTechnic );
+					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
 				else
 				{
-					//other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * GlobalManager.GameCont.Player.transform.forward, ForceMode.VelocityChange );
+					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
 				}
            	 	break;
             }
