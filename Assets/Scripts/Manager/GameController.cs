@@ -33,10 +33,13 @@ public class GameController : ManagerParent
     public Vector3[] moveRotate = new Vector3[5];
     public GameObject[] tabGameObject = new GameObject[5];
     public float delayRotate = 5;
-    public Transform textMeshs;
+    public GameObject textIntroObject;
+    public Transform[] textIntroTransform;
+    public string[] textIntroText;
+    public Tween colorTw;
 
 
-	bool restartGame = false;
+    bool restartGame = false;
     public bool canOpenShop = true;
 
     bool GameStarted = false;
@@ -51,27 +54,37 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
-			
+
             switch (chooseOption)
             {
+
             case 0: // Options
 
                     //Debug.Log("Options");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
+                    
 
-                
-                //GameStartedUpdate();
-                break;
+                    //GameStartedUpdate();
+                    break;
 
 			case 1: // Leaderboards
-                //Debug.Log("Leaderboards");
-
+                    //Debug.Log("Leaderboards");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
+                    
                     break;
 
             case 2: //Start game
 
-                   //Debug.Log("Start");
-
-				if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
+                    //Debug.Log("Start");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
+                    
+                    if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
                 {
                     StartGame();
                     isStay = false;
@@ -81,21 +94,34 @@ public class GameController : ManagerParent
                 break;
 		
 			case 3: // Shop
-                //Debug.Log("Shop");
+                    //Debug.Log("Shop");
+
+
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
+
+                    ActiveTextIntro();
 
                     if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
                         GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
                     break;
 
             case 4:  // Quitter
-                //Debug.Log("Quit");
-                break;
+                     //Debug.Log("Quit");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
+                    
+                    break;
             }
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                ActiveTextIntro();
                 ChooseRotate(false);
             }else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
             {
+                ActiveTextIntro();
                 ChooseRotate(true);
             }
 		}else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
@@ -107,6 +133,14 @@ public class GameController : ManagerParent
         
 	}
 
+    void ActiveTextIntro()
+    {
+        colorTw = DOVirtual.DelayedCall(.2f, () => {
+            Color alph = textIntroObject.GetComponent<TextMesh>().color;
+            alph.a = 1;
+            textIntroObject.GetComponent<TextMesh>().color = alph;
+        });
+    }
 
     #endregion
 
@@ -305,6 +339,11 @@ public class GameController : ManagerParent
 		{
 			return;
 		}
+        //colorTw.Kill(true);
+
+        Color alphachg = textIntroObject.GetComponent<TextMesh>().color;
+        alphachg.a = 0;
+        textIntroObject.GetComponent<TextMesh>().color = alphachg;
 
         if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {

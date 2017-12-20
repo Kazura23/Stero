@@ -644,52 +644,52 @@ public class PlayerController : MonoBehaviour
 		}
 		Dash = false;
 
-		if ( ThisAct == SpecialAction.SlowMot )
-		{
-			if ( SliderContent > 0 )
-			{
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
+        if (ThisAct == SpecialAction.SlowMot)
+        {
+            if (SliderContent > 0)
+            {
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
 
-				if ( !animeSlo )
-				{
-					animeSlo = true;
-					GlobalManager.Ui.StartSlowMo ( );
-				}
+                if (!animeSlo)
+                {
+                    animeSlo = true;
+                    GlobalManager.Ui.StartSlowMo();
+                }
 
-				if ( Time.timeScale > 1 / SlowMotion )
-				{
-					Time.timeScale -= Time.deltaTime * SpeedSlowMot;
-				}
+                if (Time.timeScale > 1 / SlowMotion)
+                {
+                    Time.timeScale -= Time.deltaTime * SpeedSlowMot;
+                }
 
-				SliderContent -= ReduceSlider * Time.deltaTime;
-			}
-			else if ( Time.timeScale < 1 )
-			{
-				if ( SliderContent < 0 )
-				{
-					canSpe = false;
-					SliderContent = 0;
-				}
+                SliderContent -= ReduceSlider * Time.deltaTime;
+            }
+            else if (Time.timeScale < 1)
+            {
+                if (SliderContent < 0)
+                {
+                    canSpe = false;
+                    SliderContent = 0;
+                }
 
-				Time.timeScale += getTime * SpeedDeacSM;
-			}
-			else if ( SliderContent < 10 )
-			{
-				animeSlo = false;
-				Time.timeScale = 1;
-				SliderContent += RecovSlider * getTime;
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+                Time.timeScale += getTime * SpeedDeacSM;
+            }
+            else if (SliderContent < 10)
+            {
+                animeSlo = false;
+                Time.timeScale = 1;
+                SliderContent += RecovSlider * getTime;
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = false;
 
-				if ( SliderContent > 2 )
-				{
-					canSpe = true;
-				}
-			}
-			else
-			{
-				canSpe = true;
-				SliderContent = 10;
-			}
+                if (SliderContent > 2)
+                {
+                    canSpe = true;
+                }
+            }
+            else
+            {
+                canSpe = true;
+                SliderContent = 10;
+            }
 
 			SliderSlow.value = SliderContent;
 		}
@@ -700,14 +700,20 @@ public class PlayerController : MonoBehaviour
 			pRig.useGravity = false;
 			StopPlayer = true;
 
-			DOVirtual.DelayedCall ( .1f, ( ) =>
+			DOVirtual.DelayedCall ( .35f, ( ) =>
 			{ 
 				onAnimeAir = true;
 			} );
 
-			pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
+            transform.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+
+            transform.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+            pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
 				pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 10 - pTrans.up * 2, .2f).SetEase(Ease.Linear).OnComplete(() => {
-					onAnimeAir = false;
+                    transform.DOLocalRotate((new Vector3(25, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
+                        transform.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                    });
+                    onAnimeAir = false;
 					pRig.useGravity = true;
 					StopPlayer = false;
 					pRig.AddForce ( Vector3.down * 10, ForceMode.VelocityChange );
@@ -724,10 +730,8 @@ public class PlayerController : MonoBehaviour
 			e.CheckDist = DistDBTake;
 			e.Raise ( );
 
-			StopPlayer = true;
-
-			StartCoroutine ( prepDeadBall ( ) );
-		}
+            StartCoroutine(prepDeadBall());
+        }
 	}
 	bool onAnimeAir = false;
 	IEnumerator groundAfterChoc ( )
@@ -1280,9 +1284,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        //Shader.SetGlobalFloat("_Saturation", -BarMadness.value / 20);
+        Shader.SetGlobalFloat("_Saturation", 5);
 
-        Debug.Log(-BarMadness.value / 20);
+        //Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 
