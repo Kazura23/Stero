@@ -55,67 +55,67 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
+			switch (chooseOption)
+			{
 
-            switch (chooseOption)
-            {
+			case 0: // Options
 
-            case 0: // Options
+				//Debug.Log("Options");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
 
-                    //Debug.Log("Options");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
-                    
 
-                    //GameStartedUpdate();
-                    break;
+				//GameStartedUpdate();
+				break;
 
 			case 1: // Leaderboards
-                    //Debug.Log("Leaderboards");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
-                    
-                    break;
+				//Debug.Log("Leaderboards");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
 
-            case 2: //Start game
+				break;
 
-                    //Debug.Log("Start");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
-                    
-                    if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
-                {
-                    StartGame();
-                    isStay = false;
-                    AnimationStartGame();
-                }
+			case 2: //Start game
 
-                break;
-		
+				//Debug.Log("Start");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
+
+				if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
+				{
+					StartGame();
+					isStay = false;
+					AnimationStartGame();
+				}
+
+				break;
+
 			case 3: // Shop
-                    //Debug.Log("Shop");
+				//Debug.Log("Shop");
 
 
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
+				textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
 
-                    ActiveTextIntro();
+				ActiveTextIntro();
 
-                    if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
-                        GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
-                    break;
+				if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
+					GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
+				break;
 
-            case 4:  // Quitter
-                     //Debug.Log("Quit");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
-                    
-                    break;
-            }
+			case 4:  // Quitter
+				//Debug.Log("Quit");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
+
+				break;
+			}
+           
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 ActiveTextIntro();
@@ -186,7 +186,6 @@ public class GameController : ManagerParent
                 GlobalManager.Ui.IntroRestart();
 			});
 		}
-
 
 		SetAllBonus ( );
 

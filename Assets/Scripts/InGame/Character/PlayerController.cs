@@ -212,8 +212,6 @@ public class PlayerController : MonoBehaviour
             acceleration = 1;
         }
             
-
-
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
 
@@ -567,6 +565,7 @@ public class PlayerController : MonoBehaviour
 			Time.timeScale = 1;
 			Dash = true;
 			canUseDash = false;
+			GlobalManager.Ui.DashSpeedEffect ( true );
 		}
 		else if ( Input.GetAxis ( "Dash" ) == 0 )
 		{
@@ -636,10 +635,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Input.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
 		{
-			if ( ThisAct == SpecialAction.SlowMot && Input.GetAxis ( "SpecialAction" ) == 0 )
+			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
 			{
 				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 				animeSlo = false;
+				Time.timeScale = 1;
 			}
 			return;
 		}
@@ -672,7 +672,9 @@ public class PlayerController : MonoBehaviour
                     SliderContent = 0;
                 }
 
-                Time.timeScale += getTime * SpeedDeacSM;
+				Time.timeScale = 1;
+
+               // Time.timeScale += getTime * SpeedDeacSM;
             }
             else if (SliderContent < 10)
             {
@@ -715,13 +717,13 @@ public class PlayerController : MonoBehaviour
 
                     //MR S RETOMBE
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
+						onAnimeAir = false;
 
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
                         });
 
 						StopPlayer = false;
-                        onAnimeAir = false;
                         pRig.useGravity = true;
                         pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
                         inAir = true;
@@ -939,12 +941,11 @@ public class PlayerController : MonoBehaviour
 		{
 			speed *= DashSpeed;
 
-			GlobalManager.Ui.DashSpeedEffect ( true );
-           
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
 		{
+			GlobalManager.Ui.DashSpeedEffect ( false );
 			speed /= 1.60f;
 		}
 		else
@@ -1221,7 +1222,7 @@ public class PlayerController : MonoBehaviour
             canPunch = false;
             propP = true;
 			timeToDP = TimeToDoublePunch;
-            if (Time.timeScale < 1)
+			if (getDelta < 1)
                 Time.timeScale = 1;
 
 			//if ( !InMadness )
@@ -1469,7 +1470,7 @@ public class PlayerController : MonoBehaviour
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
                 thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
-				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
+					thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward );
 				return;
 			}
 

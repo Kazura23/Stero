@@ -16,7 +16,7 @@ public class MeshDesctruc : MonoBehaviour
 		//stockElem = new List<GameObject> ( );
 	}
 
-	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 10, bool little = false, bool explos = false )    
+	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 25, bool little = false, bool explos = false )    
 	{
 		WaitForEndOfFrame thisFrame = new WaitForEndOfFrame ( );
 
@@ -43,6 +43,12 @@ public class MeshDesctruc : MonoBehaviour
 		else if ( objSource.GetComponent<SkinnedMeshRenderer> ( ) )
 		{
 			materials = objSource.GetComponent<SkinnedMeshRenderer> ( ).materials;
+		}
+
+		if ( objSource.GetComponent<MeshRenderer> ( ) == null )
+		{
+			Destroy ( objSource );
+			yield break;
 		}
 
 		objSource.GetComponent<MeshRenderer> ( ).enabled = false;

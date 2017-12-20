@@ -48,4 +48,10 @@ public static class ScriptableObjectUtility
 	{
 		ScriptableObjectUtility.CreateAsset<ListChunkScriptable> ( );
 	}
+
+    [MenuItem("CustomTools/Scriptable/CoinBonus")]
+    public static void CreateListCoinBonus()
+    {
+        ScriptableObjectUtility.CreateAsset<CoinBonusScriptable>();
+    }
 }

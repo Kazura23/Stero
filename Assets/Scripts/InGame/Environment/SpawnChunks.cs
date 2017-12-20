@@ -122,14 +122,23 @@ public class SpawnChunks : MonoBehaviour
 		}
 
 		LvlChunksInfo = chunkOrder;
-
+		bool checkZero = false;
+			
 		while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
 		{
 			currLevel++;
 
 			if ( currLevel > chunkOrder.Count )
 			{
-				return;
+				if ( !checkZero )
+				{
+					checkZero = true;
+					currLevel = 0;
+				}
+				else
+				{
+					return;
+				}
 			}
 		}
 
@@ -231,6 +240,7 @@ public class SpawnChunks : MonoBehaviour
 		List<GameObject> getSpc = getSpawnChunks;
 		Transform getChunkT = getSpc [ getSpc.Count - 1 ].transform;
 		GameObject thisObj;
+		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
 
 		if ( getCunk.WallOnLastChunk != null )
 		{
@@ -244,17 +254,27 @@ public class SpawnChunks : MonoBehaviour
 			transitChunk = false;
 			currLevel++;
 
-			if ( currLevel >= LvlChunksInfo.Count || randAllChunk )
+			if ( currLevel >= chunkOrder.Count || randAllChunk )
 			{
 				randAllChunk = true;
 
-				if ( LvlChunksInfo.Count > 1 )
+				if ( chunkOrder.Count > 1 )
 				{
 					currLevel = Random.Range ( 1, LvlChunksInfo.Count );
 				}
 				else
 				{
 					currLevel = 0;
+				}
+			}
+
+			while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
+			{
+				currLevel++;
+
+				if ( currLevel > chunkOrder.Count )
+				{
+					return;
 				}
 			}
 
@@ -278,6 +298,8 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( !transitChunk )
 		{
+			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
+				
 			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
 			getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
 		}
