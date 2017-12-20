@@ -248,7 +248,14 @@ public class SpawnChunks : MonoBehaviour
 			{
 				randAllChunk = true;
 
-				currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+				if ( LvlChunksInfo.Count > 1 )
+				{
+					currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+				}
+				else
+				{
+					currLevel = 0;
+				}
 			}
 
 			CurrRandLvl = Random.Range ( 0, LvlChunksInfo [ currLevel ].ChunkScript.Count );
