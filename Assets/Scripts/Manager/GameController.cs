@@ -44,6 +44,7 @@ public class GameController : ManagerParent
     public bool canOpenShop = true;
 
     bool GameStarted = false;
+	bool firstStartGame = true;
     #endregion
 
     #region Mono
@@ -84,9 +85,13 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
 
-				if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
+				if (Input.GetKeyDown(KeyCode.W) && !restartGame)
 				{
-					StartGame();
+					if ( !firstStartGame )
+					{
+						StartGame();
+					}
+					firstStartGame = false;
 					isStay = false;
 					AnimationStartGame();
 				}
