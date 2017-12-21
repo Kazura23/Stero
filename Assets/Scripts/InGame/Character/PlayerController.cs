@@ -208,19 +208,6 @@ public class PlayerController : MonoBehaviour
 	{
         //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
-		if ( Input.GetKeyDown ( KeyCode.Keypad1 ) )
-		{
-			ThisAct = SpecialAction.DeadBall;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad2 ) )
-		{
-			ThisAct = SpecialAction.OndeChoc;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad3 ) )
-		{
-			ThisAct = SpecialAction.SlowMot;
-		}
-
         if (Input.GetKeyDown(KeyCode.K))
         {
             MaxSpeed = 1f;
