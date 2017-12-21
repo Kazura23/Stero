@@ -13,6 +13,8 @@ public class SpawnNewLvl : MonoBehaviour
 	[HideInInspector]
 	public int OnLine;
 
+	public bool AddToList = true;
+
 	bool detect = false;
 	#endregion
 	
@@ -29,7 +31,10 @@ public class SpawnNewLvl : MonoBehaviour
 		{
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
-			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+			if (AddToList) 
+			{
+				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+			}
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;

@@ -15,7 +15,7 @@ public class SlowMotionDetection : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == Constants._EnnemisTag && !player.InMadness)
+		if(other.tag == Constants._EnnemisTag && !player.InMadness && !player.onAnimeAir )
         {
             Time.timeScale = ratioSlow;
             StartCoroutine("delaySlowMotio");

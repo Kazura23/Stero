@@ -109,6 +109,8 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
+	[HideInInspector]
+	public bool onAnimeAir = false;
 
 	public int Life = 1;
 	public bool StopPlayer = false;
@@ -207,19 +209,6 @@ public class PlayerController : MonoBehaviour
 	void Update ( )
 	{
         //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
-
-		if ( Input.GetKeyDown ( KeyCode.Keypad1 ) )
-		{
-			ThisAct = SpecialAction.DeadBall;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad2 ) )
-		{
-			ThisAct = SpecialAction.OndeChoc;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad3 ) )
-		{
-			ThisAct = SpecialAction.SlowMot;
-		}
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -775,7 +764,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(prepDeadBall());
         }
 	}
-	bool onAnimeAir = false;
+
 	IEnumerator groundAfterChoc ( )
 	{
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );

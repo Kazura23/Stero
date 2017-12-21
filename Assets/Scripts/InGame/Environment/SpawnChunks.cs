@@ -402,7 +402,16 @@ public class SpawnChunks : MonoBehaviour
 					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
 					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
 
-					otherSpawn.Add ( thisSpawn );
+					if (sourceSpawn.ThoseExit.Count > 1) 
+					{
+						otherSpawn.Add ( thisSpawn );
+					} 
+					else 
+					{
+						currSL.AddToList = false;
+						getSpawnChunks.Add (thisSpawn);
+					}
+
 				}
 			}
 
