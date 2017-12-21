@@ -61,4 +61,5 @@ public class ChunkExit
 	public Vector2 OtherNbrFin = new Vector2 ( -1, -1 );
 	public Transform LevelParent;
 	public ListChunkScriptable LCS;
+	public GameObject WallEndChunk;
 }

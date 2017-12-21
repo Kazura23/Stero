@@ -295,6 +295,7 @@ public class SpawnChunks : MonoBehaviour
 		Transform getChunkT;
 		ChunksScriptable getChunk;
 		GetSpawnable getSble;
+		GameObject currWall;
 
 		if ( !transitChunk )
 		{
@@ -395,6 +396,7 @@ public class SpawnChunks : MonoBehaviour
 					getCurrNew [ vertChunk ].NbrLaneDebut = currSL.InfoChunk.NbrLaneDebut;
 					getCurrNew [ vertChunk ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 					getCurrNew [ vertChunk ].CurrVert = sourceSpawn.ThoseExit [ a ].Verticalite;
+					getCurrNew [ vertChunk ].WallEndChunk = sourceSpawn.ThoseExit [ a ].WallEndChunk;
 
 					allNewChunk.Add ( new ToDestChunk ( ) );
 					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
@@ -508,12 +510,21 @@ public class SpawnChunks : MonoBehaviour
 				// check if there is spaces and place wall if yes
 				for ( b = 0; b < getCurrNew.Count; b++ )
 				{
+					if ( getCurrNew [ b ].WallEndChunk != null )
+					{
+						currWall = getCurrNew [ b ].WallEndChunk;
+					}
+					else
+					{
+						currWall = getChunk.WallEndChunk;
+					}
+
 					if ( b == 0 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
 						while ( diffLine < 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine - getCurrNew [ b ].NbrLaneDebut.x ) - getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine++;
@@ -527,7 +538,7 @@ public class SpawnChunks : MonoBehaviour
 
 						while ( diffLine > 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine--;
@@ -541,7 +552,7 @@ public class SpawnChunks : MonoBehaviour
 
 						while ( diffLine != 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 
@@ -673,6 +684,7 @@ public class VertNCSI
 public class NewChunkSaveInf 
 {
 	public GameObject ThisObj;
+	public GameObject WallEndChunk;
 	public Vector2 NbrLaneDebut;
 	public Vector2 SizeWall;
 	public SpawnNewLvl SpawnNL;
