@@ -44,7 +44,7 @@ public class GameController : ManagerParent
     public bool canOpenShop = true;
 
     bool GameStarted = false;
-	bool firstStartGame = true;
+	bool onHub = true;
     #endregion
 
     #region Mono
@@ -87,11 +87,8 @@ public class GameController : ManagerParent
 
 				if (Input.GetKeyDown(KeyCode.W) && !restartGame)
 				{
-					if ( !firstStartGame )
-					{
-						StartGame();
-					}
-					firstStartGame = false;
+					SetAllBonus ( );
+
 					isStay = false;
 					AnimationStartGame();
 				}
@@ -176,20 +173,25 @@ public class GameController : ManagerParent
 		Intro = true;
 		isStay = true;
 
-
 		if ( restartGame )
 		{
 			isStay = false;
 			Intro = false;
 
-			Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+			Player.transform.DOMoveZ ( 3, 0.5f ).OnComplete ( ( ) =>
 			{
 
-				Player.GetComponent<PlayerController>().GetPunchIntro();
-				Player.GetComponent<PlayerController>( ).StopPlayer = false;
+				Player.GetComponent<PlayerController> ( ).GetPunchIntro ( );
+				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
 				restartGame = false;
-                GlobalManager.Ui.IntroRestart();
-			});
+				GlobalManager.Ui.IntroRestart ( );
+			} );
+		}
+		else
+		{
+			onHub = true;
+			GlobalManager.AudioMa.CloseAllAudio ( );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
 		SetAllBonus ( );
@@ -202,12 +204,6 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
-
-        
-		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) ) 
-		{ 
-			setMusic ( ); 
-		} 
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -275,8 +271,6 @@ public class GameController : ManagerParent
         }
         else
         {
-
-
             isReady = false;
             GameStarted = false;
             Debug.Log(isReady + " " + GameStarted);
@@ -302,11 +296,7 @@ public class GameController : ManagerParent
     #region Private Methods
 	void setMusic () 
 	{ 
-        if(restartGame)
 		    GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
-
-        else
-            GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "Menu",true,null);
     } 
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
@@ -397,12 +387,20 @@ public class GameController : ManagerParent
         {*/
             if (GameStarted && !checkStart)
             {
+				
+				if ( onHub )
+				{
+					onHub = false;
+					GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+					setMusic ( );
+				}
+				
                 //Debug.Log("Demarrage");
 
                 GlobalManager.Ui.Intro();
                 isStay = false;
 
-            GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+            //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
 
             musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
                 musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
