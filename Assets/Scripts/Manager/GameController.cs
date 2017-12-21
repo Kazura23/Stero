@@ -152,12 +152,7 @@ public class GameController : ManagerParent
     {
         GameStartedUpdate();
     }
-
-    private void Awake()
-    { 
-        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
-    }
-
+    
     public void StartGame ( )
 	{
         //Debug.Log("Start");
@@ -446,7 +441,9 @@ public class GameController : ManagerParent
 	{
 		Player = GameObject.FindGameObjectWithTag("Player");
 
-		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
+        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+
+        SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         //AllPlayerPrefs.saveData = SaveData.Load();
 
