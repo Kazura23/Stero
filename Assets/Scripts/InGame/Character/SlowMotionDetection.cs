@@ -7,18 +7,29 @@ public class SlowMotionDetection : MonoBehaviour {
     public float ratioSlow = 0.3f;
     public float timeSlow = 0.3f;
     private PlayerController player;
+	IEnumerator getEnum;
 
     private void Awake()
     {
         player = GetComponentInParent<PlayerController>();
     }
 
+	void Update ()
+	{
+		if ( getEnum != null && player.playerInv )
+		{
+			Time.timeScale = 1;
+			StopCoroutine ( getEnum );
+		}
+	}
+
     void OnTriggerEnter(Collider other)
     {
 		if(other.tag == Constants._EnnemisTag && !player.InMadness && !player.playerInv )
         {
             Time.timeScale = ratioSlow;
-            StartCoroutine("delaySlowMotio");
+			getEnum = delaySlowMotio();
+			StartCoroutine(getEnum);
         }
     }
 
@@ -30,6 +41,7 @@ public class SlowMotionDetection : MonoBehaviour {
         {
             Time.timeScale = 1;
         }
+		getEnum = null;
     }
 
 }

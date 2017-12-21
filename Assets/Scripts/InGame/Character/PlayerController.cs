@@ -772,6 +772,7 @@ public class PlayerController : MonoBehaviour
 
 		while ( inAir )
 		{
+			pRig.AddForce(Vector3.down, ForceMode.VelocityChange);
 			yield return thisF;
 		}
 
@@ -786,8 +787,9 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator waitInvPlayer ( )
 	{
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 1 );
 		playerInv = false;
+		Debug.Log ( "StopInv" );
 	}
 
 
@@ -904,7 +906,7 @@ public class PlayerController : MonoBehaviour
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
-		else if ( !checkAir && getCamRM )
+		else if ( !checkAir && getCamRM || inAir )
         {
 			checkDistY = pTrans.position.y - 1000;
 
