@@ -81,7 +81,9 @@ public class Punch : MonoBehaviour {
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
-				if ( RightPunch )
+                MadnessMana("Simple");
+
+                if ( RightPunch )
 				{
 					getProj += getPlayer.right * Random.Range ( 0.2f, 1f );
 				}
@@ -101,8 +103,10 @@ public class Punch : MonoBehaviour {
 
 				break;
 			case (int)Technic.double_punch:
-				//Debug.Log ( pourcPunch );
-				if ( other.gameObject.tag != Constants._ObjDeadTag )
+                MadnessMana("Double");
+
+                //Debug.Log ( pourcPunch );
+                if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
@@ -112,11 +116,9 @@ public class Punch : MonoBehaviour {
 				}
            	 	break;
             }
-            MadnessMana("Double");
         }else if (other.gameObject.tag == Constants._MissileBazoo)
         {
             other.gameObject.GetComponent<MissileBazooka>().ActiveTir(-other.gameObject.GetComponent<MissileBazooka>().GetDirection(), facteurVitesseRenvoie, true);
-            MadnessMana("Double");
         }
         
     }
