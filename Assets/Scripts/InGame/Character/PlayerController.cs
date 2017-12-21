@@ -347,16 +347,6 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-
-            totalDis += 20000;
-            Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
-
-        }
-    }
 
     public void GameOver ( bool forceDead = false )
 	{
@@ -364,6 +354,8 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
+
+        Debug.Log("GAMEOVER");
 
         Life--;
 
@@ -384,7 +376,7 @@ public class PlayerController : MonoBehaviour
 
         AllPlayerPrefs.distance = totalDis;
         AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
-        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        //AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
 
 		StopPlayer = true;
 

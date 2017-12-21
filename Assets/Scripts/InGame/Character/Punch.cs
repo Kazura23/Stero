@@ -136,6 +136,7 @@ public class Punch : MonoBehaviour {
 
     public void MadnessMana(string type)
     {
+        Debug.Log("Madddddd");
         //if (!control.IsInMadness()) {
             if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == "Simple")
             {
