@@ -385,42 +385,42 @@ public class GameController : ManagerParent
     {
         /*if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
         {*/
-            if (GameStarted && !checkStart)
-            {
-				
-				if ( onHub )
-				{
-					onHub = false;
-					GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
-					setMusic ( );
-				}
-				
-                //Debug.Log("Demarrage");
 
-                GlobalManager.Ui.Intro();
-                isStay = false;
+		if ( onHub )
+		{
+			Debug.Log ( "OnHub" );
+			onHub = false;
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+		}
 
-            //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+        if (GameStarted && !checkStart)
+        {
 
-            musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
-                musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
+            GlobalManager.Ui.Intro();
+            isStay = false;
+
+        //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+
+        musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+            musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
 
 
-                checkStart = true;
-                //Debug.Log("player = " + Player);
-                Player.GetComponent<PlayerController>().StopPlayer = false;
-                //Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                //Camera.main.GetComponent<RainbowMove>().time = .2f;
+            checkStart = true;
+            //Debug.Log("player = " + Player);
+            Player.GetComponent<PlayerController>().StopPlayer = false;
+            //Camera.main.GetComponent<RainbowRotate>().time = .4f;
+            //Camera.main.GetComponent<RainbowMove>().time = .2f;
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
-                    //Debug.Log("here");
-                    int randomSound = UnityEngine.Random.Range(0, 6);
+            soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+                //Debug.Log("here");
+                int randomSound = UnityEngine.Random.Range(0, 6);
 
-                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
-                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    //Debug.Log("Audio");
-                }).SetLoops(-1, LoopType.Restart);
-            }
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+                //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+                //Debug.Log("Audio");
+            }).SetLoops(-1, LoopType.Restart);
+        }
             /*else
             {
                 // punch the door

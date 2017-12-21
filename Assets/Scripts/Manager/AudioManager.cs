@@ -235,6 +235,7 @@ public class AudioManager : ManagerParent
 		setDict.Add ( AudioType.Acceleration, currT.Find ( "Acceleration" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.SteroKill, currT.Find ( "SteroKill" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.PunchVoice, currT.Find ( "PunchVoice" ).GetComponent<AudioSource> ( ) );
+		setDict.Add ( AudioType.MusicTrash, currT.Find ( "MusicTrash" ).GetComponent<AudioSource> ( ) );
 
 		AudioType[] getTypes = ( AudioType[] ) System.Enum.GetValues ( typeof( AudioType ) );
 
