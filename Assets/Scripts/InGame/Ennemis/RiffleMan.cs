@@ -53,7 +53,8 @@ public class RiffleMan : AbstractObject
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
 
-            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 8, transform.position.z), "TextEnemy", GlobalManager.Ui.transform.parent, 3);
+            //txt.transform.DOLocalMoveY(6, 0);
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
         }

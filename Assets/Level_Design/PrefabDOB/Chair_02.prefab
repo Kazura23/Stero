@@ -21,6 +21,9 @@ GameObject:
   - component: {fileID: 4067272409407200}
   - component: {fileID: 33325232632938054}
   - component: {fileID: 23820737450793842}
+  - component: {fileID: 64474444551922948}
+  - component: {fileID: 114839799208321312}
+  - component: {fileID: 205631069609522524}
   m_Layer: 0
   m_Name: Chair_02
   m_TagString: Untagged
@@ -35,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099416517792914}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.71, y: 1.23, z: 52.34}
-  m_LocalScale: {x: 0.5234196, y: 0.5234197, z: 0.5234197}
+  m_LocalPosition: {x: 64.65905, y: 52.87243, z: 288.67554}
+  m_LocalScale: {x: 0.67955554, y: 0.67955554, z: 0.67955554}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -64,7 +67,7 @@ MeshRenderer:
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
+  m_ImportantGI: 1
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -80,3 +83,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099416517792914}
   m_Mesh: {fileID: 4300000, guid: 4694d7c52133543459e0404254353a92, type: 3}
+--- !u!64 &64474444551922948
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1099416517792914}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 4694d7c52133543459e0404254353a92, type: 3}
+--- !u!114 &114839799208321312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1099416517792914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7f872dd3672684392c2e835fd52299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForcePropulse: 100
+  DelayDestruc: 1
+  nbPunchDestroy: 5
+--- !u!205 &205631069609522524
+LODGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1099416517792914}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 2.7092896
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LODs:
+  - screenRelativeHeight: 0.049211968
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 23820737450793842}
+  m_Enabled: 1

@@ -27,6 +27,7 @@ public class UiManager : ManagerParent
     public Image SlowMotion;
     public Image BonusLife;
 	public List<Image> ExtraHearts;
+    public Sprite[] AbilitiesSprite;
 
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
@@ -260,7 +261,10 @@ public class UiManager : ManagerParent
         Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
         Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
-        GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+        GameObject textMadness;
+        textMadness = GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+
+        Destroy(textMadness, 3);
 
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
@@ -329,8 +333,17 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSlowMo()
+	public void StartSpecialAction(string type)
     {
+        if (type == "SlowMot")
+            SlowMotion.sprite = AbilitiesSprite[0];
+
+        if (type == "OndeChoc")
+            SlowMotion.sprite = AbilitiesSprite[1];
+
+        if (type == "DeadBall")
+            SlowMotion.sprite = AbilitiesSprite[2];
+
         SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(Color.white, 0);
