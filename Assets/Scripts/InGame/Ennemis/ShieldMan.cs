@@ -52,7 +52,7 @@ public class ShieldMan : AbstractObject {
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}
 
-	public override void ForceProp ( Vector3 forceProp )
+	public override void ForceProp ( Vector3 forceProp, bool checkConst )
 	{
 		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness )
 		{
@@ -95,7 +95,7 @@ public class ShieldMan : AbstractObject {
 
 
 
-        if ( isDetected )
+		if ( isDetected && parMat != null )
 		{
 			parMat.color = NewColor;
 		}
@@ -121,11 +121,13 @@ public class ShieldMan : AbstractObject {
 
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "MetalHit_" + (randomSong + 1), false);
 
-                GameObject[] listKnight = GameObject.FindGameObjectsWithTag("Knighty");
-
-                foreach (GameObject trans in listKnight)
+				foreach (Transform trans in gameObject.GetComponentsInChildren<Transform> ( ) )
                 {
-                    Destroy(trans);
+					if ( trans.tag == "Knighty" )
+					{
+						StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( trans.gameObject, GlobalManager.GameCont.Player.transform, 200, 2, 10 ) );
+						//Destroy ( trans.gameObject );
+					}
                 }
 
 

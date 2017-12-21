@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
+	bool playerInv = false;
 	#endregion
 
 	#region Mono
@@ -211,8 +212,6 @@ public class PlayerController : MonoBehaviour
             acceleration = 1;
         }
             
-
-
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
 
@@ -283,7 +282,7 @@ public class PlayerController : MonoBehaviour
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
 		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
-		sphereChocWave = pTrans.GetChild(0).GetComponent<SphereCollider>();
+		sphereChocWave = pTrans.Find("ChocWave").GetComponent<SphereCollider>();
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
@@ -566,6 +565,7 @@ public class PlayerController : MonoBehaviour
 			Time.timeScale = 1;
 			Dash = true;
 			canUseDash = false;
+			GlobalManager.Ui.DashSpeedEffect ( true );
 		}
 		else if ( Input.GetAxis ( "Dash" ) == 0 )
 		{
@@ -635,99 +635,116 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Input.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
 		{
-			if ( ThisAct == SpecialAction.SlowMot && Input.GetAxis ( "SpecialAction" ) == 0 )
+			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
 			{
 				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 				animeSlo = false;
+				Time.timeScale = 1;
 			}
 			return;
 		}
 		Dash = false;
 
-		if ( ThisAct == SpecialAction.SlowMot )
-		{
-			if ( SliderContent > 0 )
-			{
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
+        if (ThisAct == SpecialAction.SlowMot)
+        {
+            if (SliderContent > 0)
+            {
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
 
-				if ( !animeSlo )
-				{
-					animeSlo = true;
-					GlobalManager.Ui.StartSlowMo ( );
-				}
+                if (!animeSlo)
+                {
+                    animeSlo = true;
+                    GlobalManager.Ui.StartSpecialAction("SlowMot");
+                }
 
-				if ( Time.timeScale > 1 / SlowMotion )
-				{
-					Time.timeScale -= Time.deltaTime * SpeedSlowMot;
-				}
+                if (Time.timeScale > 1 / SlowMotion)
+                {
+                    Time.timeScale -= Time.deltaTime * SpeedSlowMot;
+                }
 
-				SliderContent -= ReduceSlider * Time.deltaTime;
-			}
-			else if ( Time.timeScale < 1 )
-			{
-				if ( SliderContent < 0 )
-				{
-					canSpe = false;
-					SliderContent = 0;
-				}
+                SliderContent -= ReduceSlider * Time.deltaTime;
+            }
+            else if (Time.timeScale < 1)
+            {
+                if (SliderContent < 0)
+                {
+                    canSpe = false;
+                    SliderContent = 0;
+                }
 
-				Time.timeScale += getTime * SpeedDeacSM;
-			}
-			else if ( SliderContent < 10 )
-			{
-				animeSlo = false;
 				Time.timeScale = 1;
-				SliderContent += RecovSlider * getTime;
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 
-				if ( SliderContent > 2 )
-				{
-					canSpe = true;
-				}
-			}
-			else
-			{
-				canSpe = true;
-				SliderContent = 10;
-			}
+               // Time.timeScale += getTime * SpeedDeacSM;
+            }
+            else if (SliderContent < 10)
+            {
+                animeSlo = false;
+                Time.timeScale = 1;
+                SliderContent += RecovSlider * getTime;
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = false;
+
+                if (SliderContent > 2)
+                {
+                    canSpe = true;
+                }
+            }
+            else
+            {
+                canSpe = true;
+                SliderContent = 10;
+            }
 
 			SliderSlow.value = SliderContent;
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && canChange )
 		{
 			canSpe = false;
+			playerInv = true;
 			thisCam.GetComponent<RainbowMove>().enabled = false;
 			pRig.useGravity = false;
 			StopPlayer = true;
 
-			DOVirtual.DelayedCall ( .1f, ( ) =>
-			{ 
-				onAnimeAir = true;
-			} );
+            GlobalManager.Ui.StartSpecialAction("OndeChoc");
 
-			pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 5, .25f).SetEase(Ease.Linear).OnComplete(() => {
-				pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 10 - pTrans.up * 2, .2f).SetEase(Ease.Linear).OnComplete(() => {
-					onAnimeAir = false;
-					pRig.useGravity = true;
-					StopPlayer = false;
-					pRig.AddForce ( Vector3.down * 10, ForceMode.VelocityChange );
-					inAir = true;
-					StartCoroutine ( groundAfterChoc ( ) );	
-				});
+            //MR S S'ABAISSE
+            pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
+			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
+
+                //MR S SAUTE
+				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
+					onAnimeAir = true;
+
+                    //MR S RETOMBE
+                    pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
+						onAnimeAir = false;
+
+						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
+							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+                        });
+
+						StopPlayer = false;
+                        pRig.useGravity = true;
+                        pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+                        inAir = true;
+                        StartCoroutine(groundAfterChoc());
+                    });
+                });
             });
+
 		}
 		else if ( ThisAct == SpecialAction.DeadBall )
 		{
 			pRig.constraints = RigidbodyConstraints.FreezeAll;
+			StopPlayer = true;
+            GlobalManager.Ui.StartSpecialAction("DeadBall");
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;
 			e.Raise ( );
 
-			StopPlayer = true;
-
-			StartCoroutine ( prepDeadBall ( ) );
-		}
+            StartCoroutine(prepDeadBall());
+        }
 	}
 	bool onAnimeAir = false;
 	IEnumerator groundAfterChoc ( )
@@ -742,9 +759,18 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
 		sphereChocWave.enabled = true;
+
 		StartCoroutine(CooldownWave());
 		StartCoroutine(TimerHitbox());
+		StartCoroutine(waitInvPlayer());
 	}
+
+	IEnumerator waitInvPlayer ( )
+	{
+		yield return new WaitForSeconds ( 0.5f );
+		playerInv = false;
+	}
+
 
 	IEnumerator prepDeadBall ( )
 	{
@@ -915,12 +941,11 @@ public class PlayerController : MonoBehaviour
 		{
 			speed *= DashSpeed;
 
-			GlobalManager.Ui.DashSpeedEffect ( true );
-           
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
 		{
+			GlobalManager.Ui.DashSpeedEffect ( false );
 			speed /= 1.60f;
 		}
 		else
@@ -1197,7 +1222,7 @@ public class PlayerController : MonoBehaviour
             canPunch = false;
             propP = true;
 			timeToDP = TimeToDoublePunch;
-            if (Time.timeScale < 1)
+			if (getDelta < 1)
                 Time.timeScale = 1;
 
 			//if ( !InMadness )
@@ -1280,9 +1305,9 @@ public class PlayerController : MonoBehaviour
         punchBox.enabled = true;
        /* corou =*/ StartCoroutine("TimerHitbox");
 
-        //Shader.SetGlobalFloat("_Saturation", -BarMadness.value / 20);
+        Shader.SetGlobalFloat("_Saturation", 5);
 
-        Debug.Log(-BarMadness.value / 20);
+        //Debug.Log(-BarMadness.value / 20);
 
 		StartCoroutine ( CooldownPunch ( type_technic ) );
 
@@ -1417,9 +1442,8 @@ public class PlayerController : MonoBehaviour
 		{
 			GameOver ( true );
 		}
-		if ( Dash || InMadness )
+		if ( Dash || InMadness || playerInv )
 		{
-
             if (getObj.tag == Constants._EnnemisTag)
             {
                 GlobalManager.Ui.BloodHitDash();
@@ -1446,7 +1470,7 @@ public class PlayerController : MonoBehaviour
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
                 thisColl.collider.enabled = false;
                 if(thisColl.gameObject.GetComponent<AbstractObject>())
-				    thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash );
+					thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward );
 				return;
 			}
 

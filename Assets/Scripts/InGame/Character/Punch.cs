@@ -9,7 +9,7 @@ public class Punch : MonoBehaviour {
     public float addPointBarByPunchDouble = 5;
     public float puissanceOnde = 15;
     private PlayerController control;
-
+	Transform getPlayer;
     private enum Technic
     {
         basic_punch,
@@ -19,7 +19,10 @@ public class Punch : MonoBehaviour {
 		
     private int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
-    public Vector3 projection_basic, projection_double, projection_dash;
+	public float projection_basic = 50;
+	public float projection_double = 100;
+	public float projection_dash = 150;
+
     public float facteurVitesseRenvoie = 1.5f;
 	public bool RightPunch = false;
 
@@ -27,7 +30,8 @@ public class Punch : MonoBehaviour {
 	//float pourcPunch = 100;
     void Start()
     {
-		control = GlobalManager.GameCont.Player.GetComponent<PlayerController>();
+		getPlayer = GlobalManager.GameCont.Player.transform;
+		control = getPlayer.GetComponent<PlayerController>();
         barMadness = control.BarMadness;
         barMadness.value = 0;
     }
@@ -55,7 +59,7 @@ public class Punch : MonoBehaviour {
             }
         }
 
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
@@ -63,32 +67,49 @@ public class Punch : MonoBehaviour {
 				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
 			}
 
-			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false );
+            if(other.gameObject.tag == Constants._EnnemisTag)
+            {
+                int rdmValue = UnityEngine.Random.Range(0, 5);
+                GlobalManager.AudioMa.OpenAudio(AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true);
+                GlobalManager.Ui.BloodHit();
+            }
 
-            int rdmValue = UnityEngine.Random.Range(0, 5);
-			GlobalManager.AudioMa.OpenAudio ( AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true );
 
-            GlobalManager.Ui.BloodHit();
-
-           // Debug.Log("song");
-            Vector3 getProj = projection_basic;
+            GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
+            // Debug.Log("song");
+			Vector3 getProj = getPlayer.forward + getPlayer.right;
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
 				if ( RightPunch )
 				{
-					getProj.x *= Random.Range ( -getProj.x, -getProj.x / 2 );
+					getProj += getPlayer.right * Random.Range ( 0.2f, 1f );
 				}
 				else
 				{
-					getProj.x *= Random.Range ( getProj.x / 2, getProj.x );
+					getProj -= getPlayer.right * Random.Range ( 0.2f, 1f );
 				}
 
-				tryGet.Degat ( getProj, numTechnic );
+				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				{
+					tryGet.Degat ( getProj * projection_basic, numTechnic );
+				}
+				else
+				{
+					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
+				}
+
 				break;
 			case (int)Technic.double_punch:
 				//Debug.Log ( pourcPunch );
-				tryGet.Degat ( projection_double/* * pourcPunch*/, numTechnic );
+				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				{
+					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
+				}
+				else
+				{
+					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+				}
            	 	break;
             }
             MadnessMana("Double");

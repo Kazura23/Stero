@@ -62,6 +62,19 @@ public class AbstractObject : MonoBehaviour
 			meshRigid = mainCorps;
 		}
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
+	}
+
+    protected virtual void Update()
+    {
+        if (playerCont.playerDead)
+            PlayerDetected(playerTrans.gameObject, false);
+    }
+
+    protected virtual void Start()
+    {
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
+
 
 		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
@@ -73,19 +86,6 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
-
-	}
-
-    void Update()
-    {
-        if (playerCont.playerDead)
-            PlayerDetected(playerTrans.gameObject, false);
-    }
-
-    protected virtual void Start()
-    {
-		playerTrans = GlobalManager.GameCont.Player.transform;
-		playerCont = playerTrans.GetComponent<PlayerController>();
     }
 	#endregion
 
@@ -142,9 +142,9 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	public virtual void ForceProp ( Vector3 forceProp )
+	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true )
 	{
-		onEnemyDead ( forceProp );
+		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
 		Destroy ( gameObject, delayDead );
 	}
@@ -171,6 +171,14 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 		}*/
+	}
+
+	protected virtual void OnTriggerEnter ( Collider thisColl )
+	{
+		if ( thisColl.tag == Constants._ChocWave )
+		{
+			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, false );
+		}
 	}
 
 	void startDeadBall ( ) 
@@ -204,7 +212,6 @@ public class AbstractObject : MonoBehaviour
 					getTrans.localPosition = new Vector3 ( Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ) );
 					getTrans.localRotation = new Quaternion ( Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), 0 );
 					meshRigid.transform.position = getTrans.position;
-
 				}; 
 
 				GlobalManager.Event.Register ( SetParent ); 
@@ -216,7 +223,7 @@ public class AbstractObject : MonoBehaviour
 		} 
 	} 
 
-	void onEnemyDead ( Vector3 forceProp )
+	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
@@ -240,13 +247,18 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		mainCorps.constraints = RigidbodyConstraints.None;
-		checkConstAxe ( );
+
+		if ( checkConst )
+		{
+			checkConstAxe ( );
+		}
+
 		if ( useGravity )
 		{
 			mainCorps.useGravity = true;
 		}
 
-		if ( meshRigid.gameObject != gameObject )
+		if ( meshRigid.gameObject != gameObject && GetComponent<BoxCollider> ( ) != null )
 		{
 			GetComponent<BoxCollider> ( ).enabled = false;
 		}
@@ -257,7 +269,7 @@ public class AbstractObject : MonoBehaviour
         }
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 		string getObsT = Constants._ObjDeadTag;
-		foreach (Rigidbody thisRig in meshRigid.GetComponentsInChildren<Rigidbody>())
+		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
 		{
 			thisRig.tag = getObsT;
 		}

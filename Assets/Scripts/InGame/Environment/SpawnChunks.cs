@@ -122,14 +122,23 @@ public class SpawnChunks : MonoBehaviour
 		}
 
 		LvlChunksInfo = chunkOrder;
-
+		bool checkZero = false;
+			
 		while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
 		{
 			currLevel++;
 
 			if ( currLevel > chunkOrder.Count )
 			{
-				return;
+				if ( !checkZero )
+				{
+					checkZero = true;
+					currLevel = 0;
+				}
+				else
+				{
+					return;
+				}
 			}
 		}
 
@@ -174,6 +183,7 @@ public class SpawnChunks : MonoBehaviour
 		currNbrCh = 0;
 		currLevel = 0;
 		saveLvlForStart = 0;
+		transitChunk = false;
 
 		List<GameObject> getSpc = getSpawnChunks;
 		bool doubleFirst = false;
@@ -230,6 +240,7 @@ public class SpawnChunks : MonoBehaviour
 		List<GameObject> getSpc = getSpawnChunks;
 		Transform getChunkT = getSpc [ getSpc.Count - 1 ].transform;
 		GameObject thisObj;
+		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
 
 		if ( getCunk.WallOnLastChunk != null )
 		{
@@ -243,11 +254,28 @@ public class SpawnChunks : MonoBehaviour
 			transitChunk = false;
 			currLevel++;
 
-			if ( currLevel >= LvlChunksInfo.Count || randAllChunk )
+			if ( currLevel >= chunkOrder.Count || randAllChunk )
 			{
 				randAllChunk = true;
 
-				currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+				if ( chunkOrder.Count > 1 )
+				{
+					currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+				}
+				else
+				{
+					currLevel = 0;
+				}
+			}
+
+			while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
+			{
+				currLevel++;
+
+				if ( currLevel > chunkOrder.Count )
+				{
+					return;
+				}
 			}
 
 			CurrRandLvl = Random.Range ( 0, LvlChunksInfo [ currLevel ].ChunkScript.Count );
@@ -270,6 +298,8 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( !transitChunk )
 		{
+			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
+				
 			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
 			getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
 		}
@@ -278,10 +308,10 @@ public class SpawnChunks : MonoBehaviour
 			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ].TransitionChunks [ Random.Range ( 0, chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ].TransitionChunks.Count ) ];
 			getSble = new GetSpawnable ( );
 
-			getSble.getEnnemySpawnable.CopyTo ( getChunk.EnnemySpawnable.ToArray ( ) );
-			getSble.getObstacleSpawnable.CopyTo ( getChunk.ObstacleSpawnable.ToArray ( ) );
-			getSble.getObstacleDestrucSpawnable.CopyTo ( getChunk.ObstacleDestrucSpawnable.ToArray ( ) );
-			getSble.getCoinSpawnable.CopyTo ( getChunk.CoinSpawnable.ToArray ( ) );
+			getSble.getEnnemySpawnable = getChunk.EnnemySpawnable;
+			getSble.getObstacleSpawnable = getChunk.ObstacleSpawnable;
+			getSble.getObstacleDestrucSpawnable = getChunk.ObstacleDestrucSpawnable;
+			getSble.getCoinSpawnable = getChunk.CoinSpawnable;
 		}
 
 		thisChunk = getChunk;
