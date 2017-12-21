@@ -9,7 +9,7 @@ Material:
   m_Name: Generic_Colors - Obstacle Dangerous
   m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
   m_ShaderKeywords: _EMISSION _HIGHLIGHT_ON
-  m_LightmapFlags: 1
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
@@ -97,10 +97,11 @@ Material:
     - _gloss: 0
     - _gloss_color: 1
     - _highlight: 1
-    - _highlight__force: 1.13
-    - _highlight_amount: -0
-    - _highlight_speed: 1.64
+    - _highlight__force: 0.2
+    - _highlight_amount: 4.65
+    - _highlight_speed: 1.11
     - _outline_basevalue: 0.1
+    - _roughForce: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.5661765, g: 0.43295848, b: 0.43295848, a: 1}
