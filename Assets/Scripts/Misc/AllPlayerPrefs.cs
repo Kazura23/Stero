@@ -17,10 +17,10 @@ public static class AllPlayerPrefs
         distance = 0;
     }
 
-    public static DataSave NewData()
+   /* public static DataSave NewData()
     {
         return new DataSave(finalScore, scoreWhithoutDistance, piece, distance);
-    }
+    }*/
 
     #region Get Methods
 	public static int GetIntValue ( string thisString )

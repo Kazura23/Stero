@@ -18,7 +18,7 @@ Shader "Custom/Character_toon" {
         _highlight_amount ("highlight_amount", Range(5, 2)) = 2
         _highlight_speed ("highlight_speed", Range(1, 3)) = 1
         _highlight__force ("highlight__force", Range(0, 2)) = 2
-        _Saturation ("Saturation", Range(-0.3, -5)) = -0.3
+        [HideInInspector]_Saturation ("Saturation", Range(-0.3, -5)) = -0.3
         [MaterialToggle] _SwitchemittTimeOff ("SwitchemittTimeOff", Float ) = 0
         _Hilight_fix ("Hilight_fix", Range(0, 1)) = 0
     }

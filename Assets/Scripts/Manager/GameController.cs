@@ -448,7 +448,7 @@ public class GameController : ManagerParent
 
 		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-        AllPlayerPrefs.saveData = SaveData.Load();
+        //AllPlayerPrefs.saveData = SaveData.Load();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -577,16 +577,17 @@ public class GameController : ManagerParent
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
-    {
+    {/*
         string path1 = Application.dataPath + "/Save/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
-        Debug.Log("save");
+        Debug.Log("save");*/
     }
 
     public static ListData Load()
     {
+        
         string path1 = Application.dataPath + "/Save/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
@@ -660,7 +661,7 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
-        SaveData.Save(this);
+        //SaveData.Save(this);
     }
 }
 
