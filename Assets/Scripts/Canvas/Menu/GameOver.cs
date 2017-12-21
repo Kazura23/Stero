@@ -41,10 +41,7 @@ public class GameOver : UiParent
 
         float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
-
-
-
-        Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+      //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
 
         Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
@@ -63,7 +60,6 @@ public class GameOver : UiParent
 		PatternGameOver.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
 			PatternGameOver.transform.DOLocalMoveY(1092, 0);
 		}).SetLoops(-1, LoopType.Restart);
-
 
 		gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
 		{
@@ -105,7 +101,6 @@ public class GameOver : UiParent
 			});
 		});
 	}
-		
 
 	public override void CloseThis ( )
 	{
