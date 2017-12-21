@@ -26,6 +26,7 @@ public static class Constants
 	public const string _ObsPropSafe = "ObsPropSafe";
 	public const string _Intro = "Intro";
 	public const string _ChocWave = "ChocWave";
+	public const string _Ground = "Ground";
 	#endregion
 
 	#region PlayerPref

@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 lastPos;
 	//Vector3 posDir;
 	Text textDist;
-	Text textCoin;
+	//Text textCoin;
 
 	IEnumerator currWF;
 	IEnumerator propPunch;
@@ -235,7 +235,6 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_Radius", Radius );
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
-
         
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -264,10 +263,10 @@ public class PlayerController : MonoBehaviour
         {
             if(timerBeginMadness < delayInBeginMadness)
             {
-                timerBeginMadness += Time.deltaTime;
-                camMad._Y += saveCamMad.x * Time.deltaTime / delayInBeginMadness;
-                camMad._U += saveCamMad.y * Time.deltaTime / delayInBeginMadness;
-                camMad._V += saveCamMad.z * Time.deltaTime / delayInBeginMadness;
+				timerBeginMadness += getTime;
+				camMad._Y += saveCamMad.x * getTime / delayInBeginMadness;
+				camMad._U += saveCamMad.y * getTime / delayInBeginMadness;
+				camMad._V += saveCamMad.z * getTime / delayInBeginMadness;
             }
             else
             {
@@ -291,13 +290,13 @@ public class PlayerController : MonoBehaviour
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
+		thisCam = GlobalManager.GameCont.thisCam;
 		getPunch = GetComponentInChildren<Punch> ( );
-		thisCam = GetComponentInChildren<Camera> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
-		textCoin = GlobalManager.Ui.MoneyPoints;
+		//textCoin = GlobalManager.Ui.MoneyPoints;
 		nextIncrease = DistIncMaxSpeed;
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
@@ -894,7 +893,7 @@ public class PlayerController : MonoBehaviour
 				currWF = waitFall ( );
 				StartCoroutine ( currWF );
 			}
-            // Camera.main.GetComponent<RainbowMove>().enabled = false;
+            // thisCam.GetComponent<RainbowMove>().enabled = false;
 
 			if ( inAir )
 			{
