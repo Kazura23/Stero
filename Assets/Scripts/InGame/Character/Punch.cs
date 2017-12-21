@@ -81,7 +81,7 @@ public class Punch : MonoBehaviour {
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
-                MadnessMana("Simple");
+                MadnessMana("Simple", false);
 
                 if ( RightPunch )
 				{
@@ -103,7 +103,7 @@ public class Punch : MonoBehaviour {
 
 				break;
 			case (int)Technic.double_punch:
-                MadnessMana("Double");
+                MadnessMana("Double", false);
 
                 //Debug.Log ( pourcPunch );
                 if ( other.gameObject.tag != Constants._ObjDeadTag )
@@ -134,18 +134,32 @@ public class Punch : MonoBehaviour {
 		canPunc = canPush;
 	}
 
-    public void MadnessMana(string type)
+	public void MadnessMana(string type, bool empty = true )
     {
         //if (!control.IsInMadness()) {
-            if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == "Simple")
-            {
-                //barMadness.value += addPointBarByPunchSimple;
-                control.AddSmoothCurve(addPointBarByPunchSimple);
-            } else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == "Double")
-            {
+        if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == "Simple")
+        {
+            //barMadness.value += addPointBarByPunchSimple;
+			if ( empty )
+			{
+				control.AddSmoothCurve(addPointBarByPunchSimple / 2 );
+			}
+			else
+			{
+				control.AddSmoothCurve(addPointBarByPunchSimple);
+			}
+        } else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == "Double")
+        {
+			if ( empty )
+			{
+				control.AddSmoothCurve(addPointBarByPunchDouble / 2 );
+			}
+			else
+			{
+				control.AddSmoothCurve(addPointBarByPunchDouble);
+			}
                 //barMadness.value += addPointBarByPunchDouble;
-                control.AddSmoothCurve(addPointBarByPunchDouble);
-            }
+        }
             /*else
             {
                 barMadness.value = barMadness.maxValue;
