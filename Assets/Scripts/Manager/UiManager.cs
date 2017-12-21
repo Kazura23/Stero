@@ -490,7 +490,7 @@ public class UiManager : ManagerParent
 		{
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 		}
-		GlobalManager.GameCont.StartGame ( );
+		//GlobalManager.GameCont.StartGame ( );
 	}
 
 	void InieUI ( )

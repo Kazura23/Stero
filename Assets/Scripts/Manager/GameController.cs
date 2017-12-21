@@ -17,6 +17,7 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
+	public GameObject BarrierIntro;
     public bool Intro;
 
 	[HideInInspector]
@@ -155,6 +156,8 @@ public class GameController : ManagerParent
     
     public void StartGame ( )
 	{
+		GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
 		if ( Player == null )
