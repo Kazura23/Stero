@@ -112,6 +112,7 @@ public class ShieldMan : AbstractObject {
             if (shieldActive)
             {
                 shieldActive = false;
+                playerCont.MadnessMana(1);
 				move = getTrans.position + (getTrans.forward * distance);
 				getTrans.DOMoveX(move.x, delay);
 				getTrans.DOMoveZ(move.z, delay);

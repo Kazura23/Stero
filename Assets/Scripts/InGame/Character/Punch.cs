@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Punch : MonoBehaviour {
     private Slider barMadness;
-    public float addPointBarByPunchSimple = 3;
-    public float addPointBarByPunchDouble = 5;
+    
     public float puissanceOnde = 15;
     private PlayerController control;
 	Transform getPlayer;
@@ -81,7 +80,7 @@ public class Punch : MonoBehaviour {
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
-                MadnessMana("Simple", false);
+                //MadnessMana("Simple");
 
                 if ( RightPunch )
 				{
@@ -103,7 +102,7 @@ public class Punch : MonoBehaviour {
 
 				break;
 			case (int)Technic.double_punch:
-                MadnessMana("Double", false);
+                //MadnessMana("Double");
 
                 //Debug.Log ( pourcPunch );
                 if ( other.gameObject.tag != Constants._ObjDeadTag )
@@ -134,38 +133,5 @@ public class Punch : MonoBehaviour {
 		canPunc = canPush;
 	}
 
-	public void MadnessMana(string type, bool empty = true )
-    {
-        Debug.Log("Madddddd");
-        //if (!control.IsInMadness()) {
-        if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == "Simple")
-        {
-            //barMadness.value += addPointBarByPunchSimple;
-			if ( empty )
-			{
-				control.AddSmoothCurve(addPointBarByPunchSimple / 2 );
-			}
-			else
-			{
-				control.AddSmoothCurve(addPointBarByPunchSimple);
-			}
-        } else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == "Double")
-        {
-			if ( empty )
-			{
-				control.AddSmoothCurve(addPointBarByPunchDouble / 2 );
-			}
-			else
-			{
-				control.AddSmoothCurve(addPointBarByPunchDouble);
-			}
-                //barMadness.value += addPointBarByPunchDouble;
-        }
-            /*else
-            {
-                barMadness.value = barMadness.maxValue;
-                control.SetInMadness(true);
-            }*/
-        //}
-    }
+    
 }
