@@ -109,6 +109,8 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
+	[HideInInspector]
+	public bool onAnimeAir = false;
 
 	public int Life = 1;
 	public bool StopPlayer = false;
@@ -762,7 +764,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(prepDeadBall());
         }
 	}
-	bool onAnimeAir = false;
+
 	IEnumerator groundAfterChoc ( )
 	{
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
