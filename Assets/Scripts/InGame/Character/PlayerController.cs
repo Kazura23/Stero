@@ -109,10 +109,9 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
-	[HideInInspector]
-	public bool onAnimeAir = false;
-
-	public int Life = 1;
+    [HideInInspector]
+    public bool playerInv = false;
+    public int Life = 1;
 	public bool StopPlayer = false;
 
 	private BoxCollider punchBox;
@@ -202,11 +201,13 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
-	bool playerInv = false;
-	#endregion
 
-	#region Mono
-	void Update ( )
+
+    bool onAnimeAir = false;
+    #endregion
+
+    #region Mono
+    void Update ( )
 	{
         //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
@@ -836,7 +837,7 @@ public class PlayerController : MonoBehaviour
 
 		foreach ( RaycastHit thisRay in allHit )
 		{
-			if ( thisRay.collider.gameObject == gameObject )
+			if ( thisRay.collider.gameObject == gameObject || thisRay.collider.tag == Constants._EnnemisTag || thisRay.collider.tag == Constants._ObsPropSafe )
 			{
 				continue;
 			}
