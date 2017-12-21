@@ -5,7 +5,7 @@ using UnityEngine;
 public class SlowMotionDetection : MonoBehaviour {
 
     public float ratioSlow = 0.3f;
-    public float timeSlow = 0.5f;
+    public float timeSlow = 0.3f;
     private PlayerController player;
 
     private void Awake()

@@ -451,7 +451,9 @@ public class UiManager : ManagerParent
 			getCurrHeat.DOFade(.75f, .1f);
 			getCurrHeat.transform.DOScale(10, 0f);
 			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
-                CircleFeel.transform.DOScale(28, .8f);
+				CircleFeel.transform.DOScale(28, .8f).OnComplete(() => {
+					getCurrHeat.enabled = false;
+				});
                 CircleFeel.DOFade(1, .2f).OnComplete(() => {
                     CircleFeel.DOFade(0, .4f);
                 });
