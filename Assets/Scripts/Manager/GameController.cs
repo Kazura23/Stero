@@ -37,12 +37,14 @@ public class GameController : ManagerParent
     public Transform[] textIntroTransform;
     public string[] textIntroText;
     public Tween colorTw;
+    public GameObject musicObject;
 
 
     bool restartGame = false;
     public bool canOpenShop = true;
 
     bool GameStarted = false;
+	bool onHub = true;
     #endregion
 
     #region Mono
@@ -54,67 +56,68 @@ public class GameController : ManagerParent
 		}
         if (!checkStart && isStay && !isReady)
         {
+			switch (chooseOption)
+			{
 
-            switch (chooseOption)
-            {
+			case 0: // Options
 
-            case 0: // Options
+				//Debug.Log("Options");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
 
-                    //Debug.Log("Options");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
-                    
 
-                    //GameStartedUpdate();
-                    break;
+				//GameStartedUpdate();
+				break;
 
 			case 1: // Leaderboards
-                    //Debug.Log("Leaderboards");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
-                    
-                    break;
+				//Debug.Log("Leaderboards");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
 
-            case 2: //Start game
+				break;
 
-                    //Debug.Log("Start");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
-                    
-                    if (Input.GetKeyDown(KeyCode.W)&& !restartGame)
-                {
-                    StartGame();
-                    isStay = false;
-                    AnimationStartGame();
-                }
+			case 2: //Start game
 
-                break;
-		
+				//Debug.Log("Start");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
+
+				if (Input.GetKeyDown(KeyCode.W) && !restartGame)
+				{
+					SetAllBonus ( );
+
+					isStay = false;
+					AnimationStartGame();
+				}
+
+				break;
+
 			case 3: // Shop
-                    //Debug.Log("Shop");
+				//Debug.Log("Shop");
 
 
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
+				textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
 
-                    ActiveTextIntro();
+				ActiveTextIntro();
 
-                    if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
-                        GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
-                    break;
+				if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
+					GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
+				break;
 
-            case 4:  // Quitter
-                     //Debug.Log("Quit");
-                    textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
-                    textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
-                    
-                    break;
-            }
+			case 4:  // Quitter
+				//Debug.Log("Quit");
+				textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
+
+				break;
+			}
+           
             if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 ActiveTextIntro();
@@ -150,6 +153,11 @@ public class GameController : ManagerParent
         GameStartedUpdate();
     }
 
+    private void Awake()
+    { 
+        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+    }
+
     public void StartGame ( )
 	{
         //Debug.Log("Start");
@@ -170,16 +178,21 @@ public class GameController : ManagerParent
 			isStay = false;
 			Intro = false;
 
-			Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+			Player.transform.DOMoveZ ( 3, 0.5f ).OnComplete ( ( ) =>
 			{
 
-				Player.GetComponent<PlayerController>().GetPunchIntro();
-				Player.GetComponent<PlayerController>( ).StopPlayer = false;
+				Player.GetComponent<PlayerController> ( ).GetPunchIntro ( );
+				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
 				restartGame = false;
-                GlobalManager.Ui.IntroRestart();
-			});
+				GlobalManager.Ui.IntroRestart ( );
+			} );
 		}
-
+		else
+		{
+			onHub = true;
+			GlobalManager.AudioMa.CloseAllAudio ( );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
+		}
 
 		SetAllBonus ( );
 
@@ -191,11 +204,6 @@ public class GameController : ManagerParent
         Camera.main.GetComponent<RainbowRotate>().time = 2;
         Camera.main.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
-
-		if ( !GlobalManager.AudioMa.IsAudioLaunch ( AudioType.MusicBackGround ) ) 
-		{ 
-			setMusic ( ); 
-		} 
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -263,8 +271,6 @@ public class GameController : ManagerParent
         }
         else
         {
-
-
             isReady = false;
             GameStarted = false;
             Debug.Log(isReady + " " + GameStarted);
@@ -288,10 +294,10 @@ public class GameController : ManagerParent
     #endregion
 
     #region Private Methods
-	void setMusic ( ) 
+	void setMusic () 
 	{ 
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
-	} 
+		    GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+    } 
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
@@ -308,7 +314,14 @@ public class GameController : ManagerParent
                     //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
                     Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
                     {
+                        // Cri de Mr S après avoir pris sa dose
                         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+                        // Démarrage de la musique du Hub amplifiée après Stéro
+                        musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+                        musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+                        musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
 
                         Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
                         {
@@ -374,10 +387,24 @@ public class GameController : ManagerParent
         {*/
             if (GameStarted && !checkStart)
             {
+				
+				if ( onHub )
+				{
+					onHub = false;
+					GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+					setMusic ( );
+				}
+				
                 //Debug.Log("Demarrage");
 
                 GlobalManager.Ui.Intro();
                 isStay = false;
+
+            //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+
+            musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+                musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
+
 
                 checkStart = true;
                 //Debug.Log("player = " + Player);
