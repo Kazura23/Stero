@@ -449,7 +449,6 @@ public class PlayerController : MonoBehaviour
 
             //if ( !InMadness )
             //{
-            punch.MadnessMana("Simple");
 
             ScreenShake.Singleton.ShakeIntro();
             
@@ -1226,9 +1225,10 @@ public class PlayerController : MonoBehaviour
 			if (getDelta < 1)
                 Time.timeScale = 1;
 
-			//if ( !InMadness )
-			//{
-				punch.MadnessMana("Simple");
+            //if ( !InMadness )
+            //{
+            Debug.Log("1");
+			punch.MadnessMana("Simple");
 
             int randomSong = UnityEngine.Random.Range(0, 3);
 			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false );
