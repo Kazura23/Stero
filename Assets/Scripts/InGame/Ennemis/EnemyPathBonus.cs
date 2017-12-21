@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ZigZagEnemi : AbstractObject {
+public class EnemyPathBonus : AbstractObject {
 
     public List<Transform> tabPath = new List<Transform>();
     private int currentMove;
@@ -70,7 +70,7 @@ public class ZigZagEnemi : AbstractObject {
 
     public override void Dead(bool enemy = false)
     {
-        if (moveFinish)
+        if (!moveFinish)
         {
             Instantiate(coin.CoinSpawn[0], transform.position, Quaternion.identity);
         }

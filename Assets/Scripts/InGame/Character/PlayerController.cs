@@ -66,8 +66,10 @@ public class PlayerController : MonoBehaviour
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
     public int debugNumTechnic = 2;
+    public float addPointBarByPunchSimple = 3;
+    public float addPointBarByPunchDouble = 5;
 
-	[Tooltip ("Le temps max sera delayPunch")]
+    [Tooltip ("Le temps max sera delayPunch")]
 	public float TimePropulsePunch = 0.1f, TimePropulseDoublePunch = 0.2f;
 	[Tooltip ("La valeur est un multiplicateur sur la vitesse du joueur")]
 	public float SpeedPunchRun = 1.2f, SpeedDoublePunchRun = 1.5f;
@@ -415,6 +417,28 @@ public class PlayerController : MonoBehaviour
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
 
 		//GlobalManager.GameCont.GameOver ( );
+    }
+
+    public void MadnessMana(int type)
+    {
+        //if (!control.IsInMadness()) {
+        Debug.Log("hit mad");
+        if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == 0)
+        {
+            //barMadness.value += addPointBarByPunchSimple;
+            this.AddSmoothCurve(addPointBarByPunchSimple);
+        }
+        else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == 1)
+        {
+            //barMadness.value += addPointBarByPunchDouble;
+            this.AddSmoothCurve(addPointBarByPunchDouble);
+        }
+        /*else
+        {
+            barMadness.value = barMadness.maxValue;
+            control.SetInMadness(true);
+        }*/
+        //}
     }
 
     public void AddSmoothCurve(float p_value)
@@ -1220,7 +1244,7 @@ public class PlayerController : MonoBehaviour
             //if ( !InMadness )
             //{
             Debug.Log("1");
-			punch.MadnessMana("Simple");
+			this.MadnessMana(0);
 
             int randomSong = UnityEngine.Random.Range(0, 3);
 			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false );
@@ -1268,7 +1292,7 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 1;
 			//if ( !InMadness )
 			//{
-				punch.MadnessMana("Double");
+				this.MadnessMana(1);
 			//}
 
             propDP = true;

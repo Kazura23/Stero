@@ -32,7 +32,7 @@ public class AbstractObject : MonoBehaviour
 
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
-    PlayerController playerCont;
+    protected PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
 	Rigidbody meshRigid;
@@ -92,6 +92,7 @@ public class AbstractObject : MonoBehaviour
 	#region Public Methods
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
+        playerCont.MadnessMana(p_technic);
 		if ( !isDead )
 		{
 			projection = p_damage;
