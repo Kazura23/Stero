@@ -38,14 +38,11 @@ public class GameOver : UiParent
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
 		base.OpenThis ( GetTok );
-
-<<<<<<< HEAD
+        
         GlobalManager.Ui.ExtraHearts[0].enabled = false;
         GlobalManager.Ui.ExtraHearts[1].enabled = false;
         float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
-=======
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
->>>>>>> Alex
 
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
 
