@@ -144,13 +144,16 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( getSpc.Count > 2 )
 		{
-			if ( getSpc [ 0 ].OnScene )
+			if ( getSpc [ 0 ].ThisChunk != null )
 			{
-				getSpc [ 0 ].ThisChunk.SetActive ( false );
-			}
-			else
-			{
-				Destroy ( getSpc [ 0 ].ThisChunk );
+				if ( getSpc [ 0 ].OnScene )
+				{
+					getSpc [ 0 ].ThisChunk.SetActive ( false );
+				}
+				else
+				{
+					Destroy ( getSpc [ 0 ].ThisChunk );
+				}
 			}
 
 			getSpc.RemoveAt ( 0 );
@@ -749,7 +752,7 @@ public class SpawnChunks : MonoBehaviour
 
 		while ( getChunk.Count > 0 )
 		{
-			if ( getChunk [ getChunk.Count - 1 ] == null )
+			if ( getChunk [ getChunk.Count - 1 ].ThisChunk == null )
 			{
 				getChunk.RemoveAt ( getChunk.Count - 1 );
 				continue;
