@@ -52,7 +52,7 @@ public class Punch : MonoBehaviour {
                     enn.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
                     break;
                 case Constants._ObsPropSafe:
-                    GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3);
+				GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3 );
                     break;
                 //case tag bibli
             }

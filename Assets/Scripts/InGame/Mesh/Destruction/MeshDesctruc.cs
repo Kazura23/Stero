@@ -16,7 +16,7 @@ public class MeshDesctruc : MonoBehaviour
 		//stockElem = new List<GameObject> ( );
 	}
 
-	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 25, bool little = false, bool explos = false )    
+	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 25, bool little = false, bool explos = false, bool destobj = false )    
 	{
 		WaitForEndOfFrame thisFrame = new WaitForEndOfFrame ( );
 
@@ -212,7 +212,26 @@ public class MeshDesctruc : MonoBehaviour
 		}
 			
 
-		Destroy ( objSource, 10 );
+		if ( destobj )
+		{
+			Destroy ( objSource, 10 );
+		}
+		else
+		{
+			StartCoroutine ( waitDisable ( objSource ) );
+		}
+	}
+
+	IEnumerator waitDisable ( GameObject thisObj )
+	{
+		WaitForSeconds thisSec = new WaitForSeconds ( 10 );
+
+		yield return thisSec;
+
+		if ( thisObj != null )
+		{
+			thisObj.SetActive ( false );
+		}
 	}
 
 	/*public void ReAddObj ( GameObject thisObj )

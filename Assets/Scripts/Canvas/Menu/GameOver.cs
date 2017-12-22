@@ -39,11 +39,18 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
+<<<<<<< HEAD
         GlobalManager.Ui.ExtraHearts[0].enabled = false;
         GlobalManager.Ui.ExtraHearts[1].enabled = false;
         float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
+=======
+        //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
+>>>>>>> Alex
 
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+
+		GlobalManager.Ui.ExtraHearts [ 0 ].enabled = false; 
+		GlobalManager.Ui.ExtraHearts [ 1 ].enabled = false; 
 
         Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
