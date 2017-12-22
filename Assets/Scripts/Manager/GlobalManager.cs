@@ -28,7 +28,7 @@ public class GlobalManager : MonoBehaviour
     #region Mono
     void Awake()
 	{
-		//PlayerPrefs.DeleteAll ( );
+		PlayerPrefs.DeleteAll ( );
 		if ( mainManagerInstance != null )
 		{
 			Destroy ( gameObject );

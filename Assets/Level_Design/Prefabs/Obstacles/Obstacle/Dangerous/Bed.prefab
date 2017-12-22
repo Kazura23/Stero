@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 65814709157132024}
   - component: {fileID: 54477334422799932}
   - component: {fileID: 114583517501270692}
+  - component: {fileID: 114640206044104438}
   m_Layer: 0
   m_Name: Bed
   m_TagString: ElemDash
@@ -141,3 +142,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 100
   DelayDestruc: 1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1
+--- !u!114 &114640206044104438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650294033588118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 10
+  onObjForward: 20
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  useGravity: 1

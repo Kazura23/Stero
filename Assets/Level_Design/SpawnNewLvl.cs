@@ -11,7 +11,15 @@ public class SpawnNewLvl : MonoBehaviour
 	public List<GameObject> ToDest;
 
 	[HideInInspector]
+	public List<GameObject> GarbChunk;
+
+	[HideInInspector]
 	public int OnLine;
+
+	[HideInInspector]
+	public bool AddToList = true;
+	[HideInInspector]
+	public bool OnScene = true;
 
 	bool detect = false;
 	#endregion
@@ -29,7 +37,10 @@ public class SpawnNewLvl : MonoBehaviour
 		{
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
-			GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject );
+			if (AddToList) 
+			{
+				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject, OnScene, GarbChunk );
+			}
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
@@ -51,6 +62,8 @@ public class NewChunkInfo
 	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
 	public Vector2 NbrLaneDebut, NbrLaneFin;
 	public List <ChunkExit> ThoseExit;
+	[HideInInspector]
+	public List<GameObject> GarbageChunk;
 }
 
 [System.Serializable]

@@ -52,13 +52,13 @@ public class Punch : MonoBehaviour {
                     enn.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
                     break;
                 case Constants._ObsPropSafe:
-                    GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3);
+				GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3 );
                     break;
                 //case tag bibli
             }
         }
 
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash)) //|| other.gameObject.tag == Constants._ObjDeadTag  ))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
@@ -75,8 +75,8 @@ public class Punch : MonoBehaviour {
 
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
-            // Debug.Log("song");
-			Vector3 getProj = getPlayer.forward + getPlayer.right;
+            Debug.Log("song");
+			Vector3 getProj = Vector3.zero;
             switch (numTechnic)
             {
 			case (int)Technic.basic_punch:
@@ -84,11 +84,11 @@ public class Punch : MonoBehaviour {
 
                 if ( RightPunch )
 				{
-					getProj += getPlayer.right * Random.Range ( 0.2f, 1f );
+					getProj -= getPlayer.right;
 				}
 				else
 				{
-					getProj -= getPlayer.right * Random.Range ( 0.2f, 1f );
+					getProj += getPlayer.right;
 				}
 
 				if ( other.gameObject.tag != Constants._ObjDeadTag )
@@ -100,12 +100,18 @@ public class Punch : MonoBehaviour {
 					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
 				}
 
-				break;
-			case (int)Technic.double_punch:
-                //MadnessMana("Double");
+                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
+                    {
+                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
+                    }
+                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
 
-                //Debug.Log ( pourcPunch );
-                if ( other.gameObject.tag != Constants._ObjDeadTag )
+                    break;
+			case (int)Technic.double_punch:
+                    //MadnessMgetProj = getPlayer.forward;ana("Double");
+                    getProj = getPlayer.forward;
+                    //Debug.Log ( pourcPunch );
+                    if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
@@ -113,6 +119,13 @@ public class Punch : MonoBehaviour {
 				{
 					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
 				}
+
+                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
+                    {
+                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
+                    }
+
+                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
            	 	break;
             }
         }else if (other.gameObject.tag == Constants._MissileBazoo)

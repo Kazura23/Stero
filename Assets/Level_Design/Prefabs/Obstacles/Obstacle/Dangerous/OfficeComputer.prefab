@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 65610226802456364}
   - component: {fileID: 54530912654686550}
   - component: {fileID: 114926350692450234}
+  - component: {fileID: 114019918601847084}
   m_Layer: 0
   m_Name: OfficeComputer
   m_TagString: ElemDash
@@ -128,6 +129,25 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114019918601847084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1115211251362482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 10
+  onObjForward: 20
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  useGravity: 1
 --- !u!114 &114926350692450234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,3 +161,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 75
   DelayDestruc: 1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1

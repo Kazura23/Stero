@@ -40,16 +40,16 @@ public class AbstractObject : MonoBehaviour
 
 	Vector3 projection;
 	float distForDB = 0;
-	System.Action <DeadBallEvent> checkDBE;
+	GameObject thisObj;
+
 	#endregion
 
 	#region Mono
 	protected virtual void Awake () 
 	{
 		isDead = false;
-
 		getTrans = transform;
-
+	
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
@@ -64,19 +64,15 @@ public class AbstractObject : MonoBehaviour
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
-    protected virtual void Update()
+ /*   protected virtual void Update()
     {
         if (playerCont.playerDead)
             PlayerDetected(playerTrans.gameObject, false);
-    }
+    }*/
 
-    protected virtual void Start()
-    {
-		playerTrans = GlobalManager.GameCont.Player.transform;
-		playerCont = playerTrans.GetComponent<PlayerController>();
-
-
-		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+	void OnEnable ( )
+	{
+		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
 			if ( meshRigid != null )
 			{
@@ -86,13 +82,33 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
+	}
+
+    protected virtual void Start()
+    {
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
     }
 	#endregion
 
 	#region Public Methods
+	public void EventEnable ( )
+	{
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+			gameObject.SetActive ( true );
+		}; 
+
+		GlobalManager.Event.Register ( checkEnable ); 
+	}
+
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
-        playerCont.MadnessMana(p_technic);
+		if ( playerCont != null )
+		{
+			playerCont.MadnessMana(p_technic);
+		}
+
 		if ( !isDead )
 		{
 			projection = p_damage;
@@ -111,7 +127,6 @@ public class AbstractObject : MonoBehaviour
 
 		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-
        // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
@@ -127,8 +142,6 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
 		}
-        
-		Destroy ( gameObject, delayDead );
 	}
 
 	protected virtual void CollDetect (  )
@@ -147,7 +160,6 @@ public class AbstractObject : MonoBehaviour
 	{
 		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
-		Destroy ( gameObject, delayDead );
 	}
 	#endregion
 
@@ -219,13 +231,15 @@ public class AbstractObject : MonoBehaviour
 			});
 
 			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
-
-			//Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
 	} 
 
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
+		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+		thisObj.SetActive ( false );
+		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
 
@@ -275,6 +289,11 @@ public class AbstractObject : MonoBehaviour
 			thisRig.tag = getObsT;
 		}
 		meshRigid.tag = getObsT;
+
+		//GlobalManager.Event.UnRegister ( checkEnable );
+		//GlobalManager.Event.UnRegister ( checkDBE );
+
+		Destroy ( gameObject, delayDead );
 	}
 
 	IEnumerator enableColl ( )
@@ -334,7 +353,7 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
-        Renderer rend = GetComponentInChildren<Renderer>();
+        //Renderer rend = GetComponentInChildren<Renderer>();
         //rend.material.shader.
         //rend.material.shader = Shader.Find("Character_toon");
         //Debug.Log(rend);

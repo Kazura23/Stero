@@ -5,18 +5,12 @@ public class CercleMask : MonoBehaviour
 	#region Variable
 	public float Radius, SoftNess, SmoothSpeed, ScaleFactor;
 
-	Camera mainCam;
 	RaycastHit thisHit;
 	Ray thisRay;
 	Vector3 mousePos, smoothPoint;
 	#endregion
 	
 	#region Mono
-	void Start ( ) 
-	{
-		mainCam = GameObject.FindGameObjectWithTag ( "MainCamera" ).GetComponent<Camera> ( );
-	}
-	
 	void Update ( ) 
 	{
 		if ( Input.GetKey ( KeyCode.UpArrow ) )
@@ -40,7 +34,7 @@ public class CercleMask : MonoBehaviour
 		Mathf.Clamp ( SoftNess, 0, 100 );
 
 		mousePos = new Vector3 ( Input.mousePosition.x, Input.mousePosition.y, 0 );
-		thisRay = mainCam.ScreenPointToRay ( mousePos );
+		thisRay = GlobalManager.GameCont.thisCam.ScreenPointToRay ( mousePos );
 
 		if ( Physics.Raycast ( thisRay, out thisHit ) )
 		{

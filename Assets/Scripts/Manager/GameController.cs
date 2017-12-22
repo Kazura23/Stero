@@ -27,7 +27,7 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
-    bool isStay = true, isReady = false, relance = false;
+    bool isStay = true, isReady = false;
     [HideInInspector]
     public bool introFinished;
     private int chooseOption = 2;
@@ -39,7 +39,7 @@ public class GameController : ManagerParent
     public string[] textIntroText;
     public Tween colorTw;
     public GameObject musicObject;
-
+	public Camera thisCam;
 
     bool restartGame = false;
     public bool canOpenShop = true;
@@ -156,23 +156,25 @@ public class GameController : ManagerParent
     
     public void StartGame ( )
 	{
-		GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
-
+		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+		Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
 		if ( Player == null )
 		{
 			Player = GameObject.FindGameObjectWithTag("Player");
+			thisCam = Player.GetComponentInChildren<Camera> ( );
 			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+			GlobalManager.Ui.SetCam ( thisCam );
 		}
 
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 		Intro = true;
 		isStay = true;
-
-		if ( restartGame )
-		{
+        
+		if ( restartGame)
+        {
 			isStay = false;
 			Intro = false;
 
@@ -199,8 +201,8 @@ public class GameController : ManagerParent
 
 		SpawnerChunck.FirstSpawn ( );
 
-        Camera.main.GetComponent<RainbowRotate>().time = 2;
-        Camera.main.GetComponent<RainbowMove>().time = 1;
+		thisCam.GetComponent<RainbowRotate>().time = 2;
+		thisCam.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
     }
 
@@ -240,7 +242,7 @@ public class GameController : ManagerParent
         Time.timeScale = 1;
 
         AllPlayerPrefs.ResetStaticVar();
-		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+		SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
@@ -253,8 +255,8 @@ public class GameController : ManagerParent
             GameStarted = true;
 
 			Player.GetComponent<PlayerController>().StopPlayer = false;
-			Camera.main.GetComponent<RainbowRotate>().time = .4f;
-			Camera.main.GetComponent<RainbowMove>().time = .2f;
+			thisCam.GetComponent<RainbowRotate>().time = .4f;
+			thisCam.GetComponent<RainbowMove>().time = .2f;
 
 			soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
 				//Debug.Log("here");
@@ -407,8 +409,8 @@ public class GameController : ManagerParent
             checkStart = true;
             //Debug.Log("player = " + Player);
             Player.GetComponent<PlayerController>().StopPlayer = false;
-            //Camera.main.GetComponent<RainbowRotate>().time = .4f;
-            //Camera.main.GetComponent<RainbowMove>().time = .2f;
+			//thisCam.GetComponent<RainbowRotate>().time = .4f;
+			//thisCam.GetComponent<RainbowMove>().time = .2f;
 
             soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
                 //Debug.Log("here");
@@ -443,7 +445,7 @@ public class GameController : ManagerParent
     protected override void InitializeManager ( )
 	{
 		Player = GameObject.FindGameObjectWithTag("Player");
-
+		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
@@ -482,7 +484,7 @@ public class GameController : ManagerParent
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		List <ItemModif> AllTI = AllTempsItem;
 		ItemModif thisItem;
-		List<string> getKey = new List<string> ( );
+		//List<string> getKey = new List<string> ( );
 
 		SpawnerChunck.EndLevel = 1;
 
@@ -560,7 +562,8 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life++;
+      
+            currPlayer.Life++;
 		}
 
 		if ( thisItem.StartBonus )

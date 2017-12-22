@@ -109,8 +109,9 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
-
-	public int Life = 1;
+    [HideInInspector]
+    public bool playerInv = false;
+    public int Life = 1;
 	public bool StopPlayer = false;
 
 	private BoxCollider punchBox;
@@ -136,7 +137,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 lastPos;
 	//Vector3 posDir;
 	Text textDist;
-	Text textCoin;
+	//Text textCoin;
 
 	IEnumerator currWF;
 	IEnumerator propPunch;
@@ -200,26 +201,15 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
-	bool playerInv = false;
-	#endregion
 
-	#region Mono
-	void Update ( )
+
+    bool onAnimeAir = false;
+    #endregion
+
+    #region Mono
+    void Update ( )
 	{
         //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
-
-		if ( Input.GetKeyDown ( KeyCode.Keypad1 ) )
-		{
-			ThisAct = SpecialAction.DeadBall;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad2 ) )
-		{
-			ThisAct = SpecialAction.OndeChoc;
-		}
-		if ( Input.GetKeyDown ( KeyCode.Keypad3 ) )
-		{
-			ThisAct = SpecialAction.SlowMot;
-		}
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -245,7 +235,6 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_Radius", Radius );
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
-
         
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -274,10 +263,10 @@ public class PlayerController : MonoBehaviour
         {
             if(timerBeginMadness < delayInBeginMadness)
             {
-                timerBeginMadness += Time.deltaTime;
-                camMad._Y += saveCamMad.x * Time.deltaTime / delayInBeginMadness;
-                camMad._U += saveCamMad.y * Time.deltaTime / delayInBeginMadness;
-                camMad._V += saveCamMad.z * Time.deltaTime / delayInBeginMadness;
+				timerBeginMadness += getTime;
+				camMad._Y += saveCamMad.x * getTime / delayInBeginMadness;
+				camMad._U += saveCamMad.y * getTime / delayInBeginMadness;
+				camMad._V += saveCamMad.z * getTime / delayInBeginMadness;
             }
             else
             {
@@ -301,13 +290,13 @@ public class PlayerController : MonoBehaviour
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
+		thisCam = GlobalManager.GameCont.thisCam;
 		getPunch = GetComponentInChildren<Punch> ( );
-		thisCam = GetComponentInChildren<Camera> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
-		textCoin = GlobalManager.Ui.MoneyPoints;
+		//textCoin = GlobalManager.Ui.MoneyPoints;
 		nextIncrease = DistIncMaxSpeed;
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
@@ -359,7 +348,6 @@ public class PlayerController : MonoBehaviour
 		stopMadness ( );
 
         BarMadness.value = 0;
-
 	}
 
 
@@ -775,13 +763,14 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(prepDeadBall());
         }
 	}
-	bool onAnimeAir = false;
+
 	IEnumerator groundAfterChoc ( )
 	{
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		while ( inAir )
 		{
+			pRig.AddForce(Vector3.down, ForceMode.VelocityChange);
 			yield return thisF;
 		}
 
@@ -796,8 +785,9 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator waitInvPlayer ( )
 	{
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 1 );
 		playerInv = false;
+		Debug.Log ( "StopInv" );
 	}
 
 
@@ -847,7 +837,7 @@ public class PlayerController : MonoBehaviour
 
 		foreach ( RaycastHit thisRay in allHit )
 		{
-			if ( thisRay.collider.gameObject == gameObject )
+			if ( thisRay.collider.gameObject == gameObject || thisRay.collider.tag == Constants._EnnemisTag || thisRay.collider.tag == Constants._ObsPropSafe )
 			{
 				continue;
 			}
@@ -902,7 +892,7 @@ public class PlayerController : MonoBehaviour
 				currWF = waitFall ( );
 				StartCoroutine ( currWF );
 			}
-            // Camera.main.GetComponent<RainbowMove>().enabled = false;
+            // thisCam.GetComponent<RainbowMove>().enabled = false;
 
 			if ( inAir )
 			{
@@ -914,7 +904,7 @@ public class PlayerController : MonoBehaviour
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
-		else if ( !checkAir && getCamRM )
+		else if ( !checkAir && getCamRM || inAir )
         {
 			checkDistY = pTrans.position.y - 1000;
 
@@ -1506,7 +1496,7 @@ public class PlayerController : MonoBehaviour
 
             else if ( getObj.tag == Constants._Balls )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true, false, true ) );
 				return;
 			}
 		}

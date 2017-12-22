@@ -13,12 +13,10 @@ public class EnemyPathBonus : AbstractObject {
     public float dist = 15;
 
 
-
-
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-        if(!active && Vector3.Distance(transform.position, playerTrans.position) <= dist)
+       // base.Update();
+		if(!active && Vector3.Distance(getTrans.position, playerTrans.position) <= dist)
         {
             active = true;
             currentMove = 0;
