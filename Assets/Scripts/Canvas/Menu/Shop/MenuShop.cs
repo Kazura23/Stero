@@ -173,7 +173,6 @@ public class MenuShop : UiParent
 
             fixBackShop.SetActive(true);
             currCatSeled = DefCatSelected;
-			CheckSelectCat ( true );
             if (currItemSeled != currCatSeled.DefautItem)
             {
                 CheckSelectItem(false);
