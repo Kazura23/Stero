@@ -40,17 +40,17 @@ public class AbstractObject : MonoBehaviour
 
 	Vector3 projection;
 	float distForDB = 0;
-	System.Action <DeadBallEvent> checkDBE;
 	Vector3 startPos;
+	GameObject thisObj;
 	#endregion
 
 	#region Mono
 	protected virtual void Awake () 
 	{
 		isDead = false;
-
 		getTrans = transform;
 		startPos = getTrans.localPosition;
+	
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
@@ -70,12 +70,13 @@ public class AbstractObject : MonoBehaviour
         if (playerCont.playerDead)
             PlayerDetected(playerTrans.gameObject, false);
     }*/
+	System.Action <RenableAbstObj> checkEnable;
+	System.Action <DeadBallEvent> checkDBE;
 
     protected virtual void Start()
     {
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
-
 
 		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
@@ -87,6 +88,13 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
+
+		checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+			gameObject.SetActive ( true );
+		}; 
+
+		GlobalManager.Event.Register ( checkEnable ); 
     }
 	#endregion
 
@@ -116,7 +124,6 @@ public class AbstractObject : MonoBehaviour
 
 		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
 
-
        // Debug.Log("BoneBreak");
 
         //checkConstAxe ( );
@@ -132,17 +139,6 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
 		}
-
-		StartCoroutine ( waitDisable ( ) );
-        
-		//Destroy ( gameObject, delayDead );
-	}
-
-	IEnumerator waitDisable ( )
-	{
-		yield return new WaitForSeconds ( delayDead );
-
-		gameObject.SetActive ( false );
 	}
 
 	protected virtual void CollDetect (  )
@@ -161,8 +157,6 @@ public class AbstractObject : MonoBehaviour
 	{
 		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
-		//Destroy ( gameObject, delayDead );
-		StartCoroutine ( waitDisable ( ) );
 	}
 	#endregion
 
@@ -241,6 +235,9 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
+		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+		thisObj.SetActive ( false );
+
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
 
@@ -290,6 +287,11 @@ public class AbstractObject : MonoBehaviour
 			thisRig.tag = getObsT;
 		}
 		meshRigid.tag = getObsT;
+
+		//GlobalManager.Event.UnRegister ( checkEnable );
+		//GlobalManager.Event.UnRegister ( checkDBE );
+
+		Destroy ( gameObject, delayDead );
 	}
 
 	IEnumerator enableColl ( )

@@ -315,6 +315,9 @@ public class SpawnChunks : MonoBehaviour
 		GetSpawnable getSble;
 		GameObject currWall;
 
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
 		if ( !transitChunk )
 		{
 			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
