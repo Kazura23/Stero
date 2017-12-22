@@ -348,7 +348,6 @@ public class PlayerController : MonoBehaviour
 		stopMadness ( );
 
         BarMadness.value = 0;
-
 	}
 
 

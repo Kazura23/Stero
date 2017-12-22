@@ -88,6 +88,11 @@ public class UiManager : ManagerParent
 		}
 	}
 
+	public void SetCam ( Camera newCame )
+	{
+		thisCam = newCame;
+	}
+
     public void MenuGlobal(int whichMenu)
     {
         if(whichMenu == 1)
@@ -289,6 +294,7 @@ public class UiManager : ManagerParent
 
     public void CloseMadness()
     {
+		
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
         thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 

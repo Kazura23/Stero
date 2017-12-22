@@ -163,7 +163,9 @@ public class GameController : ManagerParent
 		if ( Player == null )
 		{
 			Player = GameObject.FindGameObjectWithTag("Player");
+			thisCam = Player.GetComponentInChildren<Camera> ( );
 			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+			GlobalManager.Ui.SetCam ( thisCam );
 		}
 
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
@@ -443,7 +445,7 @@ public class GameController : ManagerParent
     protected override void InitializeManager ( )
 	{
 		Player = GameObject.FindGameObjectWithTag("Player");
-		thisCam = GetComponentInChildren<Camera> ( );
+		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
