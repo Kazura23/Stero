@@ -172,9 +172,9 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 		Intro = true;
 		isStay = true;
-
-		if ( restartGame )
-		{
+        
+		if ( restartGame)
+        {
 			isStay = false;
 			Intro = false;
 
@@ -562,7 +562,8 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life++;
+      
+            currPlayer.Life++;
 		}
 
 		if ( thisItem.StartBonus )
