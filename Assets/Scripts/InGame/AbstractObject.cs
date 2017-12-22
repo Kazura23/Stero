@@ -40,8 +40,8 @@ public class AbstractObject : MonoBehaviour
 
 	Vector3 projection;
 	float distForDB = 0;
-	Vector3 startPos;
 	GameObject thisObj;
+
 	#endregion
 
 	#region Mono
@@ -49,7 +49,6 @@ public class AbstractObject : MonoBehaviour
 	{
 		isDead = false;
 		getTrans = transform;
-		startPos = getTrans.localPosition;
 	
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
@@ -70,15 +69,10 @@ public class AbstractObject : MonoBehaviour
         if (playerCont.playerDead)
             PlayerDetected(playerTrans.gameObject, false);
     }*/
-	System.Action <RenableAbstObj> checkEnable;
-	System.Action <DeadBallEvent> checkDBE;
 
-    protected virtual void Start()
-    {
-		playerTrans = GlobalManager.GameCont.Player.transform;
-		playerCont = playerTrans.GetComponent<PlayerController>();
-
-		checkDBE = delegate ( DeadBallEvent thisEvnt ) 
+	void OnEnable ( )
+	{
+		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
 			if ( meshRigid != null )
 			{
@@ -88,17 +82,26 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkDBE ); 
+	}
 
-		checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+    protected virtual void Start()
+    {
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
+    }
+	#endregion
+
+	#region Public Methods
+	public void EventEnable ( )
+	{
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 			gameObject.SetActive ( true );
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
-    }
-	#endregion
+	}
 
-	#region Public Methods
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
 		if ( playerCont != null )
@@ -228,8 +231,6 @@ public class AbstractObject : MonoBehaviour
 			});
 
 			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
-
-			//Destroy ( gameObject, Constants.DB_Prepare + 0.1f );
 		} 
 	} 
 
@@ -237,6 +238,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
 		thisObj.SetActive ( false );
+		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
 
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;

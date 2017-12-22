@@ -242,7 +242,7 @@ public class GameController : ManagerParent
         Time.timeScale = 1;
 
         AllPlayerPrefs.ResetStaticVar();
-		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+		SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );

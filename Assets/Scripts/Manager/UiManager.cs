@@ -476,7 +476,7 @@ public class UiManager : ManagerParent
 		InieUI ( );
 
 		thisCam = GlobalManager.GameCont.thisCam;
-		Object[] getAllMenu =Resources.LoadAll ( "Menu" );
+		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
 
 		GameObject thisMenu;
@@ -484,7 +484,7 @@ public class UiManager : ManagerParent
 
 		for ( int a = 0; a < getAllMenu.Length; a++ )
 		{
-			thisMenu = (GameObject) Instantiate ( getAllMenu [ a ], MenuParent );
+			thisMenu = ( GameObject ) Instantiate ( getAllMenu [ a ], MenuParent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
 			thisUi.Initialize ( );
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
