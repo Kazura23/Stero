@@ -318,6 +318,16 @@ public class SpawnChunks : MonoBehaviour
 		var e = new RenableAbstObj ( );
 		e.Raise ( );
 
+		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
+		{
+		};
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+		}; 
+
+		GlobalManager.Event.UnRegister ( checkDBE );
+		GlobalManager.Event.UnRegister ( checkEnable );
+
 		if ( !transitChunk )
 		{
 			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
