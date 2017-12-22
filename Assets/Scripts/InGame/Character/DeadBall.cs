@@ -46,7 +46,7 @@ public class DeadBall : MonoBehaviour
 			{
 				thisObj.Dead ( true );
 			}
-			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForceProp, DelayDestruc, 100, false, true ) );
+			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForceProp, DelayDestruc, 100, false, true, true ) );
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 		}

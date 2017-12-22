@@ -27,7 +27,7 @@ public class LevelManager : ManagerParent
 		//var e = new HomeEvent ( );
 		switch ( scene.name )
 		{
-		case "ProtoAlex":
+		case "MainScene":
 			//e.onMenuHome = false;
 			//e.Raise ( );
 		
