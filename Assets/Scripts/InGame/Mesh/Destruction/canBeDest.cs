@@ -9,7 +9,6 @@ public class canBeDest : MonoBehaviour
     public int nbPunchDestroy = 5;
 	public bool DeadByPlayer = true;
 
-
 	void OnCollisionEnter ( Collision collision )
 	{
 		string getTag = collision.collider.tag;
