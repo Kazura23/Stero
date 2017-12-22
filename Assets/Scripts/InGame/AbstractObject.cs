@@ -41,6 +41,7 @@ public class AbstractObject : MonoBehaviour
 	Vector3 projection;
 	float distForDB = 0;
 	System.Action <DeadBallEvent> checkDBE;
+	Vector3 startPos;
 	#endregion
 
 	#region Mono
@@ -49,7 +50,7 @@ public class AbstractObject : MonoBehaviour
 		isDead = false;
 
 		getTrans = transform;
-
+		startPos = getTrans.localPosition;
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
@@ -92,7 +93,11 @@ public class AbstractObject : MonoBehaviour
 	#region Public Methods
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
-        playerCont.MadnessMana(p_technic);
+		if ( playerCont != null )
+		{
+			playerCont.MadnessMana(p_technic);
+		}
+
 		if ( !isDead )
 		{
 			projection = p_damage;
@@ -127,8 +132,17 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
 		}
+
+		StartCoroutine ( waitDisable ( ) );
         
-		Destroy ( gameObject, delayDead );
+		//Destroy ( gameObject, delayDead );
+	}
+
+	IEnumerator waitDisable ( )
+	{
+		yield return new WaitForSeconds ( delayDead );
+
+		gameObject.SetActive ( false );
 	}
 
 	protected virtual void CollDetect (  )
@@ -147,7 +161,8 @@ public class AbstractObject : MonoBehaviour
 	{
 		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
-		Destroy ( gameObject, delayDead );
+		//Destroy ( gameObject, delayDead );
+		StartCoroutine ( waitDisable ( ) );
 	}
 	#endregion
 
