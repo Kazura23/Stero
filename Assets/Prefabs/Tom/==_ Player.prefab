@@ -1963,11 +1963,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!20 &20528256867032478
 Camera:
   m_ObjectHideFlags: 1
@@ -1999,11 +1999,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!23 &23314236454899272
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -2013,6 +2013,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2028,6 +2029,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2045,6 +2047,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2060,6 +2063,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2077,6 +2081,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2092,6 +2097,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2300,12 +2306,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae96edcd53504dc4685017eec4ca3880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addPointBarByPunchSimple: 5
-  addPointBarByPunchDouble: 10
   puissanceOnde: 15
-  projection_basic: {x: 11, y: 0, z: 80}
-  projection_double: {x: 0, y: 0, z: 400}
-  projection_dash: {x: 0, y: 2, z: 200}
+  projection_basic: 75
+  projection_double: 300
+  projection_dash: 200
   facteurVitesseRenvoie: 1.5
   RightPunch: 0
 --- !u!114 &114382904017303458
@@ -2384,13 +2388,15 @@ MonoBehaviour:
   DelayHitbox: 0.05
   DelayPrepare: 0.05
   debugNumTechnic: 2
+  addPointBarByPunchSimple: 3
+  addPointBarByPunchDouble: 5
   TimePropulsePunch: 0.15
   TimePropulseDoublePunch: 0
   SpeedPunchRun: 1
   SpeedDoublePunchRun: 1
   RatioMaxMadness: 4
   DelayDownBar: 3
-  SmoothSpeed: 10
+  SmoothSpeed: 2
   ratioDownInMadness: 8
   delayInBeginMadness: 1.5
   delayInEndMadness: 2
@@ -2406,6 +2412,7 @@ MonoBehaviour:
   blockChangeLine: 0
   InMadness: 0
   SliderSlow: {fileID: 0}
+  playerInv: 0
   Life: 1
   StopPlayer: 0
   leftHand: {fileID: 1061951662454474}
@@ -2568,7 +2575,7 @@ SphereCollider:
   m_GameObject: {fileID: 1547371615662760}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
@@ -2606,6 +2613,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 2
   m_ReflectionProbeUsage: 1
@@ -2621,6 +2629,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

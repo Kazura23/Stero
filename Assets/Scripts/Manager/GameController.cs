@@ -39,6 +39,7 @@ public class GameController : ManagerParent
     public string[] textIntroText;
     public Tween colorTw;
     public GameObject musicObject;
+	[HideInInspector]
 	public Camera thisCam;
 
     bool restartGame = false;

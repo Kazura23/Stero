@@ -144,13 +144,16 @@ public class SpawnChunks : MonoBehaviour
 
 		if ( getSpc.Count > 2 )
 		{
-			if ( getSpc [ 0 ].OnScene )
+			if ( getSpc [ 0 ].ThisChunk != null )
 			{
-				getSpc [ 0 ].ThisChunk.SetActive ( false );
-			}
-			else
-			{
-				Destroy ( getSpc [ 0 ].ThisChunk );
+				if ( getSpc [ 0 ].OnScene )
+				{
+					getSpc [ 0 ].ThisChunk.SetActive ( false );
+				}
+				else
+				{
+					Destroy ( getSpc [ 0 ].ThisChunk );
+				}
 			}
 
 			getSpc.RemoveAt ( 0 );
@@ -198,12 +201,15 @@ public class SpawnChunks : MonoBehaviour
 			{
 				getGarb = getSpc [ 0 ].GarbChunk;
 
-				for ( a = getGarb.Count - 1; a > 0; a-- )
+				if ( getGarb != null )
 				{
-					Destroy ( getGarb [ a ] );
-					getGarb.RemoveAt ( a );
+					for ( a = getGarb.Count - 1; a > 0; a-- )
+					{
+						Destroy ( getGarb [ a ] );
+						getGarb.RemoveAt ( a );
+					}
 				}
-				
+
 				getSpc [ 0 ].ThisChunk.SetActive ( false );
 			}
 			else
@@ -749,7 +755,7 @@ public class SpawnChunks : MonoBehaviour
 
 		while ( getChunk.Count > 0 )
 		{
-			if ( getChunk [ getChunk.Count - 1 ] == null )
+			if ( getChunk [ getChunk.Count - 1 ].ThisChunk == null )
 			{
 				getChunk.RemoveAt ( getChunk.Count - 1 );
 				continue;
@@ -760,10 +766,13 @@ public class SpawnChunks : MonoBehaviour
 				getChunk [ getChunk.Count - 1 ].ThisChunk.SetActive ( false );
 				getGarb = getChunk [ getChunk.Count - 1 ].GarbChunk;
 
-				for ( a = getGarb.Count - 1; a > 0; a-- )
+				if ( getGarb != null )
 				{
-					Destroy ( getGarb [ a ] );
-					getGarb.RemoveAt ( a );
+					for ( a = getGarb.Count - 1; a > 0; a-- )
+					{
+						Destroy ( getGarb [ a ] );
+						getGarb.RemoveAt ( a );
+					}
 				}
 			}
 			else

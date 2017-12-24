@@ -344,6 +344,7 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
+		pRig.constraints = RigidbodyConstraints.FreezeAll;
 
 		stopMadness ( );
 
@@ -820,6 +821,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	bool getCamRM = false;
+	IEnumerator thisEnum;
 	void checkInAir ( float getTime )
 	{
 		RaycastHit[] allHit;
@@ -858,23 +860,24 @@ public class PlayerController : MonoBehaviour
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
-					pRig.constraints = thisConst;
 					pRig.useGravity = true;
+					pRig.constraints = thisConst;
+
+					if ( thisEnum != null )
+					{
+						StopCoroutine ( thisEnum );
+					}
+
+					thisEnum = waitConstraint ( );
+					StartCoroutine ( thisEnum );
 				}
 				else if ( angle > 0 )
 				{
-					checkAngle = false;
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
-					pRig.useGravity = false;
 					pRig.constraints = RigidbodyConstraints.FreezeAll;
+					pRig.useGravity = false;
 				}
 			}
-		}
-
-		if ( checkAngle )
-		{
-			pRig.useGravity = true;
-			pRig.constraints = thisConst;
 		}
 
 		if ( checkAir )
@@ -896,6 +899,15 @@ public class PlayerController : MonoBehaviour
 
 			if ( inAir )
 			{
+				pRig.constraints = thisConst;
+				pRig.useGravity = true;
+				if ( thisEnum != null )
+				{
+					StopCoroutine ( thisEnum );
+				}
+
+				thisEnum = waitConstraint ( );
+				StartCoroutine ( thisEnum );
 				if ( pTrans.position.y < checkDistY )
 				{
 					GameOver ( true );
@@ -925,6 +937,15 @@ public class PlayerController : MonoBehaviour
 			}
            // ScreenShake.Singleton.ShakeFall();
         }
+	}
+
+	IEnumerator waitConstraint ()
+	{
+		yield return new WaitForSeconds ( 2 );
+
+		thisEnum = null;
+
+		pRig.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
 	IEnumerator waitFall ( )
