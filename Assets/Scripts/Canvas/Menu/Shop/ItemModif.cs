@@ -118,6 +118,7 @@ public class ItemModif : MonoBehaviour
 
 	public void ResetPos ( )
 	{
+		transform.DOKill ( false );
 		transform.DOMove ( saveStartPos, 0, true );
 		CurrPos = saveStartPos;
 	}

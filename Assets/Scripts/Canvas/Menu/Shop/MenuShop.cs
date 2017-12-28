@@ -172,12 +172,11 @@ public class MenuShop : UiParent
             transition = false;
 
             fixBackShop.SetActive(true);
-            currCatSeled = DefCatSelected;
-            if (currItemSeled != currCatSeled.DefautItem)
-            {
-                CheckSelectItem(false);
-            }
+			CheckSelectCat ( false );
+			currCatSeled = DefCatSelected;
+			CheckSelectCat ( true );
 
+			CheckSelectItem(false);
             currItemSeled = currCatSeled.DefautItem;
             CheckSelectItem(true);
         }
