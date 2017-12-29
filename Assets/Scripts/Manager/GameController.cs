@@ -394,7 +394,10 @@ public class GameController : ManagerParent
 			Debug.Log ( "OnHub" );
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
-			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+			thisAud.volume *= 1.25f;
+
+			thisAud.DOFade ( thisAud.volume * 0.75f, 3.5f );
 		}
 
         if (GameStarted && !checkStart)
