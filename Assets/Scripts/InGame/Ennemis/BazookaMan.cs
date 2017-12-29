@@ -11,6 +11,7 @@ public class BazookaMan : AbstractObject {
     private MissileBazooka MissileScript;
     private Transform player;
 	Transform localShoot;
+
 	// Use this for initialization
 	protected override void Awake()
 	{
@@ -23,10 +24,10 @@ public class BazookaMan : AbstractObject {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Vector3.Distance(transform.position, player.position) <= distanceMax)
+		if (Vector3.Distance(getTrans.position, player.position) <= distanceMax)
         {
             Debug.Log("temps = " + timer);
-            if (Vector3.Distance(transform.position, player.position) <= distanceMin && timer >= cooldownMin)
+			if (Vector3.Distance(getTrans.position, player.position) <= distanceMin && timer >= cooldownMin)
             {
 				MissileScript = Instantiate ( Missile, localShoot ).GetComponent<MissileBazooka> ( );
 				MissileScript.ActiveTir(-getTrans.forward, 1, false);

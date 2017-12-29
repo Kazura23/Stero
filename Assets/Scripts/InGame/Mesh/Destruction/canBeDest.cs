@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class canBeDest : MonoBehaviour 
 {	
-	public float ForcePropulse = 5;
-	public float DelayDestruc = 1;
+	public float ForcePropulse = 25;
+	public float DelayDestruc = 3;
     public int nbPunchDestroy = 5;
 	public bool DeadByPlayer = true;
-
 
 	void OnCollisionEnter ( Collision collision )
 	{

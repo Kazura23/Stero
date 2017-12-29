@@ -17,6 +17,7 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
+	public GameObject BarrierIntro;
     public bool Intro;
 
 	[HideInInspector]
@@ -26,7 +27,7 @@ public class GameController : ManagerParent
 
     public Tween soundFootSteps;
 	bool checkStart = false;
-    bool isStay = true, isReady = false, relance = false;
+    bool isStay = true, isReady = false;
     [HideInInspector]
     public bool introFinished;
     private int chooseOption = 2;
@@ -38,7 +39,8 @@ public class GameController : ManagerParent
     public string[] textIntroText;
     public Tween colorTw;
     public GameObject musicObject;
-
+	[HideInInspector]
+	public Camera thisCam;
 
     bool restartGame = false;
     public bool canOpenShop = true;
@@ -152,29 +154,28 @@ public class GameController : ManagerParent
     {
         GameStartedUpdate();
     }
-
-    private void Awake()
-    { 
-        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
-    }
-
+    
     public void StartGame ( )
 	{
+		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+		Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
 		if ( Player == null )
 		{
 			Player = GameObject.FindGameObjectWithTag("Player");
+			thisCam = Player.GetComponentInChildren<Camera> ( );
 			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
+			GlobalManager.Ui.SetCam ( thisCam );
 		}
 
 		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
 		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
 		Intro = true;
 		isStay = true;
-
-		if ( restartGame )
-		{
+        
+		if ( restartGame)
+        {
 			isStay = false;
 			Intro = false;
 
@@ -201,8 +202,8 @@ public class GameController : ManagerParent
 
 		SpawnerChunck.FirstSpawn ( );
 
-        Camera.main.GetComponent<RainbowRotate>().time = 2;
-        Camera.main.GetComponent<RainbowMove>().time = 1;
+		thisCam.GetComponent<RainbowRotate>().time = 2;
+		thisCam.GetComponent<RainbowMove>().time = 1;
 		GlobalManager.Ui.CloseThisMenu ( );
     }
 
@@ -242,7 +243,7 @@ public class GameController : ManagerParent
         Time.timeScale = 1;
 
         AllPlayerPrefs.ResetStaticVar();
-		SceneManager.LoadScene ( "ProtoAlex", LoadSceneMode.Single );
+		SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
 
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
@@ -255,8 +256,8 @@ public class GameController : ManagerParent
             GameStarted = true;
 
 			Player.GetComponent<PlayerController>().StopPlayer = false;
-			Camera.main.GetComponent<RainbowRotate>().time = .4f;
-			Camera.main.GetComponent<RainbowMove>().time = .2f;
+			thisCam.GetComponent<RainbowRotate>().time = .4f;
+			thisCam.GetComponent<RainbowMove>().time = .2f;
 
 			soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
 				//Debug.Log("here");
@@ -385,42 +386,42 @@ public class GameController : ManagerParent
     {
         /*if (Input.GetAxis("CoupSimple") == 1 || Input.GetAxis("CoupDouble") == 1)
         {*/
-            if (GameStarted && !checkStart)
-            {
-				
-				if ( onHub )
-				{
-					onHub = false;
-					GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
-					setMusic ( );
-				}
-				
-                //Debug.Log("Demarrage");
 
-                GlobalManager.Ui.Intro();
-                isStay = false;
+		if ( onHub )
+		{
+			Debug.Log ( "OnHub" );
+			onHub = false;
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+		}
 
-            //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+        if (GameStarted && !checkStart)
+        {
 
-            musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
-                musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
+            GlobalManager.Ui.Intro();
+            isStay = false;
+
+        //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
+
+        musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+            musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
 
 
-                checkStart = true;
-                //Debug.Log("player = " + Player);
-                Player.GetComponent<PlayerController>().StopPlayer = false;
-                //Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                //Camera.main.GetComponent<RainbowMove>().time = .2f;
+            checkStart = true;
+            //Debug.Log("player = " + Player);
+            Player.GetComponent<PlayerController>().StopPlayer = false;
+			//thisCam.GetComponent<RainbowRotate>().time = .4f;
+			//thisCam.GetComponent<RainbowMove>().time = .2f;
 
-                soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
-                    //Debug.Log("here");
-                    int randomSound = UnityEngine.Random.Range(0, 6);
+            soundFootSteps = DOVirtual.DelayedCall(GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController>().MaxSpeed / 25, () => {
+                //Debug.Log("here");
+                int randomSound = UnityEngine.Random.Range(0, 6);
 
-                    GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
-                    //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
-                    //Debug.Log("Audio");
-                }).SetLoops(-1, LoopType.Restart);
-            }
+                GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "FootSteps_" + (randomSound + 1), false);
+                //J'ai essayé de jouer le son FootSteps_1 pour voir, mais ça marche
+                //Debug.Log("Audio");
+            }).SetLoops(-1, LoopType.Restart);
+        }
             /*else
             {
                 // punch the door
@@ -445,10 +446,12 @@ public class GameController : ManagerParent
     protected override void InitializeManager ( )
 	{
 		Player = GameObject.FindGameObjectWithTag("Player");
+		thisCam = Player.GetComponentInChildren<Camera> ( );
+        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
 
-		SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
+        SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-        AllPlayerPrefs.saveData = SaveData.Load();
+        //AllPlayerPrefs.saveData = SaveData.Load();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -482,7 +485,7 @@ public class GameController : ManagerParent
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		List <ItemModif> AllTI = AllTempsItem;
 		ItemModif thisItem;
-		List<string> getKey = new List<string> ( );
+		//List<string> getKey = new List<string> ( );
 
 		SpawnerChunck.EndLevel = 1;
 
@@ -560,7 +563,8 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-			currPlayer.Life++;
+      
+            currPlayer.Life++;
 		}
 
 		if ( thisItem.StartBonus )
@@ -577,16 +581,17 @@ public class GameController : ManagerParent
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
-    {
+    {/*
         string path1 = Application.dataPath + "/Save/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
-        Debug.Log("save");
+        Debug.Log("save");*/
     }
 
     public static ListData Load()
     {
+        
         string path1 = Application.dataPath + "/Save/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
@@ -660,7 +665,7 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
-        SaveData.Save(this);
+        //SaveData.Save(this);
     }
 }
 

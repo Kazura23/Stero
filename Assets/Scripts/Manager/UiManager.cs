@@ -32,7 +32,7 @@ public class UiManager : ManagerParent
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
-    private Camera camTw1;
+    private Camera thisCam;
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
@@ -40,7 +40,7 @@ public class UiManager : ManagerParent
 	public MenuType menuOpen;
 
 	GameObject InGame;
-	bool onMainScene = true;
+	//bool onMainScene = true;
 	#endregion
 
 	#region Mono
@@ -88,6 +88,11 @@ public class UiManager : ManagerParent
 		}
 	}
 
+	public void SetCam ( Camera newCame )
+	{
+		thisCam = newCame;
+	}
+
     public void MenuGlobal(int whichMenu)
     {
         if(whichMenu == 1)
@@ -116,7 +121,7 @@ public class UiManager : ManagerParent
     public void Intro()
     {
         Time.timeScale = .05f;
-		float saveFov = Camera.main.fieldOfView;
+		float saveFov = thisCam.fieldOfView;
 
         DOVirtual.DelayedCall(.35f, () => {
             Time.timeScale = .0f;
@@ -124,33 +129,33 @@ public class UiManager : ManagerParent
             {
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
-                Camera.main.DOFieldOfView(4, .25f);
+				thisCam.DOFieldOfView(4, .25f);
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
                 });
-                Camera.main.DOFieldOfView(100, .15f);
+				thisCam.DOFieldOfView(100, .15f);
 
                 DOVirtual.DelayedCall(.25f, () => { 
-                    Camera.main.transform.DOKill(true);
-                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
-                    Camera.main.GetComponent<RainbowMove>().enabled = false;
-                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
-                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                    Camera.main.GetComponent<RainbowMove>().time = .2f;
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    thisCam.transform.DOKill(true);
+                    thisCam.GetComponent<RainbowMove>().DOKill(true);
+                    thisCam.GetComponent<RainbowMove>().enabled = false;
+                    thisCam.GetComponent<RainbowMove>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().enabled = false;
+                    thisCam.GetComponent<RainbowRotate>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().time = .4f;
+                    thisCam.GetComponent<RainbowMove>().time = .2f;
+                    thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                 DOVirtual.DelayedCall(.75f,()=>{
 
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
-                    // Camera.main.GetComponent<RainbowRotate>().reStart();
+                    thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
+                    // thisCam.GetComponent<RainbowRotate>().reStart();
                 });
                     DOVirtual.DelayedCall(2f, () =>
                     {
-						Camera.main.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
+						thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
                         });
                     });
                 });
@@ -173,19 +178,19 @@ public class UiManager : ManagerParent
                     GlobalManager.GameCont.introFinished = true;
                 });
                 {
-                    Camera.main.transform.DOKill(true);
-                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
-                    Camera.main.GetComponent<RainbowMove>().enabled = false;
-                    Camera.main.GetComponent<RainbowMove>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().enabled = false;
-                    Camera.main.GetComponent<RainbowRotate>().DOKill(true);
-                    Camera.main.GetComponent<RainbowRotate>().time = .4f;
-                    Camera.main.GetComponent<RainbowMove>().time = .2f;
-                    Camera.main.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                    thisCam.transform.DOKill(true);
+                    thisCam.GetComponent<RainbowMove>().DOKill(true);
+                    thisCam.GetComponent<RainbowMove>().enabled = false;
+                    thisCam.GetComponent<RainbowMove>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().enabled = false;
+                    thisCam.GetComponent<RainbowRotate>().DOKill(true);
+                    thisCam.GetComponent<RainbowRotate>().time = .4f;
+                    thisCam.GetComponent<RainbowMove>().time = .2f;
+                    thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                     DOVirtual.DelayedCall(.75f, () =>
                     {
-                        Camera.main.GetComponent<RainbowRotate>().enabled = true; Camera.main.GetComponent<RainbowMove>().enabled = true;
+                        thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
                     });
                 }
             });
@@ -194,10 +199,10 @@ public class UiManager : ManagerParent
 
     public void DoubleCoup()
     {
-		float saveFov = Camera.main.fieldOfView;
+		float saveFov = thisCam.fieldOfView;
 
-        Camera.main.DOFieldOfView(40, .1f).OnComplete(() => {
-			Camera.main.DOFieldOfView(saveFov, .15f);
+        thisCam.DOFieldOfView(40, .1f).OnComplete(() => {
+			thisCam.DOFieldOfView(saveFov, .15f);
         });
     }
 
@@ -210,11 +215,11 @@ public class UiManager : ManagerParent
             //Time.fixedDeltaTime = .02F;
         });
 
-		float saveFov = Camera.main.fieldOfView;
-		Camera.main.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
+		float saveFov = thisCam.fieldOfView;
+		thisCam.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
 		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
 			RedScreen.DOFade(0, .12f);
-			Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
+			thisCam.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
 		});
 	}
 
@@ -228,11 +233,11 @@ public class UiManager : ManagerParent
             //Time.fixedDeltaTime = .02F;
         });
 
-        float saveFov = Camera.main.fieldOfView;
-        Camera.main.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
+        float saveFov = thisCam.fieldOfView;
+        thisCam.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
         RedScreen.DOFade(.4f, .1f).OnComplete(() => {
             RedScreen.DOFade(0, .08f);
-            Camera.main.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
+            thisCam.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
         });
     }
 
@@ -257,8 +262,8 @@ public class UiManager : ManagerParent
 
     public void OpenMadness()
     {
-        Camera.main.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
-        Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+        thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
+        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
         Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
         GameObject textMadness;
@@ -269,39 +274,40 @@ public class UiManager : ManagerParent
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
         //textMad.GetComponentInChildren<TextMesh>().text = 
-        //Camera.main.transform.GetComponent<RainbowMove>().enabled = false;
+        //thisCam.transform.GetComponent<RainbowMove>().enabled = false;
 
-        //Camera.main.transform.DOKill(false);
+        //thisCam.transform.DOKill(false);
 
         /*
-        Camera.main.transform.DOLocalMoveY(0, .3f).OnComplete(() => {
+        thisCam.transform.DOLocalMoveY(0, .3f).OnComplete(() => {
             DOVirtual.DelayedCall(.65f,()=>{
-                Camera.main.transform.DOLocalMoveY(.9f, .1f);
+                thisCam.transform.DOLocalMoveY(.9f, .1f);
             });
         }).SetLoops(-1,LoopType.Yoyo);*/
 
         /*
-        Camera.main.DOFieldOfView(40, .35f).OnComplete(() => {
-            Camera.main.DOFieldOfView(60, .35f);
+        thisCam.DOFieldOfView(40, .35f).OnComplete(() => {
+            thisCam.DOFieldOfView(60, .35f);
         }).SetLoops(-1,LoopType.Yoyo);
         */
     }
 
     public void CloseMadness()
     {
-        Camera.main.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
-        Camera.main.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
+		
+        thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
+        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
-        //Camera.main.GetComponent<RainbowRotate>().enabled = false;
+        //thisCam.GetComponent<RainbowRotate>().enabled = false;
         
 
-        //Camera.main.DOKill(true);
+        //thisCam.DOKill(true);
 
-		Camera.main.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
+		thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
        // Debug.Log("CloseMad");
-        //Camera.main.GetComponent<RainbowRotate>().enabled = true;
+        //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
-       //Camera.main.transform.GetComponent<RainbowMove>().enabled = true;
+       //thisCam.transform.GetComponent<RainbowMove>().enabled = true;
     }
 
 	public void DashSpeedEffect ( bool enable )
@@ -395,13 +401,13 @@ public class UiManager : ManagerParent
 
 	public void OpenShop()
     {
-        Camera.main.DOFieldOfView(10, .05f);
+        thisCam.DOFieldOfView(10, .05f);
         //GlobalManager.GameCont.Player.GetComponent<PlayerController>().
     }
 
     public void CloseShop()
     {
-        Camera.main.DOFieldOfView(60, .3f);
+        thisCam.DOFieldOfView(60, .3f);
     }
 
     public void HeartShop(int number)
@@ -451,7 +457,9 @@ public class UiManager : ManagerParent
 			getCurrHeat.DOFade(.75f, .1f);
 			getCurrHeat.transform.DOScale(10, 0f);
 			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
-                CircleFeel.transform.DOScale(28, .8f);
+				CircleFeel.transform.DOScale(28, .8f).OnComplete(() => {
+					getCurrHeat.enabled = false;
+				});
                 CircleFeel.DOFade(1, .2f).OnComplete(() => {
                     CircleFeel.DOFade(0, .4f);
                 });
@@ -467,7 +475,8 @@ public class UiManager : ManagerParent
 	{
 		InieUI ( );
 
-		Object[] getAllMenu =Resources.LoadAll ( "Menu" );
+		thisCam = GlobalManager.GameCont.thisCam;
+		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
 
 		GameObject thisMenu;
@@ -475,7 +484,7 @@ public class UiManager : ManagerParent
 
 		for ( int a = 0; a < getAllMenu.Length; a++ )
 		{
-			thisMenu = (GameObject) Instantiate ( getAllMenu [ a ], MenuParent );
+			thisMenu = ( GameObject ) Instantiate ( getAllMenu [ a ], MenuParent );
 			thisUi = thisMenu.GetComponent<UiParent> ( );
 			thisUi.Initialize ( );
 			setAllMenu.Add ( thisUi.ThisMenu, thisUi );
@@ -490,19 +499,19 @@ public class UiManager : ManagerParent
 		{
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 		}
-		GlobalManager.GameCont.StartGame ( );
+		//GlobalManager.GameCont.StartGame ( );
 	}
 
 	void InieUI ( )
 	{
         //	InvokeRepeating ( "checkCurosr", 0, 0.5f );
 
-		System.Action <HomeEvent> checkLevel = delegate ( HomeEvent thisEvnt )
+		/*System.Action <HomeEvent> checkLevel = delegate ( HomeEvent thisEvnt )
 		{
 			onMainScene = thisEvnt.onMenuHome;
-		};
+		};*/
 
-		GlobalManager.Event.Register ( checkLevel );
+		//GlobalManager.Event.Register ( checkLevel );
 
         MoneyPoints.text = "" + AllPlayerPrefs.GetIntValue(Constants.Coin);
 

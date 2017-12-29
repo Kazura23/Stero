@@ -66,8 +66,10 @@ public class PlayerController : MonoBehaviour
 	public float DelayHitbox = 0.05f;
 	public float DelayPrepare = 0.05f;
     public int debugNumTechnic = 2;
+    public float addPointBarByPunchSimple = 3;
+    public float addPointBarByPunchDouble = 5;
 
-	[Tooltip ("Le temps max sera delayPunch")]
+    [Tooltip ("Le temps max sera delayPunch")]
 	public float TimePropulsePunch = 0.1f, TimePropulseDoublePunch = 0.2f;
 	[Tooltip ("La valeur est un multiplicateur sur la vitesse du joueur")]
 	public float SpeedPunchRun = 1.2f, SpeedDoublePunchRun = 1.5f;
@@ -107,8 +109,9 @@ public class PlayerController : MonoBehaviour
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
-
-	public int Life = 1;
+    [HideInInspector]
+    public bool playerInv = false;
+    public int Life = 1;
 	public bool StopPlayer = false;
 
 	private BoxCollider punchBox;
@@ -134,7 +137,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 lastPos;
 	//Vector3 posDir;
 	Text textDist;
-	Text textCoin;
+	//Text textCoin;
 
 	IEnumerator currWF;
 	IEnumerator propPunch;
@@ -198,11 +201,13 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
-	bool playerInv = false;
-	#endregion
 
-	#region Mono
-	void Update ( )
+
+    bool onAnimeAir = false;
+    #endregion
+
+    #region Mono
+    void Update ( )
 	{
         //Shader.SetGlobalFloat ( "_emisive_force", 1 - (BarMadness.value / BarMadness.maxValue)*2 );
 
@@ -230,7 +235,6 @@ public class PlayerController : MonoBehaviour
 		Shader.SetGlobalFloat ( "GlobaleMask_Radius", Radius );
 		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
-
         
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -259,10 +263,10 @@ public class PlayerController : MonoBehaviour
         {
             if(timerBeginMadness < delayInBeginMadness)
             {
-                timerBeginMadness += Time.deltaTime;
-                camMad._Y += saveCamMad.x * Time.deltaTime / delayInBeginMadness;
-                camMad._U += saveCamMad.y * Time.deltaTime / delayInBeginMadness;
-                camMad._V += saveCamMad.z * Time.deltaTime / delayInBeginMadness;
+				timerBeginMadness += getTime;
+				camMad._Y += saveCamMad.x * getTime / delayInBeginMadness;
+				camMad._U += saveCamMad.y * getTime / delayInBeginMadness;
+				camMad._V += saveCamMad.z * getTime / delayInBeginMadness;
             }
             else
             {
@@ -286,13 +290,13 @@ public class PlayerController : MonoBehaviour
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
+		thisCam = GlobalManager.GameCont.thisCam;
 		getPunch = GetComponentInChildren<Punch> ( );
-		thisCam = GetComponentInChildren<Camera> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
-		textCoin = GlobalManager.Ui.MoneyPoints;
+		//textCoin = GlobalManager.Ui.MoneyPoints;
 		nextIncrease = DistIncMaxSpeed;
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
@@ -303,6 +307,7 @@ public class PlayerController : MonoBehaviour
 		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
+		BarMadness = GlobalManager.Ui.Madness;
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
@@ -339,23 +344,13 @@ public class PlayerController : MonoBehaviour
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		InMadness = false;
+		pRig.constraints = RigidbodyConstraints.FreezeAll;
 
 		stopMadness ( );
 
         BarMadness.value = 0;
-
 	}
 
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-
-            totalDis += 20000;
-            Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
-
-        }
-    }
 
     public void GameOver ( bool forceDead = false )
 	{
@@ -363,6 +358,8 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
+
+        Debug.Log("GAMEOVER");
 
         Life--;
 
@@ -383,7 +380,7 @@ public class PlayerController : MonoBehaviour
 
         AllPlayerPrefs.distance = totalDis;
         AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
-        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        //AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
 
 		StopPlayer = true;
 
@@ -424,6 +421,28 @@ public class PlayerController : MonoBehaviour
 		//GlobalManager.GameCont.GameOver ( );
     }
 
+    public void MadnessMana(int type)
+    {
+        //if (!control.IsInMadness()) {
+        Debug.Log("hit mad");
+        if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == 0)
+        {
+            //barMadness.value += addPointBarByPunchSimple;
+            this.AddSmoothCurve(addPointBarByPunchSimple);
+        }
+        else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == 1)
+        {
+            //barMadness.value += addPointBarByPunchDouble;
+            this.AddSmoothCurve(addPointBarByPunchDouble);
+        }
+        /*else
+        {
+            barMadness.value = barMadness.maxValue;
+            control.SetInMadness(true);
+        }*/
+        //}
+    }
+
     public void AddSmoothCurve(float p_value)
     {
         valueSmooth = valueSmoothUse + p_value;
@@ -448,7 +467,6 @@ public class PlayerController : MonoBehaviour
 
             //if ( !InMadness )
             //{
-            punch.MadnessMana("Simple");
 
             ScreenShake.Singleton.ShakeIntro();
             
@@ -746,13 +764,14 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(prepDeadBall());
         }
 	}
-	bool onAnimeAir = false;
+
 	IEnumerator groundAfterChoc ( )
 	{
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
 
 		while ( inAir )
 		{
+			pRig.AddForce(Vector3.down, ForceMode.VelocityChange);
 			yield return thisF;
 		}
 
@@ -767,8 +786,9 @@ public class PlayerController : MonoBehaviour
 
 	IEnumerator waitInvPlayer ( )
 	{
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 1 );
 		playerInv = false;
+		Debug.Log ( "StopInv" );
 	}
 
 
@@ -801,6 +821,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	bool getCamRM = false;
+	IEnumerator thisEnum;
 	void checkInAir ( float getTime )
 	{
 		RaycastHit[] allHit;
@@ -818,7 +839,7 @@ public class PlayerController : MonoBehaviour
 
 		foreach ( RaycastHit thisRay in allHit )
 		{
-			if ( thisRay.collider.gameObject == gameObject )
+			if ( thisRay.collider.gameObject == gameObject || thisRay.collider.tag == Constants._EnnemisTag || thisRay.collider.tag == Constants._ObsPropSafe )
 			{
 				continue;
 			}
@@ -839,23 +860,24 @@ public class PlayerController : MonoBehaviour
 				if ( angle < 0 )
 				{
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
-					pRig.constraints = thisConst;
 					pRig.useGravity = true;
+					pRig.constraints = thisConst;
+
+					if ( thisEnum != null )
+					{
+						StopCoroutine ( thisEnum );
+					}
+
+					thisEnum = waitConstraint ( );
+					StartCoroutine ( thisEnum );
 				}
 				else if ( angle > 0 )
 				{
-					checkAngle = false;
 					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
-					pRig.useGravity = false;
 					pRig.constraints = RigidbodyConstraints.FreezeAll;
+					pRig.useGravity = false;
 				}
 			}
-		}
-
-		if ( checkAngle )
-		{
-			pRig.useGravity = true;
-			pRig.constraints = thisConst;
 		}
 
 		if ( checkAir )
@@ -873,10 +895,19 @@ public class PlayerController : MonoBehaviour
 				currWF = waitFall ( );
 				StartCoroutine ( currWF );
 			}
-            // Camera.main.GetComponent<RainbowMove>().enabled = false;
+            // thisCam.GetComponent<RainbowMove>().enabled = false;
 
 			if ( inAir )
 			{
+				pRig.constraints = thisConst;
+				pRig.useGravity = true;
+				if ( thisEnum != null )
+				{
+					StopCoroutine ( thisEnum );
+				}
+
+				thisEnum = waitConstraint ( );
+				StartCoroutine ( thisEnum );
 				if ( pTrans.position.y < checkDistY )
 				{
 					GameOver ( true );
@@ -885,7 +916,7 @@ public class PlayerController : MonoBehaviour
 				pRig.AddForce ( Vector3.down * BonusGrav * getTime, ForceMode.VelocityChange );
 			}
         }
-		else if ( !checkAir && getCamRM )
+		else if ( !checkAir && getCamRM || inAir )
         {
 			checkDistY = pTrans.position.y - 1000;
 
@@ -906,6 +937,15 @@ public class PlayerController : MonoBehaviour
 			}
            // ScreenShake.Singleton.ShakeFall();
         }
+	}
+
+	IEnumerator waitConstraint ()
+	{
+		yield return new WaitForSeconds ( 2 );
+
+		thisEnum = null;
+
+		pRig.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
 	IEnumerator waitFall ( )
@@ -1225,9 +1265,10 @@ public class PlayerController : MonoBehaviour
 			if (getDelta < 1)
                 Time.timeScale = 1;
 
-			//if ( !InMadness )
-			//{
-				punch.MadnessMana("Simple");
+            //if ( !InMadness )
+            //{
+            Debug.Log("1");
+			this.MadnessMana(0);
 
             int randomSong = UnityEngine.Random.Range(0, 3);
 			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchFail_" + (randomSong + 1), false );
@@ -1275,7 +1316,7 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 1;
 			//if ( !InMadness )
 			//{
-				punch.MadnessMana("Double");
+				this.MadnessMana(1);
 			//}
 
             propDP = true;
@@ -1476,7 +1517,7 @@ public class PlayerController : MonoBehaviour
 
             else if ( getObj.tag == Constants._Balls )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true, false, true ) );
 				return;
 			}
 		}

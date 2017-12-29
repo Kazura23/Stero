@@ -10,10 +10,12 @@ public class ScreenShake : MonoBehaviour
     Tween punchPos;
     Tween shakePos;
     Tween shakeFall;
+
     float dir = 1;
 
 	void Awake ()
 	{
+		
 		if (ScreenShake.Singleton == null) {
 			ScreenShake.Singleton = this;
 		} else {
@@ -54,8 +56,8 @@ public class ScreenShake : MonoBehaviour
         //transform.DOKill(true);
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
-        Camera.main.DOFieldOfView(50, .1f ).OnComplete(() => {
-            Camera.main.DOFieldOfView(60, .1f);
+		GlobalManager.GameCont.thisCam.DOFieldOfView(50, .1f ).OnComplete(() => {
+			GlobalManager.GameCont.thisCam.DOFieldOfView(60, .1f);
         });
         //transform.DOPunchPosition(new Vector3(1 * .8f, 0, 1 * .8f), .25f, 3, 1);
     }

@@ -31,7 +31,7 @@ public class MenuShop : UiParent
 
     public GameObject UnlockObject;
     private string itemName;
-    private Sprite itemIcon;
+    //private Sprite itemIcon;
 
     [HideInInspector]
 	public CatShop currCatSeled;
@@ -482,7 +482,7 @@ public class MenuShop : UiParent
 
     void SelectObject()
     {
-        itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
+        //itemIcon = currItemSeled.GetComponentsInChildren<Image>()[4].sprite;
 
         itemName = currItemSeled.GetComponentsInChildren<Text>()[0].text;
 

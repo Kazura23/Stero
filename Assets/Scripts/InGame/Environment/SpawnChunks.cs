@@ -6,6 +6,7 @@ public class SpawnChunks : MonoBehaviour
 {
 	#region Variable
 	public List<ChunksScriptable> ChunksInfo;
+	public List<GameObject> ChunkOnScene;
 	public Vector3 DefaultPos;
 
 	[HideInInspector]
@@ -18,8 +19,9 @@ public class SpawnChunks : MonoBehaviour
 	public int EndLevel = 0;
 
 	List<ChunkCombineSpawnble> LvlChunksInfo;
-	List<GameObject> getSpawnChunks;
-	List<GameObject> otherSpawn;
+	List<CheckOnScene> getSpawnChunks;
+	List<CheckOnScene> otherSpawn;
+	GameObject[] GetSceneChunk;
 
 	ChunksScriptable thisChunk;
 	GameObject WallOnLastChunk;
@@ -39,35 +41,20 @@ public class SpawnChunks : MonoBehaviour
 	#region Public
 	public void RemoveAll ( )
 	{
-		int a;
-
-		for ( a = 0; a < otherSpawn.Count; a++ )
-		{
-			if ( otherSpawn [ a ] != null )
-			{
-				Destroy ( otherSpawn [ a ] );
-			}
-		}
-
-		for ( a = 0; a < getSpawnChunks.Count; a++ )
-		{
-			if ( getSpawnChunks [ a ] != null )
-			{
-				Destroy ( getSpawnChunks [ a ] );
-			}
-		}
+		CleanThisList ( otherSpawn );
+		CleanThisList ( getSpawnChunks );
 	}
 
 	public void InitChunck ( )
 	{
-		getSpawnChunks = new List<GameObject> ( );
-		otherSpawn = new List<GameObject> ( );
+		getSpawnChunks = new List<CheckOnScene> ( );
+		otherSpawn = new List<CheckOnScene> ( );
 		thisT = transform;
+		GetSceneChunk = ChunkOnScene.ToArray ( );
 
 		List<ChunksScriptable> getChunks = ChunksInfo;
 		List<List<GetSpawnable>> getSpawnable = new List<List<GetSpawnable>> ( );
 		List<ChunkCombineSpawnble> chunkOrder = new List<ChunkCombineSpawnble> ( );
-
 		Transform[] getChildrenChunk;
 
 		int a;
@@ -151,13 +138,24 @@ public class SpawnChunks : MonoBehaviour
 
 	public void NewSpawn ( NewChunkInfo sourceSpawn )
 	{
-		List<GameObject> getSpc = getSpawnChunks;
+		List<CheckOnScene> getSpc = getSpawnChunks;
 
 		spawnAfterThis ( sourceSpawn );
 
 		if ( getSpc.Count > 2 )
 		{
-			Destroy ( getSpc [ 0 ] );
+			if ( getSpc [ 0 ].ThisChunk != null )
+			{
+				if ( getSpc [ 0 ].OnScene )
+				{
+					getSpc [ 0 ].ThisChunk.SetActive ( false );
+				}
+				else
+				{
+					Destroy ( getSpc [ 0 ].ThisChunk );
+				}
+			}
+
 			getSpc.RemoveAt ( 0 );
 		}
 
@@ -185,8 +183,10 @@ public class SpawnChunks : MonoBehaviour
 		saveLvlForStart = 0;
 		transitChunk = false;
 
-		List<GameObject> getSpc = getSpawnChunks;
+		List<CheckOnScene> getSpc = getSpawnChunks;
+		List<GameObject> getGarb = new List<GameObject> ( );
 		bool doubleFirst = false;
+		int a;
 
 		if ( !StartBonus )
 		{
@@ -196,7 +196,27 @@ public class SpawnChunks : MonoBehaviour
 		while ( getSpc.Count > 0 )
 		{
 			doubleFirst = true;
-			Destroy ( getSpc [ 0 ] );
+
+			if ( getSpc [ 0 ].OnScene )
+			{
+				getGarb = getSpc [ 0 ].GarbChunk;
+
+				if ( getGarb != null )
+				{
+					for ( a = getGarb.Count - 1; a > 0; a-- )
+					{
+						Destroy ( getGarb [ a ] );
+						getGarb.RemoveAt ( a );
+					}
+				}
+
+				getSpc [ 0 ].ThisChunk.SetActive ( false );
+			}
+			else
+			{
+				Destroy ( getSpc [ 0 ].ThisChunk );
+			}
+
 			getSpc.RemoveAt ( 0 );
 		}
 
@@ -215,9 +235,12 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
-	public void AddNewChunk ( GameObject thisSpawn )
+	public void AddNewChunk ( GameObject thisSpawn, bool onScene, List<GameObject> thisGarb )
 	{
-		getSpawnChunks.Add ( thisSpawn );
+		getSpawnChunks.Add ( new CheckOnScene ( ) );
+		getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
+		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
+		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
 	}
 	#endregion
 	
@@ -237,8 +260,8 @@ public class SpawnChunks : MonoBehaviour
 	void newLevel ( )
 	{
 		ChunksScriptable getCunk = thisChunk;
-		List<GameObject> getSpc = getSpawnChunks;
-		Transform getChunkT = getSpc [ getSpc.Count - 1 ].transform;
+		List<CheckOnScene> getSpc = getSpawnChunks;
+		Transform getChunkT = getSpc [ getSpc.Count - 1 ].ThisChunk.transform;
 		GameObject thisObj;
 		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
 
@@ -291,10 +314,25 @@ public class SpawnChunks : MonoBehaviour
 	void spawnAfterThis ( NewChunkInfo sourceSpawn = null )
 	{
 		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
+		GameObject [] ScChunk = GetSceneChunk;
 		GameObject thisSpawn;
 		Transform getChunkT;
 		ChunksScriptable getChunk;
 		GetSpawnable getSble;
+		GameObject currWall;
+
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
+		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
+		{
+		};
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+		}; 
+
+		GlobalManager.Event.UnRegister ( checkDBE );
+		GlobalManager.Event.UnRegister ( checkEnable );
 
 		if ( !transitChunk )
 		{
@@ -322,7 +360,6 @@ public class SpawnChunks : MonoBehaviour
 			List<NewChunkSaveInf> getCurrNew;
 			List<ToDestChunk> allNewChunk = new List<ToDestChunk> ( );
 			List<GameObject> getThoseChunk = getChunk.TheseChunks;
-
 			NewChunkSaveInf getOtherNC;
 			SpawnNewLvl currSL;
 
@@ -333,6 +370,7 @@ public class SpawnChunks : MonoBehaviour
 			int getInd;
 			int diffLine;
 			int vertChunk;
+			bool isChunkScene;
 
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
@@ -354,7 +392,22 @@ public class SpawnChunks : MonoBehaviour
 
 				if ( thisSpawn != null )
 				{
-					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+					isChunkScene = false;
+					for ( b = 0; b < ScChunk.Length; b++ )
+					{
+						if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
+						{
+							thisSpawn = ScChunk [ b ];
+							thisSpawn.SetActive ( true );
+							isChunkScene = true;
+							break;
+						}
+					}
+
+					if ( !isChunkScene )
+					{
+						thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+					}
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
 					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
@@ -395,12 +448,31 @@ public class SpawnChunks : MonoBehaviour
 					getCurrNew [ vertChunk ].NbrLaneDebut = currSL.InfoChunk.NbrLaneDebut;
 					getCurrNew [ vertChunk ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 					getCurrNew [ vertChunk ].CurrVert = sourceSpawn.ThoseExit [ a ].Verticalite;
+					getCurrNew [ vertChunk ].WallEndChunk = sourceSpawn.ThoseExit [ a ].WallEndChunk;
+					getCurrNew [ vertChunk ].ChunkGarb = currSL.GarbChunk;
 
 					allNewChunk.Add ( new ToDestChunk ( ) );
 					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
 					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
 
-					otherSpawn.Add ( thisSpawn );
+					currSL.OnScene = isChunkScene;
+
+					if ( sourceSpawn.ThoseExit.Count > 1 ) 
+					{
+						otherSpawn.Add (new CheckOnScene ( ) );
+						otherSpawn [ otherSpawn.Count - 1 ].ThisChunk = thisSpawn;
+						otherSpawn [ otherSpawn.Count - 1 ].OnScene = isChunkScene;
+						otherSpawn [ otherSpawn.Count - 1 ].GarbChunk = currSL.GarbChunk;
+
+					} 
+					else 
+					{
+						currSL.AddToList = false;
+						getSpawnChunks.Add ( new CheckOnScene ( ) );
+						getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
+						getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = isChunkScene;
+						getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = currSL.GarbChunk;
+					}
 				}
 			}
 
@@ -508,12 +580,22 @@ public class SpawnChunks : MonoBehaviour
 				// check if there is spaces and place wall if yes
 				for ( b = 0; b < getCurrNew.Count; b++ )
 				{
+					if ( getCurrNew [ b ].WallEndChunk != null )
+					{
+						currWall = getCurrNew [ b ].WallEndChunk;
+					}
+					else
+					{
+						currWall = getChunk.WallEndChunk;
+					}
+
 					if ( b == 0 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
 						while ( diffLine < 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
+							//getCunk.GarbageSpawn.Add ( thisObj );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine - getCurrNew [ b ].NbrLaneDebut.x ) - getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine++;
@@ -527,7 +609,7 @@ public class SpawnChunks : MonoBehaviour
 
 						while ( diffLine > 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 							diffLine--;
@@ -541,7 +623,7 @@ public class SpawnChunks : MonoBehaviour
 
 						while ( diffLine != 0 )
 						{
-							thisSpawn = ( GameObject ) Instantiate ( getChunk.WallEndChunk, getCurrNew [ b ].ThisObj.transform );
+							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
 							thisSpawn.transform.localEulerAngles = new Vector3 ( 0, 90, 0 );
 
@@ -560,7 +642,7 @@ public class SpawnChunks : MonoBehaviour
 		}
 		else
 		{
-			List<GameObject> getSpc = getSpawnChunks;
+			List<CheckOnScene> getSpc = getSpawnChunks;
 
 			if ( getChunk.ChunkAleat )
 			{
@@ -575,13 +657,31 @@ public class SpawnChunks : MonoBehaviour
 
 			if ( thisSpawn != null )
 			{
-				thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+				bool isChunkScene = false;
+
+				for ( int a = 0; a < ScChunk.Length; a++ )
+				{
+					if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ a ].activeSelf )
+					{
+						thisSpawn = ScChunk [ a ];
+						thisSpawn.SetActive ( true );
+						isChunkScene = true;
+						break;
+					}
+				}
+
+				if ( !isChunkScene )
+				{
+					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+				}
 
 				getChunkT = thisSpawn.transform;
 				getChunkT.rotation = Quaternion.identity;
 				getChunkT.position = DefaultPos;
 
-				getSpc.Add ( thisSpawn );
+				getSpc.Add ( new CheckOnScene ( ) );
+				getSpc [ getSpc.Count - 1 ].ThisChunk = thisSpawn;
+				getSpc [ getSpc.Count - 1 ].OnScene = isChunkScene;
 			}
 		}
 
@@ -647,6 +747,42 @@ public class SpawnChunks : MonoBehaviour
 			}
 		}
 	}
+
+	void CleanThisList ( List<CheckOnScene> getChunk )
+	{
+		List<GameObject> getGarb = new List<GameObject> ( );
+		int a;
+
+		while ( getChunk.Count > 0 )
+		{
+			if ( getChunk [ getChunk.Count - 1 ].ThisChunk == null )
+			{
+				getChunk.RemoveAt ( getChunk.Count - 1 );
+				continue;
+			}
+
+			if ( getChunk [ getChunk.Count - 1 ].OnScene )
+			{
+				getChunk [ getChunk.Count - 1 ].ThisChunk.SetActive ( false );
+				getGarb = getChunk [ getChunk.Count - 1 ].GarbChunk;
+
+				if ( getGarb != null )
+				{
+					for ( a = getGarb.Count - 1; a > 0; a-- )
+					{
+						Destroy ( getGarb [ a ] );
+						getGarb.RemoveAt ( a );
+					}
+				}
+			}
+			else
+			{
+				Destroy ( getChunk [ getChunk.Count - 1 ].ThisChunk );
+			}
+
+			getChunk.RemoveAt ( getChunk.Count - 1 );
+		}
+	}
 	#endregion
 }
 
@@ -672,7 +808,10 @@ public class VertNCSI
 
 public class NewChunkSaveInf 
 {
+	public List<GameObject> ChunkGarb;
 	public GameObject ThisObj;
+	public GameObject WallEndChunk;
+	public GameObject ObjOnScene;
 	public Vector2 NbrLaneDebut;
 	public Vector2 SizeWall;
 	public SpawnNewLvl SpawnNL;
@@ -684,4 +823,11 @@ public class ToDestChunk
 {
 	public GameObject ThisObj;
 	public SpawnNewLvl ThisSL;
+}
+
+public class CheckOnScene 
+{
+	public List<GameObject> GarbChunk;
+	public GameObject ThisChunk;
+	public bool OnScene;
 }

@@ -47,7 +47,8 @@ public enum AudioType
 	Other,
 	Acceleration,
 	SteroKill,
-	PunchVoice
+	PunchVoice,
+	MusicTrash
 }
 
 public enum ResearcheType 

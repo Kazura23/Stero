@@ -39,12 +39,12 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
-        float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
+        //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
+      //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
 
-
-
-        Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+		GlobalManager.Ui.ExtraHearts [ 0 ].enabled = false; 
+		GlobalManager.Ui.ExtraHearts [ 1 ].enabled = false; 
 
         Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
@@ -64,7 +64,6 @@ public class GameOver : UiParent
 			PatternGameOver.transform.DOLocalMoveY(1092, 0);
 		}).SetLoops(-1, LoopType.Restart);
 
-
 		gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
 		{
 			YouGameOver.DOFade(1, .25f);
@@ -82,6 +81,12 @@ public class GameOver : UiParent
                     //Debug.Log(distPlayer);
                     //Debug.Log(AllPlayerPrefs.saveData.listScore[0].finalScore);
 
+                    DOVirtual.DelayedCall(1f, () => {
+                        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
+                        quoteScore.DOFade(1, 2f);
+                    });
+
                     if (AllPlayerPrefs.finalScore >= AllPlayerPrefs.saveData.listScore[0].finalScore)
                     {
                         newScore.transform.DOScale(5, 0);
@@ -96,16 +101,10 @@ public class GameOver : UiParent
                         });*/
                     }
 
-					DOVirtual.DelayedCall(1f, () => {
-                        PressPunch.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
-                        PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
-                        quoteScore.DOFade(1, 2f);
-					});
 				});
 			});
 		});
 	}
-		
 
 	public override void CloseThis ( )
 	{
