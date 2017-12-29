@@ -25,6 +25,10 @@ public class SpawnNewLvl : MonoBehaviour
 	#endregion
 	
 	#region Mono
+	void OnEnable ( )
+	{
+		detect = false;
+	}
 	#endregion
 		
 	#region Public
@@ -33,13 +37,27 @@ public class SpawnNewLvl : MonoBehaviour
 	#region Private
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "Player"&& !detect) 
+		if (other.gameObject.tag == Constants._PlayerTag && !detect ) 
 		{
+			Debug.Log ( "PLAYER" );
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 			if (AddToList) 
 			{
-				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject, OnScene, GarbChunk );
+				Transform getParent = transform;
+				while ( getParent.parent != null && getParent.parent.name != "Chuncks" )
+				{
+					getParent = getParent.parent;
+				}
+
+				if ( getParent.parent != null )
+				{
+					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
+				}
+				else
+				{
+					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject, OnScene, GarbChunk );
+				}
 			}
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );

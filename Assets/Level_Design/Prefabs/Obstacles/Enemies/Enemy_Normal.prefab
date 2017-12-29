@@ -1391,8 +1391,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 7}
-  m_Center: {x: 0, y: 0, z: -4}
+  m_Size: {x: 1, y: 1, z: 20}
+  m_Center: {x: 0, y: 0, z: -10}
 --- !u!65 &65351413851512724
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1463,8 +1463,11 @@ MonoBehaviour:
   onObjForward: 100
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
+  CanRun: 0
+  MoveSpeed: 10
 --- !u!114 &114687979805415018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1602,6 +1605,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1617,6 +1621,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
