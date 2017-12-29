@@ -170,22 +170,23 @@ public class GameController : ManagerParent
 			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 			GlobalManager.Ui.SetCam ( thisCam );
 		}
+		PlayerController thisPcontr = Player.GetComponent<PlayerController> ( );
 
-		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
-		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
+		thisPcontr.ResetPlayer ( );
+		thisPcontr.ThisAct = SpecialAction.Nothing;
+
 		Intro = true;
 		isStay = true;
         
-		if ( restartGame)
+		if ( restartGame )
         {
 			isStay = false;
 			Intro = false;
 
-			Player.transform.DOMoveZ ( 3, 0.5f ).OnComplete ( ( ) =>
+			Player.transform.DOMoveZ ( 3, 0.75f ).OnComplete ( ( ) =>
 			{
-
-				Player.GetComponent<PlayerController> ( ).GetPunchIntro ( );
-				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
+				thisPcontr.GetPunchIntro ( );
+				thisPcontr.StopPlayer = false;
 				restartGame = false;
 				GlobalManager.Ui.IntroRestart ( );
 			} );
