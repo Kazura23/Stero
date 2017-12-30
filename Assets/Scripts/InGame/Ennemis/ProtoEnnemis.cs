@@ -28,6 +28,11 @@ public class ProtoEnnemis : AbstractObject
 
 	void Update () 
 	{
+		if ( playerTrans == null )
+		{
+			return;
+		}
+
 		if ( Vector3.Distance ( getTrans.position, playerTrans.position ) > 7.5f )
 		{
 			if ( CanRun && detected )

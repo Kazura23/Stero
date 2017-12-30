@@ -42,13 +42,21 @@ public class GameOver : UiParent
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
 		{
 		};
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
 
+		GlobalManager.Event.UnRegister ( checkDBP );
 		GlobalManager.Event.UnRegister ( checkDBE );
 		GlobalManager.Event.UnRegister ( checkEnable );
 

@@ -351,7 +351,6 @@ public class PlayerController : MonoBehaviour
         BarMadness.value = 0;
 	}
 
-
     public void GameOver ( bool forceDead = false )
 	{
         if ( invDamage  && !forceDead )
@@ -728,24 +727,25 @@ public class PlayerController : MonoBehaviour
             pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
 			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
+				DOVirtual.DelayedCall(.1f, () => {
+					onAnimeAir = true;
+				});
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
                 pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
-					onAnimeAir = true;
+					onAnimeAir = false;
 
                     //MR S RETOMBE
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
-						onAnimeAir = false;
-
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
                         });
 
 						StopPlayer = false;
                         pRig.useGravity = true;
-                        pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+						pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
                         inAir = true;
-                        StartCoroutine(groundAfterChoc());
+						StartCoroutine(groundAfterChoc());
                     });
                 });
             });
@@ -791,14 +791,16 @@ public class PlayerController : MonoBehaviour
 		Debug.Log ( "StopInv" );
 	}
 
-
 	IEnumerator prepDeadBall ( )
 	{
 		yield return new WaitForSeconds ( Constants.DB_Prepare );
 
+		GlobalManager.Ui.BallTransition.enabled = true;
 		// camera black
 
 		yield return new WaitForSeconds ( 0.3f );
+
+		GlobalManager.Ui.BallTransition.enabled = false;
 
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
@@ -1483,6 +1485,7 @@ public class PlayerController : MonoBehaviour
 		{
 			GameOver ( true );
 		}
+
 		if ( Dash || InMadness || playerInv )
 		{
             if (getObj.tag == Constants._EnnemisTag)
@@ -1531,7 +1534,7 @@ public class PlayerController : MonoBehaviour
 			getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
 			GameOver ( );
 		}
-		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._MissileBazoo || getObj.tag == Constants._Balls )
+		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._Balls )
 		{
 			GameOver ( );
 		}
@@ -1545,7 +1548,6 @@ public class PlayerController : MonoBehaviour
 	void stopMadness ( )
 	{
 		InMadness = false;
-        
 
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;

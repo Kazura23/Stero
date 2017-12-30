@@ -82,7 +82,7 @@ public class AbstractObject : MonoBehaviour
 			}
 		}; 
 
-		GlobalManager.Event.Register ( checkDBE ); 
+		GlobalManager.Event.Register ( checkDBE );
 	}
 
     protected virtual void Start()
@@ -93,7 +93,7 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-	public void EventEnable ( )
+	public void EventEnable (  )
 	{
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
@@ -102,7 +102,15 @@ public class AbstractObject : MonoBehaviour
 
 		GlobalManager.Event.Register ( checkEnable ); 
 
-		startPos = getTrans.localPosition;
+		int a;
+		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
+		{
+			for ( a = 0; a < thisSkin.materials.Length; a++ )
+			{
+				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
+				thisSkin.materials [ a ].SetFloat ( "_highlight", 0f );
+			}	
+		}
 	}
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
@@ -159,7 +167,7 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true )
+	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true, bool forceDead = false )
 	{
 		onEnemyDead ( forceProp, checkConst );
 		StartCoroutine ( enableColl ( ) );
@@ -193,7 +201,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( thisColl.tag == Constants._ChocWave )
 		{
-			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, false );
+			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, false, true );
 		}
 	}
 
@@ -240,8 +248,8 @@ public class AbstractObject : MonoBehaviour
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
 		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
-		thisObj.transform.localPosition = startPos;
 		thisObj.SetActive ( false );
+		thisObj.transform.localPosition = startPos;
 		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
 
 		isDead = true;

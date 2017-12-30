@@ -32,6 +32,7 @@ public class UiManager : ManagerParent
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
+	public Image BallTransition;
     private Camera thisCam;
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;

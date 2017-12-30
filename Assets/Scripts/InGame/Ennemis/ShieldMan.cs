@@ -52,9 +52,9 @@ public class ShieldMan : AbstractObject {
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}
 
-	public override void ForceProp ( Vector3 forceProp, bool checkConst )
+	public override void ForceProp ( Vector3 forceProp, bool checkConst, bool forceDead = false )
 	{
-		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness )
+		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness && !forceDead )
 		{
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).GameOver ( );
 		}
