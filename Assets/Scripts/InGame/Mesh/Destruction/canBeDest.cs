@@ -14,6 +14,11 @@ public class canBeDest : MonoBehaviour
 		string getTag = collision.collider.tag;
 		if ( getTag == Constants._PlayerTag && DeadByPlayer || getTag == Constants._EnnemisTag || getTag == Constants._ObsEnn)
 		{
+			AbstractObject getAbs = GetComponent <AbstractObject> ( );
+			if ( getAbs != null )
+			{
+				getAbs.ForceProp ( Vector2.zero );
+			}
 			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc, 20 ) );
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );

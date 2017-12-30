@@ -247,6 +247,11 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
+		if ( playerCont != null )
+		{
+			playerCont.RecoverTimer ( );
+		}
+
 		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
 		thisObj.SetActive ( false );
 		thisObj.transform.localPosition = startPos;

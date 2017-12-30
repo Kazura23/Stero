@@ -116,7 +116,7 @@ public class ShieldMan : AbstractObject {
 				move = getTrans.position + (getTrans.forward * distance);
 				getTrans.DOMoveX(move.x, delay);
 				getTrans.DOMoveZ(move.z, delay);
-				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay / 2));
+				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 

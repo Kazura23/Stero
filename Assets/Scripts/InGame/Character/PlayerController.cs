@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
+	[Header ("TimerCaract")]
+	public float DelayTimerFight = 5;
+	[Tooltip ("Delay de survie une fois le timer à 0")]
+	public float DelayLastTimer = 2.5f;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort")]
+	public float TimerRecover = 10;
+
 	[Header ("IncreaseSpeed")]
 	[Tooltip ("Distance a parcourir pour augmenter la vitesse Max")]
 	public int DistIncMaxSpeed = 100;
@@ -86,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("Lier au score")]
     public float facteurMulDistance = 1;
-
 
     [Header ("SphereMask")]
 	public float Radius;
@@ -152,6 +158,8 @@ public class PlayerController : MonoBehaviour
 	Vector3 startPosRM;
     Player inputPlayer;
 
+	Image timerFight;
+
 	float checkDistY = -100;
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
@@ -201,9 +209,8 @@ public class PlayerController : MonoBehaviour
     bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
-
-
     bool onAnimeAir = false;
+	bool lastTimer = false;
     #endregion
 
     #region Mono
@@ -225,7 +232,6 @@ public class PlayerController : MonoBehaviour
 		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
 		punch.SetPunch ( !playerDead );
 
-		distCal ( );
 		playerAction ( getTime );
 
 		Mathf.Clamp ( Radius, 0, 100 );
@@ -282,6 +288,7 @@ public class PlayerController : MonoBehaviour
 	#region Public Functions
 	public void InitPlayer ( )
 	{
+		timerFight = GlobalManager.Ui.TimerFight;
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
@@ -326,6 +333,10 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		timerFight.fillAmount = 1;
+		timerFight.color = Color.white;
+		lastTimer = false;
+
 		getFOVDP = FOVIncrease;
 		Life = 1;
 		playerDead = false;
@@ -495,6 +506,26 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(propPunch);
         }
     }
+
+	public void RecoverTimer ( )
+	{
+		if ( !lastTimer )
+		{
+			timerFight.fillAmount += TimerRecover * 0.01f * ( DelayTimerFight / DelayLastTimer );
+		}
+		else
+		{
+			float getCal = timerFight.fillAmount - TimerRecover * 0.01f;
+			timerFight.fillAmount -= TimerRecover * 0.01f;
+
+			if ( getCal < 0 )
+			{
+				timerFight.color = Color.white;
+				timerFight.fillAmount -= getCal;
+				lastTimer = false;
+			}
+		}
+	}
 	#endregion
 
 	#region Private Functions
@@ -505,7 +536,8 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		float getDelta = Time.deltaTime;
+		TimerCheck ( getTime );
+		distCal ( );
 
 		if( BarMadness.value == 0 && InMadness )
 		{
@@ -573,7 +605,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		playerFight ( getDelta );
+		playerFight ( getTime );
 
 		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
@@ -608,6 +640,30 @@ public class PlayerController : MonoBehaviour
         }
 		
 		playerMove ( getTime, currSpeed );
+	}
+
+	void TimerCheck ( float getTime )
+	{
+		if ( !lastTimer )
+		{
+			timerFight.fillAmount -= getTime / DelayTimerFight;
+
+			if ( timerFight.fillAmount == 0 )
+			{
+				lastTimer = true;
+				timerFight.color = Color.red;
+			}
+		}
+		else
+		{
+			timerFight.fillAmount += getTime / DelayLastTimer;
+
+			if ( timerFight.fillAmount == 1 )
+			{
+				lastTimer = false;
+				GameOver ( true );
+			}
+		}
 	}
 
 	void distCal ( )
