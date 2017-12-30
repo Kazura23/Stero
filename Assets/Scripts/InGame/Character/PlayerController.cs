@@ -663,7 +663,7 @@ public class PlayerController : MonoBehaviour
 		}
 		Dash = false;
 
-        if (ThisAct == SpecialAction.SlowMot)
+		if (ThisAct == SpecialAction.SlowMot )
         {
             if (SliderContent > 0)
             {
@@ -714,7 +714,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && canChange )
+		else if ( ThisAct == SpecialAction.OndeChoc && canChange && newH == 0 )
 		{
 			canSpe = false;
 			playerInv = true;
@@ -751,7 +751,7 @@ public class PlayerController : MonoBehaviour
             });
 
 		}
-		else if ( ThisAct == SpecialAction.DeadBall )
+		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 && canChange )
 		{
 			pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;

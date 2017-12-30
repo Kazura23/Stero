@@ -17,7 +17,7 @@ public class AudioManager : ManagerParent
 	#endregion
 		
 	#region Public
-	public void OpenAudio ( AudioType thisType, string thisName = "", bool loopAudio = false, System.Action thisAct = null, bool playIfEmpty = false )
+	public AudioSource OpenAudio ( AudioType thisType, string thisName = "", bool loopAudio = false, System.Action thisAct = null, bool playIfEmpty = false )
 	{
 		AudioSource thisSource;
 
@@ -31,7 +31,7 @@ public class AudioManager : ManagerParent
 
 		if ( !audioParent.TryGetValue ( thisType, out thisSource ) )
 		{
-			return;
+			return thisSource;
 		}
 		else if ( thisName == "" )
 		{
@@ -51,7 +51,7 @@ public class AudioManager : ManagerParent
 
 			if ( getAllName.Count == 0 )
 			{
-				return;
+				return null;
 			}
 
 			thisName = getAllName [ Random.Range ( 0, getAllName.Count ) ];
@@ -77,6 +77,7 @@ public class AudioManager : ManagerParent
 								thisSource.Play();
 
 								thisSource.loop = true;
+								return thisSource;
 							}
 							else
 							{
@@ -88,7 +89,7 @@ public class AudioManager : ManagerParent
 									{
 										if ( getAC [ d ].ThisType == thisType && getAC [ d ].ThoseSource.Count > 0 )
 										{
-											return;
+											return null;
 										}
 									}
 								}
@@ -114,13 +115,15 @@ public class AudioManager : ManagerParent
 								}
 
 								StartCoroutine ( waitEndAudio ( getAud.clip.length + 0.1f, d, getAud, thisAct ) );
+								return getAud;
 							}
-							return;
 						}
 					}
 				}
 			}
 		}
+
+		return null;
 	}
 
 	public AudioSource GetSource ( AudioType thisType )

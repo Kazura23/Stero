@@ -18,46 +18,46 @@ public class GameController : ManagerParent
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
-    public bool Intro;
+	public bool Intro;
 
 	[HideInInspector]
 	public Dictionary <string, ItemModif> AllModifItem;
 	[HideInInspector]
 	public List <ItemModif> AllTempsItem;
 
-    public Tween soundFootSteps;
+	public Tween soundFootSteps;
 	bool checkStart = false;
-    bool isStay = true, isReady = false;
-    [HideInInspector]
-    public bool introFinished;
-    private int chooseOption = 2;
-    public Vector3[] moveRotate = new Vector3[5];
-    public GameObject[] tabGameObject = new GameObject[5];
-    public float delayRotate = 5;
-    public GameObject textIntroObject;
-    public Transform[] textIntroTransform;
-    public string[] textIntroText;
-    public Tween colorTw;
-    public GameObject musicObject;
+	bool isStay = true, isReady = false;
+	[HideInInspector]
+	public bool introFinished;
+	private int chooseOption = 2;
+	public Vector3[] moveRotate = new Vector3[5];
+	public GameObject[] tabGameObject = new GameObject[5];
+	public float delayRotate = 5;
+	public GameObject textIntroObject;
+	public Transform[] textIntroTransform;
+	public string[] textIntroText;
+	public Tween colorTw;
+	public GameObject musicObject;
 	[HideInInspector]
 	public Camera thisCam;
 
-    bool restartGame = false;
-    public bool canOpenShop = true;
+	bool restartGame = false;
+	public bool canOpenShop = true;
 
-    bool GameStarted = false;
+	bool GameStarted = false;
 	bool onHub = true;
-    #endregion
+	#endregion
 
-    #region Mono
-    void Update ( )
+	#region Mono
+	void Update ( )
 	{
 		if (Input.GetKeyDown(KeyCode.P))
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
-        if (!checkStart && isStay && !isReady)
-        {
+	        if (!checkStart && isStay && !isReady)
+	        {
 			switch (chooseOption)
 			{
 
@@ -119,22 +119,24 @@ public class GameController : ManagerParent
 
 				break;
 			}
-           
-            if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                ActiveTextIntro();
-                ChooseRotate(false);
-            }else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                ActiveTextIntro();
-                ChooseRotate(true);
-            }
-		}else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
-        {
-            Player.GetComponent<PlayerController>().GetPunchIntro();
+	           
+			if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				ActiveTextIntro();
+				ChooseRotate(false);
+			}
+			else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				ActiveTextIntro();
+				ChooseRotate(true);
+			}
+		}
+		else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
+	        {
+	            Player.GetComponent<PlayerController>().GetPunchIntro();
 
-            Debug.Log("PunchIntro");
-        }
+	            Debug.Log("PunchIntro");
+	        }
         
 	}
 
@@ -155,7 +157,7 @@ public class GameController : ManagerParent
         GameStartedUpdate();
     }
     
-    public void StartGame ( )
+	public void StartGame ( )
 	{
 		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
 		Instantiate ( BarrierIntro );
@@ -168,22 +170,23 @@ public class GameController : ManagerParent
 			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
 			GlobalManager.Ui.SetCam ( thisCam );
 		}
+		PlayerController thisPcontr = Player.GetComponent<PlayerController> ( );
 
-		Player.GetComponent<PlayerController> ( ).ResetPlayer ( );
-		Player.GetComponent<PlayerController> ( ).ThisAct = SpecialAction.Nothing;
+		thisPcontr.ResetPlayer ( );
+		thisPcontr.ThisAct = SpecialAction.Nothing;
+
 		Intro = true;
 		isStay = true;
         
-		if ( restartGame)
+		if ( restartGame )
         {
 			isStay = false;
 			Intro = false;
 
-			Player.transform.DOMoveZ ( 3, 0.5f ).OnComplete ( ( ) =>
+			Player.transform.DOMoveZ ( 3, 0.75f ).OnComplete ( ( ) =>
 			{
-
-				Player.GetComponent<PlayerController> ( ).GetPunchIntro ( );
-				Player.GetComponent<PlayerController> ( ).StopPlayer = false;
+				thisPcontr.GetPunchIntro ( );
+				thisPcontr.StopPlayer = false;
 				restartGame = false;
 				GlobalManager.Ui.IntroRestart ( );
 			} );
@@ -392,7 +395,10 @@ public class GameController : ManagerParent
 			Debug.Log ( "OnHub" );
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
-			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
+			thisAud.volume *= 1.25f;
+
+			thisAud.DOFade ( thisAud.volume * 0.75f, 3.5f );
 		}
 
         if (GameStarted && !checkStart)
