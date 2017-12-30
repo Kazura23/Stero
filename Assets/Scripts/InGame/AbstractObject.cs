@@ -38,10 +38,10 @@ public class AbstractObject : MonoBehaviour
 	Rigidbody meshRigid;
     private int techPunch;
 
+	Vector3 startPos;
 	Vector3 projection;
 	float distForDB = 0;
 	GameObject thisObj;
-
 	#endregion
 
 	#region Mono
@@ -49,6 +49,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		isDead = false;
 		getTrans = transform;
+		startPos = getTrans.localPosition;
 	
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
@@ -100,6 +101,8 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
+
+		startPos = getTrans.localPosition;
 	}
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
@@ -237,6 +240,7 @@ public class AbstractObject : MonoBehaviour
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
 		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+		thisObj.transform.localPosition = startPos;
 		thisObj.SetActive ( false );
 		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
 
