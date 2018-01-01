@@ -26,8 +26,19 @@ public class ProtoEnnemis : AbstractObject
 		base.Awake();
 	}
 
+	protected override void OnEnable ( )
+	{
+		base.OnEnable ( );
+		detected = false;
+	}
+
 	void Update () 
 	{
+		if ( playerTrans == null )
+		{
+			return;
+		}
+
 		if ( Vector3.Distance ( getTrans.position, playerTrans.position ) > 7.5f )
 		{
 			if ( CanRun && detected )

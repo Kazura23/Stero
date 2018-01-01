@@ -20,6 +20,9 @@ public class UiManager : ManagerParent
 	public Text ScorePoints;
 	public Text MoneyPoints;
 
+	public Image BallTransition;
+	public Image TimerFight;
+
     [Header("MAIN MENU")]
     public int MenuSelection = 1;
 

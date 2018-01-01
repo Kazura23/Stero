@@ -104,11 +104,11 @@ public class RiffleMan : AbstractObject
 
 			if ( checkDir )
 			{
-				getCurr.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( -NbrBalls / 2 + a * angle, Random.Range ( -angleY, angleY + 1 ), ForceBall ), ForceMode.VelocityChange );
+				getCurr.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( -NbrBalls * 0.5f + a * angle, Random.Range ( -angleY, angleY + 1 ), ForceBall ), ForceMode.VelocityChange );
 			}
 			else
 			{
-				getCurr.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( NbrBalls / 2 - a * angle, Random.Range ( -angleY, angleY + 1 ), ForceBall ), ForceMode.VelocityChange );
+				getCurr.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( NbrBalls * 0.5f - a * angle, Random.Range ( -angleY, angleY + 1 ), ForceBall ), ForceMode.VelocityChange );
 			}
 
 			Destroy ( getCurr, TimeDestr );

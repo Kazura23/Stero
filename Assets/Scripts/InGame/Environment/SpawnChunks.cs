@@ -188,6 +188,19 @@ public class SpawnChunks : MonoBehaviour
 		bool doubleFirst = false;
 		int a;
 
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
+
+		GlobalManager.Event.UnRegister ( checkDBP );
+		GlobalManager.Event.UnRegister ( checkEnable );
+
 		if ( !StartBonus )
 		{
 			currLevel = minLevel;
@@ -324,14 +337,14 @@ public class SpawnChunks : MonoBehaviour
 		var e = new RenableAbstObj ( );
 		e.Raise ( );
 
-		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
-		{
-		};
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
 
-		GlobalManager.Event.UnRegister ( checkDBE );
+		GlobalManager.Event.UnRegister ( checkDBP );
 		GlobalManager.Event.UnRegister ( checkEnable );
 
 		if ( !transitChunk )
@@ -395,7 +408,7 @@ public class SpawnChunks : MonoBehaviour
 					isChunkScene = false;
 					for ( b = 0; b < ScChunk.Length; b++ )
 					{
-						if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
+						if ( ScChunk [ b ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
 						{
 							thisSpawn = ScChunk [ b ];
 							thisSpawn.SetActive ( true );

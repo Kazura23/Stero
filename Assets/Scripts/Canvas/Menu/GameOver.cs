@@ -23,12 +23,17 @@ public class GameOver : UiParent
 	void Update ( )
 	{
 		if ( Input.GetAxis("CoupSimple") != 0 )
-		{
-            AllPlayerPrefs.relance = true;
-			GlobalManager.GameCont.Restart ();
+        {
+            gameObject.GetComponent<CanvasGroup>().DOFade(0, .25f);
+
+
+                AllPlayerPrefs.relance = true;
+                GlobalManager.GameCont.Restart();
+
 		}else if (Input.GetKeyDown(KeyCode.Escape))
         {
             AllPlayerPrefs.relance = false;
+            
             GlobalManager.GameCont.Restart();
         }
 	}
@@ -42,13 +47,21 @@ public class GameOver : UiParent
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
 		{
 		};
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
 
+		GlobalManager.Event.UnRegister ( checkDBP );
 		GlobalManager.Event.UnRegister ( checkDBE );
 		GlobalManager.Event.UnRegister ( checkEnable );
 
@@ -57,6 +70,7 @@ public class GameOver : UiParent
 
         Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
+        GetComponent<CanvasGroup>().DOFade(0, 0);
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
 		YouGameOver.DOFade(0, 0);
 		MadeGameOver.DOFade(0, 0);
@@ -117,9 +131,8 @@ public class GameOver : UiParent
 
 	public override void CloseThis ( )
 	{
-		base.CloseThis (  );
 
-        gameObject.GetComponent<CanvasGroup>().DOFade(0f, 0);
+        base.CloseThis (  );
 
     }
 	#endregion

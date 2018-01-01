@@ -70,7 +70,7 @@ public class MeshDesctruc : MonoBehaviour
 		GameObject getTri = TriangPrefb;
 		Mesh mesh;
 
-		float matCD = calDir.magnitude / 4;
+		float matCD = calDir.magnitude * 0.25f;
 
 		int[] indices;
 
@@ -81,7 +81,7 @@ public class MeshDesctruc : MonoBehaviour
 		int c;
 
 		bool checkLim;
-		getSize = new Vector2 ( getSize.x / 2, getSize.y / 2 );
+		getSize = new Vector2 ( getSize.x * 0.5f, getSize.y * 0.5f );
 
 		//getAllSt = stockElem;
 
@@ -199,7 +199,7 @@ public class MeshDesctruc : MonoBehaviour
 
 				if ( !explos )
 				{
-					GO.GetComponent<Rigidbody> ( ).AddForce ( ( new Vector3 ( Random.Range ( -matCD, matCD ), Random.Range ( 0, matCD ), Random.Range ( -matCD, matCD ) ) + calDir ) * Random.Range ( forcePro / 10, forcePro ), ForceMode.VelocityChange );
+					GO.GetComponent<Rigidbody> ( ).AddForce ( ( new Vector3 ( Random.Range ( -matCD, matCD ), Random.Range ( 0, matCD ), Random.Range ( -matCD, matCD ) ) + calDir ) * Random.Range ( forcePro * 0.1f, forcePro ), ForceMode.VelocityChange );
 				}
 				else
 				{
