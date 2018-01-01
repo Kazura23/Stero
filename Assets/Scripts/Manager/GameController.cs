@@ -42,6 +42,7 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public Camera thisCam;
 
+	GameObject lastWall;
 	bool restartGame = false;
 	public bool canOpenShop = true;
 
@@ -160,7 +161,11 @@ public class GameController : ManagerParent
 	public void StartGame ( )
 	{
 		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
-		Instantiate ( BarrierIntro );
+		if ( lastWall != null )
+		{
+			Destroy ( lastWall );
+		}
+		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
 	
