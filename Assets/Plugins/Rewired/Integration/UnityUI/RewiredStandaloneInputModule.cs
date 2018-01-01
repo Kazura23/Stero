@@ -48,6 +48,13 @@ namespace Rewired.Integration.UnityUI {
         [SerializeField]
         [Tooltip("A list of Player Ids that are allowed to control the UI. If Use All Rewired Game Players = True, this list will be ignored.")]
         private int[] rewiredPlayerIds = new int[1] { 0 };
+        
+        /// <summary>
+        /// Allow only Players with Player.isPlaying = true to control the UI.
+        /// </summary>
+        [SerializeField]
+        [Tooltip("Allow only Players with Player.isPlaying = true to control the UI.")]
+        private bool usePlayingPlayersOnly = false;
 
         /// <summary>
         /// Makes an axis press always move only one UI selection. Enable if you do not want to allow scrolling through UI elements by holding an axis direction.
@@ -90,6 +97,14 @@ namespace Rewired.Integration.UnityUI {
                 SetupRewiredVars();
             }
         }
+        
+        /// <summary>
+        /// Allow only Players with Player.isPlaying = true to control the UI.
+        /// </summary>
+        public bool UsePlayingPlayersOnly {
+            get { return usePlayingPlayersOnly; }
+            set { usePlayingPlayersOnly = value; }
+        }
 
         /// <summary>
         /// Makes an axis press always move only one UI selection. Enable if you do not want to allow scrolling through UI elements by holding an axis direction.
@@ -117,6 +132,7 @@ namespace Rewired.Integration.UnityUI {
 
         private bool isMouseSupported {
             get {
+                if(!Input.mousePresent) return false;
                 if(!m_allowMouseInput) return false;
                 return isTouchSupported ? m_allowMouseInputIfTouchSupported : true;
             }
@@ -130,6 +146,7 @@ namespace Rewired.Integration.UnityUI {
 
         private Vector2 m_LastMousePosition;
         private Vector2 m_MousePosition;
+        private bool m_HasFocus = true;
 
         [SerializeField]
         private string m_HorizontalAxis = DEFAULT_ACTION_MOVE_HORIZONTAL;
@@ -285,10 +302,12 @@ namespace Rewired.Integration.UnityUI {
             CheckEditorRecompile();
             if(recompiling) return;
             if(!ReInput.isReady) return;
-            
+
+            if(!m_HasFocus && ShouldIgnoreEventsOnNoFocus()) return;
+
             if(isMouseSupported) {
                 m_LastMousePosition = m_MousePosition;
-                m_MousePosition = ReInput.controllers.Mouse.screenPosition;
+                m_MousePosition = UnityEngine.Input.mousePosition;
             }
         }
 
@@ -307,6 +326,7 @@ namespace Rewired.Integration.UnityUI {
             for(int i = 0; i < playerIds.Length; i++) {
                 Rewired.Player player = ReInput.players.GetPlayer(playerIds[i]);
                 if(player == null) continue;
+                if(usePlayingPlayersOnly && !player.isPlaying) continue;
 
                 shouldActivate |= player.GetButtonDown(m_SubmitButton);
                 shouldActivate |= player.GetButtonDown(m_CancelButton);
@@ -322,7 +342,7 @@ namespace Rewired.Integration.UnityUI {
             // Mouse input
             if(isMouseSupported) {
                 shouldActivate |= (m_MousePosition - m_LastMousePosition).sqrMagnitude > 0.0f;
-                shouldActivate |= ReInput.controllers.Mouse.GetButtonDown(0);
+                shouldActivate |= UnityEngine.Input.GetMouseButtonDown(0);
             }
 
             // Touch input
@@ -339,10 +359,12 @@ namespace Rewired.Integration.UnityUI {
         }
 
         public override void ActivateModule() {
+            if(!m_HasFocus && ShouldIgnoreEventsOnNoFocus()) return;
+
             base.ActivateModule();
 
             if(isMouseSupported) {
-                Vector2 mousePosition = ReInput.controllers.Mouse.screenPosition;
+                Vector2 mousePosition = UnityEngine.Input.mousePosition;
                 m_MousePosition = mousePosition;
                 m_LastMousePosition = mousePosition;
             }
@@ -361,7 +383,8 @@ namespace Rewired.Integration.UnityUI {
 
         public override void Process() {
             if(!ReInput.isReady) return;
-            
+            if(!m_HasFocus && ShouldIgnoreEventsOnNoFocus()) return;
+
             bool usedEvent = SendUpdateEventToSelectedObject();
 
             if(eventSystem.sendNavigationEvents) {
@@ -511,6 +534,7 @@ namespace Rewired.Integration.UnityUI {
             for(int i = 0; i < playerIds.Length; i++) {
                 Rewired.Player player = ReInput.players.GetPlayer(playerIds[i]);
                 if(player == null) continue;
+                if(usePlayingPlayersOnly && !player.isPlaying) continue;
 
                 if(player.GetButtonDown(m_SubmitButton)) {
                     ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.submitHandler);
@@ -536,6 +560,7 @@ namespace Rewired.Integration.UnityUI {
             for(int i = 0; i < playerIds.Length; i++) {
                 Rewired.Player player = ReInput.players.GetPlayer(playerIds[i]);
                 if(player == null) continue;
+                if(usePlayingPlayersOnly && !player.isPlaying) continue;
 
                 if(moveOneElementPerAxisPress) { // axis press moves only to the next UI element with each press
                     float x = 0.0f;
@@ -638,6 +663,7 @@ namespace Rewired.Integration.UnityUI {
             for(int i = 0; i < playerIds.Length; i++) {
                 Rewired.Player player = ReInput.players.GetPlayer(playerIds[i]);
                 if(player == null) continue;
+                if(usePlayingPlayersOnly && !player.isPlaying) continue;
 
                 allow |= player.GetButtonDown(m_HorizontalAxis) || player.GetNegativeButtonDown(m_HorizontalAxis);
                 allow |= player.GetButtonDown(m_VerticalAxis) || player.GetNegativeButtonDown(m_VerticalAxis);
@@ -780,6 +806,22 @@ namespace Rewired.Integration.UnityUI {
                     HandlePointerExitAndEnter(pointerEvent, currentOverGo);
                 }
             }
+        }
+
+        protected virtual void OnApplicationFocus(bool hasFocus) {
+            m_HasFocus = hasFocus;
+        }
+
+        private bool ShouldIgnoreEventsOnNoFocus() {
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_WSA || UNITY_WINRT
+#if UNITY_EDITOR
+            if(UnityEditor.EditorApplication.isRemoteConnected) return false;
+#endif
+            if(!ReInput.isReady) return true;
+#else
+            if(!ReInput.isReady) return false;
+#endif
+            return ReInput.configuration.ignoreInputWhenAppNotInFocus;
         }
 
         #region Rewired Methods
