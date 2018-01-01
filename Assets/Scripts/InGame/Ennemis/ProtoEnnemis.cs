@@ -26,6 +26,12 @@ public class ProtoEnnemis : AbstractObject
 		base.Awake();
 	}
 
+	protected override void OnEnable ( )
+	{
+		base.OnEnable ( );
+		detected = false;
+	}
+
 	void Update () 
 	{
 		if ( playerTrans == null )

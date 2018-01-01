@@ -1198,12 +1198,12 @@ public class PlayerController : MonoBehaviour
 			{
 				float accLine = 0;
 
-				if ( saveDist < 0 && newH > -lineDistance / 1.25f || saveDist > 0 && newH < lineDistance / 1.25f )
+				if ( saveDist < 0 && newH > -lineDistance * 0.60f || saveDist > 0 && newH < lineDistance * 0.60f )
 				{
 					canChange = true;
 				}
 
-				if ( saveDist < 0 && newH > -lineDistance / 4 || saveDist > 0 && newH < lineDistance / 4 )
+				if ( saveDist < 0 && newH > -lineDistance * 0.40f || saveDist > 0 && newH < lineDistance * 0.40f )
 				{
 					currSpLine -= decelerationCL * delTime;
 

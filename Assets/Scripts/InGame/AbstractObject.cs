@@ -50,7 +50,7 @@ public class AbstractObject : MonoBehaviour
 		isDead = false;
 		getTrans = transform;
 		startPos = getTrans.localPosition;
-	
+
 		mainCorps = getTrans.GetComponent<Rigidbody> ( );
 		Rigidbody [] allRig = getTrans.GetComponentsInChildren<Rigidbody> ( );
 
@@ -71,8 +71,21 @@ public class AbstractObject : MonoBehaviour
             PlayerDetected(playerTrans.gameObject, false);
     }*/
 
-	void OnEnable ( )
+	protected virtual void OnEnable ( )
 	{
+		playerTrans = GlobalManager.GameCont.Player.transform;
+		playerCont = playerTrans.GetComponent<PlayerController>();
+
+		int a;
+		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
+		{
+			for ( a = 0; a < thisSkin.materials.Length; a++ )
+			{
+				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
+				thisSkin.materials [ a ].SetFloat ( "_highlight", 0f );
+			}	
+		}
+
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt ) 
 		{ 
 			if ( meshRigid != null )
@@ -87,8 +100,7 @@ public class AbstractObject : MonoBehaviour
 
     protected virtual void Start()
     {
-		playerTrans = GlobalManager.GameCont.Player.transform;
-		playerCont = playerTrans.GetComponent<PlayerController>();
+		
     }
 	#endregion
 
@@ -101,16 +113,6 @@ public class AbstractObject : MonoBehaviour
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
-
-		int a;
-		foreach ( SkinnedMeshRenderer thisSkin in GetComponentsInChildren<SkinnedMeshRenderer> ( ))
-		{
-			for ( a = 0; a < thisSkin.materials.Length; a++ )
-			{
-				thisSkin.materials [ a ] = new Material ( thisSkin.materials [ a ] );
-				thisSkin.materials [ a ].SetFloat ( "_highlight", 0f );
-			}	
-		}
 	}
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
@@ -130,7 +132,6 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-		isDead = true;
         //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
@@ -177,6 +178,11 @@ public class AbstractObject : MonoBehaviour
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
+		if ( playerCont.playerDead )
+		{
+			return;
+		}
+
 		GameObject getThis = thisColl.gameObject;
 
 		if ( getThis.tag == Constants._EnnemisTag || ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe ) || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
