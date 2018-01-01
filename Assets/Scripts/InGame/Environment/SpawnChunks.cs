@@ -408,7 +408,7 @@ public class SpawnChunks : MonoBehaviour
 					isChunkScene = false;
 					for ( b = 0; b < ScChunk.Length; b++ )
 					{
-						if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
+						if ( ScChunk [ b ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
 						{
 							thisSpawn = ScChunk [ b ];
 							thisSpawn.SetActive ( true );
