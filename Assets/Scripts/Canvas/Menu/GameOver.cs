@@ -17,6 +17,7 @@ public class GameOver : UiParent
 
 	public GameObject PatternGameOver, BarGameOver;
 	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
+	float TimeFade = 0;
 	#endregion
 
 	#region Mono
@@ -24,13 +25,11 @@ public class GameOver : UiParent
 	{
 		if ( Input.GetAxis("CoupSimple") != 0 )
         {
-            gameObject.GetComponent<CanvasGroup>().DOFade(0, .25f);
+            AllPlayerPrefs.relance = true;
+            GlobalManager.GameCont.Restart();
 
-
-                AllPlayerPrefs.relance = true;
-                GlobalManager.GameCont.Restart();
-
-		}else if (Input.GetKeyDown(KeyCode.Escape))
+		}
+		else if (Input.GetKeyDown(KeyCode.Escape))
         {
             AllPlayerPrefs.relance = false;
             
@@ -131,9 +130,11 @@ public class GameOver : UiParent
 
 	public override void CloseThis ( )
 	{
-
-        base.CloseThis (  );
-
+		gameObject.GetComponent<CanvasGroup> ( ).DOFade ( 0, TimeFade ).OnComplete ( ( ) =>
+		{
+			TimeFade = 0.25f;
+			base.CloseThis ( );
+		} );
     }
 	#endregion
 

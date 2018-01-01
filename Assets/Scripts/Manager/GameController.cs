@@ -163,13 +163,7 @@ public class GameController : ManagerParent
 		Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
-		if ( Player == null )
-		{
-			Player = GameObject.FindGameObjectWithTag("Player");
-			thisCam = Player.GetComponentInChildren<Camera> ( );
-			Player.GetComponent<PlayerController> ( ).InitPlayer ( );
-			GlobalManager.Ui.SetCam ( thisCam );
-		}
+	
 		PlayerController thisPcontr = Player.GetComponent<PlayerController> ( );
 
 		thisPcontr.ResetPlayer ( );
@@ -244,10 +238,11 @@ public class GameController : ManagerParent
     public void Restart () 
 	{
         Time.timeScale = 1;
+		GlobalManager.Ui.thisCam.transform.DOKill ();
+		ScreenShake.Singleton.StopShake ( );
 
         AllPlayerPrefs.ResetStaticVar();
-		SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
-
+		//SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
         GlobalManager.Ui.DashSpeedEffect(false);
         SpawnerChunck.RemoveAll ( );
         checkStart = false;
@@ -279,6 +274,8 @@ public class GameController : ManagerParent
             GameStarted = false;
             Debug.Log(isReady + " " + GameStarted);
         }
+
+		StartGame ( );
         //GameStarted = false;
     }   
     

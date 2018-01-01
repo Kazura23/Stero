@@ -94,6 +94,13 @@ public class ScreenShake : MonoBehaviour
         transform.DOShakePosition(.4f, .65f, 22, 90);
     }
 
+	public void StopShake ( )
+	{
+		shakePos.Kill ( true );
+		punchPos.Kill(true);
+		shakeFall.Kill(true);
+	}
+
     public void ShakeGameOver()
     {
 
