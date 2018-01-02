@@ -10,19 +10,15 @@ public class Piece : MonoBehaviour
     {
         if(other.tag == Constants._PlayerTag)
         {
-
             GlobalManager.Ui.TakeCoin();
 
             GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Coin", false);
 
             GetComponent<CapsuleCollider>().enabled = false;
 
-            Debug.Log(GetComponent<MeshRenderer>().material.name);
-
             if (GetComponent<MeshRenderer>().material.name == "GoldCoin (Instance)")
             { 
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 1);
-                
             }
             else
             {
@@ -34,8 +30,16 @@ public class Piece : MonoBehaviour
 
             transform.DOLocalRotate(new Vector3(0, 2000, 0),1f,RotateMode.FastBeyond360);
 
-            Destroy(this.gameObject, 1f);
-            
-        }
+			GetComponent<MeshRenderer>().enabled = false;
+			StartCoroutine ( waitEnable ( ) );
+		}
     }
+
+	IEnumerator waitEnable ( )
+	{
+		yield return new WaitForSeconds ( 3 );
+
+		GetComponent<MeshRenderer>().enabled = false;
+		GetComponent<CapsuleCollider>().enabled = true;
+	}
 }

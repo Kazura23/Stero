@@ -73,6 +73,7 @@ public class AbstractObject : MonoBehaviour
 
 	protected virtual void OnEnable ( )
 	{
+		gameObject.GetComponent <Collider> ( ).enabled = true;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
 

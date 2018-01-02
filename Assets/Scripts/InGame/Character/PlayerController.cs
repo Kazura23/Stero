@@ -156,8 +156,8 @@ public class PlayerController : MonoBehaviour
 
 	Quaternion startRotRR;
 	Vector3 startPosRM;
+	Vector3 startPlayer;
     Player inputPlayer;
-
 	Image timerFight;
 
 	float checkDistY = -100;
@@ -286,7 +286,12 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
-	public void InitPlayer ( )
+	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
+	{
+		//NbrLineLeft = NbrLineL 
+	}
+
+	public void IniPlayer ( )
 	{
 		timerFight = GlobalManager.Ui.TimerFight;
 		pTrans = transform;
@@ -318,17 +323,12 @@ public class PlayerController : MonoBehaviour
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
-
-        /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
+		startPlayer = pTrans.localPosition;
+		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
-        //inputPlayer = ReInput.players.GetPlayer(0);
+		//inputPlayer = ReInput.players.GetPlayer(0);
 
-        //Plafond.GetComponent<MeshRenderer>().enabled = true;
-    }
-
-	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
-	{
-		//NbrLineLeft = NbrLineL 
+		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
 	public void ResetPlayer ( )
@@ -337,11 +337,14 @@ public class PlayerController : MonoBehaviour
 		timerFight.color = Color.white;
 		lastTimer = false;
 
+		canPunch = true; 
+		punchRight = true;
 		getFOVDP = FOVIncrease;
 		Life = 1;
 		playerDead = false;
 		StopPlayer = true;
 		totalDis = 0;
+		nextIncrease = DistIncMaxSpeed;
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
@@ -356,6 +359,14 @@ public class PlayerController : MonoBehaviour
         NbrLineLeft = 0;
 		InMadness = false;
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
+		playAnimator.Play ( "Start" );
+
+		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
+		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
+
+		thisCam.transform.localRotation = startRotRR;
+		thisCam.transform.localPosition = startPosRM;
+		pTrans.localPosition = startPlayer;
 
 		stopMadness ( );
 
@@ -400,13 +411,11 @@ public class PlayerController : MonoBehaviour
 		GameOverTok thisTok = new GameOverTok ( );
 		thisTok.totalDist = totalDis;
 
-		ScreenShake.Singleton.ShakeGameOver();
-
+		//ScreenShake.Singleton.ShakeGameOver();
 		GlobalManager.Ui.GameOver();
 
         DOVirtual.DelayedCall(.2f, () =>
         {
-
             thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
             thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
@@ -423,7 +432,7 @@ public class PlayerController : MonoBehaviour
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
             //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
             //Debug.Log("compile");
-            ScreenShake.Singleton.ShakeGameOver();
+           // ScreenShake.Singleton.ShakeGameOver();
 
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );

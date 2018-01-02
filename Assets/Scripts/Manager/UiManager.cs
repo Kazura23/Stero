@@ -35,7 +35,8 @@ public class UiManager : ManagerParent
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
-    private Camera thisCam;
+	[HideInInspector]
+    public Camera thisCam;
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
@@ -496,12 +497,7 @@ public class UiManager : ManagerParent
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
-
-
-		if ( GlobalManager.GameCont.Player != null )
-		{
-			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
-		}
+		GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).IniPlayer ( );
 		//GlobalManager.GameCont.StartGame ( );
 	}
 
