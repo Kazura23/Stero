@@ -18,11 +18,17 @@ public class GameOver : UiParent
 	public GameObject PatternGameOver, BarGameOver;
 	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
 	float TimeFade = 0;
+	bool canUpdate = false;
 	#endregion
 
 	#region Mono
 	void Update ( )
 	{
+		if ( !canUpdate )
+		{
+			return;
+		}
+
 		if ( Input.GetAxis("CoupSimple") != 0 )
         {
             AllPlayerPrefs.relance = true;
@@ -43,6 +49,7 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
+		canUpdate = true;
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
@@ -130,6 +137,8 @@ public class GameOver : UiParent
 
 	public override void CloseThis ( )
 	{
+		canUpdate = false;
+
 		gameObject.GetComponent<CanvasGroup> ( ).DOFade ( 0, TimeFade ).OnComplete ( ( ) =>
 		{
 			TimeFade = 0.25f;
