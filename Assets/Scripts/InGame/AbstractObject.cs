@@ -28,6 +28,8 @@ public class AbstractObject : MonoBehaviour
     [Tooltip("Lier au score")]
     public int point = 100;
 
+	public float MalusDivTimer = 0;
+
     public bool useGravity = true;
 
 	protected Rigidbody mainCorps;
@@ -42,6 +44,7 @@ public class AbstractObject : MonoBehaviour
 	Vector3 projection;
 	float distForDB = 0;
 	GameObject thisObj;
+	bool checkDead = false;
 	#endregion
 
 	#region Mono
@@ -73,6 +76,7 @@ public class AbstractObject : MonoBehaviour
 
 	protected virtual void OnEnable ( )
 	{
+		checkDead = false;
 		gameObject.GetComponent <Collider> ( ).enabled = true;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
@@ -254,6 +258,13 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
 	{
+		if ( checkDead )
+		{
+			return;
+		}
+
+		checkDead = true;
+
 		if ( playerCont != null )
 		{
 			playerCont.RecoverTimer ( );
