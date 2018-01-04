@@ -350,6 +350,7 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		SliderSlow.value = SliderSlow.maxValue;
 		currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
 		backTF.color = Color.white;
@@ -870,6 +871,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( Input.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
 		{
+			SliderSlow.value += getTime;
+
 			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
 			{
 				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;

@@ -37,6 +37,7 @@ public class AbstractObject : MonoBehaviour
     protected PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
+	protected bool isObject = false;
 	Rigidbody meshRigid;
     private int techPunch;
 
@@ -285,7 +286,10 @@ public class AbstractObject : MonoBehaviour
 
         int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+		if ( !isObject )
+		{
+			GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+		}
 
         var animation = GetComponentInChildren<Animator>();
         if(animation)

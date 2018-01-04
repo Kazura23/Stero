@@ -8,7 +8,11 @@ public class ProtoObs : AbstractObject
 	#endregion
 
 	#region Mono
-
+	protected override void Awake ()
+	{
+		base.Awake ( );
+		isObject = true;
+	}
 	#endregion
 
 	#region Public Methods
