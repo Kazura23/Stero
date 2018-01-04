@@ -52,9 +52,9 @@ public class ShieldMan : AbstractObject {
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}
 
-	public override void ForceProp ( Vector3 forceProp, bool checkConst )
+	public override void ForceProp ( Vector3 forceProp, bool checkConst, bool forceDead = false )
 	{
-		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness )
+		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness && !forceDead )
 		{
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).GameOver ( );
 		}
@@ -116,7 +116,7 @@ public class ShieldMan : AbstractObject {
 				move = getTrans.position + (getTrans.forward * distance);
 				getTrans.DOMoveX(move.x, delay);
 				getTrans.DOMoveZ(move.z, delay);
-				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay / 2));
+				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 

@@ -45,6 +45,7 @@ public class SpawnChunks : MonoBehaviour
 		CleanThisList ( getSpawnChunks );
 	}
 
+	// Initilisation des chunks ( Organisation / tri des chunks enregistrer + sauvegarde des éléments qui servent de spawn d'obstacle ou autres )
 	public void InitChunck ( )
 	{
 		getSpawnChunks = new List<CheckOnScene> ( );
@@ -111,6 +112,7 @@ public class SpawnChunks : MonoBehaviour
 		LvlChunksInfo = chunkOrder;
 		bool checkZero = false;
 			
+		// Init du level minimun disponible
 		while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
 		{
 			currLevel++;
@@ -136,12 +138,15 @@ public class SpawnChunks : MonoBehaviour
 		thisChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
 	}
 
+	// Un nouveau chunk à faire spawn
 	public void NewSpawn ( NewChunkInfo sourceSpawn )
 	{
 		List<CheckOnScene> getSpc = getSpawnChunks;
 
+		//spawn du nouveau chunk
 		spawnAfterThis ( sourceSpawn );
 
+		// Desactivation de chunk
 		if ( getSpc.Count > 2 )
 		{
 			if ( getSpc [ 0 ].ThisChunk != null )
@@ -159,8 +164,10 @@ public class SpawnChunks : MonoBehaviour
 			getSpc.RemoveAt ( 0 );
 		}
 
+		// Verifie si on passe au niveau superieur
 		if ( thisChunk.NbrChunkOneLvl < currNbrCh )
 		{
+			// Pour le démarrage bonus
 			if ( StartBonus )
 			{
 				if ( saveLvlForStart >= EndLevel )
@@ -171,10 +178,12 @@ public class SpawnChunks : MonoBehaviour
 
 				saveLvlForStart++;
 			}
+
 			newLevel ( );
 		}
 	}
 
+	// Premier chunk à spawn
 	public void FirstSpawn ( )
 	{
 		randAllChunk = false;
@@ -188,11 +197,25 @@ public class SpawnChunks : MonoBehaviour
 		bool doubleFirst = false;
 		int a;
 
+		var e = new RenableAbstObj ( );
+		e.Raise ( );
+
+		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
+		{ 
+		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
+
+		GlobalManager.Event.UnRegister ( checkDBP );
+		GlobalManager.Event.UnRegister ( checkEnable );
+
 		if ( !StartBonus )
 		{
 			currLevel = minLevel;
 		}
 
+		// Désactive les chunks encore activés
 		while ( getSpc.Count > 0 )
 		{
 			doubleFirst = true;
@@ -235,6 +258,7 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
+	// Ajoute un chunk à la liste des chunk actives
 	public void AddNewChunk ( GameObject thisSpawn, bool onScene, List<GameObject> thisGarb )
 	{
 		getSpawnChunks.Add ( new CheckOnScene ( ) );
@@ -257,6 +281,7 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
+	// vérification de si il y a un niveau supérieur disponible ou non (si non alors random)
 	void newLevel ( )
 	{
 		ChunksScriptable getCunk = thisChunk;
@@ -311,6 +336,7 @@ public class SpawnChunks : MonoBehaviour
 		currNbrCh = 0;
 	}
 
+	// Spawn du nouveau chunk
 	void spawnAfterThis ( NewChunkInfo sourceSpawn = null )
 	{
 		List<ChunkCombineSpawnble> chunkOrder = LvlChunksInfo;
@@ -324,16 +350,17 @@ public class SpawnChunks : MonoBehaviour
 		var e = new RenableAbstObj ( );
 		e.Raise ( );
 
-		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
-		{
-		};
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 		}; 
+		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
+		{ 
+		}; 
 
-		GlobalManager.Event.UnRegister ( checkDBE );
+		GlobalManager.Event.UnRegister ( checkDBP );
 		GlobalManager.Event.UnRegister ( checkEnable );
 
+		// Si le dernier chunk activé comporte des chunks spécifique à spawn
 		if ( !transitChunk )
 		{
 			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
@@ -354,6 +381,7 @@ public class SpawnChunks : MonoBehaviour
 
 		thisChunk = getChunk;
 
+		// Si il s'agit du premier chunk ou non
 		if ( sourceSpawn != null )
 		{
 			List<VertNCSI> getNewChunk = new List<VertNCSI> ( );
@@ -395,7 +423,7 @@ public class SpawnChunks : MonoBehaviour
 					isChunkScene = false;
 					for ( b = 0; b < ScChunk.Length; b++ )
 					{
-						if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
+						if ( ScChunk [ b ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
 						{
 							thisSpawn = ScChunk [ b ];
 							thisSpawn.SetActive ( true );
@@ -573,6 +601,7 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
+			// vérification d'espace entre les chunks (spawn de wall pour combler les espaces)
 			for ( a = 0; a < getNewChunk.Count; a++ )
 			{
 				getCurrNew = getNewChunk [ a ].AllInfNewChunk;
@@ -685,6 +714,7 @@ public class SpawnChunks : MonoBehaviour
 			}
 		}
 
+		// Spawn de divers éléments (en random) sur les emplacements prévue
 		spawnElements ( getSble.getCoinSpawnable, getChunk.CoinSpawnable );
 		spawnElements ( getSble.getEnnemySpawnable, getChunk.EnnemySpawnable );
 		spawnElements ( getSble.getObstacleSpawnable, getChunk.ObstacleSpawnable );
@@ -730,6 +760,7 @@ public class SpawnChunks : MonoBehaviour
 		}*/
 	}
 
+	// Spawn de divers éléments (en random) sur les emplacements prévue
 	void spawnElements ( List<GameObject> spawnerElem, List<GameObject> elemSpawnable )
 	{
 		GameObject thisObj;
@@ -748,6 +779,7 @@ public class SpawnChunks : MonoBehaviour
 		}
 	}
 
+	//Désactive tous les chunks de la liste envoyé
 	void CleanThisList ( List<CheckOnScene> getChunk )
 	{
 		List<GameObject> getGarb = new List<GameObject> ( );

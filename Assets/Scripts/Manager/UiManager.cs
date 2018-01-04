@@ -20,6 +20,8 @@ public class UiManager : ManagerParent
 	public Text ScorePoints;
 	public Text MoneyPoints;
 
+	public Image BallTransition;
+
     [Header("MAIN MENU")]
     public int MenuSelection = 1;
 
@@ -32,7 +34,8 @@ public class UiManager : ManagerParent
     [Header("MISC GAMEFEEL")]
     public Image CircleFeel;
     public GameObject TextFeelMadness;
-    private Camera thisCam;
+	[HideInInspector]
+    public Camera thisCam;
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
@@ -265,9 +268,8 @@ public class UiManager : ManagerParent
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
         thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
-        Vector3 tmpPos = GlobalManager.GameCont.Player.transform.position;
-        GameObject textMadness;
-        textMadness = GlobalManager.GameCont.FxInstanciate(new Vector3(tmpPos.x, tmpPos.y, tmpPos.z + 10), "TextMadness", transform, 10f);
+		Transform getPlayer = GlobalManager.GameCont.Player.transform;
+		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
 
         Destroy(textMadness, 3);
 
@@ -296,7 +298,7 @@ public class UiManager : ManagerParent
     {
 		
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
-        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
+        //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
         
@@ -493,12 +495,7 @@ public class UiManager : ManagerParent
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
-
-
-		if ( GlobalManager.GameCont.Player != null )
-		{
-			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InitPlayer ( );
-		}
+		GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).IniPlayer ( );
 		//GlobalManager.GameCont.StartGame ( );
 	}
 

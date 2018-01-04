@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Punch : MonoBehaviour {
-    private Slider barMadness;
     
     public float puissanceOnde = 15;
     private PlayerController control;
@@ -31,8 +30,6 @@ public class Punch : MonoBehaviour {
     {
 		getPlayer = GlobalManager.GameCont.Player.transform;
 		control = getPlayer.GetComponent<PlayerController>();
-        barMadness = control.BarMadness;
-        barMadness.value = 0;
     }
 
     void OnTriggerEnter(Collider other)

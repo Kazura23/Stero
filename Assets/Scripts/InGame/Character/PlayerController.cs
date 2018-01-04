@@ -33,6 +33,21 @@ public class PlayerController : MonoBehaviour
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
+	[Header ("TimerCaract")]
+	public float DelayTimerFight = 5;
+	[Tooltip ("Delay de survie une fois le timer à 0")]
+	public float DelayLastTimer = 2.5f;
+	public float DelaySecureTimer = 2.5f;
+	public float DelayTimerOnMadness = 2.5f;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort")]
+	public float TimerRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort dans le rouge")]
+	public float TimerLastRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort dans le vert")]
+	public float TimerSecureRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort pendant la madness")]
+	public float TimerRecoverOnMadness = 10;
+
 	[Header ("IncreaseSpeed")]
 	[Tooltip ("Distance a parcourir pour augmenter la vitesse Max")]
 	public int DistIncMaxSpeed = 100;
@@ -81,12 +96,11 @@ public class PlayerController : MonoBehaviour
     public float SmoothSpeed = 100;
     public float ratioDownInMadness = 1.5f;
 
-    public float delayInBeginMadness = 2;
-    public float delayInEndMadness = 2;
+    //public float delayInBeginMadness = 2;
+   // public float delayInEndMadness = 2;
 
     [Tooltip("Lier au score")]
     public float facteurMulDistance = 1;
-
 
     [Header ("SphereMask")]
 	public float Radius;
@@ -101,8 +115,6 @@ public class PlayerController : MonoBehaviour
 	public int NbrLineLeft = 1;
 	[HideInInspector]
 	public bool Dash = false;
-	[HideInInspector]
-	public bool Running = true;
 	[HideInInspector]
 	public bool blockChangeLine = false;
 	[HideInInspector]
@@ -150,7 +162,10 @@ public class PlayerController : MonoBehaviour
 
 	Quaternion startRotRR;
 	Vector3 startPosRM;
+	Vector3 startPlayer;
     Player inputPlayer;
+	Slider timerFight;
+	Image backTF;
 
 	float checkDistY = -100;
 	float maxSpeedCL = 0;
@@ -177,7 +192,7 @@ public class PlayerController : MonoBehaviour
 	float valueSmooth = 0;
     float valueSmoothUse = 0;
 	float timeToDP;
-    float timerBeginMadness = 0;
+    //float timerBeginMadness = 0;
 	float getFOVDP;
 
 	int LastImp = 0;
@@ -185,6 +200,7 @@ public class PlayerController : MonoBehaviour
     int debugTech = 0;
 
 	//bool canJump = true;
+	bool Running = true;
 	bool propP = false;
 	bool propDP = false;
 	bool newPos = false;
@@ -198,12 +214,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool playerDead = false;
 	bool dpunch = false;
-    bool InBeginMadness = false;
+    //bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
-
-
     bool onAnimeAir = false;
+	bool lastTimer = false;
+	bool secureTimer = false;
     #endregion
 
     #region Mono
@@ -222,10 +238,15 @@ public class PlayerController : MonoBehaviour
 
         float getTime = Time.deltaTime;
 
-		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
+		rationUse = 1;
+
+		if ( InMadness )
+		{
+			rationUse += timerFight.value;
+		}
+
 		punch.SetPunch ( !playerDead );
 
-		distCal ( );
 		playerAction ( getTime );
 
 		Mathf.Clamp ( Radius, 0, 100 );
@@ -243,20 +264,20 @@ public class PlayerController : MonoBehaviour
                 debugTech = 0;
         }
 
-        SmoothBar();
+        //SmoothBar();
 
-        if (!InBeginMadness)
+        /*if (!InBeginMadness)
         {
             camMad._Y = saveCamMad.x * (BarMadness.value / BarMadness.maxValue);
             camMad._U = saveCamMad.y * (BarMadness.value / BarMadness.maxValue);
             camMad._V = saveCamMad.z * (BarMadness.value / BarMadness.maxValue);
             if (BarMadness.value - (getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1)) > 0)
             {
-                BarMadness.value -= getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1);
+               // BarMadness.value -= getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1);
             }
             else
             {
-                BarMadness.value = 0;
+                //BarMadness.value = 0;
             }
         }
         else
@@ -270,9 +291,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                InBeginMadness = false;
+               // InBeginMadness = false;
             }
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.O))
             PlayerPrefs.DeleteAll();
 
@@ -280,8 +301,16 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Public Functions
-	public void InitPlayer ( )
+	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
 	{
+		//NbrLineLeft = NbrLineL 
+	}
+
+	public void IniPlayer ( )
+	{
+		timerFight = GlobalManager.Ui.Madness;
+		timerFight.value = 0.5f;
+		backTF = timerFight.transform.Find ( "Background" ).GetComponent<Image> ( );
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
@@ -307,30 +336,35 @@ public class PlayerController : MonoBehaviour
 		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
-		BarMadness = GlobalManager.Ui.Madness;
+		//BarMadness = GlobalManager.Ui.Madness;
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
-
-        /* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
+		startPlayer = pTrans.localPosition;
+		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
-        //inputPlayer = ReInput.players.GetPlayer(0);
+		//inputPlayer = ReInput.players.GetPlayer(0);
 
-        //Plafond.GetComponent<MeshRenderer>().enabled = true;
-    }
-
-	public void UpdateNbrLine ( int NbrLineL, int NbrLineR )
-	{
-		//NbrLineLeft = NbrLineL 
+		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
 	public void ResetPlayer ( )
 	{
+		currentDir = Direction.North;
+		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
+		backTF.color = Color.white;
+		lastTimer = false;
+		secureTimer = false;
+		newPos = false;
+		blockChangeLine = false;
+		canPunch = true; 
+		punchRight = true;
 		getFOVDP = FOVIncrease;
 		Life = 1;
 		playerDead = false;
 		StopPlayer = true;
 		totalDis = 0;
+		nextIncrease = DistIncMaxSpeed;
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
@@ -339,18 +373,28 @@ public class PlayerController : MonoBehaviour
 		decelerationCL = DecelerationCL;
 		ThisAct = SpecialAction.Nothing;
 		timeToDP = TimeToDoublePunch;
-		BarMadness = GlobalManager.Ui.Madness;
-		BarMadness.value = 0;
+		//BarMadness = GlobalManager.Ui.Madness;
+		//BarMadness.value = 0;
         NbrLineRight = 0;
         NbrLineLeft = 0;
+		newH = 0;
+		currLine = 0;
+		canChange = false;
 		InMadness = false;
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
+		playAnimator.Play ( "Start" );
+
+		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
+		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
+
+		thisCam.transform.localRotation = startRotRR;
+		thisCam.transform.localPosition = startPosRM;
+		pTrans.localPosition = startPlayer;
 
 		stopMadness ( );
 
-        BarMadness.value = 0;
+       // BarMadness.value = 0;
 	}
-
 
     public void GameOver ( bool forceDead = false )
 	{
@@ -390,13 +434,11 @@ public class PlayerController : MonoBehaviour
 		GameOverTok thisTok = new GameOverTok ( );
 		thisTok.totalDist = totalDis;
 
-		ScreenShake.Singleton.ShakeGameOver();
-
+		//ScreenShake.Singleton.ShakeGameOver();
 		GlobalManager.Ui.GameOver();
 
         DOVirtual.DelayedCall(.2f, () =>
         {
-
             thisCam.transform.DORotate(new Vector3(-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
             thisCam.transform.DOLocalMoveZ(-50f, .4f);
         });
@@ -413,7 +455,7 @@ public class PlayerController : MonoBehaviour
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
             //GlobalManager.Ui.OpenThisMenu(MenuType.Leaderboard);
             //Debug.Log("compile");
-            ScreenShake.Singleton.ShakeGameOver();
+           // ScreenShake.Singleton.ShakeGameOver();
 
         });
         //GlobalManager.Ui.OpenThisMenu ( MenuType.GameOver );
@@ -496,26 +538,149 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(propPunch);
         }
     }
+
+	public void RecoverTimer ( float malus = 1 )
+	{
+		if ( playerDead || StopPlayer )
+		{
+			return;
+		}
+
+		if ( malus <= 0 )
+		{
+			malus = 1;
+		}
+
+		float getCal;
+		if ( secureTimer )
+		{
+			if ( !InMadness )
+			{
+				getCal = TimerSecureRecover / malus;
+			}
+			else
+			{
+				getCal = TimerRecoverOnMadness / malus;
+			}
+
+			getCal *= 0.25f;
+			getCal = timerFight.value + getCal * 0.01f;
+
+			if ( getCal >= 1 && !InMadness )
+			{
+				getCal = 1;
+				InMadness = true;
+				StopPlayer = true;
+
+				DOVirtual.DelayedCall(2f, () => {
+					StopPlayer = false;
+				});
+
+				maxSpeedCL = MaxSpeedCL * 2;
+				maxSpeed = MaxSpeed * 3;
+				accelerationCL = AccelerationCL * 2;
+				acceleration = Acceleration * 4;
+				StartCoroutine ( camColor ( true ) );
+				GlobalManager.Ui.OpenMadness ( );
+			}
+		}
+		else if ( !lastTimer )
+		{
+			getCal = ( ( TimerRecover * 0.01f ) / malus ) * 0.75f + timerFight.value;
+
+			if ( getCal > 0.75f )
+			{
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.green, 0.1f );
+				secureTimer = true;
+			}
+		}
+		else
+		{
+			getCal = timerFight.value + ( ( TimerLastRecover * 0.01f ) / malus ) * 0.25f;
+
+			if ( getCal > 0.25f )
+			{
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.white, 0.1f );
+				//getCal = -getCal;
+				lastTimer = false;
+				secureTimer = false;
+			}
+		}
+
+		timerFight.DOKill ( );
+		timerFight.DOValue ( getCal, 0.2f );
+	}
+
+	IEnumerator camColor ( bool enable )
+	{
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+		float currTime = 0;
+		float inMad;
+		float targetTime;
+		float getDelT = Time.deltaTime;
+
+		Vector3 getValue;
+
+		if ( enable )
+		{
+			getValue = saveCamMad;
+			camMad.enabled = true;
+			inMad = 0.5f;
+			targetTime = 2;
+		}
+		else
+		{
+			getValue = -saveCamMad;
+			inMad = 1;
+			targetTime = 1;
+		}
+
+		do
+		{
+			camMad._Y += getValue.x * getDelT * inMad;
+			camMad._U += getValue.y * getDelT * inMad;
+			camMad._V += getValue.z * getDelT * inMad;
+			currTime += getDelT;
+
+			yield return thisF;
+
+		} while ( currTime < targetTime );
+
+		if ( !enable )
+		{
+			camMad.enabled = false;
+			camMad._Y = 0; camMad._U = 0; camMad._V = 0;
+		}
+		else
+		{
+			camMad._Y = getValue.x;
+			camMad._U = getValue.y;
+			camMad._V = getValue.z;
+		}
+	}
 	#endregion
 
 	#region Private Functions
 	void playerAction ( float getTime )
 	{
-		if ( playerDead || StopPlayer || InBeginMadness )
+		if ( playerDead || StopPlayer )
 		{
 			return;
 		}
 
-		float getDelta = Time.deltaTime;
+		TimerCheck ( getTime );
+		distCal ( );
 
-		if( BarMadness.value == 0 && InMadness )
-		{
+		//if( BarMadness.value == 0 && InMadness )
+		//{
             /*playAnimator.SetBool("InMadness", false);
 
 			//stopMadness ( );
             InMadness = false;*/
-            stopMadnessLeft();
-		}
+          //  stopMadnessLeft();
+		//}
 
 		if ( Running )
 		{
@@ -574,7 +739,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		playerFight ( getDelta );
+		playerFight ( getTime );
 
 		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
@@ -609,6 +774,58 @@ public class PlayerController : MonoBehaviour
         }
 		
 		playerMove ( getTime, currSpeed );
+	}
+
+	void TimerCheck ( float getTime )
+	{
+		if ( secureTimer )
+		{
+			if ( InMadness )
+			{
+				timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
+			}
+			else
+			{
+				timerFight.value -= ( getTime / DelaySecureTimer ) * 0.25f;
+			}
+
+			if ( timerFight.value < 0.75f )
+			{
+				secureTimer = false;
+				lastTimer = false;
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.white, 0.1f );
+
+				if ( InMadness )
+				{
+					timerFight.DOValue ( 0.5f, 0.1f );
+					stopMadness ( );
+				}
+			}
+		}
+		else if ( !lastTimer )
+		{
+			timerFight.value -= ( getTime / DelayTimerFight ) * 0.75f;
+
+			if ( timerFight.value < 0.25f )
+			{
+				secureTimer = false;
+				lastTimer = true;
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.red, 0.1f );
+			}
+		}
+		else
+		{
+			timerFight.value -= ( getTime / DelayLastTimer ) * 0.25f;
+
+			if ( timerFight.value <= 0 )
+			{
+				secureTimer = false;
+				lastTimer = false;
+				GameOver ( true );
+			}
+		}
 	}
 
 	void distCal ( )
@@ -728,24 +945,25 @@ public class PlayerController : MonoBehaviour
             pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
 			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
+				DOVirtual.DelayedCall(.1f, () => {
+					onAnimeAir = true;
+				});
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
                 pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
-					onAnimeAir = true;
+					onAnimeAir = false;
 
                     //MR S RETOMBE
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
-						onAnimeAir = false;
-
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
                         });
 
 						StopPlayer = false;
                         pRig.useGravity = true;
-                        pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+						pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
                         inAir = true;
-                        StartCoroutine(groundAfterChoc());
+						StartCoroutine(groundAfterChoc());
                     });
                 });
             });
@@ -791,14 +1009,16 @@ public class PlayerController : MonoBehaviour
 		Debug.Log ( "StopInv" );
 	}
 
-
 	IEnumerator prepDeadBall ( )
 	{
 		yield return new WaitForSeconds ( Constants.DB_Prepare );
 
+		GlobalManager.Ui.BallTransition.enabled = true;
 		// camera black
 
 		yield return new WaitForSeconds ( 0.3f );
+
+		GlobalManager.Ui.BallTransition.enabled = false;
 
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
@@ -1140,12 +1360,12 @@ public class PlayerController : MonoBehaviour
 			{
 				float accLine = 0;
 
-				if ( saveDist < 0 && newH > -lineDistance / 1.25f || saveDist > 0 && newH < lineDistance / 1.25f )
+				if ( saveDist < 0 && newH > -lineDistance * 0.60f || saveDist > 0 && newH < lineDistance * 0.60f )
 				{
 					canChange = true;
 				}
 
-				if ( saveDist < 0 && newH > -lineDistance / 4 || saveDist > 0 && newH < lineDistance / 4 )
+				if ( saveDist < 0 && newH > -lineDistance * 0.40f || saveDist > 0 && newH < lineDistance * 0.40f )
 				{
 					currSpLine -= decelerationCL * delTime;
 
@@ -1331,7 +1551,7 @@ public class PlayerController : MonoBehaviour
 
 	private IEnumerator StartPunch(int type_technic/*, float getTDp = 0*/ )
 	{
-		yield return new WaitForSeconds(DelayPrepare / rationUse);
+		yield return new WaitForSeconds ( DelayPrepare );
 		 
 		if ( type_technic == 1 )
 		{
@@ -1483,6 +1703,7 @@ public class PlayerController : MonoBehaviour
 		{
 			GameOver ( true );
 		}
+
 		if ( Dash || InMadness || playerInv )
 		{
             if (getObj.tag == Constants._EnnemisTag)
@@ -1531,7 +1752,7 @@ public class PlayerController : MonoBehaviour
 			getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
 			GameOver ( );
 		}
-		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._MissileBazoo || getObj.tag == Constants._Balls )
+		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._Balls )
 		{
 			GameOver ( );
 		}
@@ -1545,17 +1766,18 @@ public class PlayerController : MonoBehaviour
 	void stopMadness ( )
 	{
 		InMadness = false;
-        
 
 		maxSpeed = MaxSpeed;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
 		acceleration = Acceleration;
 
+		StartCoroutine ( camColor ( false ) );
+
 		GlobalManager.Ui.CloseMadness();
 	}
 
-    void stopMadnessLeft()
+   /* void stopMadnessLeft()
     {
         //Debug.Log("val = " + delayInEndMadness);
         InMadness = false;
@@ -1584,11 +1806,11 @@ public class PlayerController : MonoBehaviour
             Acceleration,
             delayInEndMadness
         );
-    }
+    }*/
 
     private void SmoothBar()
     {
-        float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
+        /*float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
         if(BarMadness.value + res <= 0)
         {
             BarMadness.value = 0;
@@ -1628,7 +1850,7 @@ public class PlayerController : MonoBehaviour
         {
             BarMadness.value += res;
             valueSmoothUse -= res;
-        }
+        }*/
     }
 	#endregion
 }
