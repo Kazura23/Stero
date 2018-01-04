@@ -28,6 +28,7 @@ public class MenuShop : UiParent
     public GameObject moleculeContainer;
     public Image backgroundColor;
     public string[] quoteShop;
+    
 
     public GameObject UnlockObject;
     private string itemName;
@@ -48,6 +49,7 @@ public class MenuShop : UiParent
 	Transform saveParentAb;
 	Transform saveParentBo;
 	Text moneyNumberPlayer;
+    Sprite itemSprite;
 
     Tween shopTw1, shopTw2;
 
@@ -241,6 +243,7 @@ public class MenuShop : UiParent
 
     public void ShopUnlock()
     {
+        
         backgroundColor.DOFade(.95f, .1f);
 
         backgroundColor.transform.SetParent(currItemSeled.transform.parent.parent);
@@ -257,6 +260,7 @@ public class MenuShop : UiParent
         bg.transform.DOScaleY(1, .25f);
 
         Image icon = UnlockObject.GetComponentsInChildren<Image>()[1];
+        icon.sprite = itemSprite;
         icon.transform.DOScale(3, 0);
         icon.transform.DOScale(1, .25f);
         icon.DOFade(0, 0);
@@ -417,8 +421,13 @@ public class MenuShop : UiParent
 				if ( currCatSeled.BuyForLife )
 				{
                     ShopUnlock();
+                    getThis = currItemSeled;
+                    //Debug.Log(getThis.GetComponentsInChildren<Text>()[0].text);
+                    itemName = getThis.GetComponentsInChildren<Text>()[0].text;
+                    itemSprite = getThis.GetComponentsInChildren<Image>()[4].sprite;
+                    Debug.Log(getThis.GetComponentsInChildren<Image>()[3].sprite);
 
-					if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
+                    if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 					{
 						getAllBuy.Remove ( getCons );
 					}

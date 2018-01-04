@@ -21,9 +21,12 @@ GameObject:
   - component: {fileID: 4504893581172732}
   - component: {fileID: 33057674524394068}
   - component: {fileID: 23164549965497606}
+  - component: {fileID: 114847279273236370}
+  - component: {fileID: 205329653225757436}
+  - component: {fileID: 114855992096310560}
   m_Layer: 0
   m_Name: O_S_Container3
-  m_TagString: Untagged
+  m_TagString: ObsPropSafe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -54,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c7c0720f4d687c8488bddb244dd9dae9, type: 2}
+  - {fileID: 2100000, guid: 2403a4a26710bdc44bc3def77ebee3bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,3 +83,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418470728967284}
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
+--- !u!114 &114847279273236370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418470728967284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7f872dd3672684392c2e835fd52299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForcePropulse: 50
+  DelayDestruc: 1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1
+--- !u!114 &114855992096310560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418470728967284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  MalusDivTimer: 0
+  useGravity: 1
+--- !u!205 &205329653225757436
+LODGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418470728967284}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1.8334541
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LODs:
+  - screenRelativeHeight: 0.0064644516
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 23698244996846870, guid: 344effbebd1becb408b31803145aaa65,
+        type: 2}
+  m_Enabled: 1

@@ -55,12 +55,11 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cb5d0a53856b2f4499bd89ab94e04120, type: 2}
+  - {fileID: 2100000, guid: 531b7c1714aee1844a8d0a1daf662c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71,7 +70,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -142,8 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7f872dd3672684392c2e835fd52299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForcePropulse: 6.05
-  DelayDestruc: 0.1
+  ForcePropulse: 40
+  DelayDestruc: 0.25
+  nbPunchDestroy: 5
+  DeadByPlayer: 1
 --- !u!114 &114784780510303164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,4 +162,5 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  MalusDivTimer: 0
   useGravity: 1

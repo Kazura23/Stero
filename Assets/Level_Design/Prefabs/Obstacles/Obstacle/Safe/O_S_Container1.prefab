@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23698244996846870}
   - component: {fileID: 114475000981384640}
   - component: {fileID: 205591229989585562}
+  - component: {fileID: 114378622259804240}
   m_Layer: 0
   m_Name: O_S_Container1
   m_TagString: Untagged
@@ -97,6 +98,26 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
+--- !u!114 &114378622259804240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730595229995834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  MalusDivTimer: 0
+  useGravity: 1
 --- !u!114 &114475000981384640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7f872dd3672684392c2e835fd52299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForcePropulse: 2
+  ForcePropulse: 50
   DelayDestruc: 1
-  nbPunchDestroy: 4
+  nbPunchDestroy: 5
   DeadByPlayer: 1
 --- !u!205 &205591229989585562
 LODGroup:
