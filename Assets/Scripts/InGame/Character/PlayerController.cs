@@ -355,7 +355,8 @@ public class PlayerController : MonoBehaviour
 		backTF.color = Color.white;
 		lastTimer = false;
 		secureTimer = false;
-
+		newPos = false;
+		blockChangeLine = false;
 		canPunch = true; 
 		punchRight = true;
 		getFOVDP = FOVIncrease;
@@ -562,10 +563,12 @@ public class PlayerController : MonoBehaviour
 				getCal = TimerRecoverOnMadness / malus;
 			}
 
-			getCal = timerFight.value - getCal * 0.01f;
+			getCal *= 0.25f;
+			getCal = timerFight.value + getCal * 0.01f;
 
-			if ( getCal < 0 && !InMadness )
+			if ( getCal >= 1 && !InMadness )
 			{
+				getCal = 1;
 				InMadness = true;
 				StopPlayer = true;
 
@@ -583,25 +586,24 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			getCal = ( TimerRecover * 0.01f ) / malus + timerFight.value;
+			getCal = ( ( TimerRecover * 0.01f ) / malus ) * 0.75f + timerFight.value;
 
-			if ( getCal > 1 )
+			if ( getCal > 0.75f )
 			{
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.green, 0.1f );
-				getCal = 1 - getCal;
 				secureTimer = true;
 			}
 		}
 		else
 		{
-			getCal = timerFight.value - ( TimerLastRecover * 0.01f ) / malus;
+			getCal = timerFight.value + ( ( TimerLastRecover * 0.01f ) / malus ) * 0.25f;
 
-			if ( getCal < 0 )
+			if ( getCal > 0.25f )
 			{
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.white, 0.1f );
-				getCal = -getCal;
+				//getCal = -getCal;
 				lastTimer = false;
 				secureTimer = false;
 			}
@@ -780,14 +782,14 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( InMadness )
 			{
-				timerFight.value += getTime / DelayTimerOnMadness;
+				timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
 			}
 			else
 			{
-				timerFight.value += getTime / DelaySecureTimer;
+				timerFight.value -= ( getTime / DelaySecureTimer ) * 0.25f;
 			}
 
-			if ( timerFight.value == 1 )
+			if ( timerFight.value < 0.75f )
 			{
 				secureTimer = false;
 				lastTimer = false;
@@ -803,9 +805,9 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			timerFight.value -= getTime / DelayTimerFight;
+			timerFight.value -= ( getTime / DelayTimerFight ) * 0.75f;
 
-			if ( timerFight.value == 0 )
+			if ( timerFight.value < 0.25f )
 			{
 				secureTimer = false;
 				lastTimer = true;
@@ -815,9 +817,9 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			timerFight.value += getTime / DelayLastTimer;
+			timerFight.value -= ( getTime / DelayLastTimer ) * 0.25f;
 
-			if ( timerFight.value == 1 )
+			if ( timerFight.value <= 0 )
 			{
 				secureTimer = false;
 				lastTimer = false;
