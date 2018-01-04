@@ -37,8 +37,16 @@ public class PlayerController : MonoBehaviour
 	public float DelayTimerFight = 5;
 	[Tooltip ("Delay de survie une fois le timer à 0")]
 	public float DelayLastTimer = 2.5f;
+	public float DelaySecureTimer = 2.5f;
+	public float DelayTimerOnMadness = 2.5f;
 	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort")]
 	public float TimerRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort dans le rouge")]
+	public float TimerLastRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort dans le vert")]
+	public float TimerSecureRecover = 10;
+	[Tooltip ("Pourcentage de récupération pour chaque ennemis mort pendant la madness")]
+	public float TimerRecoverOnMadness = 10;
 
 	[Header ("IncreaseSpeed")]
 	[Tooltip ("Distance a parcourir pour augmenter la vitesse Max")]
@@ -88,8 +96,8 @@ public class PlayerController : MonoBehaviour
     public float SmoothSpeed = 100;
     public float ratioDownInMadness = 1.5f;
 
-    public float delayInBeginMadness = 2;
-    public float delayInEndMadness = 2;
+    //public float delayInBeginMadness = 2;
+   // public float delayInEndMadness = 2;
 
     [Tooltip("Lier au score")]
     public float facteurMulDistance = 1;
@@ -107,8 +115,6 @@ public class PlayerController : MonoBehaviour
 	public int NbrLineLeft = 1;
 	[HideInInspector]
 	public bool Dash = false;
-	[HideInInspector]
-	public bool Running = true;
 	[HideInInspector]
 	public bool blockChangeLine = false;
 	[HideInInspector]
@@ -158,7 +164,8 @@ public class PlayerController : MonoBehaviour
 	Vector3 startPosRM;
 	Vector3 startPlayer;
     Player inputPlayer;
-	Image timerFight;
+	Slider timerFight;
+	Image backTF;
 
 	float checkDistY = -100;
 	float maxSpeedCL = 0;
@@ -185,7 +192,7 @@ public class PlayerController : MonoBehaviour
 	float valueSmooth = 0;
     float valueSmoothUse = 0;
 	float timeToDP;
-    float timerBeginMadness = 0;
+    //float timerBeginMadness = 0;
 	float getFOVDP;
 
 	int LastImp = 0;
@@ -193,6 +200,7 @@ public class PlayerController : MonoBehaviour
     int debugTech = 0;
 
 	//bool canJump = true;
+	bool Running = true;
 	bool propP = false;
 	bool propDP = false;
 	bool newPos = false;
@@ -206,11 +214,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool playerDead = false;
 	bool dpunch = false;
-    bool InBeginMadness = false;
+    //bool InBeginMadness = false;
 	bool chargeDp = false;
 	bool canUseDash = true;
     bool onAnimeAir = false;
 	bool lastTimer = false;
+	bool secureTimer = false;
     #endregion
 
     #region Mono
@@ -229,7 +238,13 @@ public class PlayerController : MonoBehaviour
 
         float getTime = Time.deltaTime;
 
-		rationUse = 1 + (RatioMaxMadness * (InMadness ? 1 : (BarMadness.value / BarMadness.maxValue)));
+		rationUse = 1;
+
+		if ( InMadness )
+		{
+			rationUse += timerFight.value;
+		}
+
 		punch.SetPunch ( !playerDead );
 
 		playerAction ( getTime );
@@ -249,20 +264,20 @@ public class PlayerController : MonoBehaviour
                 debugTech = 0;
         }
 
-        SmoothBar();
+        //SmoothBar();
 
-        if (!InBeginMadness)
+        /*if (!InBeginMadness)
         {
             camMad._Y = saveCamMad.x * (BarMadness.value / BarMadness.maxValue);
             camMad._U = saveCamMad.y * (BarMadness.value / BarMadness.maxValue);
             camMad._V = saveCamMad.z * (BarMadness.value / BarMadness.maxValue);
             if (BarMadness.value - (getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1)) > 0)
             {
-                BarMadness.value -= getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1);
+               // BarMadness.value -= getTime * DelayDownBar * (InMadness ? ratioDownInMadness : 1);
             }
             else
             {
-                BarMadness.value = 0;
+                //BarMadness.value = 0;
             }
         }
         else
@@ -276,9 +291,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                InBeginMadness = false;
+               // InBeginMadness = false;
             }
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.O))
             PlayerPrefs.DeleteAll();
 
@@ -293,7 +308,9 @@ public class PlayerController : MonoBehaviour
 
 	public void IniPlayer ( )
 	{
-		timerFight = GlobalManager.Ui.TimerFight;
+		timerFight = GlobalManager.Ui.Madness;
+		timerFight.value = 0.5f;
+		backTF = timerFight.transform.Find ( "Background" ).GetComponent<Image> ( );
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
@@ -319,7 +336,7 @@ public class PlayerController : MonoBehaviour
 		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
-		BarMadness = GlobalManager.Ui.Madness;
+		//BarMadness = GlobalManager.Ui.Madness;
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
@@ -333,9 +350,11 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
-		timerFight.fillAmount = 1;
-		timerFight.color = Color.white;
+		currentDir = Direction.North;
+		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
+		backTF.color = Color.white;
 		lastTimer = false;
+		secureTimer = false;
 
 		canPunch = true; 
 		punchRight = true;
@@ -353,10 +372,13 @@ public class PlayerController : MonoBehaviour
 		decelerationCL = DecelerationCL;
 		ThisAct = SpecialAction.Nothing;
 		timeToDP = TimeToDoublePunch;
-		BarMadness = GlobalManager.Ui.Madness;
-		BarMadness.value = 0;
+		//BarMadness = GlobalManager.Ui.Madness;
+		//BarMadness.value = 0;
         NbrLineRight = 0;
         NbrLineLeft = 0;
+		newH = 0;
+		currLine = 0;
+		canChange = false;
 		InMadness = false;
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
 		playAnimator.Play ( "Start" );
@@ -370,7 +392,7 @@ public class PlayerController : MonoBehaviour
 
 		stopMadness ( );
 
-        BarMadness.value = 0;
+       // BarMadness.value = 0;
 	}
 
     public void GameOver ( bool forceDead = false )
@@ -516,23 +538,124 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	public void RecoverTimer ( )
+	public void RecoverTimer ( float malus = 1 )
 	{
-		if ( !lastTimer )
+		if ( playerDead || StopPlayer )
 		{
-			timerFight.fillAmount += TimerRecover * 0.01f * ( DelayTimerFight / DelayLastTimer );
+			return;
+		}
+
+		if ( malus <= 0 )
+		{
+			malus = 1;
+		}
+
+		float getCal;
+		if ( secureTimer )
+		{
+			if ( !InMadness )
+			{
+				getCal = TimerSecureRecover / malus;
+			}
+			else
+			{
+				getCal = TimerRecoverOnMadness / malus;
+			}
+
+			getCal = timerFight.value - getCal * 0.01f;
+
+			if ( getCal < 0 && !InMadness )
+			{
+				InMadness = true;
+				StopPlayer = true;
+
+				DOVirtual.DelayedCall(2f, () => {
+					StopPlayer = false;
+				});
+
+				maxSpeedCL = MaxSpeedCL * 2;
+				maxSpeed = MaxSpeed * 3;
+				accelerationCL = AccelerationCL * 2;
+				acceleration = Acceleration * 4;
+				StartCoroutine ( camColor ( true ) );
+				GlobalManager.Ui.OpenMadness ( );
+			}
+		}
+		else if ( !lastTimer )
+		{
+			getCal = ( TimerRecover * 0.01f ) / malus + timerFight.value;
+
+			if ( getCal > 1 )
+			{
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.green, 0.1f );
+				getCal = 1 - getCal;
+				secureTimer = true;
+			}
 		}
 		else
 		{
-			float getCal = timerFight.fillAmount - TimerRecover * 0.01f;
-			timerFight.fillAmount -= TimerRecover * 0.01f;
+			getCal = timerFight.value - ( TimerLastRecover * 0.01f ) / malus;
 
 			if ( getCal < 0 )
 			{
-				timerFight.color = Color.white;
-				timerFight.fillAmount -= getCal;
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.white, 0.1f );
+				getCal = -getCal;
 				lastTimer = false;
+				secureTimer = false;
 			}
+		}
+
+		timerFight.DOKill ( );
+		timerFight.DOValue ( getCal, 0.2f );
+	}
+
+	IEnumerator camColor ( bool enable )
+	{
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+		float currTime = 0;
+		float inMad;
+		float targetTime;
+		float getDelT = Time.deltaTime;
+
+		Vector3 getValue;
+
+		if ( enable )
+		{
+			getValue = saveCamMad;
+			camMad.enabled = true;
+			inMad = 0.5f;
+			targetTime = 2;
+		}
+		else
+		{
+			getValue = -saveCamMad;
+			inMad = 1;
+			targetTime = 1;
+		}
+
+		do
+		{
+			camMad._Y += getValue.x * getDelT * inMad;
+			camMad._U += getValue.y * getDelT * inMad;
+			camMad._V += getValue.z * getDelT * inMad;
+			currTime += getDelT;
+
+			yield return thisF;
+
+		} while ( currTime < targetTime );
+
+		if ( !enable )
+		{
+			camMad.enabled = false;
+			camMad._Y = 0; camMad._U = 0; camMad._V = 0;
+		}
+		else
+		{
+			camMad._Y = getValue.x;
+			camMad._U = getValue.y;
+			camMad._V = getValue.z;
 		}
 	}
 	#endregion
@@ -540,7 +663,7 @@ public class PlayerController : MonoBehaviour
 	#region Private Functions
 	void playerAction ( float getTime )
 	{
-		if ( playerDead || StopPlayer || InBeginMadness )
+		if ( playerDead || StopPlayer )
 		{
 			return;
 		}
@@ -548,14 +671,14 @@ public class PlayerController : MonoBehaviour
 		TimerCheck ( getTime );
 		distCal ( );
 
-		if( BarMadness.value == 0 && InMadness )
-		{
+		//if( BarMadness.value == 0 && InMadness )
+		//{
             /*playAnimator.SetBool("InMadness", false);
 
 			//stopMadness ( );
             InMadness = false;*/
-            stopMadnessLeft();
-		}
+          //  stopMadnessLeft();
+		//}
 
 		if ( Running )
 		{
@@ -653,22 +776,50 @@ public class PlayerController : MonoBehaviour
 
 	void TimerCheck ( float getTime )
 	{
-		if ( !lastTimer )
+		if ( secureTimer )
 		{
-			timerFight.fillAmount -= getTime / DelayTimerFight;
-
-			if ( timerFight.fillAmount == 0 )
+			if ( InMadness )
 			{
+				timerFight.value += getTime / DelayTimerOnMadness;
+			}
+			else
+			{
+				timerFight.value += getTime / DelaySecureTimer;
+			}
+
+			if ( timerFight.value == 1 )
+			{
+				secureTimer = false;
+				lastTimer = false;
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.white, 0.1f );
+
+				if ( InMadness )
+				{
+					timerFight.DOValue ( 0.5f, 0.1f );
+					stopMadness ( );
+				}
+			}
+		}
+		else if ( !lastTimer )
+		{
+			timerFight.value -= getTime / DelayTimerFight;
+
+			if ( timerFight.value == 0 )
+			{
+				secureTimer = false;
 				lastTimer = true;
-				timerFight.color = Color.red;
+				backTF.DOKill ( );
+				backTF.DOColor ( Color.red, 0.1f );
 			}
 		}
 		else
 		{
-			timerFight.fillAmount += getTime / DelayLastTimer;
+			timerFight.value += getTime / DelayLastTimer;
 
-			if ( timerFight.fillAmount == 1 )
+			if ( timerFight.value == 1 )
 			{
+				secureTimer = false;
 				lastTimer = false;
 				GameOver ( true );
 			}
@@ -1398,7 +1549,7 @@ public class PlayerController : MonoBehaviour
 
 	private IEnumerator StartPunch(int type_technic/*, float getTDp = 0*/ )
 	{
-		yield return new WaitForSeconds(DelayPrepare / rationUse);
+		yield return new WaitForSeconds ( DelayPrepare );
 		 
 		if ( type_technic == 1 )
 		{
@@ -1619,10 +1770,12 @@ public class PlayerController : MonoBehaviour
 		accelerationCL = AccelerationCL;
 		acceleration = Acceleration;
 
+		StartCoroutine ( camColor ( false ) );
+
 		GlobalManager.Ui.CloseMadness();
 	}
 
-    void stopMadnessLeft()
+   /* void stopMadnessLeft()
     {
         //Debug.Log("val = " + delayInEndMadness);
         InMadness = false;
@@ -1651,11 +1804,11 @@ public class PlayerController : MonoBehaviour
             Acceleration,
             delayInEndMadness
         );
-    }
+    }*/
 
     private void SmoothBar()
     {
-        float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
+        /*float res = valueSmoothUse * (Time.deltaTime * SmoothSpeed);
         if(BarMadness.value + res <= 0)
         {
             BarMadness.value = 0;
@@ -1695,7 +1848,7 @@ public class PlayerController : MonoBehaviour
         {
             BarMadness.value += res;
             valueSmoothUse -= res;
-        }
+        }*/
     }
 	#endregion
 }
