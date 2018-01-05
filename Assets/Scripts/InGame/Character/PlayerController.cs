@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
 	{
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
-		backTF = timerFight.transform.Find ( "Background" ).GetComponent<Image> ( );
+		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
 		pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
@@ -796,8 +796,11 @@ public class PlayerController : MonoBehaviour
 				lastTimer = false;
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.white, 0.1f );
-
-				if ( InMadness )
+                timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.white, 0.1f);
+                timerFight.GetComponents<RainbowScale>()[0].enabled = false;
+                timerFight.transform.DOScale(1, .5f).SetEase(Ease.InSine);
+                
+                if ( InMadness )
 				{
 					timerFight.DOValue ( 0.5f, 0.1f );
 					stopMadness ( );
@@ -814,7 +817,10 @@ public class PlayerController : MonoBehaviour
 				lastTimer = true;
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.red, 0.1f );
-			}
+                timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.red, 0.1f);
+                //Debug.Log("Red");
+                timerFight.GetComponents<RainbowScale>()[0].enabled = true;
+            }
 		}
 		else
 		{

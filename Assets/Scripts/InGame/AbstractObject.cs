@@ -141,9 +141,7 @@ public class AbstractObject : MonoBehaviour
         //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
-        int randomSong = UnityEngine.Random.Range(0, 8);
-
-		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
+        
 
        // Debug.Log("BoneBreak");
 
@@ -152,13 +150,17 @@ public class AbstractObject : MonoBehaviour
         if ( enemy )
 		{
 			onEnemyDead ( getTrans.forward * onObjForward );
-		}
+            int randomSong = UnityEngine.Random.Range(0, 8);
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1), false);
+        }
 		else
 		{
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
+
 		}
 	}
 

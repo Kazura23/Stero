@@ -25,7 +25,10 @@ public class canBeDest : MonoBehaviour
 			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc, 20 ) );
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
-		}
+
+
+            VibrationManager.Singleton.ObsVibration();
+        }
 	}
 
     private void OnTriggerEnter ( Collider other )
