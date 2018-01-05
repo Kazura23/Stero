@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
     Player inputPlayer;
 	Slider timerFight;
 	Image backTF;
+    Image handleTF;
 
 	float checkDistY = -100;
 	float maxSpeedCL = 0;
@@ -311,7 +312,8 @@ public class PlayerController : MonoBehaviour
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
 		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
-		pTrans = transform;
+        handleTF = timerFight.transform.GetChild(2).transform.GetChild(0).GetComponent<Image> ( );
+        pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
 		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
@@ -351,7 +353,8 @@ public class PlayerController : MonoBehaviour
 	public void ResetPlayer ( )
 	{
 		SliderSlow.value = SliderSlow.maxValue;
-		currentDir = Direction.North;
+        newStat(StatePlayer.Normal);
+        currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
 		backTF.color = Color.white;
 		lastTimer = false;
@@ -593,8 +596,6 @@ public class PlayerController : MonoBehaviour
 			{
 				newStat ( StatePlayer.Madness );
 
-				backTF.DOKill ( );
-				backTF.DOColor ( Color.green, 0.1f );
 				secureTimer = true;
 			}
 		}
@@ -605,9 +606,7 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.25f )
 			{
 				newStat ( StatePlayer.Normal );
-
-				backTF.DOKill ( );
-				backTF.DOColor ( Color.white, 0.1f );
+                
 				//getCal = -getCal;
 				lastTimer = false;
 				secureTimer = false;
@@ -786,14 +785,53 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( currStat == StatePlayer.Danger )
 		{
-		}
+
+            timerFight.GetComponents<RainbowScale>()[0].enabled = true;
+            timerFight.GetComponents<RainbowScale>()[1].enabled = false;
+            
+
+            backTF.GetComponents<RainbowColor>()[1].enabled = false;
+            backTF.DOKill(true);
+            backTF.GetComponents<RainbowColor>()[0].enabled = true;
+
+            handleTF.GetComponents<RainbowColor>()[1].enabled = false;
+            handleTF.DOKill(true);
+            handleTF.GetComponents<RainbowColor>()[0].enabled = true;
+            //timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.white, 0.1f);
+
+        }
 		else if ( currStat == StatePlayer.Madness )
 		{
-		}
+            timerFight.GetComponents<RainbowScale>()[0].enabled = false;
+            timerFight.GetComponents<RainbowScale>()[1].enabled = true;
+
+            backTF.GetComponents<RainbowColor>()[0].enabled = false;
+            backTF.DOKill(true);
+            backTF.GetComponents<RainbowColor>()[1].enabled = true;
+
+            handleTF.GetComponents<RainbowColor>()[0].enabled = false;
+            handleTF.DOKill(true);
+            handleTF.GetComponents<RainbowColor>()[1].enabled = true;
+
+        }
 		else // normal
 		{
-			
-		}
+            timerFight.GetComponents<RainbowScale>()[0].enabled = false;
+            timerFight.GetComponents<RainbowScale>()[1].enabled = false;
+            timerFight.transform.DOKill();
+            timerFight.transform.DOScale(1, 0f).SetEase(Ease.InSine);
+
+            backTF.GetComponents<RainbowColor>()[0].enabled = false;
+            backTF.GetComponents<RainbowColor>()[1].enabled = false;
+            backTF.DOKill();
+            backTF.DOColor(Color.white, 0);
+
+            handleTF.GetComponents<RainbowColor>()[0].enabled = false;
+            handleTF.GetComponents<RainbowColor>()[1].enabled = false;
+            handleTF.DOKill();
+            handleTF.DOColor(new Color32(0x4B,0xA0,0xCC,0xFF), 0);
+            //backTF.DOColor(Color., 0.1f);
+        }
 	}
 
 	void TimerCheck ( float getTime )
@@ -813,11 +851,8 @@ public class PlayerController : MonoBehaviour
 			{
 				secureTimer = false;
 				lastTimer = false;
-				backTF.DOKill ( );
-				backTF.DOColor ( Color.white, 0.1f );
-                timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.white, 0.1f);
-                timerFight.GetComponents<RainbowScale>()[0].enabled = false;
-                timerFight.transform.DOScale(1, .5f).SetEase(Ease.InSine);
+
+                
                 
 				newStat ( StatePlayer.Normal );
 
@@ -838,11 +873,7 @@ public class PlayerController : MonoBehaviour
 
 				secureTimer = false;
 				lastTimer = true;
-				backTF.DOKill ( );
-				backTF.DOColor ( Color.red, 0.1f );
-                timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.red, 0.1f);
-                //Debug.Log("Red");
-                timerFight.GetComponents<RainbowScale>()[0].enabled = true;
+
             }
 		}
 		else
@@ -876,6 +907,7 @@ public class PlayerController : MonoBehaviour
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
+                //Debug.Log(maxSpeed);
 			}
 			else
 			{
