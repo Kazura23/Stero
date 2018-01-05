@@ -420,11 +420,13 @@ public class MenuShop : UiParent
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 				if ( currCatSeled.BuyForLife )
 				{
-                    ShopUnlock();
                     getThis = currItemSeled;
                     //Debug.Log(getThis.GetComponentsInChildren<Text>()[0].text);
                     itemName = getThis.GetComponentsInChildren<Text>()[0].text;
                     itemSprite = getThis.GetComponentsInChildren<Image>()[4].sprite;
+
+					ShopUnlock();
+
                     Debug.Log(getThis.GetComponentsInChildren<Image>()[3].sprite);
 
                     if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
