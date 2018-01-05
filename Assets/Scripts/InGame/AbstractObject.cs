@@ -160,8 +160,9 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
+            GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 
-		}
+        }
 	}
 
 	protected virtual void CollDetect (  )
