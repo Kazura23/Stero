@@ -6,6 +6,7 @@ using DG.Tweening;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
+using Rewired;
 
 public class GameController : ManagerParent
 {
@@ -41,6 +42,7 @@ public class GameController : ManagerParent
 	public GameObject musicObject;
 	[HideInInspector]
 	public Camera thisCam;
+	Player inputPlayer;
 
 	GameObject lastWall;
 	bool restartGame = false;
@@ -48,17 +50,34 @@ public class GameController : ManagerParent
 
 	bool GameStarted = false;
 	bool onHub = true;
+	bool coupSimpl = true;
+	bool horiz = true;
 	#endregion
 
 	#region Mono
+	void Start ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+	}
+
 	void Update ( )
 	{
+		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+		{
+			coupSimpl = true;
+		}
+
+		if ( inputPlayer.GetAxis ( "Horizontal" ) == 0 )
+		{
+			horiz = true;
+		}
+
 		if (Input.GetKeyDown(KeyCode.P))
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
-	        if (!checkStart && isStay && !isReady)
-	        {
+        if (!checkStart && isStay && !isReady)
+        {
 			switch (chooseOption)
 			{
 
@@ -88,8 +107,9 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
 
-				if (Input.GetKeyDown(KeyCode.W) && !restartGame)
+				if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame)
 				{
+					coupSimpl = false;
 					SetAllBonus ( );
 
 					isStay = false;
@@ -102,14 +122,17 @@ public class GameController : ManagerParent
 				//Debug.Log("Shop");
 
 
-				textIntroObject.transform.DOLocalMove(textIntroTransform[3].localPosition, 0);
-				textIntroObject.transform.DOLocalRotate(textIntroTransform[3].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[3];
+				textIntroObject.transform.DOLocalMove ( textIntroTransform [ 3 ].localPosition, 0 );
+				textIntroObject.transform.DOLocalRotate ( textIntroTransform [ 3 ].localEulerAngles, 0 );
+				textIntroObject.GetComponent<TextMesh> ( ).text = textIntroText [ 3 ];
 
-				ActiveTextIntro();
-
-				if (Input.GetKeyDown(KeyCode.W) && GlobalManager.GameCont.canOpenShop)
+				ActiveTextIntro ( );
+				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl && GlobalManager.GameCont.canOpenShop )
+				{
+					coupSimpl = false;
 					GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
+				}
+					
 				break;
 
 			case 4:  // Quitter
@@ -121,19 +144,22 @@ public class GameController : ManagerParent
 				break;
 			}
 	           
-			if (!checkStart && Input.GetKeyDown(KeyCode.LeftArrow))
+			if (!checkStart && inputPlayer.GetAxis("Horizontal") == -1 && horiz)
 			{
+				horiz = false;
 				ActiveTextIntro();
 				ChooseRotate(false);
 			}
-			else if (!checkStart && Input.GetKeyDown(KeyCode.RightArrow))
+			else if (!checkStart && inputPlayer.GetAxis("Horizontal") == 1 && horiz)
 			{
+				horiz = false;
 				ActiveTextIntro();
 				ChooseRotate(true);
 			}
 		}
-		else if (isReady && Input.GetKeyDown(KeyCode.W) && !restartGame && isStay )
+		else if (isReady && inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame && isStay )
 	        {
+			coupSimpl = false;
 	            Player.GetComponent<PlayerController>().GetPunchIntro();
 
 	            Debug.Log("PunchIntro");

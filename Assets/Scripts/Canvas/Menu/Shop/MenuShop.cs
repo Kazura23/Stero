@@ -5,6 +5,7 @@ using DG.Tweening;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class MenuShop : UiParent 
 {
@@ -50,6 +51,7 @@ public class MenuShop : UiParent
 	Transform saveParentBo;
 	Text moneyNumberPlayer;
     Sprite itemSprite;
+	Player inputPlayer;
 
     Tween shopTw1, shopTw2;
 
@@ -59,18 +61,29 @@ public class MenuShop : UiParent
 	bool waitImpCan = false;
 	bool waitImpSub = false;
     bool transition = false;
+	bool coupSimpl = false;
 	#endregion
 
 	#region Mono
+	void Start ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+	}
+
 	void Update ( )
 	{
-		float getH = Input.GetAxis ( "Horizontal" );
-		float getV = Input.GetAxis ( "Vertical" );
+		float getH = inputPlayer.GetAxis ( "Horizontal" );
+		float getV = inputPlayer.GetAxis ( "Vertical" );
 
+		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+		{
+			coupSimpl = true;
+		}
+			
         if (CanInput)
         {
             // Touche pour pouvoir selectionner les items
-            if (Input.GetAxis("Submit") == 1 && !waitImpSub && !transition)
+			if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !waitImpSub && !transition)
             {
                 transition = true;
                 waitImpSub = true;
@@ -84,13 +97,13 @@ public class MenuShop : UiParent
                     ChangeToItem(true);
                 }
             }
-            else if (Input.GetAxis("Submit") == 0)
+			else if (inputPlayer.GetAxis("CoupSimple") == 0)
             {
                 waitImpSub = false;
             }
 
             // Touche pour sortir des items
-            if (Input.GetAxis("Cancel") == 1 && !waitImpCan && !transition)
+			if (inputPlayer.GetAxis("CoupDouble") == 1 && !waitImpCan && !transition)
             {
                 waitImpCan = true;
                 transition = true;
@@ -105,7 +118,7 @@ public class MenuShop : UiParent
                     GlobalManager.Ui.CloseThisMenu();
                 }
             }
-            else if (Input.GetAxis("Cancel") == 0)
+			else if (inputPlayer.GetAxis("CoupDouble") == 0)
             {
                 waitImpCan = false;
             }
@@ -137,7 +150,7 @@ public class MenuShop : UiParent
 				waitInputH = false;
 			}
 		}
-		else if ( Input.GetAxis ( "Horizontal" ) == 0 )
+		else if ( inputPlayer.GetAxis ( "Horizontal" ) == 0 )
 		{
 			waitInputH = false;
 		}
@@ -148,7 +161,7 @@ public class MenuShop : UiParent
 				waitInputV = true;
 				NextItem ( ( int ) getH * 2 );
 		}
-		else if ( Input.GetAxis ( "Vertical" ) == 0 )
+		else if ( inputPlayer.GetAxis ( "Vertical" ) == 0 )
 		{
 			waitInputV = false;
 		}
@@ -420,11 +433,13 @@ public class MenuShop : UiParent
                 //moneyNumberPlayer.transform.DOScale(3, .25f);
 				if ( currCatSeled.BuyForLife )
 				{
-                    ShopUnlock();
                     getThis = currItemSeled;
                     //Debug.Log(getThis.GetComponentsInChildren<Text>()[0].text);
                     itemName = getThis.GetComponentsInChildren<Text>()[0].text;
                     itemSprite = getThis.GetComponentsInChildren<Image>()[4].sprite;
+
+					ShopUnlock();
+
                     Debug.Log(getThis.GetComponentsInChildren<Image>()[3].sprite);
 
                     if ( getAllBuy.TryGetValue ( getCons, out getThis ) )

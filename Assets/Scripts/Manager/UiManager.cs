@@ -414,19 +414,22 @@ public class UiManager : ManagerParent
 
     public void HeartShop(int number)
     {
-        ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
+		Image getImage = ExtraHearts [ number ];
+		Transform getImgTrans = getImage.transform;
+
+		getImgTrans.DOLocalMove(new Vector2(930, -510), .05f);
         DOVirtual.DelayedCall(.1f, () => {
-            ExtraHearts[number].DOFade(1f, .1f);
-            ExtraHearts[number].GetComponent<RainbowScale>().enabled = false;
-            ExtraHearts[number].transform.DOScale(4, 0f);
-            ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
-                ExtraHearts[number].transform.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
-                ExtraHearts[number].DOFade(0, .05f);
+			getImage.DOFade(1f, .1f);
+			getImage.GetComponent<RainbowScale>().enabled = false;
+			getImgTrans.DOScale(4, 0f);
+			getImgTrans.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+				getImgTrans.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
+				getImage.DOFade(0, .05f);
                 DOVirtual.DelayedCall(.15f, () =>
                 {
-                    ExtraHearts[number].DOFade(1, .1f);
-                    ExtraHearts[number].transform.DOScale(1, 0f);
-                    ExtraHearts[number].GetComponent<RainbowScale>().enabled = true;
+					getImage.DOFade(1, .1f);
+					getImgTrans.DOScale(1, 0f);
+					getImage.GetComponent<RainbowScale>().enabled = true;
                 });
             });
         });
