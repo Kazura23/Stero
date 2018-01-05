@@ -211,7 +211,9 @@ public class UiManager : ManagerParent
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0.0f;
+        VibrationManager.Singleton.CoupSimpleVibration();
+
+        Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.05f, () => {
 			Time.timeScale = 1;
@@ -231,6 +233,8 @@ public class UiManager : ManagerParent
         //Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
+        VibrationManager.Singleton.CoupSimpleVibration();
+
         DOVirtual.DelayedCall(.4f, () => {
             Time.timeScale = 1;
             //Time.fixedDeltaTime = .02F;
@@ -247,11 +251,11 @@ public class UiManager : ManagerParent
     public void GameOver()
     {
         //Debug.Log("ShakeOver");
-
+        VibrationManager.Singleton.GameOverVibration();
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
         //DOVirtual.DelayedCall(.4f, () => {
-            Time.timeScale = 1;
+        Time.timeScale = 1;
             Time.fixedDeltaTime = .02F;
             ScreenShake.Singleton.ShakeGameOver();
         //});
@@ -265,6 +269,8 @@ public class UiManager : ManagerParent
 
     public void OpenMadness()
     {
+        VibrationManager.Singleton.FleshBallVibration();
+
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
         thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
