@@ -29,6 +29,14 @@ public enum UnLockMethode
 	Empty
 }
 
+public enum StatePlayer
+{
+	Normal,
+	Madness,
+	Danger
+}
+
+
 public enum SpecialAction
 {
 	Nothing,
