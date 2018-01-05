@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 65667835784126926}
   - component: {fileID: 114799397982213360}
   - component: {fileID: 54285490070942000}
+  - component: {fileID: 114877208965671628}
   m_Layer: 0
   m_Name: O_S_ChairAlone
   m_TagString: ObsPropSafe
@@ -171,3 +172,24 @@ MonoBehaviour:
   ForcePropulse: 50
   DelayDestruc: 1
   nbPunchDestroy: 5
+  DeadByPlayer: 1
+--- !u!114 &114877208965671628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1099708887686824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  MalusDivTimer: 0
+  useGravity: 1
