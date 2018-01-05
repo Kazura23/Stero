@@ -343,7 +343,7 @@ public class PlayerController : MonoBehaviour
 		startPlayer = pTrans.localPosition;
 		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
-		//inputPlayer = ReInput.players.GetPlayer(0);
+		inputPlayer = ReInput.players.GetPlayer(0);
 
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
@@ -713,12 +713,12 @@ public class PlayerController : MonoBehaviour
 		}
 
 	
-		if ( Input.GetAxis ( "CoupSimple" ) == 0 )
+		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			resetAxeS = true;
 		}
 
-		if ( Input.GetAxis ( "CoupDouble" ) == 0 )
+		if ( inputPlayer.GetAxis ( "CoupDouble" ) == 0 )
 		{
 			resetAxeD = true;
 			getFOVDP = FOVIncrease;
@@ -742,7 +742,7 @@ public class PlayerController : MonoBehaviour
 
 		playerFight ( getTime );
 
-		if ( Input.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
+		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
 			int rdmValue = UnityEngine.Random.Range(0, 3);
 			GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
@@ -751,7 +751,7 @@ public class PlayerController : MonoBehaviour
 			canUseDash = false;
 			GlobalManager.Ui.DashSpeedEffect ( true );
 		}
-		else if ( Input.GetAxis ( "Dash" ) == 0 )
+		else if ( inputPlayer.GetAxis ( "Dash" ) == 0 )
 		{
 			canUseDash = true;
 			Dash = false;
@@ -766,7 +766,7 @@ public class PlayerController : MonoBehaviour
             speAction(getTime);
         break;
         case 1:
-            if (Input.GetAxis("SpecialAction") > 0) {
+			if (inputPlayer.GetAxis("SpecialAction") > 0) {
                 sphereChocWave.enabled = true;
                 StartCoroutine(CooldownWave());
                 StartCoroutine(TimerHitbox());
@@ -869,7 +869,7 @@ public class PlayerController : MonoBehaviour
 
 	void speAction ( float getTime )
 	{
-		if ( Input.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
+		if ( inputPlayer.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
 		{
 			SliderSlow.value += getTime;
 
@@ -1049,7 +1049,6 @@ public class PlayerController : MonoBehaviour
 	{
 		RaycastHit[] allHit;
 		bool checkAir = true;
-		bool checkAngle = true;
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 
@@ -1319,7 +1318,7 @@ public class PlayerController : MonoBehaviour
 
 	void changeLine ( float delTime )
 	{
-		float newImp = Input.GetAxis ( "Horizontal" );
+		float newImp = inputPlayer.GetAxis ( "Horizontal" );
 		float lineDistance = Constants.LineDist;
 
 		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine )
@@ -1422,7 +1421,7 @@ public class PlayerController : MonoBehaviour
 
 	void playerFight ( float getDelta )
 	{
-		if ( Input.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
+		if ( inputPlayer.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
 		{
 			Dash = false;
 			float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
@@ -1476,7 +1475,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if(Input.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
+		if(inputPlayer.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
         {
 			Dash = false;
             thisCam.fieldOfView = Constants.DefFov;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Rewired;
 
 public class GameOver : UiParent 
 {
@@ -19,9 +20,15 @@ public class GameOver : UiParent
 	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
 	float TimeFade = 0;
 	bool canUpdate = false;
+	Player inputPlayer;
 	#endregion
 
 	#region Mono
+	void Start ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+	}
+
 	void Update ( )
 	{
 		if ( !canUpdate )
@@ -29,13 +36,13 @@ public class GameOver : UiParent
 			return;
 		}
 
-		if ( Input.GetAxis("CoupSimple") != 0 )
+		if ( inputPlayer.GetAxis("CoupSimple") != 0 )
         {
             AllPlayerPrefs.relance = true;
             GlobalManager.GameCont.Restart();
 
 		}
-		else if (Input.GetKeyDown(KeyCode.Escape))
+		else if (inputPlayer.GetAxis("CoupDouble") == 1 || Input.GetKeyDown(KeyCode.Escape) )
         {
             AllPlayerPrefs.relance = false;
             
