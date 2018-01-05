@@ -591,6 +591,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( getCal > 0.75f )
 			{
+				newStat ( StatePlayer.Madness );
+
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.green, 0.1f );
 				secureTimer = true;
@@ -602,6 +604,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( getCal > 0.25f )
 			{
+				newStat ( StatePlayer.Normal );
+
 				backTF.DOKill ( );
 				backTF.DOColor ( Color.white, 0.1f );
 				//getCal = -getCal;
@@ -777,6 +781,21 @@ public class PlayerController : MonoBehaviour
 		playerMove ( getTime, currSpeed );
 	}
 
+
+	void newStat ( StatePlayer currStat )
+	{
+		if ( currStat == StatePlayer.Danger )
+		{
+		}
+		else if ( currStat == StatePlayer.Madness )
+		{
+		}
+		else // normal
+		{
+			
+		}
+	}
+
 	void TimerCheck ( float getTime )
 	{
 		if ( secureTimer )
@@ -800,6 +819,8 @@ public class PlayerController : MonoBehaviour
                 timerFight.GetComponents<RainbowScale>()[0].enabled = false;
                 timerFight.transform.DOScale(1, .5f).SetEase(Ease.InSine);
                 
+				newStat ( StatePlayer.Normal );
+
                 if ( InMadness )
 				{
 					timerFight.DOValue ( 0.5f, 0.1f );
@@ -813,6 +834,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( timerFight.value < 0.25f )
 			{
+				newStat ( StatePlayer.Danger );
+
 				secureTimer = false;
 				lastTimer = true;
 				backTF.DOKill ( );
