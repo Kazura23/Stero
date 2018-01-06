@@ -313,11 +313,19 @@ public class PlayerController : MonoBehaviour
 
 	public void IniPlayer ( )
 	{
+		pTrans = transform;
+
+		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
+		getObj.transform.localPosition = Vector3.zero;
+		getObj.name = "pivot";
+		thisCam = GlobalManager.GameCont.thisCam;
+		thisCam.transform.SetParent ( getObj.transform );
+		pivotTrans = getObj.transform;
+
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
 		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
         handleTF = timerFight.transform.GetChild(2).transform.GetChild(0).GetComponent<Image> ( );
-        pTrans = transform;
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
 		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
@@ -325,8 +333,7 @@ public class PlayerController : MonoBehaviour
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
-		thisCam = GlobalManager.GameCont.thisCam;
-		pivotTrans = thisCam.transform.parent;
+
 		getPunch = GetComponentInChildren<Punch> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
