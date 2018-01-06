@@ -591,7 +591,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			getCal = ( ( TimerRecover * 0.01f ) / malus ) * 0.75f + timerFight.value;
+			getCal = ( ( TimerRecover * 0.01f ) / malus ) * 0.5f + timerFight.value;
 
 			if ( getCal > 0.75f )
 			{
@@ -852,8 +852,6 @@ public class PlayerController : MonoBehaviour
 			{
 				secureTimer = false;
 				lastTimer = false;
-
-                
                 
 				newStat ( StatePlayer.Normal );
 
@@ -866,7 +864,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			timerFight.value -= ( getTime / DelayTimerFight ) * 0.75f;
+			timerFight.value -= ( getTime / DelayTimerFight ) * 0.5f;
 
 			if ( timerFight.value < 0.25f )
 			{
