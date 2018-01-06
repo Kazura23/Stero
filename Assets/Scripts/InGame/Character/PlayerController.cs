@@ -147,6 +147,8 @@ public class PlayerController : MonoBehaviour
 	Direction newDir = Direction.North;
 	Vector3 dirLine = Vector3.zero;
 	Vector3 lastPos;
+	Vector3 currVect;
+
 	//Vector3 posDir;
 	Text textDist;
 	//Text textCoin;
@@ -156,6 +158,7 @@ public class PlayerController : MonoBehaviour
 	Animator playAnimator;
 
 	Camera thisCam;
+	Transform pivotTrans;
 	Punch getPunch;
     CameraFilterPack_Color_YUV camMad;
     Vector3 saveCamMad;
@@ -221,6 +224,7 @@ public class PlayerController : MonoBehaviour
     bool onAnimeAir = false;
 	bool lastTimer = false;
 	bool secureTimer = false;
+	bool useFord = true;
     #endregion
 
     #region Mono
@@ -322,6 +326,7 @@ public class PlayerController : MonoBehaviour
 		canPunch = true; 
 		punchRight = true;
 		thisCam = GlobalManager.GameCont.thisCam;
+		pivotTrans = thisCam.transform.parent;
 		getPunch = GetComponentInChildren<Punch> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		SliderContent = 10;
@@ -397,6 +402,8 @@ public class PlayerController : MonoBehaviour
 		pTrans.localPosition = startPlayer;
 		lastPos = startPlayer;
 		stopMadness ( );
+
+		currVect = Vector3.forward;
 
        // BarMadness.value = 0;
 	}
@@ -1125,13 +1132,17 @@ public class PlayerController : MonoBehaviour
 			{
 				continue;
 			}
+
 			checkAir = false;
 
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
+				pTrans.rotation = getThis.rotation;
+				pivotTrans.localRotation = Quaternion.Inverse ( pTrans.localRotation );
+				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
 
-				float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation ) / 4;
+				/*float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation );
 
 				//Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
 				if ( getThis.rotation.x > 0 || getThis.rotation.x <= 0 && getThis.rotation.y < 0 && getThis.rotation.z > 0 )
@@ -1139,9 +1150,10 @@ public class PlayerController : MonoBehaviour
 					angle = -angle;
 				}
 
+
 				if ( angle < 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
+					//pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
 					pRig.useGravity = true;
 					pRig.constraints = thisConst;
 
@@ -1152,13 +1164,22 @@ public class PlayerController : MonoBehaviour
 
 					thisEnum = waitConstraint ( );
 					StartCoroutine ( thisEnum );
+					break;
 				}
 				else if ( angle > 0 )
 				{
-					pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
+					//pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
 					pRig.constraints = RigidbodyConstraints.FreezeAll;
 					pRig.useGravity = false;
-				}
+					break;
+				}*/
+			}
+			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
+			{
+				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
+				pTrans.localRotation = Quaternion.identity;
+				pivotTrans.localRotation = Quaternion.identity;
+				pRig.constraints = RigidbodyConstraints.FreezeAll;
 			}
 		}
 
@@ -1226,7 +1247,6 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds ( 2 );
 
 		thisEnum = null;
-
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
@@ -1331,29 +1351,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		switch ( currentDir )
-		{
-		case Direction.North: 
-			calTrans = Vector3.forward * speed * delTime;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), RotationSpeed * delTime );
-			yRot = 0;
-			break;
-		case Direction.South: 
-			calTrans = Vector3.back * speed * delTime;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), RotationSpeed * delTime );
-			yRot = 180;
-			break;
-		case Direction.East: 
-			calTrans = Vector3.right * speed * delTime;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), RotationSpeed * delTime );
-			yRot = 90;
-			break;
-		case Direction.West: 
-			calTrans = Vector3.left * speed * delTime;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), RotationSpeed * delTime );
-			yRot = -90;
-			break;
-		}
+
 
 		if ( newPos )
 		{
@@ -1364,7 +1362,18 @@ public class PlayerController : MonoBehaviour
 				newPos = false;
 				currentDir = newDir;
 				pTrans.Translate ( pTrans.forward * befRot, Space.World );
+				useFord = false;
+				StartCoroutine ( rotPlayer ( delTime ) );
 			}
+		}
+	
+		if ( useFord )
+		{
+			calTrans = pTrans.forward * speed * delTime;
+		}
+		else
+		{
+			calTrans = currVect * speed * delTime;
 		}
 
 		pTrans.Translate ( calTrans, Space.World );
@@ -1374,6 +1383,43 @@ public class PlayerController : MonoBehaviour
 			canJump = false;
 			pRig.AddForce ( transPlayer.up * JumpForce, ForceMode.Impulse );
 		}*/
+	}
+
+	IEnumerator rotPlayer ( float delTime )
+	{
+		Transform transPlayer = pTrans;
+		float calcTime = RotationSpeed * delTime;
+
+		switch ( currentDir )
+		{
+		case Direction.North: 
+			currVect = Vector3.forward;
+			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), calcTime );
+			yRot = 0;
+			break;
+		case Direction.South: 
+			currVect = Vector3.back;
+			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), calcTime );
+			yRot = 180;
+			break;
+		case Direction.East: 
+			currVect = Vector3.right;
+			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), calcTime );
+			yRot = 90;
+			break;
+		case Direction.West: 
+			currVect = Vector3.left;
+			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), calcTime );
+			yRot = -90;
+			break;
+		}
+
+		yield return new WaitForSeconds ( calcTime );
+
+		yield return new WaitForEndOfFrame ( );
+
+		useFord = true;
+		currVect = pTrans.forward;
 	}
 
 	void changeLine ( float delTime )
