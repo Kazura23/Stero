@@ -352,8 +352,9 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
-        newStat(StatePlayer.Normal);
+		newStat ( StatePlayer.Normal );
         currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
 		backTF.color = Color.white;
@@ -387,14 +388,14 @@ public class PlayerController : MonoBehaviour
 		InMadness = false;
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
 		playAnimator.Play ( "Start" );
-
+		totalDis = 0;
 		thisCam.GetComponent<RainbowMove> ( ).reStart ( );
 		thisCam.GetComponent<RainbowRotate> ( ).reStart ( );
-
+		currSpeed = 0;
 		thisCam.transform.localRotation = startRotRR;
 		thisCam.transform.localPosition = startPosRM;
 		pTrans.localPosition = startPlayer;
-
+		lastPos = startPlayer;
 		stopMadness ( );
 
        // BarMadness.value = 0;
@@ -903,7 +904,7 @@ public class PlayerController : MonoBehaviour
 		{
 			nextIncrease += DistIncMaxSpeed;
 
-			if ( MaxSpeedInc > maxSpeed - MaxSpeed || InMadness )
+			if ( MaxSpeedInc > ( maxSpeed + SpeedIncrease ) - MaxSpeed )
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
@@ -914,7 +915,7 @@ public class PlayerController : MonoBehaviour
 				maxSpeed = MaxSpeed + MaxSpeedInc;
 			}
 
-			if ( MaxCLInc > maxSpeedCL - MaxSpeedCL || InMadness)
+			if ( MaxCLInc > ( maxSpeedCL + CLSpeedIncrease ) - MaxSpeedCL )
 			{
 				maxSpeedCL += CLSpeedIncrease;
 				accelerationCL += AcceleraCLInc;
