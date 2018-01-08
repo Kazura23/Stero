@@ -334,43 +334,43 @@ public class GameController : ManagerParent
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
         Player.transform.DORotate(new Vector3(0, 90, 0), 2).OnComplete(()=> 
+        {
+            //animation seringue + son
+            Player.transform.DORotate(new Vector3(-65, 0, 0), 2).OnComplete(()=> 
             {
-                //animation seringue + son
-                Player.transform.DORotate(new Vector3(-65, 0, 0), 2).OnComplete(()=> 
+                // activation shader + son
+                /*for(int i = 0; i < textMeshs.childCount; i++) // voir si active la liste des text mesh ou un par un
                 {
-                    // activation shader + son
-                    /*for(int i = 0; i < textMeshs.childCount; i++) // voir si active la liste des text mesh ou un par un
+                    textMeshs.GetChild(i).gameObject.SetActive(true);
+                }*/
+                //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
+                Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
+                {
+                    // Cri de Mr S après avoir pris sa dose
+                    GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+                    // Démarrage de la musique du Hub amplifiée après Stéro
+                    musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+                    musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+                    musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+
+					thisCam.transform.DOLocalMoveY(0.312f, 1).OnComplete(() =>
                     {
-                        textMeshs.GetChild(i).gameObject.SetActive(true);
-                    }*/
-                    //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
-                    Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
-                    {
-                        // Cri de Mr S après avoir pris sa dose
-                        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+                        //Player.GetComponentInChildren<RainbowMove>().enabled = true;
 
 
-                        // Démarrage de la musique du Hub amplifiée après Stéro
-                        musicObject.GetComponent<AudioSource>().volume = 0.0004f;
-                        musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
-                        musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
-
-                        Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
+                        Player.transform.DOMoveZ(3, 1).OnComplete(() =>
                         {
-                            //Player.GetComponentInChildren<RainbowMove>().enabled = true;
-
-
-                            Player.transform.DOMoveZ(3, 1).OnComplete(() =>
-                            {
-                                isReady = true;
-                                isStay = true;
-                                //Player.GetComponent<PlayerController>().StopPlayer = false;
-                                //Debug.Log("anime fonctionnelle");
-                            });
+                            isReady = true;
+                            isStay = true;
+                            //Player.GetComponent<PlayerController>().StopPlayer = false;
+                            //Debug.Log("anime fonctionnelle");
                         });
                     });
                 });
             });
+        });
     }
 
     private IEnumerator TimerRotate()
