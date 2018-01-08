@@ -39,7 +39,6 @@ public class SpawnNewLvl : MonoBehaviour
 	{
 		if (other.gameObject.tag == Constants._PlayerTag && !detect ) 
 		{
-			Debug.Log ( "PLAYER" );
 			detect = true;
 			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 			if (AddToList) 

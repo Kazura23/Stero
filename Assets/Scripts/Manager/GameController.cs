@@ -161,8 +161,6 @@ public class GameController : ManagerParent
 	        {
 			coupSimpl = false;
 	            Player.GetComponent<PlayerController>().GetPunchIntro();
-
-	            Debug.Log("PunchIntro");
 	        }
         
 	}
@@ -303,7 +301,6 @@ public class GameController : ManagerParent
         {
             isReady = false;
             GameStarted = false;
-            Debug.Log(isReady + " " + GameStarted);
         }
 
 		StartGame ( );
@@ -393,7 +390,6 @@ public class GameController : ManagerParent
 
         if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {
-            Debug.Log("Rotate");
             chooseOption++;
             if (chooseOption == moveRotate.Length)
                 chooseOption = 0;
@@ -420,7 +416,6 @@ public class GameController : ManagerParent
 
 		if ( onHub )
 		{
-			Debug.Log ( "OnHub" );
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
@@ -464,8 +459,6 @@ public class GameController : ManagerParent
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-
-            Debug.Log("Fx");
             Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
             GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
             thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);

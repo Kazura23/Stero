@@ -40,7 +40,6 @@ public class CloseRoof : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("hey");
 			StartCoroutine ( CloseWallStart ( ) );
         }
     }
