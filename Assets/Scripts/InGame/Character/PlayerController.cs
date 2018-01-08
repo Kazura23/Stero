@@ -315,13 +315,6 @@ public class PlayerController : MonoBehaviour
 	{
 		pTrans = transform;
 
-		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
-		getObj.transform.localPosition = Vector3.zero;
-		getObj.name = "pivot";
-		thisCam = GlobalManager.GameCont.thisCam;
-		thisCam.transform.SetParent ( getObj.transform );
-		pivotTrans = getObj.transform;
-
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
 		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
@@ -352,13 +345,22 @@ public class PlayerController : MonoBehaviour
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
 		//BarMadness = GlobalManager.Ui.Madness;
 
-		startRotRR = thisCam.transform.localRotation;
-		startPosRM = thisCam.transform.localPosition;
-		startPlayer = pTrans.localPosition;
+	
 		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
 		preparPunch = null;*/
 		inputPlayer = ReInput.players.GetPlayer(0);
 
+		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
+		getObj.transform.localPosition = Vector3.zero;
+		getObj.name = "pivot";
+		getObj.transform.localPosition = Vector3.zero;
+		thisCam = GlobalManager.GameCont.thisCam;
+		thisCam.transform.SetParent ( getObj.transform );
+		pivotTrans = getObj.transform;
+
+		startRotRR = thisCam.transform.localRotation;
+		startPosRM = thisCam.transform.localPosition;
+		startPlayer = pTrans.localPosition;
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
