@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
     Vector3 saveCamMad;
 
 	Quaternion startRotRR;
+	Quaternion startRotPlayer;
 	Vector3 startPosRM;
 	Vector3 startPlayer;
     Player inputPlayer;
@@ -327,6 +328,7 @@ public class PlayerController : MonoBehaviour
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
+		startRotPlayer = pTrans.localRotation;
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
@@ -375,6 +377,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.transform.localRotation = startRotRR;
 		thisCam.transform.localPosition = startPosRM;
 		pTrans.localPosition = startPlayer;
+		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
 		stopMadness ( );
 
