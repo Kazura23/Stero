@@ -423,7 +423,7 @@ public class SpawnChunks : MonoBehaviour
 					isChunkScene = false;
 					for ( b = 0; b < ScChunk.Length; b++ )
 					{
-						if ( ScChunk [ b ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
+						if ( ScChunk[b] !=null && ScChunk [ b ].name == thisSpawn.name && !ScChunk [ b ].activeSelf )
 						{
 							thisSpawn = ScChunk [ b ];
 							thisSpawn.SetActive ( true );
@@ -690,7 +690,7 @@ public class SpawnChunks : MonoBehaviour
 
 				for ( int a = 0; a < ScChunk.Length; a++ )
 				{
-					if ( ScChunk [ a ].name == thisSpawn.name && !ScChunk [ a ].activeSelf )
+					if ( ScChunk [ a ] != null && ScChunk [ a ].name == thisSpawn.name && !ScChunk [ a ].activeSelf )
 					{
 						thisSpawn = ScChunk [ a ];
 						thisSpawn.SetActive ( true );
