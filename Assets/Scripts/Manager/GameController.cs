@@ -161,8 +161,6 @@ public class GameController : ManagerParent
 	        {
 			coupSimpl = false;
 	            Player.GetComponent<PlayerController>().GetPunchIntro();
-
-	            Debug.Log("PunchIntro");
 	        }
         
 	}
@@ -303,7 +301,6 @@ public class GameController : ManagerParent
         {
             isReady = false;
             GameStarted = false;
-            Debug.Log(isReady + " " + GameStarted);
         }
 
 		StartGame ( );
@@ -334,43 +331,43 @@ public class GameController : ManagerParent
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
         Player.transform.DORotate(new Vector3(0, 90, 0), 2).OnComplete(()=> 
+        {
+            //animation seringue + son
+            Player.transform.DORotate(new Vector3(-65, 0, 0), 2).OnComplete(()=> 
             {
-                //animation seringue + son
-                Player.transform.DORotate(new Vector3(-65, 0, 0), 2).OnComplete(()=> 
+                // activation shader + son
+                /*for(int i = 0; i < textMeshs.childCount; i++) // voir si active la liste des text mesh ou un par un
                 {
-                    // activation shader + son
-                    /*for(int i = 0; i < textMeshs.childCount; i++) // voir si active la liste des text mesh ou un par un
+                    textMeshs.GetChild(i).gameObject.SetActive(true);
+                }*/
+                //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
+                Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
+                {
+                    // Cri de Mr S après avoir pris sa dose
+                    GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+                    // Démarrage de la musique du Hub amplifiée après Stéro
+                    musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+                    musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+                    musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+
+					thisCam.transform.DOLocalMoveY(0.312f, 1).OnComplete(() =>
                     {
-                        textMeshs.GetChild(i).gameObject.SetActive(true);
-                    }*/
-                    //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
-                    Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
-                    {
-                        // Cri de Mr S après avoir pris sa dose
-                        GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+                        //Player.GetComponentInChildren<RainbowMove>().enabled = true;
 
 
-                        // Démarrage de la musique du Hub amplifiée après Stéro
-                        musicObject.GetComponent<AudioSource>().volume = 0.0004f;
-                        musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
-                        musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
-
-                        Player.transform.GetChild(3).DOLocalMoveY(0.312f, 1).OnComplete(() =>
+                        Player.transform.DOMoveZ(3, 1).OnComplete(() =>
                         {
-                            //Player.GetComponentInChildren<RainbowMove>().enabled = true;
-
-
-                            Player.transform.DOMoveZ(3, 1).OnComplete(() =>
-                            {
-                                isReady = true;
-                                isStay = true;
-                                //Player.GetComponent<PlayerController>().StopPlayer = false;
-                                //Debug.Log("anime fonctionnelle");
-                            });
+                            isReady = true;
+                            isStay = true;
+                            //Player.GetComponent<PlayerController>().StopPlayer = false;
+                            //Debug.Log("anime fonctionnelle");
                         });
                     });
                 });
             });
+        });
     }
 
     private IEnumerator TimerRotate()
@@ -393,7 +390,6 @@ public class GameController : ManagerParent
 
         if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {
-            Debug.Log("Rotate");
             chooseOption++;
             if (chooseOption == moveRotate.Length)
                 chooseOption = 0;
@@ -420,7 +416,6 @@ public class GameController : ManagerParent
 
 		if ( onHub )
 		{
-			Debug.Log ( "OnHub" );
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
@@ -464,8 +459,6 @@ public class GameController : ManagerParent
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-
-            Debug.Log("Fx");
             Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
             GameObject thisGO = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
             thisGO.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().rightHand.transform);

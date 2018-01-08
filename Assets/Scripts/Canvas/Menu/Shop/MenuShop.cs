@@ -363,8 +363,6 @@ public class MenuShop : UiParent
 		{
 			AllPlayerPrefs.SetStringValue ( getCons + currItemSeled.ItemName, "Confirm" );
 
-            Debug.Log("Confirm?");
-
             if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 			{
 				AllPlayerPrefs.SetStringValue ( getCons + getThis.ItemName, "ok" );
@@ -439,8 +437,11 @@ public class MenuShop : UiParent
                     itemSprite = getThis.GetComponentsInChildren<Image>()[4].sprite;
 
 					ShopUnlock();
+<<<<<<< HEAD
 
                     Debug.Log(getThis.GetComponentsInChildren<Image>()[3].sprite);
+=======
+>>>>>>> Alex
 
                     if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 					{

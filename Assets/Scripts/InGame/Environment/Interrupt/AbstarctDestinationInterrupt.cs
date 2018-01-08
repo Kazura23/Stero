@@ -15,7 +15,6 @@ public abstract class AbstarctDestinationInterrupt : MonoBehaviour {
 	
 	public void ActiveCondition(bool p_active, int p_numCondition)
     {
-        Debug.Log("active");
         condition[p_numCondition] = p_active;
         for(int i = 0; i < condition.Length; i++)
         {

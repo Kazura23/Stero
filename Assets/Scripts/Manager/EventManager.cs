@@ -76,11 +76,6 @@ public class EventManager : ManagerParent
 		        //Loop through callbacks and wrap each in a try/catch to avoid a single error breaking the entire chain
 		        for(int i = 0; i < callbacks.Length; i++)
 		        {
-					if ( callbacks [ i ] == null )
-					{
-						Debug.Log ( "Test" );
-					}
-
 		            try
 		            {
 		                callbacks[i].DynamicInvoke(evnt);

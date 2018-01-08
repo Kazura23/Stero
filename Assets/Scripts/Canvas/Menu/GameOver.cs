@@ -81,7 +81,6 @@ public class GameOver : UiParent
 		GlobalManager.Ui.ExtraHearts [ 0 ].enabled = false; 
 		GlobalManager.Ui.ExtraHearts [ 1 ].enabled = false; 
 
-        Debug.Log("GameOver");
 		GameOverTok thisTok = GetTok as GameOverTok;
         GetComponent<CanvasGroup>().DOFade(0, 0);
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();

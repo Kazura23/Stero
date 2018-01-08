@@ -363,8 +363,6 @@ public class SpawnChunks : MonoBehaviour
 		// Si le dernier chunk activé comporte des chunks spécifique à spawn
 		if ( !transitChunk )
 		{
-			Debug.Log ( CurrRandLvl + " / " + chunkOrder [ currLevel ].ChunkScript.Count );
-				
 			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
 			getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
 		}
