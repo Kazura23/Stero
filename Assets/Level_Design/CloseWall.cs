@@ -36,7 +36,6 @@ public class CloseWall : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("hey");
 			StartCoroutine ( CloseWallStart ( ) );
         }
     }
