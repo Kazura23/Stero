@@ -1145,8 +1145,13 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
-				pTrans.rotation = getThis.rotation;
-				pivotTrans.localRotation = Quaternion.Inverse ( pTrans.localRotation );
+
+				if ( !waitRotate )
+				{
+					pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
+					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 ( pTrans.localRotation.x, 0, 0 ) ) );
+				}
+
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
 
 				/*float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation );
@@ -1184,8 +1189,12 @@ public class PlayerController : MonoBehaviour
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
 			{
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
-				pTrans.localRotation = Quaternion.identity;
-				pivotTrans.localRotation = Quaternion.identity;
+				if ( !waitRotate )
+				{
+					pTrans.DOLocalRotate ( new Vector3 ( 0, pTrans.localRotation.eulerAngles.y, pTrans.localRotation.eulerAngles.z ), 0 );
+					pivotTrans.localRotation = Quaternion.identity;
+				}
+
 				pRig.constraints = RigidbodyConstraints.FreezeAll;
 			}
 		}
@@ -1392,31 +1401,33 @@ public class PlayerController : MonoBehaviour
 		}*/
 	}
 
+	bool waitRotate = false;
 	IEnumerator rotPlayer ( float delTime )
 	{
 		Transform transPlayer = pTrans;
 		float calcTime = RotationSpeed * delTime;
+		waitRotate = true;
 
 		switch ( currentDir )
 		{
 		case Direction.North: 
 			currVect = Vector3.forward;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), calcTime );
+			transPlayer.DOLocalRotate ( new Vector3 ( 0, 0, 0 ), calcTime, RotateMode.Fast );
 			yRot = 0;
 			break;
 		case Direction.South: 
 			currVect = Vector3.back;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), calcTime );
+			transPlayer.DOLocalRotate ( new Vector3 ( 0, 180, 0 ), calcTime, RotateMode.Fast );
 			yRot = 180;
 			break;
 		case Direction.East: 
 			currVect = Vector3.right;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), calcTime );
+			transPlayer.DOLocalRotate ( new Vector3 ( 0, 90, 0 ), calcTime, RotateMode.Fast );
 			yRot = 90;
 			break;
 		case Direction.West: 
 			currVect = Vector3.left;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), calcTime );
+			transPlayer.DOLocalRotate ( new Vector3 ( 0, -90, 0 ), calcTime, RotateMode.Fast );
 			yRot = -90;
 			break;
 		}
@@ -1424,7 +1435,7 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
-
+		waitRotate = false;
 		useFord = true;
 		currVect = pTrans.forward;
 	}
