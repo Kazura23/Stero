@@ -226,10 +226,7 @@ public class PlayerController : MonoBehaviour
 	bool lastTimer = false;
 	bool secureTimer = false;
 	bool useFord = true;
-<<<<<<< HEAD
-=======
 	bool getCamRM = false;
->>>>>>> Alex
     #endregion
 
     #region Mono
@@ -288,16 +285,6 @@ public class PlayerController : MonoBehaviour
 	{
 		pTrans = transform;
 
-<<<<<<< HEAD
-		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
-		getObj.transform.localPosition = Vector3.zero;
-		getObj.name = "pivot";
-		thisCam = GlobalManager.GameCont.thisCam;
-		thisCam.transform.SetParent ( getObj.transform );
-		pivotTrans = getObj.transform;
-
-=======
->>>>>>> Alex
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
 		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
@@ -340,13 +327,6 @@ public class PlayerController : MonoBehaviour
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
-<<<<<<< HEAD
-		/* punchLeft = true; preparRight = false; preparLeft = false; defense = false;
-		preparPunch = null;*/
-		inputPlayer = ReInput.players.GetPlayer(0);
-
-=======
->>>>>>> Alex
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
@@ -399,11 +379,6 @@ public class PlayerController : MonoBehaviour
 		stopMadness ( );
 
 		currVect = Vector3.forward;
-<<<<<<< HEAD
-
-       // BarMadness.value = 0;
-=======
->>>>>>> Alex
 	}
 
     public void GameOver ( bool forceDead = false )
@@ -581,10 +556,6 @@ public class PlayerController : MonoBehaviour
 			{
 				newStat ( StatePlayer.Normal );
                 
-<<<<<<< HEAD
-				//getCal = -getCal;
-=======
->>>>>>> Alex
 				lastTimer = false;
 				secureTimer = false;
 			}
@@ -683,10 +654,6 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-<<<<<<< HEAD
-	
-=======
->>>>>>> Alex
 		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			resetAxeS = true;
@@ -751,25 +718,13 @@ public class PlayerController : MonoBehaviour
 		playerMove ( getTime, currSpeed );
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Alex
 	void newStat ( StatePlayer currStat )
 	{
 		if ( currStat == StatePlayer.Danger )
 		{
-<<<<<<< HEAD
-
             timerFight.GetComponents<RainbowScale>()[0].enabled = true;
             timerFight.GetComponents<RainbowScale>()[1].enabled = false;
             
-
-=======
-            timerFight.GetComponents<RainbowScale>()[0].enabled = true;
-            timerFight.GetComponents<RainbowScale>()[1].enabled = false;
-            
->>>>>>> Alex
             backTF.GetComponents<RainbowColor>()[1].enabled = false;
             backTF.DOKill(true);
             backTF.GetComponents<RainbowColor>()[0].enabled = true;
@@ -777,11 +732,6 @@ public class PlayerController : MonoBehaviour
             handleTF.GetComponents<RainbowColor>()[1].enabled = false;
             handleTF.DOKill(true);
             handleTF.GetComponents<RainbowColor>()[0].enabled = true;
-<<<<<<< HEAD
-            //timerFight.GetComponentsInChildren<Image>()[2].DOColor(Color.white, 0.1f);
-
-=======
->>>>>>> Alex
         }
 		else if ( currStat == StatePlayer.Madness )
 		{
@@ -795,10 +745,6 @@ public class PlayerController : MonoBehaviour
             handleTF.GetComponents<RainbowColor>()[0].enabled = false;
             handleTF.DOKill(true);
             handleTF.GetComponents<RainbowColor>()[1].enabled = true;
-<<<<<<< HEAD
-
-=======
->>>>>>> Alex
         }
 		else // normal
 		{
@@ -816,10 +762,6 @@ public class PlayerController : MonoBehaviour
             handleTF.GetComponents<RainbowColor>()[1].enabled = false;
             handleTF.DOKill();
             handleTF.DOColor(new Color32(0x4B,0xA0,0xCC,0xFF), 0);
-<<<<<<< HEAD
-            //backTF.DOColor(Color., 0.1f);
-=======
->>>>>>> Alex
         }
 	}
 
@@ -1114,54 +1056,13 @@ public class PlayerController : MonoBehaviour
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
 				Transform getThis = thisRay.collider.transform;
-				pTrans.rotation = getThis.rotation;
-				pivotTrans.localRotation = Quaternion.Inverse ( pTrans.localRotation );
-				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
 
-<<<<<<< HEAD
-				/*float angle = Quaternion.Angle ( Quaternion.Euler ( new Vector3 ( 0, yRot, 0 ) ), getThis.rotation );
-
-				//Debug.Log ( getThis.rotation.x + " / " + getThis.rotation.y + " / " + getThis.rotation.z );
-				if ( getThis.rotation.x > 0 || getThis.rotation.x <= 0 && getThis.rotation.y < 0 && getThis.rotation.z > 0 )
-=======
 				if ( !waitRotate )
->>>>>>> Alex
 				{
 					pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
 					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 ( pTrans.localRotation.x, 0, 0 ) ) );
 				}
 
-<<<<<<< HEAD
-
-				if ( angle < 0 )
-				{
-					//pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.4f, 0 ), Space.World );
-					pRig.useGravity = true;
-					pRig.constraints = thisConst;
-
-					if ( thisEnum != null )
-					{
-						StopCoroutine ( thisEnum );
-					}
-
-					thisEnum = waitConstraint ( );
-					StartCoroutine ( thisEnum );
-					break;
-				}
-				else if ( angle > 0 )
-				{
-					//pTrans.Translate ( new Vector3 ( 0, angle * getTime * 1.1f, 0 ), Space.World );
-					pRig.constraints = RigidbodyConstraints.FreezeAll;
-					pRig.useGravity = false;
-					break;
-				}*/
-			}
-			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
-			{
-				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
-				pTrans.localRotation = Quaternion.identity;
-				pivotTrans.localRotation = Quaternion.identity;
-=======
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
 			}
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
@@ -1173,7 +1074,6 @@ public class PlayerController : MonoBehaviour
 					pivotTrans.localRotation = Quaternion.identity;
 				}
 
->>>>>>> Alex
 				pRig.constraints = RigidbodyConstraints.FreezeAll;
 			}
 		}
@@ -1339,11 +1239,6 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> Alex
 		if ( newPos )
 		{
 			befRot -= speed * delTime;
@@ -1401,43 +1296,6 @@ public class PlayerController : MonoBehaviour
 
 		yield return new WaitForEndOfFrame ( );
 		waitRotate = false;
-		useFord = true;
-		currVect = pTrans.forward;
-	}
-
-	IEnumerator rotPlayer ( float delTime )
-	{
-		Transform transPlayer = pTrans;
-		float calcTime = RotationSpeed * delTime;
-
-		switch ( currentDir )
-		{
-		case Direction.North: 
-			currVect = Vector3.forward;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 0, 0 ) ), calcTime );
-			yRot = 0;
-			break;
-		case Direction.South: 
-			currVect = Vector3.back;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 180, 0 ) ), calcTime );
-			yRot = 180;
-			break;
-		case Direction.East: 
-			currVect = Vector3.right;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, 90, 0 ) ), calcTime );
-			yRot = 90;
-			break;
-		case Direction.West: 
-			currVect = Vector3.left;
-			transPlayer.rotation = Quaternion.Slerp ( transPlayer.rotation, Quaternion.Euler ( new Vector3 ( 0, -90, 0 ) ), calcTime );
-			yRot = -90;
-			break;
-		}
-
-		yield return new WaitForSeconds ( calcTime );
-
-		yield return new WaitForEndOfFrame ( );
-
 		useFord = true;
 		currVect = pTrans.forward;
 	}

@@ -437,11 +437,6 @@ public class MenuShop : UiParent
                     itemSprite = getThis.GetComponentsInChildren<Image>()[4].sprite;
 
 					ShopUnlock();
-<<<<<<< HEAD
-
-                    Debug.Log(getThis.GetComponentsInChildren<Image>()[3].sprite);
-=======
->>>>>>> Alex
 
                     if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 					{
