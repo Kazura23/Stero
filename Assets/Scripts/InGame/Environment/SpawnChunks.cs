@@ -75,9 +75,15 @@ public class SpawnChunks : MonoBehaviour
 				chunkOrder [ chunkOrder.Count - 1 ].SpawnAble = new List<GetSpawnable> ( );
 			}
 
-			chunkOrder [ currChunkLvl ].ChunkScript.Add ( getChunks [ a ] );
 			for ( b = 0; b < getChunks [ a ].TheseChunks.Count; b++ )
 			{
+				if ( getChunks [ a ].TheseChunks [ b ] == null )
+				{
+					getChunks [ a ].TheseChunks.RemoveAt ( b );
+					b--;
+					continue;
+				}
+
 				getSpawnable [ a ].Add ( new GetSpawnable ( ) );
 				getSpawnable [ a ] [ b ].getCoinSpawnable = new List<GameObject> ( );
 				getSpawnable [ a ] [ b ].getEnnemySpawnable = new List<GameObject> ( );
@@ -105,8 +111,8 @@ public class SpawnChunks : MonoBehaviour
 					}
 				}
 			}
-
-			chunkOrder [ currChunkLvl ].SpawnAble = getSpawnable [ a ];
+			chunkOrder [ currChunkLvl ].ChunkScript.Add ( getChunks [ a ] );
+			chunkOrder [ currChunkLvl ].SpawnAble.AddRange ( getSpawnable [ a ] );
 		}
 
 		LvlChunksInfo = chunkOrder;

@@ -1272,32 +1272,39 @@ public class PlayerController : MonoBehaviour
 	IEnumerator rotPlayer ( float delTime )
 	{
 		Transform transPlayer = pTrans;
+		Vector3 currRot = Vector3.zero;
 		float calcTime = RotationSpeed * delTime;
 		waitRotate = true;
+
+		transPlayer.DOKill ( );
 
 		switch ( currentDir )
 		{
 		case Direction.North: 
 			currVect = Vector3.forward;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 0, 0 ), calcTime, RotateMode.Fast );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.South: 
 			currVect = Vector3.back;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 180, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 180, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.East: 
 			currVect = Vector3.right;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.West: 
 			currVect = Vector3.left;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, -90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, -90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		}
 
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
+		transPlayer.localRotation = Quaternion.Euler ( currRot );
 		waitRotate = false;
 		useFord = true;
 		currVect = pTrans.forward;
