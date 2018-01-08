@@ -424,8 +424,6 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-        Debug.Log("GAMEOVER");
-
         Life--;
 
         GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 1);
@@ -487,7 +485,6 @@ public class PlayerController : MonoBehaviour
     public void MadnessMana(int type)
     {
         //if (!control.IsInMadness()) {
-        Debug.Log("hit mad");
         if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == 0)
         {
             //barMadness.value += addPointBarByPunchSimple;
@@ -1085,7 +1082,6 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitForSeconds ( 1 );
 		playerInv = false;
-		Debug.Log ( "StopInv" );
 	}
 
 	IEnumerator prepDeadBall ( )
@@ -1615,7 +1611,6 @@ public class PlayerController : MonoBehaviour
 
             //if ( !InMadness )
             //{
-            Debug.Log("1");
 			this.MadnessMana(0);
 
             int randomSong = UnityEngine.Random.Range(0, 3);

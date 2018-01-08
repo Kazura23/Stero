@@ -72,7 +72,6 @@ public class Punch : MonoBehaviour {
 
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
-            Debug.Log("song");
 			Vector3 getProj = Vector3.zero;
             switch (numTechnic)
             {

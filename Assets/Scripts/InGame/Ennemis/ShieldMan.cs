@@ -73,13 +73,13 @@ public class ShieldMan : AbstractObject {
        // if (GetComponenstInChildren<Transform>().tag == "Knighty")
           //  Destroy(tran.gameObject);
 
-        foreach (Transform trans in transform)
+       /* foreach (Transform trans in transform)
         {
             if(trans.gameObject.tag == "Knighty")
             {
                 Debug.Log(trans.gameObject);
             }
-        }
+        }*/
 
         if (!detected)
         {
@@ -141,14 +141,9 @@ public class ShieldMan : AbstractObject {
             }
         }else
         {
-            if (shieldActive)
+            if (!shieldActive)
             {
-                Debug.Log("Fracas bouclier");
-                // animation ou son sur le bouclier
-            }
-            else
-            {
-                base.Degat(p_damage, p_technic);
+				base.Degat(p_damage, p_technic);
             }
         }
     }
