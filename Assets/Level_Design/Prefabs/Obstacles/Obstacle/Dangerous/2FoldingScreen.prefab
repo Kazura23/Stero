@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 114825479836569484}
   m_Layer: 0
   m_Name: SM_Folding_Screen_A2 (4)
-  m_TagString: ObsPropSafe
+  m_TagString: ElemDash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 114912499691615508}
   m_Layer: 0
   m_Name: SM_Folding_Screen_A2 (5)
-  m_TagString: ObsPropSafe
+  m_TagString: ElemDash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 4270170270838594}
   m_Layer: 0
   m_Name: 2FoldingScreen
-  m_TagString: Untagged
+  m_TagString: ElemDash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cb5d0a53856b2f4499bd89ab94e04120, type: 2}
+  - {fileID: 2100000, guid: 531b7c1714aee1844a8d0a1daf662c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,7 +155,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cb5d0a53856b2f4499bd89ab94e04120, type: 2}
+  - {fileID: 2100000, guid: 531b7c1714aee1844a8d0a1daf662c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -289,6 +289,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1
 --- !u!114 &114825479836569484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -306,6 +308,8 @@ MonoBehaviour:
   onObjForward: 15
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  MalusDivTimer: 0
   useGravity: 1
 --- !u!114 &114912499691615508
 MonoBehaviour:
@@ -320,3 +324,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 50
   DelayDestruc: 1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1

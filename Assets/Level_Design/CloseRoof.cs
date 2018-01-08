@@ -18,20 +18,20 @@ public class CloseRoof : MonoBehaviour {
 
     IEnumerator CloseWallStart()
     {
-        while (true)
+		WaitForSeconds thisSec = new WaitForSeconds ( timeBetweenClose );
+		Transform getTrans = Roof.transform;
+		Transform getOtherTr;
+
+		while (getTrans.position.y > 0)
         {
-            yield return new WaitForSeconds(timeBetweenClose);
+			yield return thisSec;
 
-            Roof.transform.position = new Vector3(Roof.transform.position.x, Roof.transform.position.y - speed, Roof.transform.position.z);
-
+			getTrans.localPosition = new Vector3 ( getTrans.localPosition.x, getTrans.localPosition.y - speed, getTrans.localPosition.z );
+		
             for(int i = 0; i < otherElement.Length; i++)
             {
-                otherElement[i].transform.position = new Vector3(otherElement[i].transform.position.x, otherElement[i].transform.position.y - speed, otherElement[i].transform.position.z);
-            }
-
-            if (Roof.transform.position.y <= 0)
-            {
-                break;
+				getOtherTr = otherElement [ i ].transform;
+				getOtherTr.localPosition = new Vector3 ( getOtherTr.localPosition.x, getOtherTr.localPosition.y - speed, getOtherTr.localPosition.z );
             }
         }
     }
@@ -41,7 +41,7 @@ public class CloseRoof : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("hey");
-            StartCoroutine(CloseWallStart());
+			StartCoroutine ( CloseWallStart ( ) );
         }
     }
 }

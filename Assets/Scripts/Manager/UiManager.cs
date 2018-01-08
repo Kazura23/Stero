@@ -211,7 +211,9 @@ public class UiManager : ManagerParent
 
 	public void BloodHit()
 	{
-		Time.timeScale = 0.0f;
+        VibrationManager.Singleton.CoupSimpleVibration();
+
+        Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
         DOVirtual.DelayedCall(.05f, () => {
 			Time.timeScale = 1;
@@ -231,6 +233,8 @@ public class UiManager : ManagerParent
         //Debug.Log("HitDash");
         //Time.timeScale = 0.0f;
         //fixedDeltaTime = 0.02F * Time.timeScale;
+        VibrationManager.Singleton.CoupSimpleVibration();
+
         DOVirtual.DelayedCall(.4f, () => {
             Time.timeScale = 1;
             //Time.fixedDeltaTime = .02F;
@@ -247,11 +251,11 @@ public class UiManager : ManagerParent
     public void GameOver()
     {
         //Debug.Log("ShakeOver");
-
+        VibrationManager.Singleton.GameOverVibration();
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
         //DOVirtual.DelayedCall(.4f, () => {
-            Time.timeScale = 1;
+        Time.timeScale = 1;
             Time.fixedDeltaTime = .02F;
             ScreenShake.Singleton.ShakeGameOver();
         //});
@@ -265,6 +269,8 @@ public class UiManager : ManagerParent
 
     public void OpenMadness()
     {
+        VibrationManager.Singleton.FleshBallVibration();
+
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
         thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
@@ -414,19 +420,22 @@ public class UiManager : ManagerParent
 
     public void HeartShop(int number)
     {
-        ExtraHearts[number].transform.DOLocalMove(new Vector2(930, -510), .05f);
+		Image getImage = ExtraHearts [ number ];
+		Transform getImgTrans = getImage.transform;
+
+		getImgTrans.DOLocalMove(new Vector2(930, -510), .05f);
         DOVirtual.DelayedCall(.1f, () => {
-            ExtraHearts[number].DOFade(1f, .1f);
-            ExtraHearts[number].GetComponent<RainbowScale>().enabled = false;
-            ExtraHearts[number].transform.DOScale(4, 0f);
-            ExtraHearts[number].transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
-                ExtraHearts[number].transform.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
-                ExtraHearts[number].DOFade(0, .05f);
+			getImage.DOFade(1f, .1f);
+			getImage.GetComponent<RainbowScale>().enabled = false;
+			getImgTrans.DOScale(4, 0f);
+			getImgTrans.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+				getImgTrans.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
+				getImage.DOFade(0, .05f);
                 DOVirtual.DelayedCall(.15f, () =>
                 {
-                    ExtraHearts[number].DOFade(1, .1f);
-                    ExtraHearts[number].transform.DOScale(1, 0f);
-                    ExtraHearts[number].GetComponent<RainbowScale>().enabled = true;
+					getImage.DOFade(1, .1f);
+					getImgTrans.DOScale(1, 0f);
+					getImage.GetComponent<RainbowScale>().enabled = true;
                 });
             });
         });

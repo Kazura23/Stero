@@ -37,6 +37,7 @@ public class AbstractObject : MonoBehaviour
     protected PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
+	protected bool isObject = false;
 	Rigidbody meshRigid;
     private int techPunch;
 
@@ -140,9 +141,7 @@ public class AbstractObject : MonoBehaviour
         //Time.timeScale = 1;
         //StartCoroutine ( disableColl ( ) );
         
-        int randomSong = UnityEngine.Random.Range(0, 8);
-
-		GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1),false);
+        
 
        // Debug.Log("BoneBreak");
 
@@ -151,14 +150,19 @@ public class AbstractObject : MonoBehaviour
         if ( enemy )
 		{
 			onEnemyDead ( getTrans.forward * onObjForward );
-		}
+            int randomSong = UnityEngine.Random.Range(0, 8);
+
+            GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1), false);
+        }
 		else
 		{
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp );
-		}
+            GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+
+        }
 	}
 
 	protected virtual void CollDetect (  )
@@ -285,7 +289,10 @@ public class AbstractObject : MonoBehaviour
 
         int randomSongBone = UnityEngine.Random.Range(0, 4);
 
-        GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+		if ( !isObject )
+		{
+			GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BoneBreak_" + (randomSongBone + 1), false);
+		}
 
         var animation = GetComponentInChildren<Animator>();
         if(animation)

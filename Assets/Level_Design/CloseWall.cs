@@ -18,18 +18,17 @@ public class CloseWall : MonoBehaviour {
 
     IEnumerator CloseWallStart()
     {
-        while(true)
+		WaitForSeconds thisSec = new WaitForSeconds ( timeBetweenClose );
+		Transform wRight = WallRight.transform;
+		Transform wLeft = WallLeft.transform;
+
+		while(wRight.position.x > wLeft.position.x)
         {
-            yield return new WaitForSeconds(timeBetweenClose) ;
+			yield return thisSec;
 
-            WallRight.transform.position = new Vector3(WallRight.transform.position.x - speed, WallRight.transform.position.y, WallRight.transform.position.z);
+			wRight.localPosition = new Vector3 ( wRight.localPosition.x - speed, wRight.localPosition.y, wRight.localPosition.z );
 
-            WallLeft.transform.position = new Vector3(WallLeft.transform.position.x + speed, WallLeft.transform.position.y, WallLeft.transform.position.z);
-
-            if (WallRight.transform.position.x <= WallLeft.transform.position.x)
-            {
-                break;
-            }
+			wLeft.localPosition = new Vector3 ( wLeft.localPosition.x + speed, wLeft.localPosition.y, wLeft.localPosition.z );
         }
     }
 
@@ -38,7 +37,7 @@ public class CloseWall : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("hey");
-            StartCoroutine(CloseWallStart());
+			StartCoroutine ( CloseWallStart ( ) );
         }
     }
 }

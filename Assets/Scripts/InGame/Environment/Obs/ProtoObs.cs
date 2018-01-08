@@ -8,7 +8,11 @@ public class ProtoObs : AbstractObject
 	#endregion
 
 	#region Mono
-
+	protected override void Awake ()
+	{
+		base.Awake ( );
+		isObject = true;
+	}
 	#endregion
 
 	#region Public Methods
@@ -30,7 +34,7 @@ public class ProtoObs : AbstractObject
 
 		if ( isDead )
 		{
-			GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+			
 		}
 	}
 	#endregion
