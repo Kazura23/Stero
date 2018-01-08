@@ -532,10 +532,6 @@ public class PlayerController : MonoBehaviour
 					StopPlayer = false;
 				});
 
-				maxSpeedCL = MaxSpeedCL * 2;
-				maxSpeed = MaxSpeed * 3;
-				accelerationCL = AccelerationCL * 2;
-				acceleration = Acceleration * 4;
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
 			}
@@ -1170,6 +1166,11 @@ public class PlayerController : MonoBehaviour
 			speed = ( speed / 100 ) * PourcRal;
 		}
 
+		if ( InMadness )
+		{
+			speed *= 1.5f;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
 		if ( Dash && !playerDead && !InMadness )
 		{
 			speed *= DashSpeed;
@@ -1195,6 +1196,8 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
+
+
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
@@ -1709,11 +1712,6 @@ public class PlayerController : MonoBehaviour
 	void stopMadness ( )
 	{
 		InMadness = false;
-
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
 
 		StartCoroutine ( camColor ( false ) );
 
