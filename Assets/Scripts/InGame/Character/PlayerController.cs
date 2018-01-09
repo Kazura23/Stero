@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
     Vector3 saveCamMad;
 
 	Quaternion startRotRR;
+	Quaternion startRotPlayer;
 	Vector3 startPosRM;
 	Vector3 startPlayer;
     Player inputPlayer;
@@ -327,6 +328,7 @@ public class PlayerController : MonoBehaviour
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
+		startRotPlayer = pTrans.localRotation;
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
@@ -375,6 +377,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.transform.localRotation = startRotRR;
 		thisCam.transform.localPosition = startPosRM;
 		pTrans.localPosition = startPlayer;
+		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
 		stopMadness ( );
 
@@ -529,10 +532,6 @@ public class PlayerController : MonoBehaviour
 					StopPlayer = false;
 				});
 
-				maxSpeedCL = MaxSpeedCL * 2;
-				maxSpeed = MaxSpeed * 3;
-				accelerationCL = AccelerationCL * 2;
-				acceleration = Acceleration * 4;
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
 			}
@@ -1167,6 +1166,11 @@ public class PlayerController : MonoBehaviour
 			speed = ( speed / 100 ) * PourcRal;
 		}
 
+		if ( InMadness )
+		{
+			speed *= 1.5f;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
 		if ( Dash && !playerDead && !InMadness )
 		{
 			speed *= DashSpeed;
@@ -1192,6 +1196,8 @@ public class PlayerController : MonoBehaviour
 				speed *= SpeedDoublePunchRun;
 			}
 		}
+
+
 
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
@@ -1269,32 +1275,39 @@ public class PlayerController : MonoBehaviour
 	IEnumerator rotPlayer ( float delTime )
 	{
 		Transform transPlayer = pTrans;
+		Vector3 currRot = Vector3.zero;
 		float calcTime = RotationSpeed * delTime;
 		waitRotate = true;
+
+		transPlayer.DOKill ( );
 
 		switch ( currentDir )
 		{
 		case Direction.North: 
 			currVect = Vector3.forward;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 0, 0 ), calcTime, RotateMode.Fast );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.South: 
 			currVect = Vector3.back;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 180, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 180, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.East: 
 			currVect = Vector3.right;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.West: 
 			currVect = Vector3.left;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, -90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, -90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		}
 
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
+		transPlayer.localRotation = Quaternion.Euler ( currRot );
 		waitRotate = false;
 		useFord = true;
 		currVect = pTrans.forward;
@@ -1699,11 +1712,6 @@ public class PlayerController : MonoBehaviour
 	void stopMadness ( )
 	{
 		InMadness = false;
-
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
 
 		StartCoroutine ( camColor ( false ) );
 
