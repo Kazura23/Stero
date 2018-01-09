@@ -19,6 +19,8 @@ public class UiManager : ManagerParent
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
+	public Text RankText;
+	public Text Multiplicateur;
 
 	public Image BallTransition;
 

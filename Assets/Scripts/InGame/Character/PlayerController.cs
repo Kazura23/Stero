@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int currLine = 0;
+
+	[HideInInspector]
+	public int MultiPli = 1;
+
     Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
@@ -501,6 +505,8 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
+
+		GlobalManager.GameCont.NewScore ( );
 
 		if ( Dash )
 		{
