@@ -63,7 +63,7 @@ public class GameController : ManagerParent
 	int currIndex = -1;
 	int currMax = 0;
 
-	int currScore = 0;
+	int CurrentScore = 0;
 	#endregion
 
 	#region Mono
@@ -77,7 +77,7 @@ public class GameController : ManagerParent
 	{
 		for ( int a = 0; a < AllRank.Length; a++ )
 		{
-			if ( a != currIndex && AllRank [ a ].NeededScore < currScore && AllRank [ a ].NeededScore > currMax )
+			if ( a != currIndex && AllRank [ a ].NeededScore < CurrentScore && AllRank [ a ].NeededScore > currMax )
 			{
 				currMax = AllRank [ a ].NeededScore;
 				GlobalManager.Ui.RankText.text = AllRank [ a ].NameRank;
@@ -234,7 +234,7 @@ public class GameController : ManagerParent
 		GlobalManager.Ui.RankText.text = Constants.DefRankName;
 		currIndex = -1;
 		currMax = 0;
-		currScore = 0;
+		CurrentScore = 0;
 
 		if ( getCurWait != null )
 		{
@@ -428,6 +428,7 @@ public class GameController : ManagerParent
 
 		int currScore = int.Parse ( textScore.text ) + thisInf.AllScore * thisInf.CurrCount;
 		textScore.text = "" + currScore;
+		CurrentScore = currScore;
 	}
 
 	void setMusic () 
@@ -449,6 +450,7 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
 		currIndex = -1;
 		currMax = 0;
+		CurrentScore = 0;
 	}
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
