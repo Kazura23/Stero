@@ -203,6 +203,21 @@ public class UiManager : ManagerParent
         });
     }
 
+
+    public void ScorePlus()
+    {
+        Text scoretxt = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "TextScore", transform, 4f).GetComponent<Text>();
+        
+        scoretxt.transform.DOScale(2, 0);
+        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(()=> {
+                scoretxt.transform.DOScale(0, .5f);
+                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
+            });
+        });
+    }
+
+
     public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
