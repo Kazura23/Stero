@@ -27,7 +27,7 @@ public class DeadBall : MonoBehaviour
 	{
 		getRirig.AddForce ( Acceleration * getForward * Time.deltaTime, ForceMode.VelocityChange );
 	}
-
+    /*
 	void OnCollisionEnter ( Collision collision )
 	{
 		if ( collision.collider.tag != Constants._UnTagg && collision.collider.tag != Constants._DebrisEnv && collision.collider.tag != Constants._ObjDeadTag )
@@ -50,7 +50,7 @@ public class DeadBall : MonoBehaviour
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 		}
-	}
+	}*/
 
 	IEnumerator waitCol ( Collider thisColl, WaitForSeconds thisSec )
 	{

@@ -951,14 +951,20 @@ public class PlayerController : MonoBehaviour
             GlobalManager.Ui.StartSpecialAction("OndeChoc");
 
             //MR S S'ABAISSE
+            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
+            target.transform.DOScale(Vector3.one, 0);
             pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
-			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
+            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
+            target.GetComponent<Rigidbody>().AddForce(Vector3.down * 20, ForceMode.VelocityChange);
+            pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
 				DOVirtual.DelayedCall(.1f, () => {
 					onAnimeAir = true;
 				});
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, 0).SetEase(Ease.Linear);
+                //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, 0f).SetEase(Ease.Linear);
                 pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
 					onAnimeAir = false;
 
@@ -966,6 +972,11 @@ public class PlayerController : MonoBehaviour
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+
+                            GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
+                            circle.transform.DOScale(10, 4);
+                            circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+
                         });
 
 						StopPlayer = false;
