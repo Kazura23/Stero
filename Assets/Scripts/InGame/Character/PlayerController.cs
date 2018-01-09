@@ -502,6 +502,11 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
+		if ( Dash )
+		{
+			malus /= 2;
+		}
+
 		if ( malus <= 0 )
 		{
 			malus = 1;
@@ -1197,8 +1202,6 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-
-
 		float calCFov = Constants.DefFov * ( speed / maxSpeed );
 
 		if ( timeToDP == TimeToDoublePunch )
@@ -1277,6 +1280,12 @@ public class PlayerController : MonoBehaviour
 		Transform transPlayer = pTrans;
 		Vector3 currRot = Vector3.zero;
 		float calcTime = RotationSpeed * delTime;
+
+		if ( InMadness || Dash )
+		{
+			calcTime *= 2;
+		}
+
 		waitRotate = true;
 
 		transPlayer.DOKill ( );

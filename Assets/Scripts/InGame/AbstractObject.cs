@@ -32,6 +32,7 @@ public class AbstractObject : MonoBehaviour
 
     public bool useGravity = true;
 
+	protected GameObject thisObj;
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
     protected PlayerController playerCont;
@@ -44,7 +45,6 @@ public class AbstractObject : MonoBehaviour
 	Vector3 startPos;
 	Vector3 projection;
 	float distForDB = 0;
-	GameObject thisObj;
 	bool checkDead = false;
 	#endregion
 
@@ -187,7 +187,7 @@ public class AbstractObject : MonoBehaviour
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
-		if ( playerCont.playerDead )
+		if ( playerCont != null && playerCont.playerDead )
 		{
 			return;
 		}
@@ -274,10 +274,14 @@ public class AbstractObject : MonoBehaviour
 			playerCont.RecoverTimer ( );
 		}
 
-		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
-		thisObj.SetActive ( false );
+		if ( thisObj == null )
+		{
+			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+			thisObj.SetActive ( false );
+			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+		}
+
 		thisObj.transform.localPosition = startPos;
-		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
 
 		isDead = true;
         AllPlayerPrefs.scoreWhithoutDistance += point;
