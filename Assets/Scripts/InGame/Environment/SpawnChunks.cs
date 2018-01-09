@@ -428,7 +428,7 @@ public class SpawnChunks : MonoBehaviour
 					currChunk = Random.Range ( 0, getThoseChunk.Count );
 				}
 
-				if ( sourceSpawn.ThoseExit.Count > 1 && sourceSpawn.ThoseExit [ a ].LCS != null && sourceSpawn.ThoseExit [ a ].LCS.SpawnEnable.Count > 0 )
+				if ( sourceSpawn.ThoseExit.Count > 0 && sourceSpawn.ThoseExit [ a ].LCS != null && sourceSpawn.ThoseExit [ a ].LCS.SpawnEnable.Count > 0 )
 				{
 					thisSpawn = sourceSpawn.ThoseExit [ a ].LCS.SpawnEnable [ Random.Range ( 0, sourceSpawn.ThoseExit [ a ].LCS.SpawnEnable.Count ) ];
 				}
