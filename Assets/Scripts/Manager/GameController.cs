@@ -53,6 +53,9 @@ public class GameController : ManagerParent
 
 	[Header ("Score Parametre")]
 	public Rank[] AllRank;
+	public ScoringInfo [] InfScore;
+
+
 
 	bool GameStarted = false;
 	bool onHub = true;
@@ -61,6 +64,7 @@ public class GameController : ManagerParent
 	int currIndex = -1;
 	int currMax = 0;
 
+	int currScore = 0;
 	#endregion
 
 	#region Mono
@@ -74,7 +78,7 @@ public class GameController : ManagerParent
 	{
 		for ( int a = 0; a < AllRank.Length; a++ )
 		{
-			if ( a != currIndex && AllRank [ a ].NeededScore < int.Parse ( textScore.text ) && AllRank [ a ].NeededScore > currMax )
+			if ( a != currIndex && AllRank [ a ].NeededScore < currScore && AllRank [ a ].NeededScore > currMax )
 			{
 				currMax = AllRank [ a ].NeededScore;
 				GlobalManager.Ui.RankText.text = AllRank [ a ].NameRank;
@@ -231,6 +235,7 @@ public class GameController : ManagerParent
 		GlobalManager.Ui.RankText.text = Constants.DefRankName;
 		currIndex = -1;
 		currMax = 0;
+		currScore = 0;
 
 		if ( getCurWait != null )
 		{
@@ -350,8 +355,9 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name ); 
 	} 
 
-	public void NewScore ( DeathType thisDeath )
+	public void NewScore ( DeathType thisDeath, int nbrPoint )
 	{
+		//AllPlayerPrefs.scoreWhithoutDistance += point;
 		if ( getCurWait != null )
 		{
 			StopCoroutine ( getCurWait );
@@ -363,10 +369,45 @@ public class GameController : ManagerParent
 
 			StartCoroutine ( getCurWait );
 		}
+
+		ScoringInfo getInfS;
+		for ( int a = 0; a < InfScore.Length; a++ )
+		{
+			getInfS = InfScore [ a ];
+			if ( getInfS.TypeDeath == thisDeath )
+			{
+				if ( getInfS.WaitCulmul )
+				{
+					getInfS.CurrCount++;
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
+
+					if ( getInfS.CurrWait != null )
+					{
+						StopCoroutine ( getInfS.CurrWait );
+					}
+
+					getInfS.CurrWait = waitScore ( getInfS );
+					StartCoroutine ( getInfS.CurrWait );
+				}
+			}
+		}
 	}
     #endregion
 
     #region Private Methods
+	IEnumerator waitScore ( ScoringInfo thisInf )
+	{
+		yield return new WaitForSeconds ( thisInf.SecCumul );
+
+		addNewScore ( thisInf );
+	}
+
+	void addNewScore ( ScoringInfo thisInf )
+	{
+		int currScore = int.Parse ( textScore.text ) + thisInf.AllScore * thisInf.CurrCount;
+		textScore.text = "" + currScore;
+	}
+
 	void setMusic () 
 	{ 
 		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
@@ -661,7 +702,6 @@ public class GameController : ManagerParent
 		}
 	}
     #endregion
-
 }
 
 #region Save
@@ -713,7 +753,6 @@ public class DataSave
     public int score;
     public int piece;
     public float distance;
-
 }
 
 public class ListData
@@ -800,3 +839,23 @@ public class Rank
 	public float Time;
 	public int NeededScore; 
 } 
+
+[System.Serializable] 
+public class ScoringInfo 
+{ 
+	public DeathType TypeDeath;
+	public int Multiplicateur = 1;
+
+	[Header ("Si il faut attendre pour cumuler du score")]
+	public bool WaitCulmul;
+	public float SecCumul = 0;
+
+	[HideInInspector]
+	public IEnumerator CurrWait;
+	[HideInInspector]
+	public int CurrCount = 0;
+	[HideInInspector]
+	public int AllScore = 0;
+	[HideInInspector]
+	public List<GameObject> CurrSpawn;
+}

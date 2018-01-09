@@ -265,7 +265,7 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
-			playerCont.RecoverTimer ( thisDeath, MalusDivTimer );
+			playerCont.RecoverTimer ( thisDeath, point, MalusDivTimer );
 		}
 
 		if ( thisObj == null )
@@ -278,7 +278,6 @@ public class AbstractObject : MonoBehaviour
 		thisObj.transform.localPosition = startPos;
 
 		isDead = true;
-        AllPlayerPrefs.scoreWhithoutDistance += point;
 
 		if ( !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).StopPlayer )
 		{
@@ -385,15 +384,6 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 		
-	IEnumerator disableColl ( )
-	{
-		WaitForSeconds thisSec = new WaitForSeconds ( 0.0f );
-
-		yield return thisSec;
-
-		getTrans.tag = Constants._ObjDeadTag;
-	}
-
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
         //Renderer rend = GetComponentInChildren<Renderer>();
