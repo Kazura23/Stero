@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int currLine = 0;
+
+	[HideInInspector]
+	public int MultiPli = 1;
+
     Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
@@ -156,6 +160,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator currWF;
 	IEnumerator propPunch;
 	IEnumerator thisEnum;
+	IEnumerator getCouldown;
 
 	Animator playAnimator;
 
@@ -166,6 +171,7 @@ public class PlayerController : MonoBehaviour
     Vector3 saveCamMad;
 
 	Quaternion startRotRR;
+	Quaternion startRotPlayer;
 	Vector3 startPosRM;
 	Vector3 startPlayer;
     Player inputPlayer;
@@ -327,13 +333,20 @@ public class PlayerController : MonoBehaviour
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
+		startRotPlayer = pTrans.localRotation;
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
 	public void ResetPlayer ( )
 	{
+		if ( getCouldown != null )
+		{
+			StopCoroutine ( getCouldown );
+		}
+
 		textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
+
 		newStat ( StatePlayer.Normal );
         currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
@@ -375,7 +388,9 @@ public class PlayerController : MonoBehaviour
 		thisCam.transform.localRotation = startRotRR;
 		thisCam.transform.localPosition = startPosRM;
 		pTrans.localPosition = startPlayer;
+		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
+		canSpe = true;
 		stopMadness ( );
 
 		currVect = Vector3.forward;
@@ -492,16 +507,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	public void RecoverTimer ( float malus = 1 )
+	public void RecoverTimer ( DeathType thisDeath, float malus )
 	{
 		if ( playerDead || StopPlayer )
 		{
 			return;
 		}
 
+		GlobalManager.GameCont.NewScore ( thisDeath );
+
 		if ( malus <= 0 )
 		{
 			malus = 1;
+		}
+
+		if ( Dash )
+		{
+			malus /= 2;
 		}
 
 		float getCal;
@@ -529,10 +551,6 @@ public class PlayerController : MonoBehaviour
 					StopPlayer = false;
 				});
 
-				maxSpeedCL = MaxSpeedCL * 2;
-				maxSpeed = MaxSpeed * 3;
-				accelerationCL = AccelerationCL * 2;
-				acceleration = Acceleration * 4;
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
 			}
@@ -922,7 +940,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && canChange && newH == 0 )
+		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
 		{
 			canSpe = false;
 			playerInv = true;
@@ -960,7 +978,7 @@ public class PlayerController : MonoBehaviour
             });
 
 		}
-		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 && canChange )
+		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 )
 		{
 			pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
@@ -987,8 +1005,9 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
 		sphereChocWave.enabled = true;
+		getCouldown = CooldownWave ( );
 
-		StartCoroutine(CooldownWave());
+		StartCoroutine(getCouldown);
 		StartCoroutine(TimerHitbox());
 		StartCoroutine(waitInvPlayer());
 	}
@@ -1021,7 +1040,8 @@ public class PlayerController : MonoBehaviour
 
 		pRig.constraints = thisConst;
 		StopPlayer = false;
-		StartCoroutine( CooldownDeadBall ( ) );
+		getCouldown = CooldownDeadBall ( );
+		StartCoroutine( getCouldown );
 	}
 
 	void waitInvDmg ( )
@@ -1167,6 +1187,11 @@ public class PlayerController : MonoBehaviour
 			speed = ( speed / 100 ) * PourcRal;
 		}
 
+		if ( InMadness )
+		{
+			speed *= 1.5f;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
 		if ( Dash && !playerDead && !InMadness )
 		{
 			speed *= DashSpeed;
@@ -1269,32 +1294,45 @@ public class PlayerController : MonoBehaviour
 	IEnumerator rotPlayer ( float delTime )
 	{
 		Transform transPlayer = pTrans;
+		Vector3 currRot = Vector3.zero;
 		float calcTime = RotationSpeed * delTime;
+
+		if ( InMadness || Dash )
+		{
+			calcTime *= 2;
+		}
+
 		waitRotate = true;
+
+		transPlayer.DOKill ( );
 
 		switch ( currentDir )
 		{
 		case Direction.North: 
 			currVect = Vector3.forward;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 0, 0 ), calcTime, RotateMode.Fast );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.South: 
 			currVect = Vector3.back;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 180, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 180, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.East: 
 			currVect = Vector3.right;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, 90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, 90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.West: 
 			currVect = Vector3.left;
-			transPlayer.DOLocalRotate ( new Vector3 ( 0, -90, 0 ), calcTime, RotateMode.Fast );
+			currRot = new Vector3 ( 0, -90, 0 );
+			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		}
 
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
+		transPlayer.localRotation = Quaternion.Euler ( currRot );
 		waitRotate = false;
 		useFord = true;
 		currVect = pTrans.forward;
@@ -1664,12 +1702,22 @@ public class PlayerController : MonoBehaviour
 
 				if ( thisColl.gameObject.GetComponent<AbstractObject> ( ) )
 				{
-					thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward );
+					if ( Dash )
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Acceleration );
+					}
+					else if ( InMadness )
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Madness );
+					}
+					else
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Punch );
+					}
 				}
 				return;
 			}
-
-            else if ( getObj.tag == Constants._Balls )
+			else if ( getObj.tag == Constants._Balls )
 			{
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true, false, true ) );
 				return;
@@ -1699,11 +1747,6 @@ public class PlayerController : MonoBehaviour
 	void stopMadness ( )
 	{
 		InMadness = false;
-
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
 
 		StartCoroutine ( camColor ( false ) );
 
