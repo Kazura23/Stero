@@ -160,6 +160,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator currWF;
 	IEnumerator propPunch;
 	IEnumerator thisEnum;
+	IEnumerator getCouldown;
 
 	Animator playAnimator;
 
@@ -338,8 +339,14 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		if ( getCouldown != null )
+		{
+			StopCoroutine ( getCouldown );
+		}
+
 		textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
+
 		newStat ( StatePlayer.Normal );
         currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
@@ -383,6 +390,7 @@ public class PlayerController : MonoBehaviour
 		pTrans.localPosition = startPlayer;
 		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
+		canSpe = true;
 		stopMadness ( );
 
 		currVect = Vector3.forward;
@@ -932,7 +940,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && canChange && newH == 0 )
+		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
 		{
 			canSpe = false;
 			playerInv = true;
@@ -970,7 +978,7 @@ public class PlayerController : MonoBehaviour
             });
 
 		}
-		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 && canChange )
+		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 )
 		{
 			pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
@@ -997,8 +1005,9 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
 		sphereChocWave.enabled = true;
+		getCouldown = CooldownWave ( );
 
-		StartCoroutine(CooldownWave());
+		StartCoroutine(getCouldown);
 		StartCoroutine(TimerHitbox());
 		StartCoroutine(waitInvPlayer());
 	}
@@ -1031,7 +1040,8 @@ public class PlayerController : MonoBehaviour
 
 		pRig.constraints = thisConst;
 		StopPlayer = false;
-		StartCoroutine( CooldownDeadBall ( ) );
+		getCouldown = CooldownDeadBall ( );
+		StartCoroutine( getCouldown );
 	}
 
 	void waitInvDmg ( )

@@ -46,11 +46,13 @@ public class AbstractObject : MonoBehaviour
 	Vector3 projection;
 	float distForDB = 0;
 	bool checkDead = false;
+	bool destGame;
 	#endregion
 
 	#region Mono
 	protected virtual void Awake () 
 	{
+		destGame = true;
 		isDead = false;
 		getTrans = transform;
 		startPos = getTrans.localPosition;
@@ -226,6 +228,7 @@ public class AbstractObject : MonoBehaviour
 		
 		if ( getDist < distForDB ) 
 		{ 
+			destGame = false;
 			onEnemyDead ( Vector3.zero ); 
 
 			float getConst = Constants.DB_Prepare;
@@ -339,7 +342,10 @@ public class AbstractObject : MonoBehaviour
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );
 
-		Destroy ( gameObject, delayDead );
+		if ( destGame )
+		{
+			Destroy ( gameObject, delayDead );
+		}
 	}
 
 	IEnumerator enableColl ( )
