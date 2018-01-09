@@ -99,9 +99,6 @@ public class PlayerController : MonoBehaviour
     //public float delayInBeginMadness = 2;
    // public float delayInEndMadness = 2;
 
-    [Tooltip("Lier au score")]
-    public float facteurMulDistance = 1;
-
     [Header ("SphereMask")]
 	public float Radius;
 	public float SoftNess;
@@ -421,7 +418,7 @@ public class PlayerController : MonoBehaviour
 		}
 
         AllPlayerPrefs.distance = totalDis;
-        AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int)(facteurMulDistance * totalDis);
+		AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int) totalDis;
 
 		StopPlayer = true;
 
@@ -507,14 +504,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	public void RecoverTimer ( DeathType thisDeath, float malus )
+	public void RecoverTimer ( DeathType thisDeath, int nbrPoint, float malus )
 	{
 		if ( playerDead || StopPlayer )
 		{
 			return;
 		}
 
-		GlobalManager.GameCont.NewScore ( thisDeath );
+		GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
 
 		if ( malus <= 0 )
 		{

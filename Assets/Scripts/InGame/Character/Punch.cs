@@ -39,7 +39,7 @@ public class Punch : MonoBehaviour {
         {
             switch (other.tag)
             {
-					case Constants._EnnemisTag : case Constants._ElemDash :
+				case Constants._EnnemisTag : case Constants._ElemDash :
                     Vector3 dir = Vector3.Normalize(other.transform.position - transform.position);
                     AbstractObject enn = other.GetComponentInChildren<AbstractObject>();
                     if (!enn)
@@ -54,8 +54,7 @@ public class Punch : MonoBehaviour {
                 //case tag bibli
             }
         }
-
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash)) //|| other.gameObject.tag == Constants._ObjDeadTag  ))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
         {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )

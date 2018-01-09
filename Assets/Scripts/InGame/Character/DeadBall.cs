@@ -20,7 +20,7 @@ public class DeadBall : MonoBehaviour
 		getRirig = GetComponent<Rigidbody> ( );
 		getTrans = transform;
 		getRirig.AddForce ( getForward * Acceleration, ForceMode.VelocityChange );
-		Destroy ( gameObject, 10 );
+		Destroy ( gameObject, 5 );
 	}
 
 	void Update ( )
