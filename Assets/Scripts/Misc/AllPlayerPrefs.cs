@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.IO;
+using UnityEngine.UI;
 
 public static class AllPlayerPrefs
 {
@@ -17,9 +19,23 @@ public static class AllPlayerPrefs
         distance = 0;
     }
 
-   /* public static DataSave NewData()
+    public static DataSave NewData()
     {
         return new DataSave(finalScore, scoreWhithoutDistance, piece, distance);
+    }
+
+    /*public static void testSave()
+    {
+        GameObject.Find("Trash_text").GetComponent<Text>().text = Application.dataPath;
+        if(!File.Exists(Application.dataPath + "/save.bin"))
+        {
+            File.Create(Application.dataPath + "/save.bin");
+            GameObject.Find("Trash_text").GetComponent<Text>().text = "create";
+        }
+        else
+        {
+            GameObject.Find("Trash_text").GetComponent<Text>().text = "file find";
+        }
     }*/
 
     #region Get Methods

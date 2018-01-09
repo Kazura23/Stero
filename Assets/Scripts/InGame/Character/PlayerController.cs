@@ -227,6 +227,14 @@ public class PlayerController : MonoBehaviour
 	bool secureTimer = false;
 	bool useFord = true;
 	bool getCamRM = false;
+
+    // var analytics
+    private float timerRun = 0;
+    private int heartUse = 0;
+
+    private int[] enemyKill;
+    private string[] deadType;
+
     #endregion
 
     #region Mono

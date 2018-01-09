@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using Rewired;
+using UnityEngine.UI;
 
 public class GameController : ManagerParent
 {
@@ -58,6 +59,7 @@ public class GameController : ManagerParent
 	void Start ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
+        //AllPlayerPrefs.testSave();
 	}
 
 	void Update ( )
@@ -478,7 +480,7 @@ public class GameController : ManagerParent
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-        //AllPlayerPrefs.saveData = SaveData.Load();
+        AllPlayerPrefs.saveData = SaveData.Load();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -608,23 +610,24 @@ public class GameController : ManagerParent
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
-    {/*
-        string path1 = Application.dataPath + "/Save/save.bin";
+    {
+        string path1 = Application.dataPath + "/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
-        Debug.Log("save");*/
+        //GameObject.Find("Trash_text").GetComponent<Text>().text = "save";
     }
 
     public static ListData Load()
     {
         
-        string path1 = Application.dataPath + "/Save/save.bin";
+        string path1 = Application.dataPath + "/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
         {
             FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
             l.listScore = fSave.Deserialize<List<DataSave>>();
+            //GameObject.Find("Trash_text").GetComponent<Text>().text = l.listScore.Count > 0 ? "score = "+l.listScore[0].finalScore : "no save";
         }
         return l;
     }
@@ -692,7 +695,7 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
-        //SaveData.Save(this);
+        SaveData.Save(this);
     }
 }
 

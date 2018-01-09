@@ -56,6 +56,7 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
+        AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
 		canUpdate = true;
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
