@@ -377,6 +377,15 @@ public class GameController : ManagerParent
 			getInfS = InfScore [ a ];
 			if ( getInfS.TypeDeath == thisDeath )
 			{
+				if ( currIndex >= 0 )
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur * AllRank [ currIndex ].MultiPli;
+				}
+				else
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
+				}
+
 				if ( getInfS.WaitCulmul )
 				{
 					CurrText = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
@@ -385,7 +394,6 @@ public class GameController : ManagerParent
 					getInfS.CurrSpawn.Add ( CurrText );
 
 					getInfS.CurrCount++;
-					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
 
 					if ( getInfS.CurrWait != null )
 					{
@@ -397,9 +405,9 @@ public class GameController : ManagerParent
 				}
 				else
 				{
-					getInfS.AllScore = nbrPoint * getInfS.Multiplicateur;
 					addNewScore ( getInfS );
 				}
+
 			}
 		}
 	}
@@ -423,6 +431,8 @@ public class GameController : ManagerParent
 			Destroy ( thisInf.CurrSpawn [ a ] );
 		}
 
+		thisInf.AllScore = 0;
+		thisInf.CurrCount = 0;
 		thisInf.CurrSpawn.Clear ( );
 		Destroy ( newObj, 3 );
 
