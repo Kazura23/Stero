@@ -507,23 +507,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	public void RecoverTimer ( float malus = 1 )
+	public void RecoverTimer ( DeathType thisDeath, float malus )
 	{
 		if ( playerDead || StopPlayer )
 		{
 			return;
 		}
 
-		GlobalManager.GameCont.NewScore ( );
-
-		if ( Dash )
-		{
-			malus /= 2;
-		}
+		GlobalManager.GameCont.NewScore ( thisDeath );
 
 		if ( malus <= 0 )
 		{
 			malus = 1;
+		}
+
+		if ( Dash )
+		{
+			malus /= 2;
 		}
 
 		float getCal;
@@ -1702,12 +1702,22 @@ public class PlayerController : MonoBehaviour
 
 				if ( thisColl.gameObject.GetComponent<AbstractObject> ( ) )
 				{
-					thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward );
+					if ( Dash )
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Acceleration );
+					}
+					else if ( InMadness )
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Madness );
+					}
+					else
+					{
+						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Punch );
+					}
 				}
 				return;
 			}
-
-            else if ( getObj.tag == Constants._Balls )
+			else if ( getObj.tag == Constants._Balls )
 			{
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true, false, true ) );
 				return;

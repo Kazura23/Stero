@@ -62,7 +62,7 @@ public class ShieldMan : AbstractObject {
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}
 
-	public override void ForceProp ( Vector3 forceProp, bool checkConst, bool forceDead = false )
+	public override void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst, bool forceDead = false )
 	{
 		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness && !forceDead )
 		{
@@ -71,7 +71,7 @@ public class ShieldMan : AbstractObject {
 		else
 		{
 			getTrans.DOKill ( );
-			base.ForceProp ( forceProp );
+			base.ForceProp ( forceProp, thisDeath );
 		}
 	}
 

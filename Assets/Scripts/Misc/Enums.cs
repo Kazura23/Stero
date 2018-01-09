@@ -74,3 +74,13 @@ public enum TypeRotate
 	Clockwise,
 	CounterClockwise
 }
+
+public enum DeathType 
+{
+	SpecialPower,
+	Acceleration,
+	Madness,
+	Punch,
+	Enemy,
+	Obstacle
+}

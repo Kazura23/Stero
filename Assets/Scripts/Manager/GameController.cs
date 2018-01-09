@@ -52,7 +52,6 @@ public class GameController : ManagerParent
 	public bool canOpenShop = true;
 
 	[Header ("Score Parametre")]
-	public int PalierMultiplicateur = 500;
 	public Rank[] AllRank;
 
 	bool GameStarted = false;
@@ -351,7 +350,7 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name ); 
 	} 
 
-	public void NewScore ( )
+	public void NewScore ( DeathType thisDeath )
 	{
 		if ( getCurWait != null )
 		{

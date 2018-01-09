@@ -28,7 +28,7 @@ public class AbstractObject : MonoBehaviour
     [Tooltip("Lier au score")]
     public int point = 100;
 
-	public float MalusDivTimer = 0;
+	public float MalusDivTimer = 1;
 
     public bool useGravity = true;
 
@@ -140,18 +140,9 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Dead ( bool enemy = false )
 	{
-        //Time.timeScale = 1;
-        //StartCoroutine ( disableColl ( ) );
-        
-        
-
-       // Debug.Log("BoneBreak");
-
-        //checkConstAxe ( );
-
         if ( enemy )
 		{
-			onEnemyDead ( getTrans.forward * onObjForward );
+			onEnemyDead ( getTrans.forward * onObjForward, DeathType.Enemy );
             int randomSong = UnityEngine.Random.Range(0, 8);
 
             GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1), false);
@@ -161,7 +152,7 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
-			onEnemyDead ( getFor + getRig + getUp );
+			onEnemyDead ( getFor + getRig + getUp, DeathType.Punch );
             GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 
         }
@@ -179,9 +170,9 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true, bool forceDead = false )
+	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
-		onEnemyDead ( forceProp, checkConst );
+		onEnemyDead ( forceProp, thisDeath, checkConst );
 		StartCoroutine ( enableColl ( ) );
 	}
 	#endregion
@@ -218,7 +209,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( thisColl.tag == Constants._ChocWave )
 		{
-			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, false, true );
+			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, DeathType.SpecialPower, false, true );
 		}
 	}
 
@@ -229,7 +220,7 @@ public class AbstractObject : MonoBehaviour
 		if ( getDist < distForDB ) 
 		{ 
 			destGame = false;
-			onEnemyDead ( Vector3.zero ); 
+			onEnemyDead ( Vector3.zero, DeathType.SpecialPower ); 
 
 			float getConst = Constants.DB_Prepare;
 			meshRigid.useGravity = false;
@@ -263,7 +254,7 @@ public class AbstractObject : MonoBehaviour
 		} 
 	} 
 
-	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
+	void onEnemyDead ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true )
 	{
 		if ( checkDead )
 		{
@@ -274,7 +265,7 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
-			playerCont.RecoverTimer ( );
+			playerCont.RecoverTimer ( thisDeath, MalusDivTimer );
 		}
 
 		if ( thisObj == null )
