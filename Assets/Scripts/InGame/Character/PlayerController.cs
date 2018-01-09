@@ -1036,7 +1036,7 @@ public class PlayerController : MonoBehaviour
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 
-		if ( Dash )
+		if ( Dash || InMadness )
 		{
 			getTime *= DashSpeed * 1.1f;
 		}
@@ -1166,12 +1166,7 @@ public class PlayerController : MonoBehaviour
 			speed = ( speed / 100 ) * PourcRal;
 		}
 
-		if ( InMadness )
-		{
-			speed *= 1.5f;
-			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
-		}
-		if ( Dash && !playerDead && !InMadness )
+		if ( ( Dash || InMadness ) && !playerDead )
 		{
 			speed *= DashSpeed;
 
@@ -1278,26 +1273,30 @@ public class PlayerController : MonoBehaviour
 		Vector3 currRot = Vector3.zero;
 		float calcTime = RotationSpeed * delTime;
 		waitRotate = true;
+		Vector3 getVec = Vector3.zero;
 
 		transPlayer.DOKill ( );
-
 		switch ( currentDir )
 		{
 		case Direction.North: 
+			getVec = new Vector3 (0, 0, 0);
 			currVect = Vector3.forward;
 			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.South: 
+			getVec = new Vector3 (0, 180, 0);
 			currVect = Vector3.back;
 			currRot = new Vector3 ( 0, 180, 0 );
 			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.East: 
+			getVec = new Vector3 (0, 90, 0);
 			currVect = Vector3.right;
 			currRot = new Vector3 ( 0, 90, 0 );
 			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
 			break;
 		case Direction.West: 
+			getVec = new Vector3 (0, -90, 0);
 			currVect = Vector3.left;
 			currRot = new Vector3 ( 0, -90, 0 );
 			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
@@ -1307,7 +1306,7 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
-		transPlayer.localRotation = Quaternion.Euler ( currRot );
+		transPlayer.localRotation = Quaternion.Euler (getVec);
 		waitRotate = false;
 		useFord = true;
 		currVect = pTrans.forward;
