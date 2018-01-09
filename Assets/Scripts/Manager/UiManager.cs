@@ -14,6 +14,7 @@ public class UiManager : ManagerParent
 	public Image RedScreen;
 	public GameObject speedEffect;
 	public Transform MenuParent;
+	public Transform GameParent;
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
 

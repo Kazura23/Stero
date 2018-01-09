@@ -52,10 +52,9 @@ public class GameController : ManagerParent
 	public bool canOpenShop = true;
 
 	[Header ("Score Parametre")]
+	public GameObject TextObj;
 	public Rank[] AllRank;
 	public ScoringInfo [] InfScore;
-
-
 
 	bool GameStarted = false;
 	bool onHub = true;
@@ -371,6 +370,8 @@ public class GameController : ManagerParent
 		}
 
 		ScoringInfo getInfS;
+		GameObject CurrText;
+
 		for ( int a = 0; a < InfScore.Length; a++ )
 		{
 			getInfS = InfScore [ a ];
@@ -378,6 +379,11 @@ public class GameController : ManagerParent
 			{
 				if ( getInfS.WaitCulmul )
 				{
+					CurrText = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+					CurrText.GetComponent<Text> ( ).text = "" + nbrPoint;
+
+					getInfS.CurrSpawn.Add ( CurrText );
+
 					getInfS.CurrCount++;
 					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
 
@@ -388,6 +394,11 @@ public class GameController : ManagerParent
 
 					getInfS.CurrWait = waitScore ( getInfS );
 					StartCoroutine ( getInfS.CurrWait );
+				}
+				else
+				{
+					getInfS.AllScore = nbrPoint * getInfS.Multiplicateur;
+					addNewScore ( getInfS );
 				}
 			}
 		}
@@ -404,6 +415,17 @@ public class GameController : ManagerParent
 
 	void addNewScore ( ScoringInfo thisInf )
 	{
+		GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+		newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
+
+		for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
+		{
+			Destroy ( thisInf.CurrSpawn [ a ] );
+		}
+
+		thisInf.CurrSpawn.Clear ( );
+		Destroy ( newObj, 3 );
+
 		int currScore = int.Parse ( textScore.text ) + thisInf.AllScore * thisInf.CurrCount;
 		textScore.text = "" + currScore;
 	}
