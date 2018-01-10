@@ -499,7 +499,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	public void RecoverTimer ( DeathType thisDeath, int nbrPoint, float malus )
+	public void RecoverTimer ( DeathType thisDeath, int nbrPoint, float bonus )
 	{
 		if ( playerDead || StopPlayer )
 		{
@@ -508,14 +508,14 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
 
-		if ( malus <= 0 )
+		if ( bonus <= 0 )
 		{
-			malus = 1;
+			bonus = 1;
 		}
 
-		if ( Dash )
+		if ( thisDeath == DeathType.Acceleration )
 		{
-			malus /= 2;
+			bonus *= 0.5f;
 		}
 
 		float getCal;
@@ -523,11 +523,11 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( !InMadness )
 			{
-				getCal = TimerSecureRecover / malus;
+				getCal = TimerSecureRecover * bonus;
 			}
 			else
 			{
-				getCal = TimerRecoverOnMadness / malus;
+				getCal = TimerRecoverOnMadness * bonus;
 			}
 
 			getCal *= 0.25f;
@@ -549,7 +549,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			getCal = ( ( TimerRecover * 0.01f ) / malus ) * 0.5f + timerFight.value;
+			getCal = ( ( TimerRecover * 0.01f ) * bonus ) * 0.5f + timerFight.value;
 
 			if ( getCal > 0.75f )
 			{
@@ -560,7 +560,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			getCal = timerFight.value + ( ( TimerLastRecover * 0.01f ) / malus ) * 0.25f;
+			getCal = timerFight.value + ( ( TimerLastRecover * 0.01f ) * bonus ) * 0.25f;
 
 			if ( getCal > 0.25f )
 			{

@@ -28,7 +28,7 @@ public class AbstractObject : MonoBehaviour
     [Tooltip("Lier au score")]
     public int point = 100;
 
-	public float MalusDivTimer = 1;
+	public float BonusMultTimer = 1;
 
     public bool useGravity = true;
 
@@ -265,7 +265,7 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
-			playerCont.RecoverTimer ( thisDeath, point, MalusDivTimer );
+			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
 		if ( thisObj == null )
