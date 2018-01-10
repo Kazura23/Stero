@@ -446,11 +446,11 @@ public class PlayerController : MonoBehaviour
     {
         if (/*barMadness.value + addPointBarByPunchSimple < barMadness.maxValue &&*/ type == 0)
         {
-            this.AddSmoothCurve(addPointBarByPunchSimple);
+           // this.AddSmoothCurve(addPointBarByPunchSimple);
         }
         else if (/*barMadness.value + addPointBarByPunchDouble < barMadness.maxValue &&*/ type == 1)
         {
-            this.AddSmoothCurve(addPointBarByPunchDouble);
+            //this.AddSmoothCurve(addPointBarByPunchDouble);
         }
     }
 
@@ -1049,13 +1049,6 @@ public class PlayerController : MonoBehaviour
 
 		allHit = Physics.RaycastAll ( pTrans.position, Vector3.down, 2 );
 
-		if ( Dash )
-		{
-			getTime *= DashSpeed * 1.1f;
-		}
-
-		getTime *= ( maxSpeed / MaxSpeed );
-
 		foreach ( RaycastHit thisRay in allHit )
 		{
 			if ( thisRay.collider.gameObject == gameObject || thisRay.collider.tag == Constants._EnnemisTag || thisRay.collider.tag == Constants._ObsPropSafe )
@@ -1063,10 +1056,9 @@ public class PlayerController : MonoBehaviour
 				continue;
 			}
 
-			checkAir = false;
-
 			if ( thisRay.collider.gameObject.layer == 9 )
 			{
+				checkAir = false;
 				Transform getThis = thisRay.collider.transform;
 
 				if ( !waitRotate )
@@ -1079,6 +1071,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
 			{
+				checkAir = false;
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
 				if ( !waitRotate )
 				{
@@ -1109,6 +1102,7 @@ public class PlayerController : MonoBehaviour
 			{
 				pRig.constraints = thisConst;
 				pRig.useGravity = true;
+
 				if ( thisEnum != null )
 				{
 					StopCoroutine ( thisEnum );
@@ -1397,8 +1391,9 @@ public class PlayerController : MonoBehaviour
 
 			newH -= calTrans;
 
-			if ( saveDist > 0 && newH - calTrans < 0 || saveDist < 0 && newH > 0 )
+			if ( saveDist > 0 && newH - calTrans < 0 || saveDist < 0 && newH - calTrans > 0 )
 			{
+				
 				calTrans += newH;
 				newH = 0;
 				currSpLine = 0;

@@ -39,10 +39,10 @@ public class AbstractObject : MonoBehaviour
     protected Transform playerTrans;
     protected bool activeSlow = true;
 	protected bool isObject = false;
+	protected Vector3 startPos;
 	Rigidbody meshRigid;
     private int techPunch;
 
-	Vector3 startPos;
 	Vector3 projection;
 	float distForDB = 0;
 	bool checkDead = false;
@@ -273,9 +273,8 @@ public class AbstractObject : MonoBehaviour
 			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
 			thisObj.SetActive ( false );
 			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+			thisObj.transform.localPosition = startPos;
 		}
-
-		thisObj.transform.localPosition = startPos;
 
 		isDead = true;
 
@@ -321,8 +320,10 @@ public class AbstractObject : MonoBehaviour
         {
             meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
         }
+
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 		string getObsT = Constants._ObjDeadTag;
+
 		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
 		{
 			thisRig.tag = getObsT;
