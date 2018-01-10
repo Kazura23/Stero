@@ -329,8 +329,6 @@ public class PlayerController : MonoBehaviour
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
 		startRotPlayer = pTrans.localRotation;
-
-		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
 	public void ResetPlayer ( )
@@ -366,8 +364,6 @@ public class PlayerController : MonoBehaviour
 		decelerationCL = DecelerationCL;
 		ThisAct = SpecialAction.Nothing;
 		timeToDP = TimeToDoublePunch;
-		//BarMadness = GlobalManager.Ui.Madness;
-		//BarMadness.value = 0;
         NbrLineRight = 0;
         NbrLineLeft = 0;
 		newH = 0;
