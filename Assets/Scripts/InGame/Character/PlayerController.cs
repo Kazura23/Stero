@@ -144,11 +144,8 @@ public class PlayerController : MonoBehaviour
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
 
-	Direction currentDir = Direction.North;
-	Direction newDir = Direction.North;
 	Vector3 dirLine = Vector3.zero;
 	Vector3 lastPos;
-	Vector3 currVect;
 
 	//Vector3 posDir;
 	Text textDist;
@@ -230,6 +227,7 @@ public class PlayerController : MonoBehaviour
 	bool secureTimer = false;
 	bool useFord = true;
 	bool getCamRM = false;
+	bool newDir = false;
     #endregion
 
     #region Mono
@@ -345,7 +343,6 @@ public class PlayerController : MonoBehaviour
 		SliderSlow.value = SliderSlow.maxValue;
 
 		newStat ( StatePlayer.Normal );
-        currentDir = Direction.North;
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
 		backTF.color = Color.white;
 		lastTimer = false;
@@ -389,8 +386,6 @@ public class PlayerController : MonoBehaviour
 		lastPos = startPlayer;
 		canSpe = true;
 		stopMadness ( );
-
-		currVect = Vector3.forward;
 	}
 
     public void GameOver ( bool forceDead = false )
@@ -1267,9 +1262,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( befRot < 0 )
 			{
+				pTrans.transform.position = new Vector3 ( getNewRot.x, pTrans.transform.position.y, getNewRot.z );
 				newPos = false;
-				currentDir = newDir;
-				pTrans.Translate ( pTrans.forward * befRot, Space.World );
 				useFord = false;
 				StartCoroutine ( rotPlayer ( delTime ) );
 			}
@@ -1279,10 +1273,6 @@ public class PlayerController : MonoBehaviour
 		{
 			calTrans = pTrans.forward * speed * delTime;
 		}
-		else
-		{
-			calTrans = currVect * speed * delTime;
-		}
 
 		pTrans.Translate ( calTrans, Space.World );
 	}
@@ -1291,48 +1281,34 @@ public class PlayerController : MonoBehaviour
 	IEnumerator rotPlayer ( float delTime )
 	{
 		Transform transPlayer = pTrans;
-		Vector3 currRot = Vector3.zero;
+		Vector3 currVect;
 		float calcTime = RotationSpeed * delTime;
 
 		if ( InMadness || Dash )
 		{
-			calcTime *= 2;
+			calcTime *= 0.5f;
 		}
 
 		waitRotate = true;
 
 		transPlayer.DOKill ( );
 
-		switch ( currentDir )
+		if ( newDir )
 		{
-		case Direction.North: 
-			currVect = Vector3.forward;
-			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
-			break;
-		case Direction.South: 
-			currVect = Vector3.back;
-			currRot = new Vector3 ( 0, 180, 0 );
-			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
-			break;
-		case Direction.East: 
-			currVect = Vector3.right;
-			currRot = new Vector3 ( 0, 90, 0 );
-			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
-			break;
-		case Direction.West: 
-			currVect = Vector3.left;
-			currRot = new Vector3 ( 0, -90, 0 );
-			transPlayer.DOLocalRotate ( currRot, calcTime, RotateMode.Fast );
-			break;
+			currVect = new Vector3 ( 0, 90, 0 );
 		}
+		else
+		{
+			currVect = new Vector3 ( 0, -90, 0 );
+		}
+
+		transPlayer.DOLocalRotate ( currVect, calcTime, RotateMode.LocalAxisAdd );
 
 		yield return new WaitForSeconds ( calcTime );
 
 		yield return new WaitForEndOfFrame ( );
-		transPlayer.localRotation = Quaternion.Euler ( currRot );
 		waitRotate = false;
 		useFord = true;
-		currVect = pTrans.forward;
 	}
 
 	void changeLine ( float delTime )
@@ -1648,7 +1624,7 @@ public class PlayerController : MonoBehaviour
 		propP = false;
 		propDP = false;
 	}
-
+	Vector3 getNewRot;
 	void OnTriggerEnter ( Collider thisColl )
 	{
 		if ( thisColl.tag == Constants._NewDirec )
@@ -1658,18 +1634,17 @@ public class PlayerController : MonoBehaviour
 			if ( !onAnimeAir )
 			{
 				newPos = true;
-				newDir = thisColl.GetComponent<NewDirect> ( ).NewDirection;
+				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
 				blockChangeLine = false;
 				getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
 
 				Vector3 getPtr = pTrans.position;
 				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
-
+				getNewRot = getThisC;
 				befRot = Vector3.Distance ( getThisC, getPtr );
 			}
 			else
 			{
-				currentDir = thisColl.GetComponent<NewDirect> ( ).NewDirection;
 				pTrans.position = new Vector3 ( getThisC.x, pTrans.position.y, getThisC.z );
 			}
 		} 
