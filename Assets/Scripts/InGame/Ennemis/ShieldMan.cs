@@ -35,7 +35,17 @@ public class ShieldMan : AbstractObject {
     #region Public Methods
     #endregion
 
-    #region Private Methods 
+    #region Private Methods
+	protected override void OnEnable ( )
+	{
+		base.OnEnable ( );
+		if ( !shieldActive )
+		{
+			thisObj.SetActive ( true );
+			Dead ( );
+		}	
+	}
+
 	protected override void OnCollisionEnter ( Collision thisColl )
 	{
 		base.OnCollisionEnter ( thisColl );
@@ -52,7 +62,7 @@ public class ShieldMan : AbstractObject {
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}
 
-	public override void ForceProp ( Vector3 forceProp, bool checkConst, bool forceDead = false )
+	public override void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst, bool forceDead = false )
 	{
 		if ( shieldActive && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).InMadness && !forceDead )
 		{
@@ -61,7 +71,7 @@ public class ShieldMan : AbstractObject {
 		else
 		{
 			getTrans.DOKill ( );
-			base.ForceProp ( forceProp );
+			base.ForceProp ( forceProp, thisDeath );
 		}
 	}
 
@@ -93,8 +103,6 @@ public class ShieldMan : AbstractObject {
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[2].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[2].quotes.Length)];
         }
 
-
-
 		if ( isDetected && parMat != null )
 		{
 			parMat.color = NewColor;
@@ -111,6 +119,8 @@ public class ShieldMan : AbstractObject {
         {
             if (shieldActive)
             {
+				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+
                 shieldActive = false;
                 playerCont.MadnessMana(1);
 				move = getTrans.position + (getTrans.forward * distance);
@@ -130,8 +140,6 @@ public class ShieldMan : AbstractObject {
 						//Destroy ( trans.gameObject );
 					}
                 }
-
-
 
                 //animation shield destroy
             }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using Rewired;
+using UnityEngine.UI;
 
 public class GameController : ManagerParent
 {
@@ -43,25 +44,51 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public Camera thisCam;
 	Player inputPlayer;
+	Text textScore;
 
+	IEnumerator getCurWait;
 	GameObject lastWall;
 	bool restartGame = false;
 	public bool canOpenShop = true;
+
+	[Header ("Score Parametre")]
+	public GameObject TextObj;
+	public Rank[] AllRank;
+	public ScoringInfo [] InfScore;
 
 	bool GameStarted = false;
 	bool onHub = true;
 	bool coupSimpl = true;
 	bool horiz = true;
+	int currIndex = -1;
+	int currMax = 0;
+
+	int CurrentScore = 0;
 	#endregion
 
 	#region Mono
 	void Start ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
+		textScore = GlobalManager.Ui.ScorePoints;
 	}
 
 	void Update ( )
 	{
+		for ( int a = 0; a < AllRank.Length; a++ )
+		{
+			if ( a != currIndex && AllRank [ a ].NeededScore < CurrentScore && AllRank [ a ].NeededScore > currMax )
+			{
+				currMax = AllRank [ a ].NeededScore;
+				GlobalManager.Ui.RankText.text = AllRank [ a ].NameRank;
+				Player.GetComponent<PlayerController> ( ).MultiPli = AllRank [ a ].MultiPli;
+				currIndex = a;
+				getCurWait = waitRank ( AllRank [ a ].Time );
+
+				StartCoroutine ( getCurWait );
+			}
+		}
+
 		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
@@ -185,10 +212,12 @@ public class GameController : ManagerParent
 	public void StartGame ( )
 	{
 		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+
 		if ( lastWall != null )
 		{
 			Destroy ( lastWall );
 		}
+
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
@@ -200,7 +229,18 @@ public class GameController : ManagerParent
 
 		Intro = true;
 		isStay = true;
-        
+		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
+		GlobalManager.Ui.Multiplicateur.text = "" + 1;
+		GlobalManager.Ui.RankText.text = Constants.DefRankName;
+		currIndex = -1;
+		currMax = 0;
+		CurrentScore = 0;
+
+		if ( getCurWait != null )
+		{
+			StopCoroutine ( getCurWait );
+		}
+
 		if ( restartGame )
         {
 			isStay = false;
@@ -314,19 +354,114 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name ); 
 	} 
 
-    private IEnumerator TrashFunction()
-    {
-        yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
-        GameStartedUpdate();
-    }
+	public void NewScore ( DeathType thisDeath, int nbrPoint )
+	{
+		//AllPlayerPrefs.scoreWhithoutDistance += point;
+		if ( getCurWait != null )
+		{
+			StopCoroutine ( getCurWait );
+		}
 
+		if ( currIndex >= 0 )
+		{
+			getCurWait = waitRank ( AllRank [ currIndex ].Time );
+
+			StartCoroutine ( getCurWait );
+		}
+
+		ScoringInfo getInfS;
+		GameObject CurrText;
+
+		for ( int a = 0; a < InfScore.Length; a++ )
+		{
+			getInfS = InfScore [ a ];
+			if ( getInfS.TypeDeath == thisDeath )
+			{
+				if ( currIndex >= 0 )
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur * AllRank [ currIndex ].MultiPli;
+				}
+				else
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
+				}
+
+				if ( getInfS.WaitCulmul )
+				{
+					CurrText = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+					CurrText.GetComponent<Text> ( ).text = "" + nbrPoint;
+
+					getInfS.CurrSpawn.Add ( CurrText );
+
+					getInfS.CurrCount++;
+
+					if ( getInfS.CurrWait != null )
+					{
+						StopCoroutine ( getInfS.CurrWait );
+					}
+
+					getInfS.CurrWait = waitScore ( getInfS );
+					StartCoroutine ( getInfS.CurrWait );
+				}
+				else
+				{
+					addNewScore ( getInfS );
+				}
+
+			}
+		}
+	}
     #endregion
 
     #region Private Methods
+	IEnumerator waitScore ( ScoringInfo thisInf )
+	{
+		yield return new WaitForSeconds ( thisInf.SecCumul );
+
+		addNewScore ( thisInf );
+	}
+
+	void addNewScore ( ScoringInfo thisInf )
+	{
+		GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+		newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
+
+		for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
+		{
+			Destroy ( thisInf.CurrSpawn [ a ] );
+		}
+
+		thisInf.AllScore = 0;
+		thisInf.CurrCount = 0;
+		thisInf.CurrSpawn.Clear ( );
+		Destroy ( newObj, 3 );
+
+		int currScore = int.Parse ( textScore.text ) + thisInf.AllScore * thisInf.CurrCount;
+		textScore.text = "" + currScore;
+		CurrentScore = currScore;
+	}
+
 	void setMusic () 
 	{ 
-		    GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
+
+	private IEnumerator TrashFunction()
+	{
+		yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
+		GameStartedUpdate();
+	}
+
+	IEnumerator waitRank ( float secs )
+	{
+		yield return new WaitForSeconds ( secs );
+
+		GlobalManager.Ui.RankText.text = Constants.DefRankName;
+		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
+		currIndex = -1;
+		currMax = 0;
+		CurrentScore = 0;
+	}
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
@@ -601,7 +736,6 @@ public class GameController : ManagerParent
 		}
 	}
     #endregion
-
 }
 
 #region Save
@@ -653,7 +787,6 @@ public class DataSave
     public int score;
     public int piece;
     public float distance;
-
 }
 
 public class ListData
@@ -731,3 +864,32 @@ public class NewChunk
 	public GameObject ThisChunk; 
 	public UnLockMethode ThisMethod; 
 } 
+
+[System.Serializable] 
+public class Rank  
+{ 
+	public string NameRank; 
+	public int MultiPli;
+	public float Time;
+	public int NeededScore; 
+} 
+
+[System.Serializable] 
+public class ScoringInfo 
+{ 
+	public DeathType TypeDeath;
+	public int Multiplicateur = 1;
+
+	[Header ("Si il faut attendre pour cumuler du score")]
+	public bool WaitCulmul;
+	public float SecCumul = 0;
+
+	[HideInInspector]
+	public IEnumerator CurrWait;
+	[HideInInspector]
+	public int CurrCount = 0;
+	[HideInInspector]
+	public int AllScore = 0;
+	[HideInInspector]
+	public List<GameObject> CurrSpawn;
+}

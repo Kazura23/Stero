@@ -14,11 +14,14 @@ public class UiManager : ManagerParent
 	public Image RedScreen;
 	public GameObject speedEffect;
 	public Transform MenuParent;
+	public Transform GameParent;
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
+	public Text RankText;
+	public Text Multiplicateur;
 
 	public Image BallTransition;
 

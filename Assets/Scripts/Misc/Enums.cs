@@ -4,15 +4,6 @@ public enum TokenType
 	GoTok
 }
 
-
-public enum Direction
-{
-	North,
-	South,
-	East,
-	West
-}
-
 public enum MenuType
 {
 	Nothing,
@@ -73,4 +64,14 @@ public enum TypeRotate
 {
 	Clockwise,
 	CounterClockwise
+}
+
+public enum DeathType 
+{
+	SpecialPower,
+	Acceleration,
+	Madness,
+	Punch,
+	Enemy,
+	Obstacle
 }
