@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour
 	public float SpeedEffectTime;
 	[Tooltip ("Force bonus en plus de la gravitée")]
 	public float BonusGrav = 0;
-	[Tooltip ("Pourcentage de ralentissement du personnage dans les airs")]
-	public float PourcRal = 50;
 	public float delayChocWave = 5;
 	public float DelayDeadBall = 15;
 	public float DistDBTake = 25;
@@ -709,7 +707,6 @@ public class PlayerController : MonoBehaviour
 		}
 
 		checkInAir ( getTime );
-		changeLine ( getTime );
 
         switch ( debugTech )
         {
@@ -724,8 +721,12 @@ public class PlayerController : MonoBehaviour
             }
         break;
         }
-		
-		playerMove ( getTime, currSpeed );
+
+		if ( !inAir )
+		{
+			changeLine ( getTime );
+			playerMove ( getTime, currSpeed );
+		}
 	}
 
 	void newStat ( StatePlayer currStat )
@@ -1168,11 +1169,6 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( inAir )
-		{
-			speed = ( speed / 100 ) * PourcRal;
-		}
-
 		if ( InMadness )
 		{
 			speed *= 1.5f;
@@ -1383,11 +1379,6 @@ public class PlayerController : MonoBehaviour
 			}
 
 			float calTrans = clDir * currSpLine * delTime;
-
-			if ( inAir )
-			{
-				calTrans = ( calTrans / 100 ) * PourcRal;
-			}
 
 			newH -= calTrans;
 
