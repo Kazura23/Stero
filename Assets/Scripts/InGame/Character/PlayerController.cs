@@ -157,6 +157,8 @@ public class PlayerController : MonoBehaviour
 	Animator playAnimator;
 
 	Camera thisCam;
+	Camera otherCam;
+
 	Transform pivotTrans;
 	Punch getPunch;
     CameraFilterPack_Color_YUV camMad;
@@ -283,7 +285,6 @@ public class PlayerController : MonoBehaviour
 	public void IniPlayer ( )
 	{
 		pTrans = transform;
-
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
 		backTF = timerFight.transform.GetChild(1).transform.GetChild(0).GetComponent<Image> ( );
@@ -321,12 +322,14 @@ public class PlayerController : MonoBehaviour
 		getObj.transform.localPosition = Vector3.zero;
 		thisCam = GlobalManager.GameCont.thisCam;
 		thisCam.transform.SetParent ( getObj.transform );
+		otherCam = thisCam.transform.Find ( "OtherCam" ).GetComponent<Camera> ( );
 		pivotTrans = getObj.transform;
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
 		startRotPlayer = pTrans.localRotation;
+
 		//Plafond.GetComponent<MeshRenderer>().enabled = true;
 	}
 
@@ -410,6 +413,14 @@ public class PlayerController : MonoBehaviour
             return;
 		}
 
+		int getCull = thisCam.cullingMask;
+		CameraClearFlags thisClear = thisCam.clearFlags;
+		Color thisColor = thisCam.backgroundColor;
+
+		thisCam.clearFlags = otherCam.clearFlags;
+		thisCam.cullingMask = otherCam.cullingMask;
+		thisCam.DOColor ( otherCam.backgroundColor, 0.3f );
+
         AllPlayerPrefs.distance = totalDis;
 		AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int) totalDis;
 
@@ -437,6 +448,10 @@ public class PlayerController : MonoBehaviour
         DOVirtual.DelayedCall(1f, () =>
         {
             GlobalManager.Ui.OpenThisMenu(MenuType.GameOver, thisTok);
+
+			thisCam.clearFlags = thisClear;
+			thisCam.cullingMask = getCull;
+			thisCam.backgroundColor = thisColor;
         });
     }
 
