@@ -1631,7 +1631,7 @@ public class PlayerController : MonoBehaviour
 			if ( !onAnimeAir )
 			{
 				newPos = true;
-				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
+				newDir = !thisColl.GetComponent<NewDirect> ( ).GoRight;
 				blockChangeLine = false;
 				getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
 
