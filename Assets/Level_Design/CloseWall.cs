@@ -10,11 +10,23 @@ public class CloseWall : MonoBehaviour {
     public float timeBetweenClose = 5f ;
     public float speed = 5f ;
 
-    private void Start()
+	Vector3 wallRPos;
+	Vector3 wallLPos;
+
+    private void Awake()
     {
         timeBetweenClose /= 100;
         speed /= 100;
+
+		wallRPos = WallRight.transform.localPosition;
+		wallLPos = WallLeft.transform.localPosition;
     }
+
+	void OnEnable ( )
+	{
+		WallRight.transform.localPosition = wallRPos;
+		WallLeft.transform.localPosition = wallLPos;
+	}
 
     IEnumerator CloseWallStart()
     {
@@ -34,7 +46,7 @@ public class CloseWall : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+		if ( other.gameObject.tag == "Player" )
         {
 			StartCoroutine ( CloseWallStart ( ) );
         }
