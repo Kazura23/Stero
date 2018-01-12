@@ -34,7 +34,6 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
-            
             //Debug.Log("anime active !!!");
         }
 
@@ -47,8 +46,7 @@ public class RiffleMan : AbstractObject
         {
             detected = true;
 
-
-            GetComponentInChildren<Animator>().SetTrigger("Attack");
+            GetComponentInChildren<Animator> ( ).SetTrigger("Attack");
 
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
@@ -58,8 +56,13 @@ public class RiffleMan : AbstractObject
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
         }
-
     }
+
+	protected override void OnEnable ( )
+	{
+		base.OnEnable ( );
+		detected = false;
+	}
 
 	public override void Dead ( bool enemy = false ) 
 	{

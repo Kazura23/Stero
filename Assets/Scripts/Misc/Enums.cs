@@ -4,15 +4,6 @@ public enum TokenType
 	GoTok
 }
 
-
-public enum Direction
-{
-	North,
-	South,
-	East,
-	West
-}
-
 public enum MenuType
 {
 	Nothing,
