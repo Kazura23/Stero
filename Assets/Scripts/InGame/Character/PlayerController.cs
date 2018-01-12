@@ -1096,10 +1096,11 @@ public class PlayerController : MonoBehaviour
 				if ( !waitRotate )
 				{
 					pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
-					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 ( pTrans.localRotation.x, 0, 0 ) ) );
+					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 (  getThis.rotation.x, 0, 0 ) ) );
 				}
 
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
+				break;
 			}
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
 			{
