@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using Rewired;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class GameController : ManagerParent
 {
@@ -71,6 +72,7 @@ public class GameController : ManagerParent
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
 		textScore = GlobalManager.Ui.ScorePoints;
+        AllPlayerPrefs.ANbRun = 0;
 	}
 
 	void Update ( )
@@ -178,6 +180,21 @@ public class GameController : ManagerParent
         
 	}
 
+    private void OnDestroy()
+    {
+        if (AllPlayerPrefs.canSendAnalytics)
+        {
+            var resultat = Analytics.CustomEvent("Nombre de run", new Dictionary<string, object>
+            {
+                { "Nombre total de run", AllPlayerPrefs.ANbRun}
+            });
+            if (resultat.Equals(AnalyticsResult.Ok))
+                Debug.Log(resultat);
+            else
+                Debug.LogWarning(resultat);
+        }
+    }
+
     void ActiveTextIntro()
     {
         colorTw = DOVirtual.DelayedCall(.2f, () => {
@@ -197,8 +214,9 @@ public class GameController : ManagerParent
     
 	public void StartGame ( )
 	{
-		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
-
+        //GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+        AllPlayerPrefs.ATimerRun = 0;
+        AllPlayerPrefs.ANbRun++;
 		if ( lastWall != null )
 		{
 			Destroy ( lastWall );
@@ -293,6 +311,8 @@ public class GameController : ManagerParent
     public void Restart () 
 	{
         Time.timeScale = 1;
+        AllPlayerPrefs.ATimerRun = 0;
+        AllPlayerPrefs.ANbRun++;
 		GlobalManager.Ui.thisCam.transform.DOKill ();
 		ScreenShake.Singleton.StopShake ( );
 
@@ -618,7 +638,7 @@ public class GameController : ManagerParent
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-        //AllPlayerPrefs.saveData = SaveData.Load();
+        AllPlayerPrefs.saveData = SaveData.Load();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -688,13 +708,16 @@ public class GameController : ManagerParent
 			case SpecialAction.OndeChoc:
 				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
 				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+                AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
 				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
 				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
+                    AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
 				currPlayer.SliderSlow.maxValue = 10;
+                    AllPlayerPrefs.ANameTechSpe = "Slow Motion";
 				break;
 			}
 
@@ -732,12 +755,14 @@ public class GameController : ManagerParent
 		{
       
             currPlayer.Life++;
+            AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}
 
 		if ( thisItem.StartBonus )
 		{
 			SpawnerChunck.StartBonus = true;
 			SpawnerChunck.EndLevel++;
+            AllPlayerPrefs.AExtraStart = SpawnerChunck.EndLevel;
 		}
 	}
     #endregion
@@ -747,23 +772,24 @@ public class GameController : ManagerParent
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
-    {/*
-        string path1 = Application.dataPath + "/Save/save.bin";
+    {
+        string path1 = Application.dataPath + "/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
-        Debug.Log("save");*/
+        //GameObject.Find("Trash_text").GetComponent<Text>().text = "save";
     }
 
     public static ListData Load()
     {
         
-        string path1 = Application.dataPath + "/Save/save.bin";
+        string path1 = Application.dataPath + "/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
         {
             FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
             l.listScore = fSave.Deserialize<List<DataSave>>();
+            //GameObject.Find("Trash_text").GetComponent<Text>().text = l.listScore.Count > 0 ? "score = "+l.listScore[0].finalScore : "no save";
         }
         return l;
     }
@@ -830,7 +856,7 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
-        //SaveData.Save(this);
+        SaveData.Save(this);
     }
 }
 

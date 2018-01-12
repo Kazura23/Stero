@@ -60,6 +60,11 @@ public class ShieldMan : AbstractObject {
 	public override void Dead(bool enemy = false)
 	{
 		base.Dead(enemy);
+        AllPlayerPrefs.ANbTotalEnemyKill++;
+        AllPlayerPrefs.ANbKnighty++;
+        //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
+        //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
+    }
 
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
 	}

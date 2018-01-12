@@ -34,6 +34,7 @@ public class RiffleMan : AbstractObject
 
         if (!isDead)
         {
+            
             //Debug.Log("anime active !!!");
         }
 
@@ -46,7 +47,8 @@ public class RiffleMan : AbstractObject
         {
             detected = true;
 
-            GetComponentInChildren<Animator> ( ).SetTrigger("Attack");
+
+            GetComponentInChildren<Animator>().SetTrigger("Attack");
 
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
@@ -56,6 +58,7 @@ public class RiffleMan : AbstractObject
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
         }
+
     }
 
 	protected override void OnEnable ( )
@@ -67,9 +70,11 @@ public class RiffleMan : AbstractObject
 	public override void Dead ( bool enemy = false ) 
 	{
 		base.Dead ( enemy );
-
-		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
-	}
+        AllPlayerPrefs.ANbVino++;
+        AllPlayerPrefs.ANbTotalEnemyKill++;
+        //Debug.Log("vino " + AllPlayerPrefs.ANbVino);
+        //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
+    }
 	#endregion
 
 	#region Private Methods
@@ -126,4 +131,15 @@ public class RiffleMan : AbstractObject
 }
 
 
-            
+            
+
+        if (!detected)
+        {
+            detected = true;
+
+            GetComponentInChildren<Animator> ( ).SetTrigger("Attack");
+            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 8, transform.position.z), "TextEnemy", GlobalManager.Ui.transform.parent, 3);
+            //txt.transform.DOLocalMoveY(6, 0);
+            txt.transform.DOScale(Vector3.one * .15f, 0);
+            txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
+        }
