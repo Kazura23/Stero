@@ -411,7 +411,6 @@ public class GameController : ManagerParent
 	void addNewScore ( ScoringInfo thisInf )
 	{
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore);
 		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 		int a;
 		for ( a = 0; a < thisInf.CurrSpawn.Count; a++ )
@@ -423,12 +422,14 @@ public class GameController : ManagerParent
 		//textScore.text = "" + currScore;
         for ( a = 0; a < AllRank.Length; a++)
         {
+
+            GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[a].Color);
+
             if ( a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
             {
                 currMax = AllRank[a].NeededScore;
                 GlobalManager.Ui.RankText.text = AllRank[a].NameRank;
 
-                GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[a].Color);
                 Player.GetComponent<PlayerController>().MultiPli = AllRank[a].MultiPli;
                 currIndex = a;
 
