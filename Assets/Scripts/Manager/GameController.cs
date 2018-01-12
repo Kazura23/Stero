@@ -75,20 +75,6 @@ public class GameController : ManagerParent
 
 	void Update ( )
 	{
-		for ( int a = 0; a < AllRank.Length; a++ )
-		{
-			if ( a != currIndex && AllRank [ a ].NeededScore < CurrentScore && AllRank [ a ].NeededScore > currMax )
-			{
-				currMax = AllRank [ a ].NeededScore;
-				GlobalManager.Ui.RankText.text = AllRank [ a ].NameRank;
-				Player.GetComponent<PlayerController> ( ).MultiPli = AllRank [ a ].MultiPli;
-				currIndex = a;
-				getCurWait = waitRank ( AllRank [ a ].Time );
-
-				StartCoroutine ( getCurWait );
-			}
-		}
-
 		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
@@ -423,8 +409,9 @@ public class GameController : ManagerParent
 
 	void addNewScore ( ScoringInfo thisInf )
 	{
-		GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
-		newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
+		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+        GlobalManager.Ui.ScorePlus(thisInf.AllScore);
+		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 
 		for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
 		{
@@ -434,12 +421,25 @@ public class GameController : ManagerParent
 		thisInf.AllScore = 0;
 		thisInf.CurrCount = 0;
 		thisInf.CurrSpawn.Clear ( );
-		Destroy ( newObj, 3 );
+		//Destroy ( newObj, 3 );
+		int currScore = thisInf.AllScore * thisInf.CurrCount + 1;
+		//textScore.text = "" + currScore;
+		CurrentScore += currScore;
 
-		int currScore = int.Parse ( textScore.text ) + thisInf.AllScore * thisInf.CurrCount;
-		textScore.text = "" + currScore;
-		CurrentScore = currScore;
-	}
+        for (int a = 0; a < AllRank.Length; a++)
+        {
+            if (a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
+            {
+                currMax = AllRank[a].NeededScore;
+                GlobalManager.Ui.RankText.text = AllRank[a].NameRank;
+                Player.GetComponent<PlayerController>().MultiPli = AllRank[a].MultiPli;
+                currIndex = a;
+                getCurWait = waitRank(AllRank[a].Time);
+
+                StartCoroutine(getCurWait);
+            }
+        }
+    }
 
 	void setMusic () 
 	{ 

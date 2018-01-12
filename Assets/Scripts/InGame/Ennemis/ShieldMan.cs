@@ -168,9 +168,10 @@ public class ShieldMan : AbstractObject {
 		{
 			base.CollDetect ( );
 		}
+
 		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 }
 
-				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay, true );
+//getTrans.DOLocalMove(getTrans.localPosition + getTrans.forward* distance, delay, true );
 				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));

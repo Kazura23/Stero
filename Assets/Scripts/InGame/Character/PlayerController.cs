@@ -840,15 +840,20 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void distCal ( )
+
+    void distCal ( )
 	{
-		if ( !inAir )
+        float currDist = 0;
+
+        if ( !inAir )
 		{
-			totalDis += Vector3.Distance ( lastPos, pTrans.position );
+            currDist = Vector3.Distance ( lastPos, pTrans.position );
 		}
 
-		lastPos = pTrans.position;
-		textDist.text = "" + Mathf.RoundToInt ( totalDis );
+        totalDis += currDist;
+
+        lastPos = pTrans.position;
+		textDist.text = "" + (int.Parse  (textDist.text) + Mathf.RoundToInt (currDist));
 		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
