@@ -409,11 +409,10 @@ public class GameController : ManagerParent
 
 	void addNewScore ( ScoringInfo thisInf )
 	{
-		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore);
-		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
+        //GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+        //newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 
-		for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
+        for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
 		{
 			Destroy ( thisInf.CurrSpawn [ a ] );
 		}
@@ -432,11 +431,16 @@ public class GameController : ManagerParent
             {
                 currMax = AllRank[a].NeededScore;
                 GlobalManager.Ui.RankText.text = AllRank[a].NameRank;
+
+                GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[a].Color);
                 Player.GetComponent<PlayerController>().MultiPli = AllRank[a].MultiPli;
                 currIndex = a;
                 getCurWait = waitRank(AllRank[a].Time);
 
                 StartCoroutine(getCurWait);
+
+                //Color rankColor = AllRank[a].Color;
+
             }
         }
     }
@@ -871,6 +875,7 @@ public class Rank
 	public string NameRank; 
 	public int MultiPli;
 	public float Time;
+    public Color Color;
 	public int NeededScore; 
 } 
 

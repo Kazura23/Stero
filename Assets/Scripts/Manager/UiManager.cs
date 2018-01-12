@@ -97,7 +97,7 @@ public class UiManager : ManagerParent
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Y)){
-            ScorePlus(300);
+            ScorePlus(300, Color.white);
         }
     }
 
@@ -211,7 +211,7 @@ public class UiManager : ManagerParent
     }
 
 
-    public void ScorePlus(int number)
+    public void ScorePlus(int number, Color rankColor)
     {
 
         float randomPos = UnityEngine.Random.Range(-600, 600);
@@ -219,10 +219,14 @@ public class UiManager : ManagerParent
         //Debug.Log("score");
         ScorePoints.text = "" + (int.Parse (ScorePoints.text) + number);
 
+
         Debug.Log(number);
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2 (randomPos,randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
-        scoretxt.text = "" + number;
+        scoretxt.text = "+ " + number;
         scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
+
+
+        scoretxt.GetComponent<RainbowColor>().colors[1] = rankColor;
 
         scoretxt.transform.DOScale(2, 0);
         scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
