@@ -218,7 +218,7 @@ public class GameController : ManagerParent
 		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
 		GlobalManager.Ui.Multiplicateur.text = "" + 1;
 		GlobalManager.Ui.RankText.text = Constants.DefRankName;
-		currIndex = -1;
+		currIndex = 0;
 		currMax = 0;
 		CurrentScore = 0;
 
@@ -419,12 +419,13 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
-		//textScore.text = "" + currScore;
+
+        //Debug.Log(currIndex);
+
+        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
+        //textScore.text = "" + currScore;
         for ( a = 0; a < AllRank.Length; a++)
         {
-
-            GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[a].Color);
-
             if ( a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
             {
                 currMax = AllRank[a].NeededScore;
