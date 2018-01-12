@@ -269,6 +269,7 @@ public class UiManager : ManagerParent
 
     public void OpenMadness()
     {
+        AllPlayerPrefs.ANbPassageMadness++;
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;

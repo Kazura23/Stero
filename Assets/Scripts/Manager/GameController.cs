@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using Rewired;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class GameController : ManagerParent
 {
@@ -59,7 +60,7 @@ public class GameController : ManagerParent
 	void Start ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
-        //AllPlayerPrefs.testSave();
+        AllPlayerPrefs.ANbRun = 0;
 	}
 
 	void Update ( )
@@ -167,6 +168,21 @@ public class GameController : ManagerParent
         
 	}
 
+    private void OnDestroy()
+    {
+        if (AllPlayerPrefs.canSendAnalytics)
+        {
+            var resultat = Analytics.CustomEvent("Nombre de run", new Dictionary<string, object>
+            {
+                { "Nombre total de run", AllPlayerPrefs.ANbRun}
+            });
+            if (resultat.Equals(AnalyticsResult.Ok))
+                Debug.Log(resultat);
+            else
+                Debug.LogWarning(resultat);
+        }
+    }
+
     void ActiveTextIntro()
     {
         colorTw = DOVirtual.DelayedCall(.2f, () => {
@@ -186,7 +202,9 @@ public class GameController : ManagerParent
     
 	public void StartGame ( )
 	{
-		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+        //GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+        AllPlayerPrefs.ATimerRun = 0;
+        AllPlayerPrefs.ANbRun++;
 		if ( lastWall != null )
 		{
 			Destroy ( lastWall );
@@ -269,6 +287,8 @@ public class GameController : ManagerParent
     public void Restart () 
 	{
         Time.timeScale = 1;
+        AllPlayerPrefs.ATimerRun = 0;
+        AllPlayerPrefs.ANbRun++;
 		GlobalManager.Ui.thisCam.transform.DOKill ();
 		ScreenShake.Singleton.StopShake ( );
 
@@ -550,13 +570,16 @@ public class GameController : ManagerParent
 			case SpecialAction.OndeChoc:
 				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
 				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+                AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
 				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
 				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
+                    AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
 				currPlayer.SliderSlow.maxValue = 10;
+                    AllPlayerPrefs.ANameTechSpe = "Slow Motion";
 				break;
 			}
 
@@ -594,12 +617,14 @@ public class GameController : ManagerParent
 		{
       
             currPlayer.Life++;
+            AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}
 
 		if ( thisItem.StartBonus )
 		{
 			SpawnerChunck.StartBonus = true;
 			SpawnerChunck.EndLevel++;
+            AllPlayerPrefs.AExtraStart = SpawnerChunck.EndLevel;
 		}
 	}
     #endregion

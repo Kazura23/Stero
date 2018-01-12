@@ -48,9 +48,11 @@ public class ShieldMan : AbstractObject {
 	public override void Dead(bool enemy = false)
 	{
 		base.Dead(enemy);
-
-		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
-	}
+        AllPlayerPrefs.ANbTotalEnemyKill++;
+        AllPlayerPrefs.ANbKnighty++;
+        //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
+        //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
+    }
 
 	public override void ForceProp ( Vector3 forceProp, bool checkConst, bool forceDead = false )
 	{

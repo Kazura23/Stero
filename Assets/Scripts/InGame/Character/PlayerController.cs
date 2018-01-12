@@ -630,6 +630,7 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
+        AllPlayerPrefs.ATimerRun += getTime;
 		TimerCheck ( getTime );
 		distCal ( );
 
@@ -821,6 +822,11 @@ public class PlayerController : MonoBehaviour
 			{
 				secureTimer = false;
 				lastTimer = false;
+                AllPlayerPrefs.ATypeObstacle = "Madness";
+                AllPlayerPrefs.ANameObstacle = "Madness a zero";
+                RaycastHit hit;
+                Physics.Raycast(this.transform.position, Vector3.down, out hit, 1000);
+                AllPlayerPrefs.ANameChunk = AnalyticsChunk(hit.transform);
 				GameOver ( true );
 			}
 		}
@@ -873,7 +879,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
 			{
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+                AllPlayerPrefs.ANbTechSpe++;
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 				animeSlo = false;
 				Time.timeScale = 1;
 			}
@@ -883,6 +890,7 @@ public class PlayerController : MonoBehaviour
 
 		if (ThisAct == SpecialAction.SlowMot )
         {
+            //AllPlayerPrefs.ANbTechSpe++;
             if (SliderContent > 0)
             {
                 thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
@@ -932,7 +940,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && canChange && newH == 0 )
 		{
-			canSpe = false;
+            AllPlayerPrefs.ANbTechSpe++;
+            canSpe = false;
 			playerInv = true;
 			thisCam.GetComponent<RainbowMove>().enabled = false;
 			pRig.useGravity = false;
@@ -970,7 +979,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 && canChange )
 		{
-			pRig.constraints = RigidbodyConstraints.FreezeAll;
+            AllPlayerPrefs.ANbTechSpe++;
+            pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
             GlobalManager.Ui.StartSpecialAction("DeadBall");
 			canSpe = false;
@@ -1178,7 +1188,7 @@ public class PlayerController : MonoBehaviour
 		if ( Dash && !playerDead && !InMadness )
 		{
 			speed *= DashSpeed;
-
+            AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
@@ -1464,6 +1474,7 @@ public class PlayerController : MonoBehaviour
 
 		if(inputPlayer.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
         {
+            AllPlayerPrefs.ANbCoupSimple++;
 			Dash = false;
             thisCam.fieldOfView = Constants.DefFov;
 
@@ -1505,6 +1516,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
+            AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
@@ -1650,10 +1662,15 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
+        if (playerDead)
+            return;
 		GameObject getObj = thisColl.gameObject;
 		if ( onAnimeAir && thisColl.collider.tag == Constants._UnTagg )
 		{
-			GameOver ( true );
+            AllPlayerPrefs.ATypeObstacle = "Mur / Plafond / Sol";
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( true );
 		}
 
 		if ( Dash || InMadness || playerInv )
@@ -1685,21 +1702,33 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( getObj.tag == Constants._ElemDash )
 		{
-			GameOver ( );
+            AllPlayerPrefs.ATypeObstacle = Constants._ElemDash;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( );
 		}
 
 		if ( getObj.tag == Constants._MissileBazoo )
 		{
-			getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
+            AllPlayerPrefs.ATypeObstacle = Constants._MissileBazoo;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
 			GameOver ( );
 		}
 		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._Balls )
 		{
-			GameOver ( );
+            AllPlayerPrefs.ATypeObstacle = getObj.tag;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( );
 		}
 		else if ( getObj.tag == Constants._ObsTag )
 		{
-			Life = 0;
+            AllPlayerPrefs.ATypeObstacle = Constants._ObsTag;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            Life = 0;
 			GameOver ( true );
 		}
 	}
@@ -1717,5 +1746,26 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.Ui.CloseMadness();
 	}
+
+    private string AnalyticsChunk(Transform p_child)
+    {
+        Transform currentTrans = p_child;
+        if(currentTrans == null)
+        {
+            return "Chunk non identifier";
+        }
+        while(currentTrans.parent.name != "Chuncks" && currentTrans.parent != null)
+        {
+            currentTrans = currentTrans.parent;
+        }
+        if (currentTrans.parent == null)
+        {
+            return "Chunk non identifier";
+        }
+        string nameChunk = currentTrans.name.Split('(')[0];
+        //Debug.Log(nameChunk);
+        return nameChunk;
+    }
+
 	#endregion
 }
