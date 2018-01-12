@@ -173,7 +173,10 @@ public class AbstractObject : MonoBehaviour
 	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
 		onEnemyDead ( forceProp, thisDeath, checkConst );
-		StartCoroutine ( enableColl ( ) );
+		if ( gameObject.activeSelf )
+		{
+			StartCoroutine ( enableColl ( ) );
+		}
 	}
 	#endregion
 
