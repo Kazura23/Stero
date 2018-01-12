@@ -391,6 +391,7 @@ public class GameController : ManagerParent
 				}
 				else
 				{
+					getInfS.CurrCount ++;
 					addNewScore ( getInfS );
 				}
 
@@ -412,33 +413,37 @@ public class GameController : ManagerParent
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
         GlobalManager.Ui.ScorePlus(thisInf.AllScore);
 		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
-
-		for ( int a = 0; a < thisInf.CurrSpawn.Count; a++ )
+		int a;
+		for ( a = 0; a < thisInf.CurrSpawn.Count; a++ )
 		{
 			Destroy ( thisInf.CurrSpawn [ a ] );
 		}
-
-		thisInf.AllScore = 0;
-		thisInf.CurrCount = 0;
-		thisInf.CurrSpawn.Clear ( );
 		//Destroy ( newObj, 3 );
-		int currScore = thisInf.AllScore * thisInf.CurrCount + 1;
+		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
 		//textScore.text = "" + currScore;
-		CurrentScore += currScore;
-
-        for (int a = 0; a < AllRank.Length; a++)
+        for ( a = 0; a < AllRank.Length; a++)
         {
-            if (a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
+            if ( a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
             {
                 currMax = AllRank[a].NeededScore;
                 GlobalManager.Ui.RankText.text = AllRank[a].NameRank;
                 Player.GetComponent<PlayerController>().MultiPli = AllRank[a].MultiPli;
                 currIndex = a;
+
+				if ( getCurWait != null )
+				{
+					StopCoroutine ( getCurWait );
+				}
+
                 getCurWait = waitRank(AllRank[a].Time);
 
                 StartCoroutine(getCurWait);
             }
         }
+
+		thisInf.AllScore = 0;
+		thisInf.CurrCount = 0;
+		thisInf.CurrSpawn.Clear ( );
     }
 
 	void setMusic () 
