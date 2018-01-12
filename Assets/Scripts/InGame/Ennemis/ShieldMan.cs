@@ -131,8 +131,7 @@ public class ShieldMan : AbstractObject {
 				move = getTrans.position + (getTrans.forward * distance);
 				getTrans.DOMoveX(move.x, delay);
 				getTrans.DOMoveZ(move.z, delay);
-				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay, true );
-				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
+				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 
@@ -169,6 +168,10 @@ public class ShieldMan : AbstractObject {
 		{
 			base.CollDetect ( );
 		}
+
 		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 }
+
+//getTrans.DOLocalMove(getTrans.localPosition + getTrans.forward* distance, delay, true );
+				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));

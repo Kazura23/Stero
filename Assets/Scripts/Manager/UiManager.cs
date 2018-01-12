@@ -94,7 +94,14 @@ public class UiManager : ManagerParent
 		}
 	}
 
-	public void SetCam ( Camera newCame )
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y)){
+            ScorePlus(300);
+        }
+    }
+
+    public void SetCam ( Camera newCame )
 	{
 		thisCam = newCame;
 	}
@@ -202,6 +209,32 @@ public class UiManager : ManagerParent
             });
         });
     }
+
+
+    public void ScorePlus(int number)
+    {
+
+        float randomPos = UnityEngine.Random.Range(-600, 600);
+        float randomRot = UnityEngine.Random.Range(200, 200);
+        //Debug.Log("score");
+        ScorePoints.text = "" + (int.Parse (ScorePoints.text) + number);
+
+        Debug.Log(number);
+        Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2 (randomPos,randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
+        scoretxt.text = "" + number;
+        scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
+
+        scoretxt.transform.DOScale(2, 0);
+        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(()=> {
+                scoretxt.transform.DOScale(0, .5f);
+                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
+            });
+        });
+
+        Destroy(scoretxt.gameObject,4);
+    }
+
 
     public void DoubleCoup()
     {
