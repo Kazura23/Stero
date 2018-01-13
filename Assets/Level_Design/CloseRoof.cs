@@ -22,7 +22,10 @@ public class CloseRoof : MonoBehaviour {
 
 		for ( int a = 0; a < otherElement.Length; a++ )
 		{
-			otherPos.Add ( otherElement [ a ].transform.localPosition );	
+			if ( otherElement [ a ] != null )
+			{
+				otherPos.Add ( otherElement [ a ].transform.localPosition );	
+			}
 		}
     }
 
