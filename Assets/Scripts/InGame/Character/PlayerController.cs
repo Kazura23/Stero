@@ -1218,11 +1218,6 @@ public class PlayerController : MonoBehaviour
 
 		if ( InMadness )
 		{
-			speed *= 1.5f;
-			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
-		}
-		if ( Dash && !playerDead && !InMadness )
-		{
 			speed *= DashSpeed;
             AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
@@ -1327,6 +1322,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		waitRotate = true;
+		Vector3 getVec = Vector3.zero;
 
 		transPlayer.DOKill ( );
 
@@ -1669,7 +1665,7 @@ public class PlayerController : MonoBehaviour
 			if ( !onAnimeAir )
 			{
 				newPos = true;
-				newDir = !thisColl.GetComponent<NewDirect> ( ).GoRight;
+				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
 				blockChangeLine = false;
 				getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
 
