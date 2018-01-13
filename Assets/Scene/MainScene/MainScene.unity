@@ -168,7 +168,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &3982280
 Rigidbody:
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &43779519
 MonoBehaviour:
@@ -1618,7 +1618,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &53355298
 MonoBehaviour:
@@ -2955,7 +2955,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &95905016
 MonoBehaviour:
@@ -3371,7 +3371,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114778678
 MonoBehaviour:
@@ -3746,7 +3746,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &127555173
 Rigidbody:
@@ -4778,7 +4778,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!65 &164565612
 BoxCollider:
@@ -5509,7 +5509,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &192332282
 MonoBehaviour:
@@ -6200,7 +6200,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -7870,7 +7870,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -9700,7 +9700,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &340929043
 Rigidbody:
@@ -9949,7 +9949,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &348573057
 Rigidbody:
@@ -10159,7 +10159,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &356258851
 Rigidbody:
@@ -10586,7 +10586,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &364778883
 MonoBehaviour:
@@ -10717,6 +10717,27 @@ Transform:
   m_Father: {fileID: 77505940}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &370581350 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1876287922270898, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 2111891216}
+--- !u!224 &370581351 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224672862215164702, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 2111891216}
+--- !u!225 &370581352
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 370581350}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &371225748
 GameObject:
   m_ObjectHideFlags: 0
@@ -11387,7 +11408,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &395794799
 MonoBehaviour:
@@ -11946,7 +11967,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &405581347
 MonoBehaviour:
@@ -13360,7 +13381,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &481856993
 Rigidbody:
@@ -14738,7 +14759,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &542330751
 Rigidbody:
@@ -16130,7 +16151,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &625399694
 MonoBehaviour:
@@ -16498,6 +16519,74 @@ Transform:
   m_Father: {fileID: 1827530720}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &634226906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 634226907}
+  - component: {fileID: 634226909}
+  - component: {fileID: 634226908}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &634226907
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 634226906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 370581351}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 461}
+  m_SizeDelta: {x: 100, y: 80.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &634226908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 634226906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 10827bf5722f6384c9ea6bdfccda011b, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0.718
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+--- !u!222 &634226909
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 634226906}
 --- !u!1 &635765453
 GameObject:
   m_ObjectHideFlags: 0
@@ -18970,7 +19059,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &728879876
 Rigidbody:
@@ -19597,7 +19686,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &748409403
 Rigidbody:
@@ -19960,7 +20049,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!1 &767838078
 GameObject:
@@ -20409,7 +20498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b9fa4ed1f54b940a92417911ded486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewDirection: 2
+  GoRight: 0
 --- !u!65 &782294303
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20504,7 +20593,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &787906152
 Rigidbody:
@@ -23836,7 +23925,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -24205,7 +24294,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &931314946
 Rigidbody:
@@ -24402,7 +24491,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &939208462
 Rigidbody:
@@ -24753,7 +24842,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &953120719
 MonoBehaviour:
@@ -25194,7 +25283,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &957741795
 Rigidbody:
@@ -26773,7 +26862,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1030533959
 MonoBehaviour:
@@ -27313,7 +27402,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1066923023
 MonoBehaviour:
@@ -28221,7 +28310,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1090256105
 MonoBehaviour:
@@ -29549,7 +29638,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1133366885
 Rigidbody:
@@ -30098,7 +30187,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1166231980
 Rigidbody:
@@ -30273,7 +30362,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!65 &1177985658
 BoxCollider:
@@ -30489,7 +30578,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1184341635
 Rigidbody:
@@ -31381,7 +31470,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1221066023
 Rigidbody:
@@ -31668,7 +31757,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1228988125
 Rigidbody:
@@ -33614,7 +33703,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1279380612
 MonoBehaviour:
@@ -33769,7 +33858,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1280141262
 MonoBehaviour:
@@ -34387,7 +34476,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1303804648
 MonoBehaviour:
@@ -35457,7 +35546,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -36015,7 +36104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b9fa4ed1f54b940a92417911ded486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewDirection: 0
+  GoRight: 0
 --- !u!65 &1361528359
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36180,7 +36269,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1365785460
 Rigidbody:
@@ -36798,7 +36887,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1403966680
 Rigidbody:
@@ -37364,7 +37453,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1422687728
 MonoBehaviour:
@@ -37746,7 +37835,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1438566041
 Rigidbody:
@@ -38974,7 +39063,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1474684664
 Rigidbody:
@@ -40250,7 +40339,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1513254971
 MonoBehaviour:
@@ -42188,7 +42277,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1603595573
 Rigidbody:
@@ -42895,7 +42984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b9fa4ed1f54b940a92417911ded486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewDirection: 3
+  GoRight: 0
 --- !u!65 &1613057493
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43723,7 +43812,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1650836377
 Rigidbody:
@@ -46679,7 +46768,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -47083,7 +47172,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &1762158589
 MonoBehaviour:
@@ -47789,7 +47878,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1783929993
 Rigidbody:
@@ -48705,7 +48794,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -48797,7 +48886,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1811588754
 Rigidbody:
@@ -50032,7 +50121,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -50528,7 +50617,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1897920144
 Rigidbody:
@@ -51514,7 +51603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b9fa4ed1f54b940a92417911ded486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewDirection: 1
+  GoRight: 0
 --- !u!65 &1943005188
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52502,7 +52591,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &1986197702
 Rigidbody:
@@ -54300,7 +54389,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &2020074345
 MonoBehaviour:
@@ -56699,12 +56788,12 @@ Prefab:
     - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
       propertyPath: InfScore.Array.data[0].SecCumul
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
       propertyPath: InfScore.Array.data[0].WaitCulmul
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
@@ -56780,6 +56869,365 @@ Prefab:
         type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281277238626122, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083137693049818, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776794825827622, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349711816744528, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[2].TypeDeath
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[2].Multiplicateur
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].MultiPli
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].Time
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].Time
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].MultiPli
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224353608904652762, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990128198379690, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_Text
+      value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 224353608904652762, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 461.81207
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990128198379690, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990128198379690, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990128198379690, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 57
+      objectReference: {fileID: 0}
+    - target: {fileID: 224672862215164702, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 224672862215164702, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224672862215164702, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224672862215164702, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -72
+      objectReference: {fileID: 0}
+    - target: {fileID: 224741328834459418, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708708510608316, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_Name
+      value: Multiplier Number
+      objectReference: {fileID: 0}
+    - target: {fileID: 224413018323800730, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 513.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415107346099242, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415107346099242, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 59
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415107346099242, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_Text
+      value: x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224413018323800730, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 115.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415107346099242, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_MinSize
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990128198379690, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_FontData.m_MinSize
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114156834255675864, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].Color.r
+      value: 0.77254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].Color.g
+      value: 0.8117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].Color.b
+      value: 0.39607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Color.r
+      value: 0.9843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Color.g
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Color.b
+      value: 0.35686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].Color.r
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].Color.g
+      value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].Color.b
+      value: 0.7137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[0].TypeDeath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[0].Multiplicateur
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].Color.r
+      value: 0.19215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].Color.g
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].Color.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].NeededScore
+      value: 3500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].NeededScore
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].Time
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].MultiPli
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].MultiPli
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Time
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].NeededScore
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].NeededScore
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].Color.r
+      value: 0.95686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].Color.g
+      value: 0.42352942
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].Color.b
+      value: 0.43137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[1].Multiplicateur
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[3].Multiplicateur
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[4].TypeDeath
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: InfScore.Array.data[4].Multiplicateur
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[0].NameRank
+      value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].NameRank
+      value: D
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].NameRank
+      value: C
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[3].NameRank
+      value: B
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].NameRank
+      value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[2].NeededScore
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1578233461786920, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
+      propertyPath: m_Name
+      value: Rank Number
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].MultiPli
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[4].Time
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
@@ -56867,7 +57315,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
-  MalusDivTimer: 0
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!54 &2113787461
 Rigidbody:

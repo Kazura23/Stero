@@ -447,7 +447,6 @@ public class GameController : ManagerParent
 	void addNewScore ( ScoringInfo thisInf )
 	{
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
-		GlobalManager.Ui.ScorePlus(thisInf.AllScore);
 		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 		int a;
 		for ( a = 0; a < thisInf.CurrSpawn.Count; a++ )
@@ -456,6 +455,7 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
+        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
 
 		Slider getRankSlid = GlobalManager.Ui.RankSlider;
 
@@ -938,6 +938,7 @@ public class Rank
 	public string NameRank; 
 	public int MultiPli = 1;
 	public float Time;
+    public Color Color;
 	public int NeededScore; 
 } 
 
