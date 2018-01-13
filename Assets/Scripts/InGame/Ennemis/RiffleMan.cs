@@ -129,17 +129,3 @@ public class RiffleMan : AbstractObject
 	}
 	#endregion
 }
-
-
-            
-
-        if (!detected)
-        {
-            detected = true;
-
-            GetComponentInChildren<Animator> ( ).SetTrigger("Attack");
-            GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 8, transform.position.z), "TextEnemy", GlobalManager.Ui.transform.parent, 3);
-            //txt.transform.DOLocalMoveY(6, 0);
-            txt.transform.DOScale(Vector3.one * .15f, 0);
-            txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
-        }

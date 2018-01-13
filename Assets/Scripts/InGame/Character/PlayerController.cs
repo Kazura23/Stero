@@ -135,10 +135,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int currLine = 0;
 
-	[HideInInspector]
-	public int MultiPli = 1;
-
-    Transform pTrans;
+	Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
 

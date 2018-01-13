@@ -91,6 +91,7 @@ public class GameController : ManagerParent
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
+
         if (!checkStart && isStay && !isReady)
         {
 			switch (chooseOption)
@@ -173,10 +174,10 @@ public class GameController : ManagerParent
 			}
 		}
 		else if (isReady && inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame && isStay )
-	        {
-			coupSimpl = false;
-	            Player.GetComponent<PlayerController>().GetPunchIntro();
-	        }
+        {
+		coupSimpl = false;
+            Player.GetComponent<PlayerController>().GetPunchIntro();
+        }
         
 	}
 
@@ -233,12 +234,27 @@ public class GameController : ManagerParent
 
 		Intro = true;
 		isStay = true;
-		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
-		GlobalManager.Ui.Multiplicateur.text = "" + 1;
-		GlobalManager.Ui.RankText.text = Constants.DefRankName;
-		currIndex = -1;
+
+		currIndex = 0;
 		currMax = 0;
 		CurrentScore = 0;
+
+		Slider getRankSlid = GlobalManager.Ui.RankSlider;
+		getRankSlid.value = 0;
+
+		for ( int a = 0; a < AllRank.Length; a++ )
+		{
+			if ( AllRank [ a ].NeededScore < AllRank [ currIndex ].NeededScore )
+			{
+				currIndex = a;
+			}
+		}
+
+		getRankSlid.maxValue = AllRank [ currIndex ].NeededScore;
+		currMax = ( int ) getRankSlid.maxValue;
+
+		GlobalManager.Ui.Multiplicateur.text = AllRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.text = AllRank [ currIndex ].NameRank;
 
 		if ( getCurWait != null )
 		{
@@ -414,7 +430,7 @@ public class GameController : ManagerParent
 					getInfS.CurrCount ++;
 					addNewScore ( getInfS );
 				}
-
+				break;
 			}
 		}
 	}
@@ -431,7 +447,7 @@ public class GameController : ManagerParent
 	void addNewScore ( ScoringInfo thisInf )
 	{
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore);
+		GlobalManager.Ui.ScorePlus(thisInf.AllScore);
 		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 		int a;
 		for ( a = 0; a < thisInf.CurrSpawn.Count; a++ )
@@ -440,26 +456,45 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
-		//textScore.text = "" + currScore;
-        for ( a = 0; a < AllRank.Length; a++)
+
+		Slider getRankSlid = GlobalManager.Ui.RankSlider;
+
+		int currInd = currIndex;
+
+        for ( a = 0; a < AllRank.Length; a++ )
         {
-            if ( a != currIndex && AllRank[a].NeededScore < CurrentScore && AllRank[a].NeededScore > currMax)
-            {
-                currMax = AllRank[a].NeededScore;
-                GlobalManager.Ui.RankText.text = AllRank[a].NameRank;
-                Player.GetComponent<PlayerController>().MultiPli = AllRank[a].MultiPli;
-                currIndex = a;
-
-				if ( getCurWait != null )
-				{
-					StopCoroutine ( getCurWait );
-				}
-
-                getCurWait = waitRank(AllRank[a].Time);
-
-                StartCoroutine(getCurWait);
+			if ( a != currInd && AllRank [ a ].NeededScore < CurrentScore && AllRank [ a ].NeededScore > currMax )
+			{
+				currInd = a;
             }
         }
+
+		if ( currInd != currIndex )
+		{
+			currMax = AllRank [ currInd ].NeededScore;
+			GlobalManager.Ui.RankText.text = AllRank [ currInd ].NameRank;
+
+			getRankSlid.maxValue = AllRank [ currInd ].NeededScore;
+
+			if ( currIndex >= 0 )
+			{
+				getRankSlid.minValue = AllRank [ currIndex ].NeededScore;
+			}
+
+			currIndex = currInd;
+
+			if ( getCurWait != null )
+			{
+				StopCoroutine ( getCurWait );
+			}
+
+			getCurWait = waitRank ( AllRank [ currInd ].Time );
+
+			StartCoroutine(getCurWait);
+		}
+
+		getRankSlid.DOKill ( );
+		getRankSlid.DOValue ( CurrentScore, 0.1f, true );
 
 		thisInf.AllScore = 0;
 		thisInf.CurrCount = 0;
@@ -482,10 +517,11 @@ public class GameController : ManagerParent
 		yield return new WaitForSeconds ( secs );
 
 		GlobalManager.Ui.RankText.text = Constants.DefRankName;
-		Player.GetComponent<PlayerController> ( ).MultiPli = 1;
 		currIndex = -1;
 		currMax = 0;
 		CurrentScore = 0;
+		GlobalManager.Ui.RankSlider.DOValue ( 0, 0.1f, true );
+
 	}
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
@@ -900,7 +936,7 @@ public class NewChunk
 public class Rank  
 { 
 	public string NameRank; 
-	public int MultiPli;
+	public int MultiPli = 1;
 	public float Time;
 	public int NeededScore; 
 } 
