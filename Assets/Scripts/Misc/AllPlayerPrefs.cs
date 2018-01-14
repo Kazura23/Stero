@@ -139,6 +139,11 @@ public static class AllPlayerPrefs
 		return PlayerPrefs.GetInt ( thisString, 10000 );
 	}
 
+	public static int GetIntValueForSong ( string thisString )
+	{
+		return PlayerPrefs.GetInt ( thisString, 100 );
+	}
+
 	public static bool GetBoolValue ( string thisString )
 	{
 		string getVal = PlayerPrefs.GetString ( thisString, "Nope" );

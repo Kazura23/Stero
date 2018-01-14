@@ -12,7 +12,8 @@ public enum MenuType
 	Shop,
 	Pause,
 	GameOver,
-    Leaderboard
+	Leaderboard,
+	Option
 }
 
 public enum UnLockMethode
@@ -64,6 +65,14 @@ public enum TypeRotate
 {
 	Clockwise,
 	CounterClockwise
+}
+
+public enum OptionMenu 
+{
+	Son,
+	Credits,
+	Commandes,
+	Graphiques
 }
 
 public enum DeathType 

@@ -8,9 +8,9 @@ public class AudioManager : ManagerParent
 	#region Variable
 	[Tooltip ("Create a new ScriptableAudio and drag and drop here (in project : create -> Scriptable -> Audio)")]
 	public List<AudioScriptable> AllMF;
+	public Dictionary<AudioType, int> VolumeAudio;
 	Dictionary<AudioType, AudioSource> audioParent;
 	List<ParentAud> audioChild;
-
 	#endregion
 	
 	#region Mono
@@ -57,6 +57,13 @@ public class AudioManager : ManagerParent
 			thisName = getAllName [ Random.Range ( 0, getAllName.Count ) ];
 		}
 
+		int getVolume;
+
+		if ( !VolumeAudio.TryGetValue ( thisType, out getVolume ) )
+		{
+			getVolume = 1;
+		}
+
 		for ( a = 0; a < getAMF.Count; a++ )
 		{
 			for ( b = 0; b < getAMF [ b ].AllMF.Count; b++ )
@@ -71,7 +78,7 @@ public class AudioManager : ManagerParent
                             if ( loopAudio )
 							{
 								thisSource.enabled = true;
-								thisSource.volume = getAllAudio [ c ].Volume;
+								thisSource.volume = getAllAudio [ c ].Volume * getVolume;
 								thisSource.pitch = getAllAudio [ c ].Pitch;
 								thisSource.clip = getAllAudio [ c ].Audio;
 								thisSource.Play();
@@ -99,7 +106,7 @@ public class AudioManager : ManagerParent
 								AudioSource getAud = thisSource.gameObject.AddComponent<AudioSource> ( );
 
 								getAud.loop = false;
-								getAud.volume = getAllAudio [ c ].Volume;
+								getAud.volume = getAllAudio [ c ].Volume * getVolume;
 								getAud.pitch = getAllAudio [ c ].Pitch;
 								getAud.enabled = true;
 								getAud.clip = getAllAudio [ c ].Audio;
@@ -226,6 +233,7 @@ public class AudioManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		Dictionary<AudioType, AudioSource> setDict = new Dictionary<AudioType, AudioSource> ( );
+		Dictionary<AudioType, int> setVol = new Dictionary<AudioType, int> ( );
 		Transform currT = transform;
 
 		List<ParentAud> getAC = new List<ParentAud> ( );
@@ -240,6 +248,18 @@ public class AudioManager : ManagerParent
 		setDict.Add ( AudioType.PunchVoice, currT.Find ( "PunchVoice" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.MusicTrash, currT.Find ( "MusicTrash" ).GetComponent<AudioSource> ( ) );
 
+		setVol.Add ( AudioType.OtherMusic, 1 );
+		setVol.Add ( AudioType.OtherSound, 1 );
+		setVol.Add ( AudioType.MusicTrash, 1);
+		setVol.Add ( AudioType.MusicBackGround, 1 );
+
+		setVol.Add ( AudioType.Other, 1 );
+		setVol.Add ( AudioType.FxSound, 1 );
+		setVol.Add ( AudioType.SteroKill, 1 );
+
+		setVol.Add ( AudioType.Acceleration, 1 );
+		setVol.Add ( AudioType.PunchVoice, 1 );
+
 		AudioType[] getTypes = ( AudioType[] ) System.Enum.GetValues ( typeof( AudioType ) );
 
 		for ( int a = 0; a < getTypes.Length; a++ )
@@ -251,6 +271,7 @@ public class AudioManager : ManagerParent
   
 		audioChild = getAC;
 		audioParent = setDict;
+		VolumeAudio = setVol;
 	}
 
 	IEnumerator waitEndAudio ( float time, int currIndex, AudioSource thisSource, System.Action thisAct = null )
