@@ -227,7 +227,8 @@ public class UiManager : ManagerParent
         scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
 
 
-        scoretxt.GetComponent<RainbowColor>().colors[1] = rankColor;
+        //scoretxt.GetComponent<RainbowColor>().colors[1] = rankColor;
+        scoretxt.GetComponent<Text>().color = rankColor;
 
         scoretxt.transform.DOScale(2, 0);
         scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
