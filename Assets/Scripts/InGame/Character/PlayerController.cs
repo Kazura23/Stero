@@ -1216,10 +1216,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( InMadness )
+		if ( InMadness || Dash )
 		{
 			speed *= DashSpeed;
-            AllPlayerPrefs.ATimeDash += delTime;
+			if ( Dash && !InMadness )
+			{
+				AllPlayerPrefs.ATimeDash += delTime;
+			}
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
