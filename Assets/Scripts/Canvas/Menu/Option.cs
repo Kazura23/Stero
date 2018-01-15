@@ -75,7 +75,7 @@ public class Option :  UiParent
 		}
 	}
 
-	void closeOptionMenu ( OptionMenu getOM )
+	public void closeOptionMenu ( OptionMenu getOM )
 	{
 		switch ( getOM )
 		{
@@ -91,7 +91,7 @@ public class Option :  UiParent
 		}
 	}
 
-	void openNewOption ( OptionMenu newOM )
+	public void openNewOption ( OptionMenu newOM )
 	{
 		if ( currMenu != null )
 		{
