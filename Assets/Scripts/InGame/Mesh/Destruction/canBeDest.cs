@@ -29,7 +29,10 @@ public class canBeDest : MonoBehaviour
 			}
 
 			onColl = true;
-			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc, 20 ) );
+			if ( gameObject.activeSelf )
+			{
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc, 20 ) );
+			}
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 
