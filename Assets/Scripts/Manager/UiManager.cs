@@ -10,6 +10,7 @@ public class UiManager : ManagerParent
 {
 	#region Variables
 	public Slider MotionSlider;
+	public Slider RankSlider;
     public Slider Madness;
 	public Image RedScreen;
 	public GameObject speedEffect;
@@ -309,6 +310,7 @@ public class UiManager : ManagerParent
 
     public void OpenMadness()
     {
+        AllPlayerPrefs.ANbPassageMadness++;
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;

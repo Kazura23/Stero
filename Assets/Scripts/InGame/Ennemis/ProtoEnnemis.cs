@@ -123,7 +123,9 @@ public class ProtoEnnemis : AbstractObject
         GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "Charlotte_Death" + (randomSong + 1), false);
 
         //GlobalManager.Ui.BloodHit();
-
+        AllPlayerPrefs.ANbTotalEnemyKill++;
+        AllPlayerPrefs.ANbCharlotte++;
+        //Debug.Log("charlotte "+AllPlayerPrefs.ANbCharlotte);
         base.Dead ( enemy );
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }
