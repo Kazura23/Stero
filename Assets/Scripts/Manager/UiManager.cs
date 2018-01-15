@@ -10,8 +10,8 @@ public class UiManager : ManagerParent
 {
 	#region Variables
 	public Slider MotionSlider;
-	public Slider RankSlider;
     public Slider Madness;
+	public Image RankSlider;
 	public Image RedScreen;
 	public GameObject speedEffect;
 	public Transform MenuParent;

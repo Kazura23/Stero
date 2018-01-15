@@ -235,12 +235,13 @@ public class GameController : ManagerParent
 		Intro = true;
 		isStay = true;
 
+		currNeeded = 0;
 		currIndex = 0;
 		currMax = 0;
 		CurrentScore = 0;
 
-		Slider getRankSlid = GlobalManager.Ui.RankSlider;
-		getRankSlid.value = 0;
+		Image getRankSlid = GlobalManager.Ui.RankSlider;
+		getRankSlid.fillAmount = 0;
 
 		for ( int a = 0; a < AllRank.Length; a++ )
 		{
@@ -250,8 +251,22 @@ public class GameController : ManagerParent
 			}
 		}
 
-		getRankSlid.maxValue = AllRank [ currIndex ].NeededScore;
-		currMax = ( int ) getRankSlid.maxValue;
+		currMax = AllRank [ currIndex ].NeededScore;
+
+		for ( int a = 0; a < AllRank.Length; a++ )
+		{
+			if ( currMax > currNeeded )
+			{
+				if ( AllRank [ a ].NeededScore > currNeeded )
+				{
+					currNeeded = AllRank [ a ].NeededScore;
+				}
+			}
+			else if ( AllRank [ a ].NeededScore > currMax && AllRank [ a ].NeededScore < currNeeded )
+			{
+				currNeeded = AllRank [ a ].NeededScore;
+			}
+		}
 
 		GlobalManager.Ui.Multiplicateur.text = AllRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.text = AllRank [ currIndex ].NameRank;
@@ -444,6 +459,7 @@ public class GameController : ManagerParent
 		addNewScore ( thisInf );
 	}
 
+	int currNeeded = 0;
 	void addNewScore ( ScoringInfo thisInf )
 	{
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
@@ -457,7 +473,7 @@ public class GameController : ManagerParent
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
         GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
 
-		Slider getRankSlid = GlobalManager.Ui.RankSlider;
+		Image getRankSlid = GlobalManager.Ui.RankSlider;
 
 		int currInd = currIndex;
 
@@ -471,14 +487,27 @@ public class GameController : ManagerParent
 
 		if ( currInd != currIndex )
 		{
+			for ( a = 0; a < AllRank.Length; a++ )
+			{
+				if ( currMax > currNeeded )
+				{
+					if ( AllRank [ a ].NeededScore > currNeeded )
+					{
+						currNeeded = AllRank [ a ].NeededScore;
+					}
+				}
+				else if ( AllRank [ a ].NeededScore > currMax && AllRank [ a ].NeededScore < currNeeded )
+				{
+					currNeeded = AllRank [ a ].NeededScore;
+				}
+			}
+
 			currMax = AllRank [ currInd ].NeededScore;
 			GlobalManager.Ui.RankText.text = AllRank [ currInd ].NameRank;
-
-			getRankSlid.maxValue = AllRank [ currInd ].NeededScore;
-
+		
 			if ( currIndex >= 0 )
 			{
-				getRankSlid.minValue = AllRank [ currIndex ].NeededScore;
+				getRankSlid.fillAmount = 0;
 			}
 
 			currIndex = currInd;
@@ -493,8 +522,13 @@ public class GameController : ManagerParent
 			StartCoroutine(getCurWait);
 		}
 
-		getRankSlid.DOKill ( );
-		getRankSlid.DOValue ( CurrentScore, 0.1f, true );
+		if ( currNeeded <= 0 )
+		{
+			currNeeded = 1;
+		}
+
+		Debug.Log ( currNeeded );
+		getRankSlid.fillAmount = CurrentScore / currNeeded;
 
 		thisInf.AllScore = 0;
 		thisInf.CurrCount = 0;
@@ -520,7 +554,7 @@ public class GameController : ManagerParent
 		currIndex = -1;
 		currMax = 0;
 		CurrentScore = 0;
-		GlobalManager.Ui.RankSlider.DOValue ( 0, 0.1f, true );
+		GlobalManager.Ui.RankSlider.fillAmount = 0;
 
 	}
 
