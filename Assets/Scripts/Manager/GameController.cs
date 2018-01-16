@@ -282,12 +282,8 @@ public class GameController : ManagerParent
 		}
 
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
 		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
-
-		Image getRankSlid = getRank;
-		getRankSlid.transform.parent.GetChild ( 0 ).GetComponent<RainbowColor> ( ).colors [ 1 ] = getListRank [ currIndex ].Color;
-		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 1 ] = getListRank [ currIndex ].Color;
-		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 2 ] = getListRank [ currIndex ].Color;
 
 		if ( getCurWait != null )
 		{
@@ -501,15 +497,16 @@ public class GameController : ManagerParent
             }
         }
 
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
-        GlobalManager.Ui.RankText.color = AllRank[currIndex].Color;
-        GlobalManager.Ui.Multiplicateur.text = AllRank[currIndex].MultiPli.ToString();
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color );
 
         if ( currInd != currIndex )
 		{
+			GlobalManager.Ui.RankText.color = getAllRank [ currInd ].Color;
+			GlobalManager.Ui.Multiplicateur.text = getAllRank [ currInd ].MultiPli.ToString ( );
+			GlobalManager.Ui.RankText.text = getAllRank [ currInd ].NameRank;
+
 			lastNeeded = currNeeded;
 			currMax = getAllRank [ currInd ].NeededScore;
-			GlobalManager.Ui.RankText.text = getAllRank [ currInd ].NameRank;
 		
 			currIndex = currInd;
 
@@ -531,13 +528,13 @@ public class GameController : ManagerParent
 			}
 
 
-            getCurWait = waitRank ( getRank [ currInd ].Time );
+			getCurWait = waitRank ( getAllRank [ currInd ].Time );
 
 
-			StartCoroutine(getCurWait);
+			StartCoroutine ( getCurWait );
+		}
 
-
-            GlobalManager.Ui.NewRank(currIndex);
+		GlobalManager.Ui.NewRank ( currInd );
 
 
 		float getNewRank = ( float ) ( CurrentScore - lastNeeded ) / ( currNeeded - lastNeeded );
@@ -576,15 +573,15 @@ public class GameController : ManagerParent
 			}
 		}
 
-
 		currMax = 0;
 		CurrentScore = 0;
-        GlobalManager.Ui.Multiplicateur.text = AllRank[0].MultiPli.ToString();
+		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
+		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
 
 		getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
 		getRankSlid.transform.parent.transform.DOScale(0, .3f);
 
-		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
 		getRankSlid.fillAmount = 0;
 	}
 

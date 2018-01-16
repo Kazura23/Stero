@@ -221,7 +221,6 @@ public class UiManager : ManagerParent
         ScorePoints.text = "" + (int.Parse (ScorePoints.text) + number);
 
 
-        Debug.Log(number);
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2 (randomPos,randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
         scoretxt.text = "+ " + number;
         scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
