@@ -526,7 +526,7 @@ public class GameController : ManagerParent
             getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = AllRank[currIndex].Color;
 
 
-            getCurWait = waitRank ( getRank [ currInd ].Time );
+			getCurWait = waitRank ( getAllRank [ currInd ].Time );
 
 			StartCoroutine(getCurWait);
 
