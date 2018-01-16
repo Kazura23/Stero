@@ -252,26 +252,27 @@ public class GameController : ManagerParent
 
 		DOTween.Kill ( rankValue );
 		DOTween.To ( ( ) => rankValue, x => rankValue = x, 0, 0.1f );
+		Rank [] getListRank = AllRank;
 
-		for ( int a = 0; a < AllRank.Length; a++ )
+		for ( int a = 0; a < getListRank.Length; a++ )
 		{
-			if ( AllRank [ a ].NeededScore < AllRank [ currIndex ].NeededScore )
+			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
 			{
 				currIndex = a;
 			}
 		}
 
-		currMax = AllRank [ currIndex ].NeededScore;
+		currMax = getListRank [ currIndex ].NeededScore;
 
-		for ( int a = 0; a < AllRank.Length; a++ )
+		for ( int a = 0; a < getListRank.Length; a++ )
 		{
 			if ( currMax >= currNeeded )
 			{
-				currNeeded = AllRank [ a ].NeededScore;
+				currNeeded = getListRank [ a ].NeededScore;
 			}
-			else if ( AllRank [ a ].NeededScore > currMax && AllRank [ a ].NeededScore < currNeeded )
+			else if ( getListRank [ a ].NeededScore > currMax && getListRank [ a ].NeededScore < currNeeded )
 			{
-				currNeeded = AllRank [ a ].NeededScore;
+				currNeeded = getListRank [ a ].NeededScore;
 			}
 		}
 
@@ -280,8 +281,13 @@ public class GameController : ManagerParent
 			currNeeded = 1;
 		}
 
-		GlobalManager.Ui.Multiplicateur.text = AllRank [ currIndex ].MultiPli.ToString ( );
-		GlobalManager.Ui.RankText.text = AllRank [ currIndex ].NameRank;
+		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
+
+		Image getRankSlid = getRank;
+		getRankSlid.transform.parent.GetChild ( 0 ).GetComponent<RainbowColor> ( ).colors [ 1 ] = getListRank [ currIndex ].Color;
+		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 1 ] = getListRank [ currIndex ].Color;
+		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 2 ] = getListRank [ currIndex ].Color;
 
 		if ( getCurWait != null )
 		{
@@ -482,7 +488,6 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
 
 		Image getRankSlid = getRank;
 
@@ -495,6 +500,8 @@ public class GameController : ManagerParent
 				currInd = a;
             }
         }
+
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, AllRank [ currIndex ].Color );
 
 		if ( currInd != currIndex )
 		{
@@ -521,10 +528,9 @@ public class GameController : ManagerParent
 				StopCoroutine ( getCurWait );
 			}
 
-            getRankSlid.transform.parent.GetChild(0).GetComponent<RainbowColor>().colors[1] = AllRank[currIndex].Color;
-            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = AllRank[currIndex].Color;
-            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = AllRank[currIndex].Color;
-
+			getRankSlid.transform.parent.GetChild ( 0 ).GetComponent<RainbowColor> ( ).colors [ 1 ] = AllRank [ currIndex ].Color;
+			getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 1 ] = AllRank [ currIndex ].Color;
+			getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 2 ] = AllRank [ currIndex ].Color;
 
 			getCurWait = waitRank ( getAllRank [ currInd ].Time );
 
@@ -564,16 +570,30 @@ public class GameController : ManagerParent
 	{
 		yield return new WaitForSeconds ( secs );
 
+		currIndex = 0;
+		Rank [] getListRank = AllRank;
+		Image getRankSlid = getRank;
 
-        //SliderRank.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
-        //getRankSlid.transform.parent.transform.DOScale(0, .3f);
+		for ( int a = 0; a < getListRank.Length; a++ )
+		{
+			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
+			{
+				currIndex = a;
+			}
+		}
 
-        GlobalManager.Ui.RankText.text = Constants.DefRankName;
-		currIndex = -1;
+		getRankSlid.transform.parent.GetChild ( 0 ).GetComponent<RainbowColor> ( ).colors [ 1 ] = AllRank [ currIndex ].Color;
+		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 1 ] = AllRank [ currIndex ].Color;
+		getRankSlid.transform.parent.GetChild ( 3 ).GetComponentsInChildren<RainbowColor> ( ) [ 0 ].colors [ 2 ] = AllRank [ currIndex ].Color;
+
 		currMax = 0;
 		CurrentScore = 0;
-		GlobalManager.Ui.RankSlider.fillAmount = 0;
 
+		getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
+		getRankSlid.transform.parent.transform.DOScale(0, .3f);
+
+		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
+		getRankSlid.fillAmount = 0;
 	}
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
