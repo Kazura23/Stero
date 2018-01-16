@@ -579,7 +579,6 @@ public class UiManager : ManagerParent
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
-		GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).IniPlayer ( );
 		GlobalManager.GameCont.IniFromUI ( );
 		//GlobalManager.GameCont.StartGame ( );
 	}
