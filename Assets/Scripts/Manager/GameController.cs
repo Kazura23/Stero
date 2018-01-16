@@ -48,6 +48,8 @@ public class GameController : ManagerParent
 	Text textScore;
 
 	Image getRank;
+	Image iconeSpe;
+	Slider sliderSpe;
 	IEnumerator getCurWait;
 	GameObject lastWall;
 	bool restartGame = false;
@@ -74,14 +76,6 @@ public class GameController : ManagerParent
 	#endregion
 
 	#region Mono
-	void Start ( )
-	{
-		inputPlayer = ReInput.players.GetPlayer(0);
-		textScore = GlobalManager.Ui.ScorePoints;
-        AllPlayerPrefs.ANbRun = 0;
-		getRank = GlobalManager.Ui.RankSlider;
-	}
-
 	void Update ( )
 	{
 		getRank.fillAmount = rankValue;
@@ -217,6 +211,18 @@ public class GameController : ManagerParent
     #endregion
 
     #region Public Methods
+	public void IniFromUI ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+		textScore = GlobalManager.Ui.ScorePoints;
+		AllPlayerPrefs.ANbRun = 0;
+		Player.GetComponent<PlayerController> ( ).IniPlayer ( );
+		
+		getRank = GlobalManager.Ui.RankSlider;
+		iconeSpe = GlobalManager.Ui.SlowMotion;
+		sliderSpe = GlobalManager.Ui.MotionSlider;
+	}
+
     public void ActiveGame()
     {
         GameStartedUpdate();
@@ -763,8 +769,14 @@ public class GameController : ManagerParent
 		} 
 	}
 
-	void SetAllBonus ( )
+	public void SetAllBonus ( )
 	{
+		iconeSpe.enabled = false;
+		iconeSpe.DOFade ( 0, 0.3f );
+
+		sliderSpe.gameObject.SetActive ( false );
+		sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
 		Dictionary <string, ItemModif> getMod = AllModifItem;
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		List <ItemModif> AllTI = AllTempsItem;
@@ -798,6 +810,14 @@ public class GameController : ManagerParent
 	{
 		if ( thisItem.ModifSpecial )
 		{
+			iconeSpe.enabled = true;
+			iconeSpe.DOKill ( );
+			iconeSpe.DOFade ( 1, 1 );
+
+			sliderSpe.gameObject.SetActive ( true );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
+
 			currPlayer.ThisAct = thisItem.SpecAction;
 
 			switch ( thisItem.SpecAction )

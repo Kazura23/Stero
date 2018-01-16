@@ -213,8 +213,6 @@ public class MenuShop : UiParent
             base.CloseThis();
 
         });
-
-
     }
 
 	// Nouvelle selection de catégorie
