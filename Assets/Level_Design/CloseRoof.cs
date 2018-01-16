@@ -16,8 +16,8 @@ public class CloseRoof : MonoBehaviour {
     private void Awake()
     {
         timeBetweenClose /= 100;
-        speed *= 0.01f;
-		otherPos = new List<Vector3> ( );
+        speed /= 100;
+
 		roofPos = Roof.transform.localPosition;
 
 		for ( int a = 0; a < otherElement.Length; a++ )
@@ -68,3 +68,7 @@ public class CloseRoof : MonoBehaviour {
         }
     }
 }
+
+        speed *= 0.01f;
+		otherPos = new List<Vector3> ( );
+		roofPos = Roof.transform.localPosition;
