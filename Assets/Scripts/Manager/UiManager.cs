@@ -307,6 +307,8 @@ public class UiManager : ManagerParent
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Death_" + rdmValue, false);
+
+        RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
     public void OpenMadness()
@@ -390,7 +392,38 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSpecialAction(string type)
+    public void NewRank(int currIndex)
+    {
+        Transform getRank = GlobalManager.Ui.RankSlider.transform.parent; 
+
+        getRank.DOKill(true);
+        //Vector2 localPos = getRank.localPosition;
+        getRank.DOLocalMove(new Vector2(-120, -450), 0);
+        getRank.DOPunchPosition(Vector2.one * 30f, 1f, 18, 1).OnComplete(() => {
+            getRank.DOLocalMove(new Vector2(-833, -200), .3f).OnComplete(()=> {
+
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOShakePosition(.05f, 30f, 12, 360).SetLoops(-1, LoopType.Restart);
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOPunchPosition(Vector2.one * 90f, .4f, 18, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+            });
+        });
+
+        getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
+
+
+        //getRank.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
+
+        getRank.GetComponent<CanvasGroup>().DOFade(0, 0);
+        getRank.GetComponent<CanvasGroup>().DOFade(1, .15f);
+
+        getRank.DOScale(5, 0);
+        getRank.DOScale(1, .5f);
+
+
+    }
+
+    public void StartSpecialAction(string type)
     {
         if (type == "SlowMot")
             SlowMotion.sprite = AbilitiesSprite[0];

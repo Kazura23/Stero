@@ -17,8 +17,8 @@ public class CloseRoof : MonoBehaviour {
     {
         timeBetweenClose /= 100;
         speed /= 100;
-
-		roofPos = Roof.transform.localPosition;
+        otherPos = new List<Vector3>();
+        roofPos = Roof.transform.localPosition;
 
 		for ( int a = 0; a < otherElement.Length; a++ )
 		{

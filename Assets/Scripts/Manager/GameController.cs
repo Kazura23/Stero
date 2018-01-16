@@ -475,7 +475,7 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
-        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
+
 
 		Image getRankSlid = GlobalManager.Ui.RankSlider;
 
@@ -489,7 +489,11 @@ public class GameController : ManagerParent
             }
         }
 
-		if ( currInd != currIndex )
+        GlobalManager.Ui.ScorePlus(thisInf.AllScore, AllRank[currIndex].Color);
+        GlobalManager.Ui.RankText.color = AllRank[currIndex].Color;
+        GlobalManager.Ui.Multiplicateur.text = AllRank[currIndex].MultiPli.ToString();
+
+        if ( currInd != currIndex )
 		{
 			lastNeeded = currNeeded;
 			currMax = getRank [ currInd ].NeededScore;
@@ -515,24 +519,17 @@ public class GameController : ManagerParent
 				StopCoroutine ( getCurWait );
 			}
 
-            getRankSlid.transform.parent.GetChild(0).GetComponent<RainbowColor>().colors[1] = AllRank[currIndex].Color;
-            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = AllRank[currIndex].Color;
-            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = AllRank[currIndex].Color;
-
 
             getCurWait = waitRank ( getRank [ currInd ].Time );
 
+
 			StartCoroutine(getCurWait);
 
-			getRankSlid.transform.parent.DOKill(true);
-			getRankSlid.transform.parent.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
 
-			getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, 0);
-			getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(1, .5f);
+            GlobalManager.Ui.NewRank(currIndex);
 
-			getRankSlid.transform.parent.DOScale(5, 0);
-			getRankSlid.transform.parent.DOScale(1, .5f);
-		}
+
+        }
 
 		getRankSlid.fillAmount = ( float ) ( CurrentScore - lastNeeded ) /  ( currNeeded - lastNeeded );
 
@@ -556,15 +553,19 @@ public class GameController : ManagerParent
 	{
 		yield return new WaitForSeconds ( secs );
 
+		Image getRankSlid = GlobalManager.Ui.RankSlider;
 
-        //SliderRank.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
-        //getRankSlid.transform.parent.transform.DOScale(0, .3f);
+        getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        getRankSlid.transform.parent.transform.DOScale(0, .3f);
 
-        GlobalManager.Ui.RankText.text = Constants.DefRankName;
-		currIndex = -1;
+        yield return new WaitForSeconds(.3f);
+
+        GlobalManager.Ui.RankText.text = AllRank[0].NameRank;
+		currIndex = 0;
 		currMax = 0;
 		CurrentScore = 0;
-		GlobalManager.Ui.RankSlider.fillAmount = 0;
+        GlobalManager.Ui.Multiplicateur.text = AllRank[0].MultiPli.ToString();
+        getRankSlid.fillAmount = 0;
 
 	}
 

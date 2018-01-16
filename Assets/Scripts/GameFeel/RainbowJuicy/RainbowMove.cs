@@ -10,14 +10,18 @@ public class RainbowMove : MonoBehaviour
         LocalVertical,
         LocalHorizontal,
         GlobalVertical,
-        GlobalHorizontal
+        GlobalHorizontal,
+        ShakePosition
     }
+
+    
 
     int index = -1;
     public float time = .2f;
     public Type movesType;
     public float[] moves;
     public Ease easeType;
+
 	Transform currT;
     private float LocalY;
 
@@ -52,6 +56,9 @@ public class RainbowMove : MonoBehaviour
 
         if (movesType == Type.GlobalVertical)
 			currT.DOMoveY(moves[index], time).SetEase(easeType).OnComplete(() => Next());
+
+        if (movesType == Type.ShakePosition)
+            currT.DOShakePosition(time, moves[index]).SetEase(easeType).OnComplete(() => Next());
 
     }
 
