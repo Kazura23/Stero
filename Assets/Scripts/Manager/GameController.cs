@@ -521,18 +521,23 @@ public class GameController : ManagerParent
 				StopCoroutine ( getCurWait );
 			}
 
-			getCurWait = waitRank ( getAllRank [ currInd ].Time );
+            getRankSlid.transform.parent.GetChild(0).GetComponent<RainbowColor>().colors[1] = AllRank[currIndex].Color;
+            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = AllRank[currIndex].Color;
+            getRankSlid.transform.parent.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = AllRank[currIndex].Color;
 
-			StartCoroutine ( getCurWait );
+
+            getCurWait = waitRank ( getRank [ currInd ].Time );
+
+			StartCoroutine(getCurWait);
 
 			getRankSlid.transform.parent.DOKill ( true );
 			getRankSlid.transform.parent.DOPunchPosition ( new Vector3 ( 30, 0, 0 ), 0.4f );
 
-			getRankSlid.transform.parent.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0 );
-			getRankSlid.transform.parent.GetComponent<CanvasGroup> ( ).DOFade ( 1, .2f );
+			getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, 0);
+			getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(1, .5f);
 
-			getRankSlid.transform.DOScale ( 5, 0 );
-			getRankSlid.transform.DOScale ( 1, .2f );
+			getRankSlid.transform.parent.DOScale(5, 0);
+			getRankSlid.transform.parent.DOScale(1, .5f);
 		}
 
 		float getNewRank = ( float ) ( CurrentScore - lastNeeded ) / ( currNeeded - lastNeeded );
@@ -559,7 +564,11 @@ public class GameController : ManagerParent
 	{
 		yield return new WaitForSeconds ( secs );
 
-		GlobalManager.Ui.RankText.text = Constants.DefRankName;
+
+        //SliderRank.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
+        //getRankSlid.transform.parent.transform.DOScale(0, .3f);
+
+        GlobalManager.Ui.RankText.text = Constants.DefRankName;
 		currIndex = -1;
 		currMax = 0;
 		CurrentScore = 0;
