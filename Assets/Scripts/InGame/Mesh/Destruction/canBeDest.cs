@@ -13,7 +13,7 @@ public class canBeDest : MonoBehaviour
 	void OnCollisionEnter ( Collision collision )
 	{
 		string getTag = collision.collider.tag;
-		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer && ( gameObject.tag != Constants._ElemDash || GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash ) || getTag == Constants._EnnemisTag || getTag == Constants._ObsEnn )
+		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer && ( gameObject.tag != Constants._ElemDash || GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash ) || getTag != Constants._DebrisEnv && getTag != Constants._PlayerTag && getTag != Constants._UnTagg )
 		{
 			AbstractObject getAbs = GetComponent <AbstractObject> ( );
 			if ( getAbs != null )
@@ -32,11 +32,11 @@ public class canBeDest : MonoBehaviour
 			if ( gameObject.activeSelf )
 			{
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc, 20 ) );
-			}
-			int randomSong = UnityEngine.Random.Range ( 0, 5 );
-			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
+				int randomSong = UnityEngine.Random.Range ( 0, 5 );
+				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 
-            VibrationManager.Singleton.ObsVibration();
+				VibrationManager.Singleton.ObsVibration();
+			}
         }
 	}
 

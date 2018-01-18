@@ -69,7 +69,6 @@ public class Punch : MonoBehaviour {
                 GlobalManager.Ui.BloodHit();
             }
 
-
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
 			Vector3 getProj = Vector3.zero;
             switch (numTechnic)
@@ -95,18 +94,18 @@ public class Punch : MonoBehaviour {
 					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
 				}
 
-                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-                    {
-                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-                    }
-                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+                foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
+                {
+                    thisRig.constraints = RigidbodyConstraints.FreezePositionY;
+                }
+                other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
 
-                    break;
+                break;
 			case (int)Technic.double_punch:
-                    //MadnessMgetProj = getPlayer.forward;ana("Double");
-                    getProj = getPlayer.forward;
-                    //Debug.Log ( pourcPunch );
-                    if ( other.gameObject.tag != Constants._ObjDeadTag )
+                //MadnessMgetProj = getPlayer.forward;ana("Double");
+                getProj = getPlayer.forward;
+                //Debug.Log ( pourcPunch );
+                if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
@@ -115,12 +114,12 @@ public class Punch : MonoBehaviour {
 					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
 				}
 
-                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-                    {
-                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-                    }
+                foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
+                {
+                    thisRig.constraints = RigidbodyConstraints.FreezePositionY;
+                }
 
-                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+                other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
            	 	break;
             }
         }else if (other.gameObject.tag == Constants._MissileBazoo)
