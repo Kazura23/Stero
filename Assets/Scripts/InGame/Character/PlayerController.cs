@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
     public int Life = 1;
 	public bool StopPlayer = false;
 
+	[HideInInspector]
+	public float totalDis = 0;
+
 	private BoxCollider punchBox;
     private SphereCollider sphereChocWave;
 	private Punch punch;
@@ -187,7 +190,6 @@ public class PlayerController : MonoBehaviour
 	float nextIncrease = 0;
 	float befRot = 0;
 	float SliderContent;
-	public float totalDis = 0;
     float rationUse = 1;
 	//float calPos = 0;
 
@@ -225,6 +227,7 @@ public class PlayerController : MonoBehaviour
 	bool useFord = true;
 	bool getCamRM = false;
 	bool newDir = false;
+	bool onTuto;
 
     // var analytics
     private float timerRun = 0;
@@ -307,14 +310,7 @@ public class PlayerController : MonoBehaviour
 		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
-		//textCoin = GlobalManager.Ui.MoneyPoints;
-		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
-		impulsionCL = ImpulsionCL;
-		decelerationCL = DecelerationCL;
+	
 		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
@@ -345,6 +341,7 @@ public class PlayerController : MonoBehaviour
 
 		textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
+		onTuto = GlobalManager.GameCont.LaunchTuto;
 
 		newStat ( StatePlayer.Normal );
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
@@ -361,10 +358,20 @@ public class PlayerController : MonoBehaviour
 		StopPlayer = true;
 		totalDis = 0;
 		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
+
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			acceleration = Acceleration * 0.5f;
+			maxSpeed = MaxSpeed * 0.5f;
+		}
+		else
+		{
+			acceleration = Acceleration;
+			maxSpeed = MaxSpeed;
+		}
+
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
 		impulsionCL = ImpulsionCL;
 		decelerationCL = DecelerationCL;
 		ThisAct = SpecialAction.Nothing;
@@ -390,6 +397,26 @@ public class PlayerController : MonoBehaviour
 		stopMadness ( );
 	}
 
+	public void ResetPosDo ( )
+	{
+		StopPlayer = true;
+
+		GlobalManager.GameCont.LaunchTuto = false;
+		AllPlayerPrefs.relance = false;
+
+		thisCam.GetComponent<RainbowMove> ( ).enabled = false;
+		thisCam.GetComponent<RainbowRotate> ( ).enabled = false;
+
+		thisCam.transform.DOLocalRotateQuaternion ( startRotRR, 0.5f );
+		thisCam.transform.DOLocalMove ( startPosRM, 0.5f );
+
+		pTrans.DOLocalRotateQuaternion ( startRotPlayer, 0.5f );
+		pTrans.DOLocalMove ( startPlayer, 0.6f ).OnComplete ( ( ) =>
+		{
+			GlobalManager.GameCont.Restart ( );
+		} );
+	}
+
     public void GameOver ( bool forceDead = false )
 	{
         if ( invDamage  && !forceDead )
@@ -397,21 +424,32 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-        Life--;
+		if ( onTuto )
+		{
+			currSpeed = 0;
+			StopPlayer = true;
+			pTrans.DOMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
+			{
+				StopPlayer = false;
+			} );
+			return;
+		}
+
+		Life--;
 
         GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 1);
 
-        if ( Life > 0 || playerDead )
+		if ( Life > 0 || playerDead )
 		{
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
 
-            if (!playerDead)
-            {
+			if ( !playerDead )
+			{
 				GlobalManager.Ui.StartBonusLife ( Life + 1 );
-            }
+			}
 
-            return;
+			return;
 		}
 
 		int getCull = thisCam.cullingMask;
@@ -647,6 +685,7 @@ public class PlayerController : MonoBehaviour
 		}
 
         AllPlayerPrefs.ATimerRun += getTime;
+
 		TimerCheck ( getTime );
 		distCal ( );
 
@@ -833,7 +872,7 @@ public class PlayerController : MonoBehaviour
 
             }
 		}
-		else
+		else if ( !onTuto )
 		{
 			timerFight.value -= ( getTime / DelayLastTimer ) * 0.25f;
 
@@ -1778,6 +1817,11 @@ public class PlayerController : MonoBehaviour
 
     private string AnalyticsChunk(Transform p_child)
     {
+		if ( onTuto )
+		{
+			return "Tutorial";
+		}
+
         Transform currentTrans = p_child;
         if(currentTrans == null)
         {

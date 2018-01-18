@@ -43,12 +43,13 @@ public class RiffleMan : AbstractObject
 			StartCoroutine ( shootPlayer ( new WaitForSeconds ( SpeedSpawn ), false ) );
 		}
 
+		GetComponentInChildren<Animator> ( ).SetBool ( "Detect", isDetected );
+
+
         if (!detected)
         {
             detected = true;
 
-
-            GetComponentInChildren<Animator>().SetTrigger("Attack");
 
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);

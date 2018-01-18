@@ -23,6 +23,8 @@ public class GameController : ManagerParent
 	public GameObject BarrierIntro;
 	public bool Intro;
 
+	public GameObject Tutoriel;
+
 	[HideInInspector]
 	public Dictionary <string, ItemModif> AllModifItem;
 	[HideInInspector]
@@ -44,6 +46,10 @@ public class GameController : ManagerParent
 	public GameObject musicObject;
 	[HideInInspector]
 	public Camera thisCam;
+
+	[HideInInspector]
+	public bool LaunchTuto;
+
 	Player inputPlayer;
 	Text textScore;
 
@@ -321,7 +327,15 @@ public class GameController : ManagerParent
 		GameStarted = true;
 		checkStart = false;
 
-		SpawnerChunck.FirstSpawn ( );
+		if ( !LaunchTuto )
+		{
+			SpawnerChunck.FirstSpawn ( );
+		}
+		else
+		{
+			AllPlayerPrefs.SetStringValue ( Constants.TutoName );
+			Instantiate ( Tutoriel );
+		}
 
 		thisCam.GetComponent<RainbowRotate>().time = 2;
 		thisCam.GetComponent<RainbowMove>().time = 1;
@@ -735,6 +749,7 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
+		LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;

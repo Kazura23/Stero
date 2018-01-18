@@ -13,7 +13,7 @@ public class canBeDest : MonoBehaviour
 	void OnCollisionEnter ( Collision collision )
 	{
 		string getTag = collision.collider.tag;
-		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer || getTag == Constants._EnnemisTag || getTag == Constants._ObsEnn )
+		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer && ( gameObject.tag != Constants._ElemDash || GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash ) || getTag == Constants._EnnemisTag || getTag == Constants._ObsEnn )
 		{
 			AbstractObject getAbs = GetComponent <AbstractObject> ( );
 			if ( getAbs != null )

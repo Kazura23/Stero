@@ -41,6 +41,7 @@ public static class Constants
 	public const int LineDist = 6;
 	public const float DB_Prepare = 2;
 	public const string DefRankName = "E";
+	public const string TutoName = "TutoStart";
 	//public const float ChunkLengh = 470;
 	#endregion
 }
