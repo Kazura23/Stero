@@ -7,13 +7,14 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: fenetre
-  m_Shader: {fileID: 4800000, guid: 1c9e64301b1ca0b48b0b7ed116f97189, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 0
+  m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -63,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 2325e7a2f6ef2504e8d37a3763f19b52, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7ae448db18d233143bfdc8e69fb132cf, type: 3}
         m_Scale: {x: 1.62, y: 0.34}
         m_Offset: {x: 0.1, y: -0.21}
     - _MetallicGlossMap:
@@ -78,19 +79,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _COlorforce: 1
     - _Cutoff: 0.5
     - _Detail1_rotation: 8.1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _EmissionPower: 0.81
+    - _DstBlend: 10
+    - _EmissionPower: 0.55
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.324
     - _GlossyReflections: 1
-    - _Metallic: 0
-    - _Mode: 0
+    - _Metallic: 0.123
+    - _Mode: 3
     - _OcclusionStrength: 1
     - _Outlinewidth: 0
     - _Parallax: 0.02
@@ -101,10 +106,10 @@ Material:
     - _UVSec: 0
     - _UVsize: 0.52
     - _Windowsopacity: 0.03
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.8961039, g: 0.8961039, b: 0.8961039, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.14792389, g: 0.5588235, b: 0.3547906, a: 0.047}
+    - _EmissionColor: {r: 0.033899225, g: 0.07403279, b: 0.1397059, a: 1}
     - _MAinColor: {r: 0, g: 1, b: 0.79310346, a: 1}
     - _node_6554: {r: 1, g: 0.8312373, b: 0.6176471, a: 1}
-    - _windowemission: {r: 0.3931661, g: 0.74264705, b: 0.6269573, a: 1}
+    - _windowemission: {r: 0.25400084, g: 0.5955882, b: 0.524915, a: 1}
