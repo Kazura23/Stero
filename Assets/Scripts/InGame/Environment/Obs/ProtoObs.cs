@@ -21,6 +21,23 @@ public class ProtoObs : AbstractObject
 		base.Dead ( enemy );
 	}
 
+	public override void Degat(Vector3 p_damage, int p_technic)
+	{
+		if ( p_technic == 0 )
+		{
+			if ( gameObject.activeSelf )
+			{
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 75, 3 ) );
+				int randomSong = UnityEngine.Random.Range ( 0, 5 );
+				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
+			}
+		}
+		else if ( p_technic == 1 ) 
+		{
+			ForceProp( p_damage, DeathType.Punch, true, true );
+		}
+	}
+
 	public override void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
 		base.PlayerDetected ( thisObj, isDetected );
