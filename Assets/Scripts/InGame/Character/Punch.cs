@@ -8,13 +8,7 @@ public class Punch : MonoBehaviour {
     public float puissanceOnde = 15;
     private PlayerController control;
 	Transform getPlayer;
-    private enum Technic
-    {
-        basic_punch,
-        double_punch,
-        onde_choc
-    }
-		
+   
     private int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
 	public float projection_basic = 50;

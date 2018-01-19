@@ -4,6 +4,13 @@ public enum TokenType
 	GoTok
 }
 
+public enum Technic
+{
+	basic_punch,
+	double_punch,
+	onde_choc
+}
+
 public enum MenuType
 {
 	Nothing,

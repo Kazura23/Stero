@@ -8,7 +8,6 @@ public class ShieldMan : AbstractObject {
     private bool shieldActive;
     public float delay = 1;
     public float distance = 30, hauteur = 2;
-    private Vector3 move;
     private float saveVal;
 
     #region Variables
@@ -26,7 +25,6 @@ public class ShieldMan : AbstractObject {
 		base.Awake();
 
         shieldActive = true;
-        move = new Vector3();
 		parMat = getTrans.GetComponent<MeshRenderer>().material;
         saveCol = parMat.color;
     }
@@ -99,7 +97,6 @@ public class ShieldMan : AbstractObject {
         {
             detected = true;
 
-
             GetComponentInChildren<Animator>().SetTrigger("Attack");
 
             GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
@@ -130,10 +127,8 @@ public class ShieldMan : AbstractObject {
 
                 shieldActive = false;
                 playerCont.MadnessMana(1);
-				move = getTrans.position + (getTrans.forward * distance);
-				getTrans.DOMoveX(move.x, delay);
-				getTrans.DOMoveZ(move.z, delay);
-				getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
+
+				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay ); 
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 

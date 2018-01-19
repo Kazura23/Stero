@@ -43,7 +43,7 @@ public class RiffleMan : AbstractObject
 			StartCoroutine ( shootPlayer ( new WaitForSeconds ( SpeedSpawn ), false ) );
 		}
 
-		GetComponentInChildren<Animator> ( ).SetBool ( "Detect", isDetected );
+		GetComponentInChildren<Animator> ( ).SetTrigger ( "Attack" );
 
 
         if (!detected)
@@ -98,6 +98,11 @@ public class RiffleMan : AbstractObject
 	{
 		int a;
 		GameObject getCurr;
+
+		if ( NbrBalls < 1 )
+		{
+			NbrBalls = 1;
+		}
 
 		for ( a = 0; a < NbrBalls; a++ )
 		{

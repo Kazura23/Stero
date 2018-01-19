@@ -23,12 +23,11 @@ public class ProtoObs : AbstractObject
 
 	public override void Degat(Vector3 p_damage, int p_technic)
 	{
-		Debug.Log ( p_technic );
-		if ( p_technic == 2 )
+		if ( p_technic == 0 )
 		{
 			if ( gameObject.activeSelf )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 50 * p_technic, 3 ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 75, 3 ) );
 				int randomSong = UnityEngine.Random.Range ( 0, 5 );
 				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 			}
