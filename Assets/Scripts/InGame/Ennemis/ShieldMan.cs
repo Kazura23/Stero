@@ -143,6 +143,7 @@ public class ShieldMan : AbstractObject {
 					}
                 }
 
+				mainCorps.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
                 //animation shield destroy
             }
             else
@@ -150,12 +151,10 @@ public class ShieldMan : AbstractObject {
 				getTrans.DOKill ( );
                 base.Degat(p_damage, p_technic);
             }
-        }else
-        {
-            if (!shieldActive)
-            {
-				base.Degat(p_damage, p_technic);
-            }
+        }
+		else if (!shieldActive)
+		{
+           	base.Degat(p_damage, p_technic);
         }
     }
 

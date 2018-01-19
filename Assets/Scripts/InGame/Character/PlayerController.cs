@@ -426,11 +426,15 @@ public class PlayerController : MonoBehaviour
 
 		if ( onTuto )
 		{
-			totalDis -= 20;
 			currSpeed = 0;
 			StopPlayer = true;
+
 			pTrans.DOMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
 			{
+				textDist.text = "" + ( int.Parse ( textDist.text ) - 10 );
+				totalDis -= 10;
+				calDist = (int)totalDis;
+				lastPos = pTrans.position;
 				StopPlayer = false;
 			} );
 			return;
