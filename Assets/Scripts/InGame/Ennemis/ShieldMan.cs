@@ -8,7 +8,6 @@ public class ShieldMan : AbstractObject {
     private bool shieldActive;
     public float delay = 1;
     public float distance = 30, hauteur = 2;
-    private Vector3 move;
     private float saveVal;
 
     #region Variables
@@ -26,7 +25,6 @@ public class ShieldMan : AbstractObject {
 		base.Awake();
 
         shieldActive = true;
-        move = new Vector3();
 		parMat = getTrans.GetComponent<MeshRenderer>().material;
         saveCol = parMat.color;
     }
@@ -60,9 +58,11 @@ public class ShieldMan : AbstractObject {
 	public override void Dead(bool enemy = false)
 	{
 		base.Dead(enemy);
-
-		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
-	}
+        AllPlayerPrefs.ANbTotalEnemyKill++;
+        AllPlayerPrefs.ANbKnighty++;
+        //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
+        //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
+    }
 
 	public override void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst, bool forceDead = false )
 	{
@@ -97,7 +97,6 @@ public class ShieldMan : AbstractObject {
         {
             detected = true;
 
-
             GetComponentInChildren<Animator>().SetTrigger("Attack");
 
             GameObject txt = GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), "TextEnemy", transform.parent, 3);
@@ -128,11 +127,8 @@ public class ShieldMan : AbstractObject {
 
                 shieldActive = false;
                 playerCont.MadnessMana(1);
-				move = getTrans.position + (getTrans.forward * distance);
-				getTrans.DOMoveX(move.x, delay);
-				getTrans.DOMoveZ(move.z, delay);
-				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay, true );
-				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
+
+				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay ); 
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 
@@ -147,6 +143,7 @@ public class ShieldMan : AbstractObject {
 					}
                 }
 
+				mainCorps.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
                 //animation shield destroy
             }
             else
@@ -154,12 +151,10 @@ public class ShieldMan : AbstractObject {
 				getTrans.DOKill ( );
                 base.Degat(p_damage, p_technic);
             }
-        }else
-        {
-            if (!shieldActive)
-            {
-				base.Degat(p_damage, p_technic);
-            }
+        }
+		else if (!shieldActive)
+		{
+           	base.Degat(p_damage, p_technic);
         }
     }
 
@@ -169,6 +164,10 @@ public class ShieldMan : AbstractObject {
 		{
 			base.CollDetect ( );
 		}
+
 		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 }
+
+//getTrans.DOLocalMove(getTrans.localPosition + getTrans.forward* distance, delay, true );
+				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));

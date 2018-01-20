@@ -154,7 +154,6 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getUp = transform.up * projection.y;
 			onEnemyDead ( getFor + getRig + getUp, DeathType.Punch );
             GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
-
         }
 	}
 
@@ -173,7 +172,10 @@ public class AbstractObject : MonoBehaviour
 	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
 		onEnemyDead ( forceProp, thisDeath, checkConst );
-		StartCoroutine ( enableColl ( ) );
+		if ( gameObject.activeSelf )
+		{
+			StartCoroutine ( enableColl ( ) );
+		}
 	}
 	#endregion
 
