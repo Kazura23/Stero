@@ -138,7 +138,26 @@ public class GameController : ManagerParent
 					SetAllBonus ( );
 
 					isStay = false;
-					AnimationStartGame();
+					if ( !LaunchTuto )
+					{
+						AnimationStartGame();
+					}
+					else
+					{
+						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+						{
+							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+
+							Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+							{
+								isReady = true;
+								isStay = true;
+								//Player.GetComponent<PlayerController>().StopPlayer = false;
+								//Debug.Log("anime fonctionnelle");
+							});
+						});
+					}
 				}
 
 				break;
@@ -169,13 +188,13 @@ public class GameController : ManagerParent
 				break;
 			}
 	           
-			if (!checkStart && inputPlayer.GetAxis("Horizontal") == -1 && horiz)
+			if (inputPlayer.GetAxis("Horizontal") == -1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
 				ChooseRotate(false);
 			}
-			else if (!checkStart && inputPlayer.GetAxis("Horizontal") == 1 && horiz)
+			else if (inputPlayer.GetAxis("Horizontal") == 1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
