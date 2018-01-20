@@ -2305,7 +2305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resolution: 2
+  Resolution: 0
   DefaultSpotCookie: {fileID: 2800000, guid: 1e1ae8a8637880241a6eea3f1cbbcc7e, type: 3}
 --- !u!114 &114096383040500484
 MonoBehaviour:
@@ -2347,20 +2347,20 @@ MonoBehaviour:
   m_Noise: {fileID: 2800000, guid: 35eb47181d630134c97488476efbda59, type: 3}
   m_Debug: 0
   m_Z: 1
-  m_NearClip: 10.83
-  m_FarClipMax: 72.08
-  m_GlobalDensityMult: 4.99
-  m_ConstantFog: 8.5
-  m_HeightFogAmount: 0.54
-  m_HeightFogExponent: 0
-  m_HeightFogOffset: 0
-  m_NoiseFogAmount: 0.551
-  m_NoiseFogScale: 0.18
+  m_NearClip: 1.8
+  m_FarClipMax: 70
+  m_GlobalDensityMult: 4
+  m_ConstantFog: 2
+  m_HeightFogAmount: 2
+  m_HeightFogExponent: 0.03
+  m_HeightFogOffset: 29.6
+  m_NoiseFogAmount: 0.02
+  m_NoiseFogScale: 1.89
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.37
-  m_GlobalIntensityMult: 5.24
-  m_AmbientLightIntensity: 0.65
-  m_AmbientLightColor: {r: 0.36391655, g: 0.3897059, b: 0.36729583, a: 1}
+  m_GlobalIntensityMult: 3
+  m_AmbientLightIntensity: 1.2
+  m_AmbientLightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2773,7 +2773,7 @@ ReflectionProbe:
   m_Resolution: 16
   m_UpdateFrequency: 0
   m_BoxSize: {x: 10, y: 10, z: 10}
-  m_BoxOffset: {x: 0, y: 0, z: 0}
+  m_BoxOffset: {x: 0, y: 1, z: 0}
   m_NearClip: 1
   m_FarClip: 10
   m_ShadowDistance: 100
@@ -2782,7 +2782,7 @@ ReflectionProbe:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IntensityMultiplier: 0.32
+  m_IntensityMultiplier: 1
   m_BlendDistance: 10
   m_HDR: 1
   m_BoxProjection: 1
