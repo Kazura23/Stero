@@ -413,6 +413,7 @@ public class PlayerController : MonoBehaviour
 		pTrans.DOLocalRotateQuaternion ( startRotPlayer, 0.5f );
 		pTrans.DOLocalMove ( startPlayer, 0.6f ).OnComplete ( ( ) =>
 		{
+			playAnimator.Play("Start");
 			GlobalManager.GameCont.Restart ( );
 		} );
 	}
