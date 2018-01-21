@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator thisEnum;
 	IEnumerator getCouldown;
 
-	Animator playAnimator;
+	public Animator playAnimator;
 
 	Camera thisCam;
 	Camera otherCam;
@@ -311,7 +311,6 @@ public class PlayerController : MonoBehaviour
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
 	
-		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
 
