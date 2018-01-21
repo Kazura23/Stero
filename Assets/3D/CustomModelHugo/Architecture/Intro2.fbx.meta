@@ -3,22 +3,112 @@ guid: bfbb52d63dc0e3d4795c6a55d86469a3
 timeCreated: 1513510621
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     100002: polySurface74
+    100004: Ctrl_Ouverture
+    100006: Intro8
+    100008: Open_Close_Door1
+    100010: pCylinder10
+    100012: polySurface75
+    100014: polySurface76
+    100016: Porte
     400000: //RootNode
     400002: polySurface74
+    400004: Ctrl_Ouverture
+    400006: Intro8
+    400008: Open_Close_Door1
+    400010: pCylinder10
+    400012: polySurface75
+    400014: polySurface76
+    400016: Porte
     2300000: //RootNode
     2300002: polySurface74
+    2300004: Intro8
+    2300006: pCylinder10
+    2300008: polySurface75
+    2300010: polySurface76
     3300000: //RootNode
     3300002: polySurface74
+    3300004: Intro8
+    3300006: pCylinder10
+    3300008: polySurface75
+    3300010: polySurface76
     4300000: Intro2
     4300002: polySurface74
+    4300004: pCylinder10
+    4300006: polySurface75
+    4300008: Intro8
+    4300010: polySurface76
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Detail1
+    second: {fileID: 2100000, guid: 2d81d9b1cb9a40f43b7a1851f6eff2a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Intro2_Plafond_Intro4
+    second: {fileID: 2100000, guid: 466c4795058d2c34ab5f92c4b5ca4db8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Intro2_Sol3
+    second: {fileID: 2100000, guid: 466c4795058d2c34ab5f92c4b5ca4db8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Intro2_wall5
+    second: {fileID: 2100000, guid: 466c4795058d2c34ab5f92c4b5ca4db8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lampe2
+    second: {fileID: 2100000, guid: 39c096bd05c56d94d9ec61b239267a47, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light_emissive1
+    second: {fileID: 2100000, guid: 5dc364a5ee7e4814a8ada023610161d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plafond_Intro1
+    second: {fileID: 2100000, guid: d153d2b8748f2114d84c62bf585794e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Porte_Base
+    second: {fileID: 2100000, guid: f8b70ce98348e8e498aaf04459fee4d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Poutre1
+    second: {fileID: 2100000, guid: 85e2ab7a8d663a040896626f8c9b2d60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sol1
+    second: {fileID: 2100000, guid: 3e1897e9e31938545b87ba09c7ccbcc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StingrayPBS1
+    second: {fileID: 2100000, guid: 1253389b24818b7488e5df28b53643d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wall2
+    second: {fileID: 2100000, guid: 23d301c4ce59c4c49863e5e39f0920bf, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -31,19 +121,48 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 2
+    meshCompression: 1
     addColliders: 0
     importVisibility: 0
     importBlendShapes: 0
@@ -55,15 +174,17 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 0
-    secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
-    secondaryUVHardAngle: 88
-    secondaryUVPackMargin: 10
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 9
+    secondaryUVAreaDistortion: 14
+    secondaryUVHardAngle: 128
+    secondaryUVPackMargin: 18
     useFileScale: 0
   tangentSpace:
-    normalSmoothAngle: 180
-    normalImportMode: 0
-    tangentImportMode: 0
+    normalSmoothAngle: 78
+    normalImportMode: 1
+    tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
@@ -78,13 +199,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: Porte
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
