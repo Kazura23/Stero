@@ -324,6 +324,10 @@ public class PlayerController : MonoBehaviour
 
 		inputPlayer = ReInput.players.GetPlayer(0);
 
+
+        //Rewired.ReInput.mapping.GetKeyboardMapInstance(0, 0).GetElementMaps()[0];
+        //inputPlayer.controllers.maps.GetMap(0).ReplaceElementMap(0, 0, Pole.Positive, KeyCode.A, ModifierKeyFlags.None);
+
 		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
 		getObj.transform.localPosition = Vector3.zero;
 		getObj.name = "pivot";
