@@ -2,7 +2,8 @@
 
 public class GlobalManager : MonoBehaviour
 {
-	#region Variables
+    #region Variables
+    public bool UseAnalytics = false;
    	static GlobalManager mainManagerInstance;
 
 	//Add new managers here
@@ -28,6 +29,7 @@ public class GlobalManager : MonoBehaviour
     #region Mono
     void Awake()
 	{
+        AllPlayerPrefs.canSendAnalytics = UseAnalytics;
 		PlayerPrefs.DeleteAll ( );
 		if ( mainManagerInstance != null )
 		{

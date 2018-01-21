@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
     public int Life = 1;
 	public bool StopPlayer = false;
 
+	[HideInInspector]
+	public float totalDis = 0;
+
 	private BoxCollider punchBox;
     private SphereCollider sphereChocWave;
 	private Punch punch;
@@ -135,10 +138,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public int currLine = 0;
 
-	[HideInInspector]
-	public int MultiPli = 1;
-
-    Transform pTrans;
+	Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
 
@@ -190,7 +190,6 @@ public class PlayerController : MonoBehaviour
 	float nextIncrease = 0;
 	float befRot = 0;
 	float SliderContent;
-	public float totalDis = 0;
     float rationUse = 1;
 	//float calPos = 0;
 
@@ -228,6 +227,15 @@ public class PlayerController : MonoBehaviour
 	bool useFord = true;
 	bool getCamRM = false;
 	bool newDir = false;
+	bool onTuto;
+
+    // var analytics
+    private float timerRun = 0;
+    private int heartUse = 0;
+
+    private int[] enemyKill;
+    private string[] deadType;
+
     #endregion
 
     #region Mono
@@ -302,14 +310,7 @@ public class PlayerController : MonoBehaviour
 		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
-		//textCoin = GlobalManager.Ui.MoneyPoints;
-		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
-		maxSpeedCL = MaxSpeedCL;
-		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
-		impulsionCL = ImpulsionCL;
-		decelerationCL = DecelerationCL;
+	
 		playAnimator = GetComponentInChildren<Animator> ( );
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
@@ -340,6 +341,7 @@ public class PlayerController : MonoBehaviour
 
 		textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
+		onTuto = GlobalManager.GameCont.LaunchTuto;
 
 		newStat ( StatePlayer.Normal );
 		timerFight.DOValue ( 0.5f, Mathf.Abs ( timerFight.value - 0.5f ) );
@@ -356,10 +358,20 @@ public class PlayerController : MonoBehaviour
 		StopPlayer = true;
 		totalDis = 0;
 		nextIncrease = DistIncMaxSpeed;
-		maxSpeed = MaxSpeed;
+
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			acceleration = Acceleration * 0.5f;
+			maxSpeed = MaxSpeed * 0.5f;
+		}
+		else
+		{
+			acceleration = Acceleration;
+			maxSpeed = MaxSpeed;
+		}
+
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
-		acceleration = Acceleration;
 		impulsionCL = ImpulsionCL;
 		decelerationCL = DecelerationCL;
 		ThisAct = SpecialAction.Nothing;
@@ -385,6 +397,27 @@ public class PlayerController : MonoBehaviour
 		stopMadness ( );
 	}
 
+	public void ResetPosDo ( )
+	{
+		StopPlayer = true;
+
+		GlobalManager.GameCont.LaunchTuto = false;
+		AllPlayerPrefs.relance = false;
+
+		thisCam.GetComponent<RainbowMove> ( ).enabled = false;
+		thisCam.GetComponent<RainbowRotate> ( ).enabled = false;
+
+		thisCam.transform.DOLocalRotateQuaternion ( startRotRR, 0.5f );
+		thisCam.transform.DOLocalMove ( startPosRM, 0.5f );
+
+		pTrans.DOLocalRotateQuaternion ( startRotPlayer, 0.5f );
+		pTrans.DOLocalMove ( startPlayer, 0.6f ).OnComplete ( ( ) =>
+		{
+			playAnimator.Play("Start");
+			GlobalManager.GameCont.Restart ( );
+		} );
+	}
+
     public void GameOver ( bool forceDead = false )
 	{
         if ( invDamage  && !forceDead )
@@ -392,21 +425,37 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-        Life--;
+		if ( onTuto )
+		{
+			currSpeed = 0;
+			StopPlayer = true;
+
+			pTrans.DOMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
+			{
+				textDist.text = "" + ( int.Parse ( textDist.text ) - 10 );
+				totalDis -= 10;
+				calDist = (int)totalDis;
+				lastPos = pTrans.position;
+				StopPlayer = false;
+			} );
+			return;
+		}
+
+		Life--;
 
         GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 1);
 
-        if ( Life > 0 || playerDead )
+		if ( Life > 0 || playerDead )
 		{
 			invDamage = true;
 			Invoke ( "waitInvDmg", TimeInvincible );
 
-            if (!playerDead)
-            {
+			if ( !playerDead )
+			{
 				GlobalManager.Ui.StartBonusLife ( Life + 1 );
-            }
+			}
 
-            return;
+			return;
 		}
 
 		int getCull = thisCam.cullingMask;
@@ -641,6 +690,8 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
+        AllPlayerPrefs.ATimerRun += getTime;
+
 		TimerCheck ( getTime );
 		distCal ( );
 
@@ -827,7 +878,7 @@ public class PlayerController : MonoBehaviour
 
             }
 		}
-		else
+		else if ( !onTuto )
 		{
 			timerFight.value -= ( getTime / DelayLastTimer ) * 0.25f;
 
@@ -835,20 +886,34 @@ public class PlayerController : MonoBehaviour
 			{
 				secureTimer = false;
 				lastTimer = false;
+                AllPlayerPrefs.ATypeObstacle = "Madness";
+                AllPlayerPrefs.ANameObstacle = "Madness a zero";
+                RaycastHit hit;
+                Physics.Raycast(this.transform.position, Vector3.down, out hit, 1000);
+                AllPlayerPrefs.ANameChunk = AnalyticsChunk(hit.transform);
 				GameOver ( true );
 			}
 		}
 	}
 
-	void distCal ( )
+	int calDist = 0;
+    void distCal ( )
 	{
-		if ( !inAir )
+        int currDist = 0;
+
+        if ( !inAir )
 		{
 			totalDis += Vector3.Distance ( lastPos, pTrans.position );
 		}
 
+		if ( totalDis - calDist > 1 )
+		{
+			currDist = ( int ) totalDis - calDist;
+			calDist = ( int ) totalDis;
+		}
+
 		lastPos = pTrans.position;
-		textDist.text = "" + Mathf.RoundToInt ( totalDis );
+		textDist.text = "" + ( int.Parse ( textDist.text ) + currDist );
 		//Debug.Log ( maxSpeed );
 		if ( totalDis > nextIncrease )
 		{
@@ -887,7 +952,8 @@ public class PlayerController : MonoBehaviour
 
 			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
 			{
-				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+                AllPlayerPrefs.ANbTechSpe++;
+                thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 				animeSlo = false;
 				Time.timeScale = 1;
 			}
@@ -897,6 +963,7 @@ public class PlayerController : MonoBehaviour
 
 		if (ThisAct == SpecialAction.SlowMot )
         {
+            //AllPlayerPrefs.ANbTechSpe++;
             if (SliderContent > 0)
             {
                 thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
@@ -946,7 +1013,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
 		{
-			canSpe = false;
+            AllPlayerPrefs.ANbTechSpe++;
+            canSpe = false;
 			playerInv = true;
 			thisCam.GetComponent<RainbowMove>().enabled = false;
 			pRig.useGravity = false;
@@ -955,14 +1023,20 @@ public class PlayerController : MonoBehaviour
             GlobalManager.Ui.StartSpecialAction("OndeChoc");
 
             //MR S S'ABAISSE
+            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
+            target.transform.DOScale(Vector3.one, 0);
             pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
-			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
+            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
+            target.GetComponent<Rigidbody>().AddForce(Vector3.down * 20, ForceMode.VelocityChange);
+            pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
 				DOVirtual.DelayedCall(.1f, () => {
 					onAnimeAir = true;
 				});
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
+                //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, 0).SetEase(Ease.Linear);
+                //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, 0f).SetEase(Ease.Linear);
                 pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
 					onAnimeAir = false;
 
@@ -970,6 +1044,11 @@ public class PlayerController : MonoBehaviour
                     pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+
+                            GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
+                            circle.transform.DOScale(10, 4);
+                            circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+
                         });
 
 						StopPlayer = false;
@@ -984,7 +1063,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 )
 		{
-			pRig.constraints = RigidbodyConstraints.FreezeAll;
+            AllPlayerPrefs.ANbTechSpe++;
+            pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
             GlobalManager.Ui.StartSpecialAction("DeadBall");
 			canSpe = false;
@@ -1076,10 +1156,11 @@ public class PlayerController : MonoBehaviour
 				if ( !waitRotate )
 				{
 					pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
-					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 ( pTrans.localRotation.x, 0, 0 ) ) );
+					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 (  getThis.rotation.x, 0, 0 ) ) );
 				}
 
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
+				break;
 			}
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
 			{
@@ -1180,10 +1261,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( InMadness )
+		if ( InMadness || Dash )
 		{
 			speed *= DashSpeed;
-
+			if ( Dash && !InMadness )
+			{
+				AllPlayerPrefs.ATimeDash += delTime;
+			}
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( chargeDp )
@@ -1460,6 +1544,7 @@ public class PlayerController : MonoBehaviour
 
 		if(inputPlayer.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
         {
+            AllPlayerPrefs.ANbCoupSimple++;
 			Dash = false;
             thisCam.fieldOfView = Constants.DefFov;
 
@@ -1501,6 +1586,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( dpunch && canPunch )
         {
+            AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
@@ -1645,10 +1731,15 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter ( Collision thisColl )
 	{
+        if (playerDead)
+            return;
 		GameObject getObj = thisColl.gameObject;
 		if ( onAnimeAir && thisColl.collider.tag == Constants._UnTagg )
 		{
-			GameOver ( true );
+            AllPlayerPrefs.ATypeObstacle = "Mur / Plafond / Sol";
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( true );
 		}
 
 		if ( Dash || InMadness || playerInv )
@@ -1690,21 +1781,33 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( getObj.tag == Constants._ElemDash )
 		{
-			GameOver ( );
+            AllPlayerPrefs.ATypeObstacle = Constants._ElemDash;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( );
 		}
 
 		if ( getObj.tag == Constants._MissileBazoo )
 		{
-			getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
+            AllPlayerPrefs.ATypeObstacle = Constants._MissileBazoo;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
 			GameOver ( );
 		}
 		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._Balls )
 		{
-			GameOver ( );
+            AllPlayerPrefs.ATypeObstacle = getObj.tag;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            GameOver ( );
 		}
 		else if ( getObj.tag == Constants._ObsTag )
 		{
-			Life = 0;
+            AllPlayerPrefs.ATypeObstacle = Constants._ObsTag;
+            AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
+            AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+            Life = 0;
 			GameOver ( true );
 		}
 	}
@@ -1717,5 +1820,31 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.Ui.CloseMadness();
 	}
+
+    private string AnalyticsChunk(Transform p_child)
+    {
+		if ( onTuto )
+		{
+			return "Tutorial";
+		}
+
+        Transform currentTrans = p_child;
+        if(currentTrans == null)
+        {
+            return "Chunk non identifier";
+        }
+        while(currentTrans.parent.name != "Chuncks" && currentTrans.parent != null)
+        {
+            currentTrans = currentTrans.parent;
+        }
+        if (currentTrans.parent == null)
+        {
+            return "Chunk non identifier";
+        }
+        string nameChunk = currentTrans.name.Split('(')[0];
+        //Debug.Log(nameChunk);
+        return nameChunk;
+    }
+
 	#endregion
 }

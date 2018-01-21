@@ -210,7 +210,6 @@ public class MeshDesctruc : MonoBehaviour
 				GO.GetComponent<TimeToDisable> ( ).DisableThis ( deleayDest + Random.Range ( 0.0f, deleayDest ) );
 			}
 		}
-			
 
 		if ( destobj )
 		{

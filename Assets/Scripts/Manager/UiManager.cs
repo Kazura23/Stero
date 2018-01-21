@@ -11,6 +11,7 @@ public class UiManager : ManagerParent
 	#region Variables
 	public Slider MotionSlider;
     public Slider Madness;
+	public Image RankSlider;
 	public Image RedScreen;
 	public GameObject speedEffect;
 	public Transform MenuParent;
@@ -94,7 +95,14 @@ public class UiManager : ManagerParent
 		}
 	}
 
-	public void SetCam ( Camera newCame )
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y)){
+            ScorePlus(300, Color.white);
+        }
+    }
+
+    public void SetCam ( Camera newCame )
 	{
 		thisCam = newCame;
 	}
@@ -203,6 +211,36 @@ public class UiManager : ManagerParent
         });
     }
 
+
+    public void ScorePlus(int number, Color rankColor)
+    {
+
+        float randomPos = UnityEngine.Random.Range(-600, 600);
+        float randomRot = UnityEngine.Random.Range(200, 200);
+        //Debug.Log("score");
+        ScorePoints.text = "" + (int.Parse (ScorePoints.text) + number);
+
+
+        Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2 (randomPos,randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
+        scoretxt.text = "+ " + number;
+        scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
+
+
+        //scoretxt.GetComponent<RainbowColor>().colors[1] = rankColor;
+        scoretxt.GetComponent<Text>().color = rankColor;
+
+        scoretxt.transform.DOScale(2, 0);
+        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(()=> {
+                scoretxt.transform.DOScale(0, .5f);
+                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
+            });
+        });
+
+        Destroy(scoretxt.gameObject,4);
+    }
+
+
     public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
@@ -268,10 +306,13 @@ public class UiManager : ManagerParent
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Death_" + rdmValue, false);
+
+        RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
     public void OpenMadness()
     {
+        AllPlayerPrefs.ANbPassageMadness++;
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
@@ -350,7 +391,38 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSpecialAction(string type)
+    public void NewRank(int currIndex)
+    {
+        Transform getRank = GlobalManager.Ui.RankSlider.transform.parent; 
+
+        getRank.DOKill(true);
+        //Vector2 localPos = getRank.localPosition;
+        getRank.DOLocalMove(new Vector2(-120, -450), 0);
+        getRank.DOPunchPosition(Vector2.one * 30f, 1f, 18, 1).OnComplete(() => {
+            getRank.DOLocalMove(new Vector2(-833, -200), .3f).OnComplete(()=> {
+
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOShakePosition(.05f, 30f, 12, 360).SetLoops(-1, LoopType.Restart);
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOPunchPosition(Vector2.one * 90f, .4f, 18, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+            });
+        });
+
+        getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
+
+
+        //getRank.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
+
+        getRank.GetComponent<CanvasGroup>().DOFade(0, 0);
+        getRank.GetComponent<CanvasGroup>().DOFade(1, .15f);
+
+        getRank.DOScale(5, 0);
+        getRank.DOScale(1, .5f);
+
+
+    }
+
+    public void StartSpecialAction(string type)
     {
         if (type == "SlowMot")
             SlowMotion.sprite = AbilitiesSprite[0];
@@ -507,7 +579,7 @@ public class UiManager : ManagerParent
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
-		GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).IniPlayer ( );
+		GlobalManager.GameCont.IniFromUI ( );
 		//GlobalManager.GameCont.StartGame ( );
 	}
 
