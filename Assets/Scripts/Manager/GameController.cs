@@ -149,9 +149,19 @@ public class GameController : ManagerParent
 						//AnimationStartGame();
 
 						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
-							isReady = true;
-							isStay = true;
 							getAnimator.enabled = false;
+							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+							{
+								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+								{
+									isReady = true;
+									isStay = true;
+									//Player.GetComponent<PlayerController>().StopPlayer = false;
+									//Debug.Log("anime fonctionnelle");
+								});
+							});
 						});
 
 						/*

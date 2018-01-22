@@ -799,6 +799,7 @@ GameObject:
   - component: {fileID: 222225417628463688}
   - component: {fileID: 114819523650969372}
   - component: {fileID: 114828120067224202}
+  - component: {fileID: 114925751222445762}
   m_Layer: 5
   m_Name: Multiplier Number
   m_TagString: Untagged
@@ -1768,6 +1769,7 @@ GameObject:
   - component: {fileID: 222891624097039898}
   - component: {fileID: 114417375989588268}
   - component: {fileID: 114592896259333084}
+  - component: {fileID: 114063115422626420}
   m_Layer: 5
   m_Name: Rank Number
   m_TagString: Untagged
@@ -5283,6 +5285,7 @@ GameObject:
   - component: {fileID: 222101282419864830}
   - component: {fileID: 114415107346099242}
   - component: {fileID: 114935282898283014}
+  - component: {fileID: 114990479040890050}
   m_Layer: 5
   m_Name: Multiplier Text
   m_TagString: Untagged
@@ -14255,6 +14258,25 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: STEROLAND
+--- !u!114 &114063115422626420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241059148231632}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
+  - {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
+  - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
+  - {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
+  - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
+  ComponentType: 4
 --- !u!114 &114069095160266474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -21046,6 +21068,7 @@ MonoBehaviour:
   GameParent: {fileID: 224499006852901958}
   PatternBackground: {fileID: 1217370203974976}
   GlobalBack: {fileID: 1946598014174716}
+  PostProcessGlobal: {fileID: 0}
   ScorePoints: {fileID: 114053507755531716}
   MoneyPoints: {fileID: 114758694685017768}
   RankText: {fileID: 114417375989588268}
@@ -22040,7 +22063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.52212906, g: 0.81711984, b: 0.8565828, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -22173,6 +22196,7 @@ MonoBehaviour:
   BarrierIntro: {fileID: 1857548113592824, guid: 3374611a0d02ba34886c550f335b226a,
     type: 2}
   Intro: 1
+  UseTuto: 1
   Tutoriel: {fileID: 1429416133736536, guid: 112ac4e1176932e4faac3a38908ba212, type: 2}
   AllTempsItem: []
   introFinished: 1
@@ -22215,34 +22239,34 @@ MonoBehaviour:
     NeededScore: 0
   - NameRank: E   dgy
     MultiPli: 2
-    Time: 4
+    Time: 7
     Color: {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
     NeededScore: 500
-  - NameRank: D   Emoniac
+  - NameRank: D   emoniac
     MultiPli: 3
-    Time: 3
+    Time: 6.5
     Color: {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
     NeededScore: 2000
   - NameRank: C   abbaged
     MultiPli: 4
-    Time: 3
-    Color: {r: 0.99607843, g: 0.9019608, b: 0.7137255, a: 1}
+    Time: 6
+    Color: {r: 0.47058824, g: 0.6784314, b: 0.7529412, a: 1}
     NeededScore: 4000
   - NameRank: B   angable!
     MultiPli: 5
-    Time: 2.5
-    Color: {r: 0.19215687, g: 0.15294118, b: 0.20784314, a: 1}
+    Time: 5
+    Color: {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
     NeededScore: 8000
   - NameRank: A   cidly!!
     MultiPli: 6
-    Time: 2
+    Time: 4
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
     NeededScore: 15000
   - NameRank: S   teroidal!!!
     MultiPli: 6
-    Time: 2
+    Time: 3
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
-    NeededScore: 50000
+    NeededScore: 20000
   InfScore:
   - TypeDeath: 1
     Multiplicateur: 1
@@ -23816,16 +23840,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241059148231632}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.8
+  time: 0.25
   colors:
-  - {r: 0.4611026, g: 0.86764705, b: 0.3317474, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
-  - {r: 0.8152607, g: 0.8235294, b: 0.22404847, a: 1}
   ComponentType: 4
 --- !u!114 &114599136155147946
 MonoBehaviour:
@@ -25585,7 +25608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.52212906, g: 0.81711984, b: 0.8565828, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -25734,11 +25757,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.8
+  time: 0.25
   colors:
-  - {r: 0.4611026, g: 0.86764705, b: 0.3317474, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
-  - {r: 0.8152607, g: 0.8235294, b: 0.22404847, a: 1}
   ComponentType: 4
 --- !u!114 &114833736427535302
 MonoBehaviour:
@@ -26451,6 +26473,25 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &114925751222445762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106563646088498}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
+  - {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
+  - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
+  - {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
+  - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
+  ComponentType: 4
 --- !u!114 &114931154903710038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26559,11 +26600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.8
+  time: 0.25
   colors:
-  - {r: 0.4611026, g: 0.86764705, b: 0.3317474, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
-  - {r: 0.8152607, g: 0.8235294, b: 0.22404847, a: 1}
   ComponentType: 4
 --- !u!114 &114946961154876870
 MonoBehaviour:
@@ -26972,6 +27012,25 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 3, y: 3}
   MaxRayLength: 128
+--- !u!114 &114990479040890050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708708510608316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
+  - {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
+  - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
+  - {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
+  - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
+  ComponentType: 4
 --- !u!114 &114990936453365442
 MonoBehaviour:
   m_ObjectHideFlags: 1
