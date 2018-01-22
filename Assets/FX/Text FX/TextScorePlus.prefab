@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222791917045937764}
   - component: {fileID: 114779998343564520}
   - component: {fileID: 114592149088953822}
+  - component: {fileID: 114786192501683148}
   m_Layer: 5
   m_Name: TextScorePlus
   m_TagString: Untagged
@@ -78,6 +79,25 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: + 100
+--- !u!114 &114786192501683148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877095414442122}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34c1b773868efe4cb44635a3e8e9967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.1
+  colors:
+  - {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
+  - {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
+  - {r: 0.53333336, g: 0.80784315, b: 0.9529412, a: 1}
+  - {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
+  - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
+  ComponentType: 4
 --- !u!222 &222791917045937764
 CanvasRenderer:
   m_ObjectHideFlags: 1

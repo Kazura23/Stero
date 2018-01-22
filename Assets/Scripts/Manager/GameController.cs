@@ -22,6 +22,7 @@ public class GameController : ManagerParent
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
 	public bool Intro;
+    public bool UseTuto;
 
 	public GameObject Tutoriel;
 
@@ -536,7 +537,7 @@ public class GameController : ManagerParent
             }
         }
 
-		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color );
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
 
         if ( currInd != currIndex )
 		{
@@ -770,7 +771,10 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
-		LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+        if (UseTuto)
+        {
+            LaunchTuto = !AllPlayerPrefs.GetBoolValue(Constants.TutoName);
+        }
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
