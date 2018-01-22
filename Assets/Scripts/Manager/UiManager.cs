@@ -417,8 +417,6 @@ public class UiManager : ManagerParent
 
         DOVirtual.DelayedCall(.2f, () => {
 
-            Debug.Log(currIndex);
-
             if(currIndex == 6)
             {
                 getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[0].enabled = false;

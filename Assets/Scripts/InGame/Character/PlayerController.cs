@@ -4,9 +4,11 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using Rewired;
+using UnityEngine.Playables;
 
 public class PlayerController : MonoBehaviour 
 {
+	public PlayableDirector PlayDirect;
 	public float TimeToFall = 0.5f;
 	#region Variables
 	[Header ("Caractéristique sur une même Lane")]
@@ -230,8 +232,8 @@ public class PlayerController : MonoBehaviour
 	bool onTuto;
 
     // var analytics
-    private float timerRun = 0;
-    private int heartUse = 0;
+    //private float timerRun = 0;
+   // private int heartUse = 0;
 
     private int[] enemyKill;
     private string[] deadType;
@@ -266,9 +268,9 @@ public class PlayerController : MonoBehaviour
 		Mathf.Clamp ( Radius, 0, 100 );
 		Mathf.Clamp ( SoftNess, 0, 100 );
 
-		Shader.SetGlobalVector ( "GlobaleMask_Position", new Vector4 ( pTrans.position.x, pTrans.position.y, pTrans.position.z, 0 ) );
-		Shader.SetGlobalFloat ( "GlobaleMask_Radius", Radius );
-		Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
+		//Shader.SetGlobalVector ( "GlobaleMask_Position", new Vector4 ( pTrans.position.x, pTrans.position.y, pTrans.position.z, 0 ) );
+		//Shader.SetGlobalFloat ( "GlobaleMask_Radius", Radius );
+		//Shader.SetGlobalFloat ( "GlobaleMask_SoftNess", SoftNess );
 		Shader.SetGlobalFloat ( "_SlowMot", Time.timeScale );
         
         if (Input.GetKeyDown(KeyCode.M))

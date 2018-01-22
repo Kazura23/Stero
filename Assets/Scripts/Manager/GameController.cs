@@ -139,16 +139,37 @@ public class GameController : ManagerParent
 					SetAllBonus ( );
 
 					isStay = false;
-					if ( !LaunchTuto )
+					if ( LaunchTuto )
 					{
-						AnimationStartGame();
+						PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
+						Animator getAnimator = Player.GetComponent<Animator> ( );
+						getAnimator.enabled = true;
+
+						getPlayer.PlayDirect.Play ( );
+						//AnimationStartGame();
+
+						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
+							isReady = true;
+							isStay = true;
+							getAnimator.enabled = false;
+						});
+
+						/*
+						 // Cri de Mr S après avoir pris sa dose
+						GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+						// Démarrage de la musique du Hub amplifiée après Stéro
+						musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+						musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+						musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+						*/
 					}
 					else
 					{
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 						{
 							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
-
 
 							Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
 							{
@@ -771,10 +792,14 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
-        if (UseTuto)
-        {
-            LaunchTuto = !AllPlayerPrefs.GetBoolValue(Constants.TutoName);
-        }
+		if ( UseTuto )
+		{
+			LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+		}
+		else
+		{
+			LaunchTuto = false;
+		}
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
