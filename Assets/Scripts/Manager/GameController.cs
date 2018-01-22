@@ -22,6 +22,7 @@ public class GameController : ManagerParent
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
 	public bool Intro;
+    public bool UseTuto;
 
 	public GameObject Tutoriel;
 
@@ -536,7 +537,7 @@ public class GameController : ManagerParent
             }
         }
 
-		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color );
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
 
         if ( currInd != currIndex )
 		{
@@ -571,18 +572,20 @@ public class GameController : ManagerParent
 
 
 			StartCoroutine ( getCurWait );
-		}
-
-		GlobalManager.Ui.NewRank ( currInd );
 
 
-		float getNewRank = ( float ) ( CurrentScore - lastNeeded ) / ( currNeeded - lastNeeded );
-		DOTween.Kill ( rankValue );
-		DOTween.To ( ( ) => rankValue, x => rankValue = x, getNewRank, 0.1f );
+            GlobalManager.Ui.NewRank(currInd);
 
-		thisInf.AllScore = 0;
-		thisInf.CurrCount = 0;
-		thisInf.CurrSpawn.Clear ( );
+
+            float getNewRank = (float)(CurrentScore - lastNeeded) / (currNeeded - lastNeeded);
+            DOTween.Kill(rankValue);
+            DOTween.To(() => rankValue, x => rankValue = x, getNewRank, 0.1f);
+
+            thisInf.AllScore = 0;
+            thisInf.CurrCount = 0;
+            thisInf.CurrSpawn.Clear();
+        }
+
     }
 
 	void setMusic () 
@@ -768,7 +771,10 @@ public class GameController : ManagerParent
 
     protected override void InitializeManager ( )
 	{
-		LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+        if (UseTuto)
+        {
+            LaunchTuto = !AllPlayerPrefs.GetBoolValue(Constants.TutoName);
+        }
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
