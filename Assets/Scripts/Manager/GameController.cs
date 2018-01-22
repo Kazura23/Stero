@@ -571,18 +571,20 @@ public class GameController : ManagerParent
 
 
 			StartCoroutine ( getCurWait );
-		}
-
-		GlobalManager.Ui.NewRank ( currInd );
 
 
-		float getNewRank = ( float ) ( CurrentScore - lastNeeded ) / ( currNeeded - lastNeeded );
-		DOTween.Kill ( rankValue );
-		DOTween.To ( ( ) => rankValue, x => rankValue = x, getNewRank, 0.1f );
+            GlobalManager.Ui.NewRank(currInd);
 
-		thisInf.AllScore = 0;
-		thisInf.CurrCount = 0;
-		thisInf.CurrSpawn.Clear ( );
+
+            float getNewRank = (float)(CurrentScore - lastNeeded) / (currNeeded - lastNeeded);
+            DOTween.Kill(rankValue);
+            DOTween.To(() => rankValue, x => rankValue = x, getNewRank, 0.1f);
+
+            thisInf.AllScore = 0;
+            thisInf.CurrCount = 0;
+            thisInf.CurrSpawn.Clear();
+        }
+
     }
 
 	void setMusic () 

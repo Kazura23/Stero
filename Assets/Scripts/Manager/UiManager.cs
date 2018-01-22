@@ -5,6 +5,8 @@ using DG.Tweening;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class UiManager : ManagerParent
 {
@@ -18,6 +20,7 @@ public class UiManager : ManagerParent
 	public Transform GameParent;
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
+    public GameObject PostProcessGlobal;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
@@ -408,7 +411,11 @@ public class UiManager : ManagerParent
 
         getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
         getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
-        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        DOVirtual.DelayedCall(.2f, () => {
+
+            getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        });
+        // getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
 
 
         //getRank.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
@@ -425,7 +432,13 @@ public class UiManager : ManagerParent
     public void StartSpecialAction(string type)
     {
         if (type == "SlowMot")
+        {
             SlowMotion.sprite = AbilitiesSprite[0];
+            float intensityBloom = 0;
+            DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
+            
+            PostProcessGlobal.GetComponent<Bloom>().intensity.value = intensityBloom;
+        }
 
         if (type == "OndeChoc")
             SlowMotion.sprite = AbilitiesSprite[1];
