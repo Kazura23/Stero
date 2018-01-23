@@ -9,6 +9,10 @@ using TMPro;
 using Rewired;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.PostProcessing;
+using UnityEditor;
+using System;
 
 public class GameController : ManagerParent
 {
@@ -22,6 +26,7 @@ public class GameController : ManagerParent
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
 	public bool Intro;
+    public bool UseTuto;
 
 	public GameObject Tutoriel;
 
@@ -49,6 +54,9 @@ public class GameController : ManagerParent
 
 	[HideInInspector]
 	public bool LaunchTuto;
+
+	[HideInInspector]
+	public PostProcessingProfile postProfile;
 
 	Player inputPlayer;
 	Text textScore;
@@ -138,7 +146,57 @@ public class GameController : ManagerParent
 					SetAllBonus ( );
 
 					isStay = false;
-					AnimationStartGame();
+					if ( LaunchTuto )
+					{
+						PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
+						Animator getAnimator = Player.GetComponent<Animator> ( );
+						getAnimator.enabled = true;
+
+						getPlayer.PlayDirect.Play ( );
+						//AnimationStartGame();
+
+						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
+							getAnimator.enabled = false;
+							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+							{
+								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+								{
+									isReady = true;
+									isStay = true;
+									//Player.GetComponent<PlayerController>().StopPlayer = false;
+									//Debug.Log("anime fonctionnelle");
+								});
+							});
+						});
+
+						/*
+						 // Cri de Mr S après avoir pris sa dose
+						GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+						// Démarrage de la musique du Hub amplifiée après Stéro
+						musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+						musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+						musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+						*/
+					}
+					else
+					{
+						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+						{
+							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+
+							Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+							{
+								isReady = true;
+								isStay = true;
+								//Player.GetComponent<PlayerController>().StopPlayer = false;
+								//Debug.Log("anime fonctionnelle");
+							});
+						});
+					}
 				}
 
 				break;
@@ -169,13 +227,13 @@ public class GameController : ManagerParent
 				break;
 			}
 	           
-			if (!checkStart && inputPlayer.GetAxis("Horizontal") == -1 && horiz)
+			if (inputPlayer.GetAxis("Horizontal") == -1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
 				ChooseRotate(false);
 			}
-			else if (!checkStart && inputPlayer.GetAxis("Horizontal") == 1 && horiz)
+			else if (inputPlayer.GetAxis("Horizontal") == 1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
@@ -228,6 +286,7 @@ public class GameController : ManagerParent
 		iconeSpe = GlobalManager.Ui.SlowMotion;
 		sliderSpe = GlobalManager.Ui.MotionSlider;
 	}
+
 
     public void ActiveGame()
     {
@@ -480,6 +539,44 @@ public class GameController : ManagerParent
 				}
 				break;
 			}
+	
+		}
+	}
+
+	public void SetAllBonus ( )
+	{
+		iconeSpe.enabled = false;
+		iconeSpe.DOFade ( 0, 0.3f );
+
+		sliderSpe.gameObject.SetActive ( false );
+		sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
+		Dictionary <string, ItemModif> getMod = AllModifItem;
+		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
+		List <ItemModif> AllTI = AllTempsItem;
+		ItemModif thisItem;
+		//List<string> getKey = new List<string> ( );
+
+		SpawnerChunck.EndLevel = 1;
+
+		if ( getMod != null )
+		{
+			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
+			{
+				thisItem = thisKV.Value;
+
+				setItemToPlayer ( thisItem, currPlayer );
+			}
+		}
+
+		if ( AllTI != null )
+		{
+			while ( AllTI.Count > 0 )
+			{
+				setItemToPlayer ( AllTI [ 0 ], currPlayer );
+
+				AllTI.RemoveAt ( 0 );
+			}
 		}
 	}
     #endregion
@@ -517,7 +614,7 @@ public class GameController : ManagerParent
             }
         }
 
-		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color );
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
 
         if ( currInd != currIndex )
 		{
@@ -552,18 +649,20 @@ public class GameController : ManagerParent
 
 
 			StartCoroutine ( getCurWait );
-		}
-
-		GlobalManager.Ui.NewRank ( currInd );
 
 
-		float getNewRank = ( float ) ( CurrentScore - lastNeeded ) / ( currNeeded - lastNeeded );
-		DOTween.Kill ( rankValue );
-		DOTween.To ( ( ) => rankValue, x => rankValue = x, getNewRank, 0.1f );
+            GlobalManager.Ui.NewRank(currInd);
 
-		thisInf.AllScore = 0;
-		thisInf.CurrCount = 0;
-		thisInf.CurrSpawn.Clear ( );
+
+            float getNewRank = (float)(CurrentScore - lastNeeded) / (currNeeded - lastNeeded);
+            DOTween.Kill(rankValue);
+            DOTween.To(() => rankValue, x => rankValue = x, getNewRank, 0.1f);
+
+            thisInf.AllScore = 0;
+            thisInf.CurrCount = 0;
+            thisInf.CurrSpawn.Clear();
+        }
+
     }
 
 	void setMusic () 
@@ -747,12 +846,37 @@ public class GameController : ManagerParent
         }
     }
 
+	/*float currentValue = 0;
+	void updateBloom ( )
+	{
+		BloomModel.Settings thisBloom = postProfile.bloom.settings;
+
+		thisBloom.bloom.intensity = currentValue;
+
+		postProfile.bloom.settings = thisBloom;
+	}*/
+
     protected override void InitializeManager ( )
 	{
-		LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+		if ( UseTuto )
+		{
+			LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+		}
+		else
+		{
+			LaunchTuto = false;
+		}
+
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+
+		var behaviour = thisCam.GetComponent<PostProcessingBehaviour>();
+
+		postProfile = Instantiate(behaviour.profile, transform);
+		behaviour.profile = postProfile;
+
+		//DOTween.To (()=> currentValue, x=> currentValue = x, 1, 5 ).OnStepComplete( updateBloom );
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
@@ -784,42 +908,8 @@ public class GameController : ManagerParent
 		} 
 	}
 
-	public void SetAllBonus ( )
-	{
-		iconeSpe.enabled = false;
-		iconeSpe.DOFade ( 0, 0.3f );
-
-		sliderSpe.gameObject.SetActive ( false );
-		sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
-
-		Dictionary <string, ItemModif> getMod = AllModifItem;
-		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
-		List <ItemModif> AllTI = AllTempsItem;
-		ItemModif thisItem;
-		//List<string> getKey = new List<string> ( );
-
-		SpawnerChunck.EndLevel = 1;
-
-		if ( getMod != null )
-		{
-			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
-			{
-				thisItem = thisKV.Value;
-
-				setItemToPlayer ( thisItem, currPlayer );
-			}
-		}
-
-		if ( AllTI != null )
-		{
-			while ( AllTI.Count > 0 )
-			{
-				setItemToPlayer ( AllTI [ 0 ], currPlayer );
-
-				AllTI.RemoveAt ( 0 );
-			}
-		}
-	}
+	void test ()
+	{}
 
 	void setItemToPlayer ( ItemModif thisItem, PlayerController currPlayer )
 	{

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Rewired;
 
 public class Option :  UiParent
 {
+	#region Variables
 	public override MenuType ThisMenu
 	{
 		get
@@ -27,6 +29,36 @@ public class Option :  UiParent
 	int currVoice;
 
 	OptionMenu currMenu;
+	Player inputPlayer;
+	#endregion
+
+	#region mono
+	void Start ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+	}
+
+	void Update ()
+	{
+		if ( Input.GetKeyDown ( KeyCode.Escape ) )
+		{
+			GlobalManager.Ui.CloseThisMenu ( );
+		}
+
+		if ( currMusic != MusicSlider.value )
+		{
+			currMusic = ( int ) MusicSlider.value;
+		}
+		else if ( currSon != SonSlider.value )
+		{
+			currSon = ( int ) SonSlider.value;
+		}
+		else if ( currVoice != VoiceSlider.value )
+		{
+			currVoice = ( int ) VoiceSlider.value;
+		}
+	}
+	#endregion
 
 	protected override void InitializeUi()
 	{
@@ -48,6 +80,7 @@ public class Option :  UiParent
 		currMenu = OptionMenu.Son;
 	}
 
+	#region public
 	public override void OpenThis(MenuTokenAbstract GetTok = null)
 	{
 		base.OpenThis ( GetTok );
@@ -59,22 +92,7 @@ public class Option :  UiParent
 		base.CloseThis();
 	}
 
-	void Update ()
-	{
-		if ( currMusic != MusicSlider.value )
-		{
-			currMusic = ( int ) MusicSlider.value;
-		}
-		else if ( currSon != SonSlider.value )
-		{
-			currSon = ( int ) SonSlider.value;
-		}
-		else if ( currVoice != VoiceSlider.value )
-		{
-			currVoice = ( int ) VoiceSlider.value;
-		}
-	}
-
+	#region private
 	public void closeOptionMenu ( OptionMenu getOM )
 	{
 		switch ( getOM )
@@ -90,6 +108,7 @@ public class Option :  UiParent
 			break;
 		}
 	}
+	#endregion
 
 	public void openNewOption ( OptionMenu newOM )
 	{
@@ -119,4 +138,5 @@ public class Option :  UiParent
 			break;
 		}
 	}
+	#endregion
 }

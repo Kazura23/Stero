@@ -5,6 +5,8 @@ using DG.Tweening;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class UiManager : ManagerParent
 {
@@ -18,6 +20,8 @@ public class UiManager : ManagerParent
 	public Transform GameParent;
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
+    public GameObject PostProcessGlobal;
+    public GameObject PostProcessMadness;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
@@ -97,9 +101,6 @@ public class UiManager : ManagerParent
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y)){
-            ScorePlus(300, Color.white);
-        }
     }
 
     public void SetCam ( Camera newCame )
@@ -212,33 +213,6 @@ public class UiManager : ManagerParent
     }
 
 
-    public void ScorePlus(int number, Color rankColor)
-    {
-
-        float randomPos = UnityEngine.Random.Range(-600, 600);
-        float randomRot = UnityEngine.Random.Range(200, 200);
-        //Debug.Log("score");
-        ScorePoints.text = "" + (int.Parse (ScorePoints.text) + number);
-
-
-        Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2 (randomPos,randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
-        scoretxt.text = "+ " + number;
-        scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
-
-
-        //scoretxt.GetComponent<RainbowColor>().colors[1] = rankColor;
-        scoretxt.GetComponent<Text>().color = rankColor;
-
-        scoretxt.transform.DOScale(2, 0);
-        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
-            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(()=> {
-                scoretxt.transform.DOScale(0, .5f);
-                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
-            });
-        });
-
-        Destroy(scoretxt.gameObject,4);
-    }
 
 
     public void DoubleCoup()
@@ -316,9 +290,11 @@ public class UiManager : ManagerParent
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
-        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+        //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
-		Transform getPlayer = GlobalManager.GameCont.Player.transform;
+        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = true;
+
+        Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
 
         Destroy(textMadness, 3);
@@ -351,11 +327,13 @@ public class UiManager : ManagerParent
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
-        
+
+
+        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = false;
 
         //thisCam.DOKill(true);
 
-		thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
+        thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
        // Debug.Log("CloseMad");
         //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
@@ -391,6 +369,42 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
+
+    public void ScorePlus(int number, Color rankColor, int currIndex)
+    {
+
+        float randomPos = UnityEngine.Random.Range(-600, 600);
+        float randomRot = UnityEngine.Random.Range(200, 200);
+        //Debug.Log("score");
+        ScorePoints.text = "" + (int.Parse(ScorePoints.text) + number);
+
+
+        Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
+        scoretxt.text = "+ " + number;
+        scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
+
+        if (currIndex == 6)
+        {
+            scoretxt.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+            scoretxt.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        } else
+        {
+
+            scoretxt.GetComponent<Text>().color = rankColor;
+        }
+
+
+        scoretxt.transform.DOScale(2, 0);
+        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(() => {
+                scoretxt.transform.DOScale(0, .5f);
+                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
+            });
+        });
+
+        Destroy(scoretxt.gameObject, 4);
+    }
+
     public void NewRank(int currIndex)
     {
         Transform getRank = GlobalManager.Ui.RankSlider.transform.parent; 
@@ -406,9 +420,34 @@ public class UiManager : ManagerParent
             });
         });
 
-        getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
-        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
-        getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
+        DOVirtual.DelayedCall(.2f, () => {
+
+            if(currIndex == 6)
+            {
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[2].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[3].enabled = true;
+            }
+            else
+            {
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[2].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[3].enabled = false;
+
+                getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+            }
+        });
+        // getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
 
 
         //getRank.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
@@ -425,7 +464,13 @@ public class UiManager : ManagerParent
     public void StartSpecialAction(string type)
     {
         if (type == "SlowMot")
+        {
             SlowMotion.sprite = AbilitiesSprite[0];
+            float intensityBloom = 0;
+            DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
+            
+            //PostProcessGlobal.GetComponent<Bloom>().intensity.value = intensityBloom;
+        }
 
         if (type == "OndeChoc")
             SlowMotion.sprite = AbilitiesSprite[1];

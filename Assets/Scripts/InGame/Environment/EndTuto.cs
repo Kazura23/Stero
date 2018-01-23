@@ -11,6 +11,7 @@ public class EndTuto : MonoBehaviour
 		string getTag = collision.collider.tag;
 		if ( getTag == Constants._PlayerTag )
 		{
+			GlobalManager.GameCont.thisCam.fieldOfView = Constants.DefFov;
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).ResetPosDo ( );
 			Destroy ( DestroyThis );
 		}
