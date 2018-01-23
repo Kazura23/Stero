@@ -21,6 +21,7 @@ public class UiManager : ManagerParent
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
     public GameObject PostProcessGlobal;
+    public GameObject PostProcessMadness;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
@@ -289,9 +290,11 @@ public class UiManager : ManagerParent
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
-        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+        //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
-		Transform getPlayer = GlobalManager.GameCont.Player.transform;
+        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = true;
+
+        Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
 
         Destroy(textMadness, 3);
@@ -324,11 +327,13 @@ public class UiManager : ManagerParent
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
-        
+
+
+        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = false;
 
         //thisCam.DOKill(true);
 
-		thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
+        thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
        // Debug.Log("CloseMad");
         //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
