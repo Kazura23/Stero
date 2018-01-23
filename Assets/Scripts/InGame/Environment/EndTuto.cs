@@ -16,4 +16,8 @@ public class EndTuto : MonoBehaviour
 			Destroy ( DestroyThis );
 		}
 	}
+
+    private void Start()
+    {
+    }
 }

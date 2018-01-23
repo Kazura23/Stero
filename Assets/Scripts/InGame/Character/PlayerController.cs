@@ -364,7 +364,9 @@ public class PlayerController : MonoBehaviour
 		{
 			acceleration = Acceleration * 0.5f;
 			maxSpeed = MaxSpeed * 0.5f;
-		}
+            ThisAct = SpecialAction.SlowMot;
+
+        }
 		else
 		{
 			acceleration = Acceleration;

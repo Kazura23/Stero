@@ -94,7 +94,20 @@ public class GameController : ManagerParent
 	{
 		getRank.fillAmount = rankValue;
 
-		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+
+        BloomModel.Settings thisBloom = postProfile.bloom.settings;
+
+        ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+
+        thisBloom.bloom.intensity = currentValue;
+
+        thisChrom.intensity = chromValue;
+
+        postProfile.bloom.settings = thisBloom;
+
+        postProfile.chromaticAberration.settings = thisChrom;
+
+        if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
 		}
@@ -846,15 +859,16 @@ public class GameController : ManagerParent
         }
     }
 
-	/*float currentValue = 0;
-	void updateBloom ( )
+    public float currentValue = 0;
+    public float chromValue = 0;
+    public void updateBloom ( )
 	{
 		BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
 		thisBloom.bloom.intensity = currentValue;
 
 		postProfile.bloom.settings = thisBloom;
-	}*/
+	}
 
     protected override void InitializeManager ( )
 	{
@@ -875,8 +889,6 @@ public class GameController : ManagerParent
 
 		postProfile = Instantiate(behaviour.profile, transform);
 		behaviour.profile = postProfile;
-
-		//DOTween.To (()=> currentValue, x=> currentValue = x, 1, 5 ).OnStepComplete( updateBloom );
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );

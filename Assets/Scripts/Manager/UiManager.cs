@@ -22,6 +22,7 @@ public class UiManager : ManagerParent
 	public GameObject GlobalBack;
     public GameObject PostProcessGlobal;
     public GameObject PostProcessMadness;
+    public Image ArrowTuto;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
@@ -29,6 +30,7 @@ public class UiManager : ManagerParent
 	public Text Multiplicateur;
 
 	public Image BallTransition;
+    public GameObject TutoObject;
 
     [Header("MAIN MENU")]
     public int MenuSelection = 1;
@@ -81,7 +83,8 @@ public class UiManager : ManagerParent
 			thisUi.OpenThis ( GetTok );
             OpenShop();
 		}
-	}
+
+    }
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
@@ -101,6 +104,19 @@ public class UiManager : ManagerParent
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+
+            DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 1.5f, .2f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .1f);
+            });
+
+            DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
+            });
+
+        }
     }
 
     public void SetCam ( Camera newCame )
@@ -299,6 +315,8 @@ public class UiManager : ManagerParent
 
         Destroy(textMadness, 3);
 
+        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
+
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
         //textMad.GetComponentInChildren<TextMesh>().text = 
@@ -322,7 +340,8 @@ public class UiManager : ManagerParent
 
     public void CloseMadness()
     {
-		
+        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .2f);
+
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
@@ -466,9 +485,21 @@ public class UiManager : ManagerParent
         if (type == "SlowMot")
         {
             SlowMotion.sprite = AbilitiesSprite[0];
-            float intensityBloom = 0;
-            DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
+            //float intensityBloom = 0;
+            //DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
+
             
+
+            DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
+            });
+
+            DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
+            });
+
+
+
             //PostProcessGlobal.GetComponent<Bloom>().intensity.value = intensityBloom;
         }
 
