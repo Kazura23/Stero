@@ -6,9 +6,9 @@ using DG.Tweening;
 public class EndTuto : MonoBehaviour 
 {
 	public GameObject DestroyThis;
-	void OnCollisionEnter ( Collision collision )
+	void OnTriggerEnter ( Collider collision )
 	{
-		string getTag = collision.collider.tag;
+		string getTag = collision.tag;
 		if ( getTag == Constants._PlayerTag )
 		{
 			GlobalManager.GameCont.thisCam.fieldOfView = Constants.DefFov;
@@ -16,8 +16,4 @@ public class EndTuto : MonoBehaviour
 			Destroy ( DestroyThis );
 		}
 	}
-
-    private void Start()
-    {
-    }
 }

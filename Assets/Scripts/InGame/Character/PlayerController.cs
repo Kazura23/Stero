@@ -360,12 +360,10 @@ public class PlayerController : MonoBehaviour
 		totalDis = 0;
 		nextIncrease = DistIncMaxSpeed;
 
-		if ( GlobalManager.GameCont.LaunchTuto )
+		if ( onTuto )
 		{
 			acceleration = Acceleration * 0.5f;
 			maxSpeed = MaxSpeed * 0.5f;
-            ThisAct = SpecialAction.SlowMot;
-
         }
 		else
 		{
@@ -377,7 +375,6 @@ public class PlayerController : MonoBehaviour
 		accelerationCL = AccelerationCL;
 		impulsionCL = ImpulsionCL;
 		decelerationCL = DecelerationCL;
-		ThisAct = SpecialAction.Nothing;
 		timeToDP = TimeToDoublePunch;
         NbrLineRight = 0;
         NbrLineLeft = 0;
@@ -964,7 +961,7 @@ public class PlayerController : MonoBehaviour
 		}
 		Dash = false;
 
-		if (ThisAct == SpecialAction.SlowMot )
+		if (ThisAct == SpecialAction.SlowMot || onTuto )
         {
             //AllPlayerPrefs.ANbTechSpe++;
             if (SliderContent > 0)
