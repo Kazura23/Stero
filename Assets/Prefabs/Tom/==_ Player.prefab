@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 114577942667652742}
   - component: {fileID: 114170213738010420}
   - component: {fileID: 114093049653860012}
+  - component: {fileID: 114279950590316440}
   m_Layer: 11
   m_Name: => Main Camera
   m_TagString: MainCamera
@@ -691,6 +692,7 @@ GameObject:
   - component: {fileID: 4906462964085586}
   - component: {fileID: 95222254347309296}
   - component: {fileID: 215073215248435130}
+  - component: {fileID: 114118809305398260}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -2478,7 +2480,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710701008349626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0ed42eb90d8bca245a281d40c5bfee3f, type: 2}
   m_CullingMode: 0
@@ -2537,6 +2539,20 @@ MonoBehaviour:
   - 0.35
   - 0.25
   easeType: 2
+--- !u!114 &114118809305398260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653938153768386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763fae4471321494b9d0f49449893168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ikWeight: 1
+  RightHandTarget: {fileID: 0}
+  IkValues: 0
 --- !u!114 &114170213738010420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2591,6 +2607,18 @@ MonoBehaviour:
   projection_dash: 200
   facteurVitesseRenvoie: 1.5
   RightPunch: 0
+--- !u!114 &114279950590316440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140545502523876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: f124bbe0d806da344ac415ae9d8e4c0d, type: 2}
 --- !u!114 &114382904017303458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2894,7 +2922,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1710701008349626}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 0.7
   m_Direction: 1
