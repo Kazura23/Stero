@@ -55,6 +55,7 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public bool LaunchTuto;
 
+	[HideInInspector]
 	public PostProcessingProfile postProfile;
 
 	Player inputPlayer;
