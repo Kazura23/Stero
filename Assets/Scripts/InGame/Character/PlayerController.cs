@@ -645,7 +645,7 @@ public class PlayerController : MonoBehaviour
 		if ( enable )
 		{
 			getValue = saveCamMad;
-			camMad.enabled = true;
+			//camMad.enabled = true;
 			inMad = 0.5f;
 			targetTime = 2;
 		}
@@ -669,7 +669,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( !enable )
 		{
-			camMad.enabled = false;
+			//camMad.enabled = false;
 			camMad._Y = 0; camMad._U = 0; camMad._V = 0;
 		}
 		else
