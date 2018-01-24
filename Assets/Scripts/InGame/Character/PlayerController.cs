@@ -889,7 +889,7 @@ public class PlayerController : MonoBehaviour
                 AllPlayerPrefs.ATypeObstacle = "Madness";
                 AllPlayerPrefs.ANameObstacle = "Madness a zero";
                 RaycastHit hit;
-                Physics.Raycast(this.transform.position, Vector3.down, out hit, 1000);
+                Physics.Raycast(this.transform.position, Vector3.down, out hit, 20);
                 AllPlayerPrefs.ANameChunk = AnalyticsChunk(hit.transform);
 				GameOver ( true );
 			}
@@ -1013,22 +1013,44 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && !waitRotate )
 		{
-            AllPlayerPrefs.ANbTechSpe++;
-            canSpe = false;
+            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
+            target.transform.DOScale(Vector3.one, 0);
+            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
+
+			RaycastHit[] allHit;
+			bool checkGround = true;
+
+			allHit = Physics.RaycastAll ( target.transform.position, Vector3.down, 5 );
+			foreach ( RaycastHit thisRay in allHit )
+			{
+				if ( thisRay.collider.tag == Constants._UnTagg )
+				{
+					checkGround = false;
+					break;
+				}
+			}
+
+			if ( checkGround )
+			{
+				Destroy ( target.gameObject );
+				return;
+			}
+
+
+			AllPlayerPrefs.ANbTechSpe++;
+			canSpe = false;
 			playerInv = true;
 			thisCam.GetComponent<RainbowMove>().enabled = false;
 			pRig.useGravity = false;
 			StopPlayer = true;
 
-            GlobalManager.Ui.StartSpecialAction("OndeChoc");
+			GlobalManager.Ui.StartSpecialAction("OndeChoc");
 
-            //MR S S'ABAISSE
-            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
-            target.transform.DOScale(Vector3.one, 0);
-            pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
-            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
             target.GetComponent<Rigidbody>().AddForce(Vector3.down * 20, ForceMode.VelocityChange);
-            pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
+            
+			//MR S S'ABAISSE
+			pTrans.DOLocalMoveY(pTrans.localPosition.y - .8f, .35f);
+			pTrans.DOLocalRotate((new Vector3(17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine).OnComplete(()=> {
 
 				DOVirtual.DelayedCall(.1f, () => {
 					onAnimeAir = true;
@@ -1438,12 +1460,12 @@ public class PlayerController : MonoBehaviour
 			{
 				float accLine = 0;
 
-				if ( saveDist < 0 && newH > -lineDistance * 0.60f || saveDist > 0 && newH < lineDistance * 0.60f )
+				if ( saveDist < 0 && newH > -lineDistance * 0.80f || saveDist > 0 && newH < lineDistance * 0.80f )
 				{
 					canChange = true;
 				}
 
-				if ( saveDist < 0 && newH > -lineDistance * 0.40f || saveDist > 0 && newH < lineDistance * 0.40f )
+				if ( saveDist < 0 && newH > -lineDistance * 0.20f || saveDist > 0 && newH < lineDistance * 0.20f )
 				{
 					currSpLine -= decelerationCL * delTime;
 
@@ -1710,6 +1732,11 @@ public class PlayerController : MonoBehaviour
 		{
 			Vector3 getThisC = thisColl.transform.position;
 
+			if ( playerInv )
+			{
+				return;
+			}
+
 			if ( !onAnimeAir )
 			{
 				newPos = true;
@@ -1722,21 +1749,7 @@ public class PlayerController : MonoBehaviour
 				getNewRot = getThisC;
 				befRot = Vector3.Distance ( getThisC, getPtr );
 
-				if ( playerInv )
-				{
-					pTrans.DOKill ( );
-					pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
 
-					GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
-					circle.transform.DOScale(10, 4);
-					circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
-
-					StopPlayer = false;
-					pRig.useGravity = true;
-					pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
-					inAir = true;
-					StartCoroutine(groundAfterChoc());
-				}
 			}
 			else
 			{

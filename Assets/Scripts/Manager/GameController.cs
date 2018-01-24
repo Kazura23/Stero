@@ -231,7 +231,7 @@ public class GameController : ManagerParent
 				textIntroObject.GetComponent<TextMesh> ( ).text = textIntroText [ 3 ];
 
 				ActiveTextIntro ( );
-				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl && GlobalManager.GameCont.canOpenShop )
+				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && GlobalManager.GameCont.canOpenShop )
 				{
 					coupSimpl = false;
 					GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
