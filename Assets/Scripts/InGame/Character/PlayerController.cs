@@ -1739,12 +1739,13 @@ public class PlayerController : MonoBehaviour
 		if ( thisColl.tag == Constants._NewDirec && !checkRot )
 		{
 			Vector3 getThisC = thisColl.transform.position;
-			checkRot = true;
 
 			if ( playerInv )
 			{
 				return;
 			}
+
+			checkRot = true;
 
 			if ( !onAnimeAir )
 			{
