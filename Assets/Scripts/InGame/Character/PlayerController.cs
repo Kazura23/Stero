@@ -1748,8 +1748,6 @@ public class PlayerController : MonoBehaviour
 				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
 				getNewRot = getThisC;
 				befRot = Vector3.Distance ( getThisC, getPtr );
-
-
 			}
 			else
 			{
