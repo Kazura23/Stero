@@ -772,8 +772,8 @@ public class PlayerController : MonoBehaviour
 
         switch ( debugTech )
         {
-        case 0:
-            speAction(getTime);
+		case 0:
+			speAction(getTime);
         break;
         case 1:
 			if (inputPlayer.GetAxis("SpecialAction") > 0) {
@@ -1011,7 +1011,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
+		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && !waitRotate )
 		{
             AllPlayerPrefs.ANbTechSpe++;
             canSpe = false;
@@ -1721,6 +1721,22 @@ public class PlayerController : MonoBehaviour
 				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
 				getNewRot = getThisC;
 				befRot = Vector3.Distance ( getThisC, getPtr );
+
+				if ( playerInv )
+				{
+					pTrans.DOKill ( );
+					pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
+
+					GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
+					circle.transform.DOScale(10, 4);
+					circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+
+					StopPlayer = false;
+					pRig.useGravity = true;
+					pRig.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+					inAir = true;
+					StartCoroutine(groundAfterChoc());
+				}
 			}
 			else
 			{
@@ -1755,20 +1771,20 @@ public class PlayerController : MonoBehaviour
                 GlobalManager.Ui.BloodHitDash();
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
                 thisColl.collider.enabled = false;
-
-				if ( thisColl.gameObject.GetComponent<AbstractObject> ( ) )
+				AbstractObject getAbstra = thisColl.gameObject.GetComponentInChildren<AbstractObject> ( );
+				if ( getAbstra )
 				{
 					if ( Dash )
 					{
-						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Acceleration );
+						getAbstra.ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Acceleration );
 					}
 					else if ( InMadness )
 					{
-						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Madness );
+						getAbstra.ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Madness );
 					}
 					else
 					{
-						thisColl.gameObject.GetComponent<AbstractObject> ( ).ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Punch );
+						getAbstra.ForceProp ( getPunch.projection_dash * pTrans.forward, DeathType.Punch );
 					}
 				}
 				return;

@@ -129,7 +129,7 @@ public class GameController : ManagerParent
 
 			case 0: // Options
 
-				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl )
+				if ( (inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl )
 				{
 					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
 					Debug.Log ( "Options" );
@@ -157,7 +157,7 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
 
-				if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame)
+				if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !restartGame)
 				{
 					coupSimpl = false;
 					SetAllBonus ( );

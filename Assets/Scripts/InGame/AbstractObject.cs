@@ -359,31 +359,61 @@ public class AbstractObject : MonoBehaviour
 		if ( FreezeAxe.x != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionX;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
 		}
 
 		if ( FreezeAxe.y != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionY;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
 		}
 
 		if ( FreezeAxe.z != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionZ;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionZ;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 		}
 
 		if ( FreezeRot.x != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationX;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
 		}
 
 		if ( FreezeRot.y != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationY;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationY;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
 		}
 
 		if ( FreezeRot.z != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationZ;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationZ;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
 		}
 	}
 		

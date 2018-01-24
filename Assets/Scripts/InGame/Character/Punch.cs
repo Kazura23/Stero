@@ -70,12 +70,6 @@ public class Punch : MonoBehaviour {
 			case (int)Technic.basic_punch:
                 //MadnessMana("Simple");
 
-				foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-				{
-					thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-				}
-				other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
-
                 if ( RightPunch )
 				{
 					getProj -= getPlayer.right;
@@ -99,13 +93,7 @@ public class Punch : MonoBehaviour {
                 //MadnessMgetProj = getPlayer.forward;ana("Double");
                 getProj = getPlayer.forward;
 
-				foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-				{
-					thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-				}
-				other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
-
-                //Debug.Log ( pourcPunch );
+				//Debug.Log ( pourcPunch );
                 if ( other.gameObject.tag != Constants._ObjDeadTag )
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );

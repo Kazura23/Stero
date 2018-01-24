@@ -83,7 +83,7 @@ public class MenuShop : UiParent
         if (CanInput)
         {
             // Touche pour pouvoir selectionner les items
-			if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !waitImpSub && !transition)
+			if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !waitImpSub && !transition)
             {
                 transition = true;
                 waitImpSub = true;
@@ -103,7 +103,7 @@ public class MenuShop : UiParent
             }
 
             // Touche pour sortir des items
-			if (inputPlayer.GetAxis("CoupDouble") == 1 && !waitImpCan && !transition)
+			if ( ( inputPlayer.GetAxis("CoupDouble") == 1 || Input.GetKeyDown ( KeyCode.Escape ) ) && !waitImpCan && !transition)
             {
                 waitImpCan = true;
                 transition = true;
