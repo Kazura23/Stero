@@ -751,7 +751,10 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		playerFight ( getTime );
+		if ( !waitRotate )
+		{
+			playerFight ( getTime );
+		}
 
 		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
@@ -1412,6 +1415,9 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForEndOfFrame ( );
 		waitRotate = false;
 		useFord = true;
+
+		yield return new WaitForSeconds ( 0.5f );
+		checkRot = false;
 	}
 
 	void changeLine ( float delTime )
@@ -1725,12 +1731,15 @@ public class PlayerController : MonoBehaviour
 		propP = false;
 		propDP = false;
 	}
+
 	Vector3 getNewRot;
+	bool checkRot = false;
 	void OnTriggerEnter ( Collider thisColl )
 	{
-		if ( thisColl.tag == Constants._NewDirec )
+		if ( thisColl.tag == Constants._NewDirec && !checkRot )
 		{
 			Vector3 getThisC = thisColl.transform.position;
+			checkRot = true;
 
 			if ( playerInv )
 			{
