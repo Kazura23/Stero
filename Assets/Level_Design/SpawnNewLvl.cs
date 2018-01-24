@@ -78,6 +78,7 @@ public class NewChunkInfo
 {
 	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
 	public Vector2 NbrLaneDebut, NbrLaneFin;
+	public bool calWall = true;
 	public List <ChunkExit> ThoseExit;
 	[HideInInspector]
 	public List<GameObject> GarbageChunk;

@@ -664,7 +664,7 @@ public class SpawnChunks : MonoBehaviour
 						}
 					}
 
-					if ( b < getNewChunk [ a ].AllInfNewChunk.Count - 1 )
+					if ( b < getNewChunk [ a ].AllInfNewChunk.Count - 1 && sourceSpawn.calWall )
 					{
 						diffLine = ( int ) ( 1 + getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b + 1 ].NbrLaneDebut.x ) - Mathf.Abs ( getCurrNew [ b + 1 ].CurrLane - getCurrNew [ b ].CurrLane ) );
 						diffLine = -diffLine;
