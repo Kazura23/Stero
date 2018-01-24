@@ -84,6 +84,7 @@ public class Option :  UiParent
 	public override void OpenThis(MenuTokenAbstract GetTok = null)
 	{
 		base.OpenThis ( GetTok );
+		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
 		openNewOption ( currMenu );
 	}
 

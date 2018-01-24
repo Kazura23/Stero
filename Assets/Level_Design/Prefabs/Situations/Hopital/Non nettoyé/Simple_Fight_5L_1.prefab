@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 65546946565972258}
   - component: {fileID: 54615134533641274}
   - component: {fileID: 114199210456787260}
+  - component: {fileID: 114203621643888660}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -140,6 +141,7 @@ GameObject:
   - component: {fileID: 65793943140946366}
   - component: {fileID: 54586849385498000}
   - component: {fileID: 114065843310819472}
+  - component: {fileID: 114666274444274510}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -302,6 +304,7 @@ GameObject:
   - component: {fileID: 65188499565263452}
   - component: {fileID: 54541699824211100}
   - component: {fileID: 114047263576764402}
+  - component: {fileID: 114541283482560760}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -704,6 +707,7 @@ GameObject:
   - component: {fileID: 65612312576865352}
   - component: {fileID: 54499550862757906}
   - component: {fileID: 114835856017505408}
+  - component: {fileID: 114580062708061210}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -1644,6 +1648,7 @@ GameObject:
   - component: {fileID: 65575315022025764}
   - component: {fileID: 54849540872130654}
   - component: {fileID: 114383886864141188}
+  - component: {fileID: 114469262379932182}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -2174,6 +2179,7 @@ GameObject:
   - component: {fileID: 65342843996313164}
   - component: {fileID: 54868182509902224}
   - component: {fileID: 114721005204793528}
+  - component: {fileID: 114872177431474172}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -2266,6 +2272,7 @@ GameObject:
   - component: {fileID: 65763498464547048}
   - component: {fileID: 54743770591655350}
   - component: {fileID: 114909758977348252}
+  - component: {fileID: 114582293012820126}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -5151,6 +5158,7 @@ GameObject:
   - component: {fileID: 65001377294830310}
   - component: {fileID: 54618246836986048}
   - component: {fileID: 114383361730045194}
+  - component: {fileID: 114166442699631732}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -5438,6 +5446,7 @@ GameObject:
   - component: {fileID: 65595520886872706}
   - component: {fileID: 54571445927405316}
   - component: {fileID: 114037302141730224}
+  - component: {fileID: 114835940881158514}
   m_Layer: 0
   m_Name: Flower (1)
   m_TagString: ObsPropSafe
@@ -6636,6 +6645,7 @@ GameObject:
   - component: {fileID: 65661675403463924}
   - component: {fileID: 54440029961338898}
   - component: {fileID: 114550418588767998}
+  - component: {fileID: 114082047546039580}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -6775,6 +6785,7 @@ GameObject:
   - component: {fileID: 65963612591511790}
   - component: {fileID: 54989521084528552}
   - component: {fileID: 114340906886021112}
+  - component: {fileID: 114151471696728688}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -7294,6 +7305,7 @@ GameObject:
   - component: {fileID: 65565157891803788}
   - component: {fileID: 54494717749722874}
   - component: {fileID: 114859940524355088}
+  - component: {fileID: 114809226714763518}
   m_Layer: 0
   m_Name: Flower
   m_TagString: ObsPropSafe
@@ -26704,6 +26716,26 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114082047546039580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859944070143932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114085338937121790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -26864,6 +26896,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -26907,6 +26940,46 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114151471696728688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872158833901778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
+--- !u!114 &114166442699631732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665433812968970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114166694351380088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27024,6 +27097,26 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114203621643888660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1008464770876066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114203740001432944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27092,6 +27185,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114227696070508580
 MonoBehaviour:
@@ -27123,6 +27217,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -27241,6 +27336,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -27538,6 +27634,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114418872481839156
 MonoBehaviour:
@@ -27691,6 +27788,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: 100
+--- !u!114 &114469262379932182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231389457264696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114470255719128608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27897,6 +28014,26 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 180, z: 360}
   easeType: 1
+--- !u!114 &114541283482560760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029617161593512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114541656644858092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28029,6 +28166,46 @@ MonoBehaviour:
   - 2.4
   - 2
   easeType: 1
+--- !u!114 &114580062708061210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075356097648914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
+--- !u!114 &114582293012820126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1323318516974282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114582800126017678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28162,6 +28339,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114629076086457082
 MonoBehaviour:
@@ -28181,6 +28359,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -28279,6 +28458,26 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114666274444274510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1014151683947018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114667061254348634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28330,6 +28529,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -28608,6 +28808,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114787148333957836
 MonoBehaviour:
@@ -28650,6 +28851,7 @@ MonoBehaviour:
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
   NewColor: {r: 1, g: 0, b: 0, a: 1}
   CanRun: 0
@@ -28700,6 +28902,26 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114809226714763518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933872994403222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114811645694705684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28814,6 +29036,26 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+--- !u!114 &114835940881158514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696823057374372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114836495669616144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28963,6 +29205,26 @@ MonoBehaviour:
   - 2.4
   - 2
   easeType: 1
+--- !u!114 &114872177431474172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1309102797559152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114875502701034408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29255,6 +29517,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114976887390178748
 MonoBehaviour:
@@ -29334,6 +29597,7 @@ MonoBehaviour:
   FreezeAxe: {x: 10, y: 10, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
   point: 100
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114997655739762282
 MonoBehaviour:

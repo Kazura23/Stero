@@ -30,7 +30,6 @@ public class UiManager : ManagerParent
 	public Text Multiplicateur;
 
 	public Image BallTransition;
-    public GameObject TutoObject;
 
     [Header("MAIN MENU")]
     public int MenuSelection = 1;
