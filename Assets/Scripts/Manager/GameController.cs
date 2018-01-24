@@ -129,7 +129,11 @@ public class GameController : ManagerParent
 
 			case 0: // Options
 
-				//Debug.Log("Options");
+				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl )
+				{
+					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
+					Debug.Log ( "Options" );
+				}
 				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
