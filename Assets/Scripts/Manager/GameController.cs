@@ -94,7 +94,20 @@ public class GameController : ManagerParent
 	{
 		getRank.fillAmount = rankValue;
 
-		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+
+        BloomModel.Settings thisBloom = postProfile.bloom.settings;
+
+        ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+
+        thisBloom.bloom.intensity = currentValue;
+
+        thisChrom.intensity = chromValue;
+
+        postProfile.bloom.settings = thisBloom;
+
+        postProfile.chromaticAberration.settings = thisChrom;
+
+        if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
 		}
@@ -116,7 +129,11 @@ public class GameController : ManagerParent
 
 			case 0: // Options
 
-				//Debug.Log("Options");
+				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl )
+				{
+					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
+					Debug.Log ( "Options" );
+				}
 				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
@@ -156,6 +173,8 @@ public class GameController : ManagerParent
 						//AnimationStartGame();
 
 						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
+							Player.transform.DOLocalMoveX ( 0, 0.7f );
+
 							getAnimator.enabled = false;
 							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 							{
@@ -184,6 +203,8 @@ public class GameController : ManagerParent
 					}
 					else
 					{
+						Player.transform.DOLocalMoveX ( 0, 0.7f );
+
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 						{
 							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
@@ -545,14 +566,23 @@ public class GameController : ManagerParent
 
 	public void SetAllBonus ( )
 	{
-		iconeSpe.enabled = false;
-		iconeSpe.DOFade ( 0, 0.3f );
+		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 
-		sliderSpe.gameObject.SetActive ( false );
-		sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+		if ( !LaunchTuto )
+		{
+			iconeSpe.enabled = false;
+			iconeSpe.DOFade ( 0, 0.3f );
+			sliderSpe.gameObject.SetActive ( false );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
+			currPlayer.SlowMotion = 1.25f; 
+			currPlayer.SpeedSlowMot = 1; 
+			currPlayer.SpeedDeacSM = 5; 
+			currPlayer.ReduceSlider = 1.5f; 
+			currPlayer.RecovSlider = 0.75f; 
+		}
 
 		Dictionary <string, ItemModif> getMod = AllModifItem;
-		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		List <ItemModif> AllTI = AllTempsItem;
 		ItemModif thisItem;
 		//List<string> getKey = new List<string> ( );
@@ -846,15 +876,16 @@ public class GameController : ManagerParent
         }
     }
 
-	/*float currentValue = 0;
-	void updateBloom ( )
+    public float currentValue = 0;
+    public float chromValue = 0;
+    public void updateBloom ( )
 	{
 		BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
 		thisBloom.bloom.intensity = currentValue;
 
 		postProfile.bloom.settings = thisBloom;
-	}*/
+	}
 
     protected override void InitializeManager ( )
 	{
@@ -875,8 +906,6 @@ public class GameController : ManagerParent
 
 		postProfile = Instantiate(behaviour.profile, transform);
 		behaviour.profile = postProfile;
-
-		//DOTween.To (()=> currentValue, x=> currentValue = x, 1, 5 ).OnStepComplete( updateBloom );
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
@@ -907,9 +936,6 @@ public class GameController : ManagerParent
 			} 
 		} 
 	}
-
-	void test ()
-	{}
 
 	void setItemToPlayer ( ItemModif thisItem, PlayerController currPlayer )
 	{

@@ -50,7 +50,6 @@ public class RiffleMan : AbstractObject
         {
             detected = true;
 
-
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
 
@@ -59,7 +58,6 @@ public class RiffleMan : AbstractObject
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
         }
-
     }
 
 	protected override void OnEnable ( )
@@ -92,6 +90,11 @@ public class RiffleMan : AbstractObject
 	{
 		base.CollDetect ( );
 		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+	}
+
+	public override void Degat(Vector3 p_damage, int p_technic)
+	{
+		return;
 	}
 
 	IEnumerator shootPlayer ( WaitForSeconds thisF, bool checkDir )
