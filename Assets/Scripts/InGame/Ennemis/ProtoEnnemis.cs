@@ -43,7 +43,7 @@ public class ProtoEnnemis : AbstractObject
 		{
 			if ( CanRun && detected )
 			{
-				getTrans.localPosition -= getTrans.forward * Time.deltaTime * MoveSpeed;
+				getTrans.position -= getTrans.forward * Time.deltaTime * MoveSpeed;
 			}
 		}
 		else if ( detected )

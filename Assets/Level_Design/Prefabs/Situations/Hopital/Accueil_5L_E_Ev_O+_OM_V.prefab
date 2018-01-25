@@ -2093,9 +2093,10 @@ GameObject:
   - component: {fileID: 64729609517291774}
   - component: {fileID: 114035651456944468}
   - component: {fileID: 205398537301022458}
+  - component: {fileID: 114785735074566834}
   m_Layer: 0
   m_Name: Chair_02 (2)
-  m_TagString: Untagged
+  m_TagString: ObsPropSafe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 83
@@ -3322,9 +3323,10 @@ GameObject:
   - component: {fileID: 64454117290929898}
   - component: {fileID: 114019332446586972}
   - component: {fileID: 205279907674732946}
+  - component: {fileID: 114556081422990966}
   m_Layer: 0
   m_Name: Chair_01 (3)
-  m_TagString: Untagged
+  m_TagString: ObsPropSafe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 83
@@ -40697,6 +40699,26 @@ MonoBehaviour:
   point: 100
   BonusMultTimer: 1
   useGravity: 1
+--- !u!114 &114556081422990966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279618854403566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114561799672890700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -41465,6 +41487,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: 100
+--- !u!114 &114785735074566834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177181039442542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114791338872174332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -42158,6 +42200,7 @@ MonoBehaviour:
   InfoChunk:
     NbrLaneDebut: {x: 2, y: 2}
     NbrLaneFin: {x: 1, y: 1}
+    calWall: 1
     ThoseExit:
     - LaneParent: 0
       Verticalite: 0
