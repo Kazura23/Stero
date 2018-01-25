@@ -953,7 +953,7 @@ public class PlayerController : MonoBehaviour
 		{
 			SliderSlow.value += getTime;
 
-			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
+			if ( ( ThisAct == SpecialAction.SlowMot || onTuto ) && animeSlo )
 			{
                 AllPlayerPrefs.ANbTechSpe++;
                 thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
@@ -964,7 +964,7 @@ public class PlayerController : MonoBehaviour
 		}
 		Dash = false;
 
-		if (ThisAct == SpecialAction.SlowMot || onTuto )
+		if ( ThisAct == SpecialAction.SlowMot || onTuto )
         {
             //AllPlayerPrefs.ANbTechSpe++;
             if (SliderContent > 0)
@@ -1791,7 +1791,11 @@ public class PlayerController : MonoBehaviour
 
                 GlobalManager.Ui.BloodHitDash();
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
-                thisColl.collider.enabled = false;
+				if ( !onTuto )
+				{
+					thisColl.collider.enabled = false;
+				}
+
 				AbstractObject getAbstra = thisColl.gameObject.GetComponentInChildren<AbstractObject> ( );
 				if ( getAbstra )
 				{

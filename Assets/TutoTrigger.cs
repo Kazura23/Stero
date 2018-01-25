@@ -20,25 +20,15 @@ public class TutoTrigger : MonoBehaviour {
     public TutoType typeTuto;
 
 	// Use this for initialization
-	void Start () {
-
-
+	void Start () 
+	{
         GameObject TutoObject = GameObject.Find("TextObject");
-
-        Debug.Log(TutoObject);
 
         foreach (Transform trans in TutoObject.transform)
         {
-
-            Debug.Log(trans);
             trans.GetComponent<MeshRenderer>().enabled = false;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnTriggerEnter(Collider other)
     {
