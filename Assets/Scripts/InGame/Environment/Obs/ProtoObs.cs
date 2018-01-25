@@ -30,11 +30,13 @@ public class ProtoObs : AbstractObject
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 75, 3 ) );
 				int randomSong = UnityEngine.Random.Range ( 0, 5 );
 				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
+				base.Degat ( p_damage, p_technic );
 			}
 		}
 		else if ( p_technic == 1 ) 
 		{
 			ForceProp( p_damage, DeathType.Punch, true, true );
+			base.Degat ( p_damage, p_technic );
 		}
 	}
 
@@ -54,5 +56,13 @@ public class ProtoObs : AbstractObject
 			
 		}
 	}
+
+	/*protected override void OnTriggerEnter ( Collider thisColl )
+	{
+		if ( thisColl.tag == Constants._PunchTag )
+		{
+			
+		}
+	}*/
 	#endregion
 }

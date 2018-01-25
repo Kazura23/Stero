@@ -1378,6 +1378,10 @@ public class PlayerController : MonoBehaviour
 		{
 			calTrans = pTrans.forward * speed * delTime;
 		}
+		else
+		{
+			calTrans = Vector3.zero;
+		}
 
 		pTrans.Translate ( calTrans, Space.World );
 	}

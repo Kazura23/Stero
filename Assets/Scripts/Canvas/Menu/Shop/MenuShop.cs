@@ -590,10 +590,10 @@ public class MenuShop : UiParent
                 barCategory.transform.DORotate(new Vector3(0,0,423), 0);
                 iconCategory.transform.DOMoveX(thisShop.transform.position.x + 200, 0);
                 iconCategory.transform.DOMoveY(thisShop.transform.position.y ,0);
-                textCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 300, 0);
+                textCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 35, 0);
                 textCategory.transform.DOMoveX(moleculeContainer.transform.position.x -90, 0);
                 barCategory.transform.DOMoveX(moleculeContainer.transform.position.x - 90, 0);
-                barCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 300, 0);
+                barCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 35, 0);
                 iconCategory.DOFade(1, .25f);
                 textCategory.DOFade(1, .25f);
                 barCategory.DOFade(1, .25f);
