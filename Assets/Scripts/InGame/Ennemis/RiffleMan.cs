@@ -66,9 +66,9 @@ public class RiffleMan : AbstractObject
 		detected = false;
 	}
 
-	public override void Dead ( bool enemy = false ) 
+	public override void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
 	{
-		base.Dead ( enemy );
+		base.Dead ( enemy, thisDeath );
         AllPlayerPrefs.ANbVino++;
         AllPlayerPrefs.ANbTotalEnemyKill++;
         //Debug.Log("vino " + AllPlayerPrefs.ANbVino);

@@ -95,12 +95,12 @@ public class PlayerController : MonoBehaviour
 	[Tooltip ("La valeur est un multiplicateur sur la vitesse du joueur")]
 	public float SpeedPunchRun = 1.2f, SpeedDoublePunchRun = 1.5f;
 
-    [Header("Caractéristique Madness")]
+  /*  [Header("Caractéristique Madness")]
     public float RatioMaxMadness = 4;
     public float DelayDownBar = 3;
     //public float LessPointPunchInMadness = 15;
     public float SmoothSpeed = 100;
-    public float ratioDownInMadness = 1.5f;
+    public float ratioDownInMadness = 1.5f;*/
 
     //public float delayInBeginMadness = 2;
    // public float delayInEndMadness = 2;
@@ -570,7 +570,16 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
+		if ( !InMadness || thisDeath == DeathType.Enemy )
+		{
+			GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
+		}
+		else
+		{
+			GlobalManager.GameCont.NewScore ( DeathType.Madness, nbrPoint );
+		}
+
+		Debug.Log ( thisDeath );
 
 		if ( bonus <= 0 )
 		{

@@ -16,9 +16,9 @@ public class ProtoObs : AbstractObject
 	#endregion
 
 	#region Public Methods
-	public override void Dead ( bool enemy = false ) 
+	public override void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
 	{
-		base.Dead ( enemy );
+		base.Dead ( enemy, thisDeath );
 	}
 
 	public override void Degat(Vector3 p_damage, int p_technic)

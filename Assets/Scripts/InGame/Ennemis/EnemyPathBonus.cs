@@ -66,12 +66,12 @@ public class EnemyPathBonus : AbstractObject {
         }
     }
 
-    public override void Dead(bool enemy = false)
+	public override void Dead(bool enemy = false, DeathType thisDeath = DeathType.Punch )
     {
         if (!moveFinish)
         {
             Instantiate(coin.CoinSpawn[0], transform.position, Quaternion.identity);
         }
-        base.Dead(enemy);
+		base.Dead(enemy, thisDeath);
     }
 }
