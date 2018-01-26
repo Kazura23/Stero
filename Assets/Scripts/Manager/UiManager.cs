@@ -114,6 +114,22 @@ public class UiManager : ManagerParent
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
             });*/
 
+            DOTween.To(() => GlobalManager.GameCont.weightValue, x => GlobalManager.GameCont.weightValue = x, 1f, .6f).OnComplete(() => {
+                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
+            });
+
+			var volume = PostProcessManager.instance.QuickVolume ( PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray ( ) );
+			volume.weight = 0f;
+
+			DOTween.Sequence()
+				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 1f, 1f))
+				.AppendInterval(1f)
+				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 0f, 1f))
+				.OnComplete(() =>
+				{
+					RuntimeUtilities.DestroyVolume(volume, true);
+					Destroy(this);
+				});
         }
     }
 
