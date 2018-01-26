@@ -205,6 +205,14 @@ public class GameController : ManagerParent
 					}
 					else
 					{
+						DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
+						});
+
+						DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
+						});
+
 						Player.transform.DOLocalMoveX ( 0, 0.7f );
 
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
@@ -891,14 +899,15 @@ public class GameController : ManagerParent
 
     public float currentValue = 0;
     public float chromValue = 0;
-    public void updateBloom ( )
+
+   /*public void updateBloom ( )
 	{
 		BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
 		thisBloom.bloom.intensity = currentValue;
 
 		postProfile.bloom.settings = thisBloom;
-	}
+	}*/
 
     protected override void InitializeManager ( )
 	{
