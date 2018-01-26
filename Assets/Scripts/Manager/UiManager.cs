@@ -114,22 +114,6 @@ public class UiManager : ManagerParent
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
             });*/
 
-            DOTween.To(() => GlobalManager.GameCont.weightValue, x => GlobalManager.GameCont.weightValue = x, 1f, .6f).OnComplete(() => {
-                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
-            });
-
-			var volume = PostProcessManager.instance.QuickVolume ( PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray ( ) );
-			volume.weight = 0f;
-
-			DOTween.Sequence()
-				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 1f, 1f))
-				.AppendInterval(1f)
-				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 0f, 1f))
-				.OnComplete(() =>
-				{
-					RuntimeUtilities.DestroyVolume(volume, true);
-					Destroy(this);
-				});
         }
     }
 
@@ -330,6 +314,13 @@ public class UiManager : ManagerParent
 
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
+
+
+        var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+        volume.weight = 0f;
+
+        DOTween.To(() => volume.weight, x => volume.weight = x, 1f, .6f);
+
         //textMad.GetComponentInChildren<TextMesh>().text = 
         //thisCam.transform.GetComponent<RainbowMove>().enabled = false;
 
@@ -354,6 +345,13 @@ public class UiManager : ManagerParent
         DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .2f);
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
+
+
+
+        var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+
+        DOTween.To(() => volume.weight, x => volume.weight = x, 0f, .3f);
+
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
