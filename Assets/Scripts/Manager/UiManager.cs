@@ -311,6 +311,7 @@ public class UiManager : ManagerParent
         RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
+	int getLayer;
     public void OpenMadness()
     {
         AllPlayerPrefs.ANbPassageMadness++;
@@ -331,11 +332,8 @@ public class UiManager : ManagerParent
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
 
-
-        var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
-        volume.weight = 0f;
-
-        DOTween.To(() => volume.weight, x => volume.weight = x, 1f, .6f);
+		closeMad = true;
+		StartCoroutine ( waitMad ( ) );
 
         //textMad.GetComponentInChildren<TextMesh>().text = 
         //thisCam.transform.GetComponent<RainbowMove>().enabled = false;
@@ -356,24 +354,41 @@ public class UiManager : ManagerParent
         */
     }
 
+	bool closeMad = false;
+	IEnumerator waitMad () 
+	{
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
+		var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+		volume.weight = 0f;
+
+		DOTween.To ( ( ) => volume.weight, x => volume.weight = x, 1f, .6f );
+
+		while ( !closeMad )
+		{
+			yield return thisF;
+		}
+
+		DOTween.To ( ( ) => volume.weight, x => volume.weight = x, 0, .3f ).OnComplete ( ( ) =>
+		{
+			PostProcessMadness.GetComponent<PostProcessVolume>().enabled = false;
+		} );
+	}
+
     public void CloseMadness()
     {
         DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .2f);
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
 
-
-
-        var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
-
-        DOTween.To(() => volume.weight, x => volume.weight = x, 0f, .3f);
-
+        //var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+	
+		closeMad = false;
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
 
 
-        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = false;
 
         //thisCam.DOKill(true);
 
@@ -657,7 +672,7 @@ public class UiManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
-
+		getLayer = PostProcessMadness.layer;
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
