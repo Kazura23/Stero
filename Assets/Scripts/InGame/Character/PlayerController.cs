@@ -1081,10 +1081,7 @@ public class PlayerController : MonoBehaviour
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
                         });
 
-						GameObject circle  = GlobalManager.GameCont.FxInstanciate(Vector3.zero, "CircleGround", pTrans, 10f);
-						circle.transform.DOScale(10, 4);
-						circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
-						circle.transform.localPosition = Vector3.zero;
+					
 
 						StopPlayer = false;
                         pRig.useGravity = true;
@@ -1120,6 +1117,10 @@ public class PlayerController : MonoBehaviour
 			pRig.AddForce(Vector3.down, ForceMode.VelocityChange);
 			yield return thisF;
 		}
+		GameObject circle  = GlobalManager.GameCont.FxInstanciate(Vector3.zero, "CircleGround", pTrans, 10f);
+		circle.transform.DOScale(10, 4);
+		circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+		circle.transform.localPosition = Vector3.zero;
 
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
