@@ -88,6 +88,5 @@ public enum DeathType
 	Acceleration,
 	Madness,
 	Punch,
-	Enemy,
-	Obstacle
+	Enemy
 }

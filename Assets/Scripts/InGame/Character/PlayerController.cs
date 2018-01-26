@@ -95,12 +95,12 @@ public class PlayerController : MonoBehaviour
 	[Tooltip ("La valeur est un multiplicateur sur la vitesse du joueur")]
 	public float SpeedPunchRun = 1.2f, SpeedDoublePunchRun = 1.5f;
 
-    [Header("Caractéristique Madness")]
+  /*  [Header("Caractéristique Madness")]
     public float RatioMaxMadness = 4;
     public float DelayDownBar = 3;
     //public float LessPointPunchInMadness = 15;
     public float SmoothSpeed = 100;
-    public float ratioDownInMadness = 1.5f;
+    public float ratioDownInMadness = 1.5f;*/
 
     //public float delayInBeginMadness = 2;
    // public float delayInEndMadness = 2;
@@ -570,7 +570,14 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
+		if ( !InMadness || thisDeath == DeathType.Enemy )
+		{
+			GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
+		}
+		else
+		{
+			GlobalManager.GameCont.NewScore ( DeathType.Madness, nbrPoint );
+		}
 
 		if ( bonus <= 0 )
 		{
@@ -1297,13 +1304,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( Dash )
+		if ( Dash && !waitRotate)
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
-		else if ( InMadness )
+		else if ( InMadness && !waitRotate)
 		{
 			speed *= MadnessSpeed;
 		}
@@ -1432,7 +1439,7 @@ public class PlayerController : MonoBehaviour
 		waitRotate = false;
 		useFord = true;
 
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 0.25f );
 		checkRot = false;
 	}
 

@@ -114,9 +114,7 @@ public class GameController : ManagerParent
         //thisMadnessWeight = weightValue;
         postMadnessProfile.weight = weightValue;
 
-        Debug.Log(weightValue);
-
-        if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
 		}
