@@ -55,6 +55,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,6 +71,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -146,6 +148,8 @@ MonoBehaviour:
   onObjForward: 0
   FreezeAxe: {x: 0, y: 0, z: 0}
   FreezeRot: {x: 0, y: 0, z: 0}
+  point: 25
+  BonusMultTimer: 1
   useGravity: 1
 --- !u!114 &114940716623479786
 MonoBehaviour:
@@ -160,3 +164,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForcePropulse: 6.05
   DelayDestruc: 0.1
+  nbPunchDestroy: 5
+  DeadByPlayer: 1
