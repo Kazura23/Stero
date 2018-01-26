@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.Analytics;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.PostProcessing;
-using UnityEditor;
+//using UnityEditor;
 using System;
 
 public class GameController : ManagerParent
@@ -57,6 +57,10 @@ public class GameController : ManagerParent
 
 	[HideInInspector]
 	public PostProcessingProfile postProfile;
+    public PostProcessVolume postMadnessProfile;
+
+	[HideInInspector]
+	public List<Text> GetBonusText;
 
 	Player inputPlayer;
 	Text textScore;
@@ -105,8 +109,12 @@ public class GameController : ManagerParent
         postProfile.bloom.settings = thisBloom;
 
         postProfile.chromaticAberration.settings = thisChrom;
+        //float thisMadnessWeight = postMadnessProfile.weight;
 
-        if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
+        //thisMadnessWeight = weightValue;
+        postMadnessProfile.weight = weightValue;
+
+		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
 		}
@@ -163,7 +171,7 @@ public class GameController : ManagerParent
 					isStay = false;
 					PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
 
-					if ( LaunchTuto )
+					if ( !LaunchTuto )
 					{
 						Animator getAnimator = Player.GetComponent<Animator> ( );
 						getAnimator.enabled = true;
@@ -202,6 +210,14 @@ public class GameController : ManagerParent
 					}
 					else
 					{
+						DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
+						});
+
+						DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
+						});
+
 						Player.transform.DOLocalMoveX ( 0, 0.7f );
 
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
@@ -324,6 +340,14 @@ public class GameController : ManagerParent
 			Destroy ( lastWall );
 		}
 
+		int a;
+		for ( a = 0; a < GetBonusText.Count; a++ )
+		{
+			GetBonusText [ a ].text = "LEVEL 1";
+
+			GetBonusText [ a ].transform.parent.GetComponent<ItemModif> ( ).ResetPrice ( );
+		}
+
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
@@ -346,7 +370,7 @@ public class GameController : ManagerParent
 		DOTween.To ( ( ) => rankValue, x => rankValue = x, 0, 0.1f );
 		Rank [] getListRank = AllRank;
 
-		for ( int a = 0; a < getListRank.Length; a++ )
+		for ( a = 0; a < getListRank.Length; a++ )
 		{
 			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
 			{
@@ -356,7 +380,7 @@ public class GameController : ManagerParent
 
 		currMax = getListRank [ currIndex ].NeededScore;
 
-		for ( int a = 0; a < getListRank.Length; a++ )
+		for ( a = 0; a < getListRank.Length; a++ )
 		{
 			if ( currMax >= currNeeded )
 			{
@@ -880,14 +904,16 @@ public class GameController : ManagerParent
 
     public float currentValue = 0;
     public float chromValue = 0;
-    public void updateBloom ( )
-	{
-		BloomModel.Settings thisBloom = postProfile.bloom.settings;
+    public float weightValue = 0;
 
-		thisBloom.bloom.intensity = currentValue;
+    /*public void updateBloom ( )
+     {
+         BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
-		postProfile.bloom.settings = thisBloom;
-	}
+         thisBloom.bloom.intensity = currentValue;
+
+         postProfile.bloom.settings = thisBloom;
+     }*/
 
     protected override void InitializeManager ( )
 	{
@@ -956,20 +982,21 @@ public class GameController : ManagerParent
 			switch ( thisItem.SpecAction )
 			{
 			case SpecialAction.OndeChoc:
-				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
-				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+				currPlayer.delayChocWave = thisItem.SliderTime;
                 AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
-				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
-				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
-                    AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
+				currPlayer.DelayDeadBall = thisItem.SliderTime;
+                AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
-				currPlayer.SliderSlow.maxValue = 10;
-                    AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+                AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+				currPlayer.DelaySlowMot = thisItem.SliderTime;
 				break;
 			}
+
+			currPlayer.SliderSlow.maxValue = thisItem.SliderTime;
+			currPlayer.SliderSlow.value = thisItem.SliderTime;
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 
@@ -982,7 +1009,7 @@ public class GameController : ManagerParent
 			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
 				currPlayer.DistDBTake = thisItem.DistTakeDB; 
-				if ( thisItem.AddItem ) 
+				if ( thisItem.BonusItem ) 
 				{ 
 					currPlayer.SlowMotion += thisItem.SlowMotion; 
 					currPlayer.SpeedSlowMot += thisItem.SpeedSlowMot; 
@@ -1003,7 +1030,6 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-      
             currPlayer.Life++;
             AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}

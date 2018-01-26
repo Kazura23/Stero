@@ -141,15 +141,15 @@ public class AbstractObject : MonoBehaviour
 		{
 			projection = p_damage;
             techPunch = p_technic;
-			Dead ( );
+			Dead ( false, DeathType.Punch );
 		}
 	}
 
-	public virtual void Dead ( bool enemy = false )
+	public virtual void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Enemy )
 	{
         if ( enemy )
 		{
-			onEnemyDead ( getTrans.forward * onObjForward, DeathType.Enemy );
+			onEnemyDead ( getTrans.forward * onObjForward, thisDeath );
             int randomSong = UnityEngine.Random.Range(0, 8);
 
             GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1), false);
@@ -159,7 +159,7 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
-			onEnemyDead ( getFor + getRig + getUp, DeathType.Punch );
+			onEnemyDead ( getFor + getRig + getUp, thisDeath );
             GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
         }
 	}
@@ -168,7 +168,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( !isDead )
 		{
-			Dead ( true );
+			Dead ( true, DeathType.Punch );
 		}
 		else
 		{

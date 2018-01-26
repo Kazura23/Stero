@@ -107,9 +107,9 @@ public class EnnemisLane : AbstractObject
 		}
 	}
 
-	public override void Dead ( bool enemy = false ) 
+	public override void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
 	{
-		base.Dead ( enemy );
+		base.Dead ( enemy, thisDeath );
 
 
 		//mainCorps.GetComponent<BoxCollider> ( ).enabled = false;

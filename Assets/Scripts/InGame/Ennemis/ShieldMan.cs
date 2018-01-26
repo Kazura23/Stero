@@ -55,9 +55,9 @@ public class ShieldMan : AbstractObject {
 		}
 	}
     #endregion
-	public override void Dead(bool enemy = false)
+	public override void Dead(bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
 	{
-		base.Dead(enemy);
+		base.Dead(enemy, thisDeath);
         AllPlayerPrefs.ANbTotalEnemyKill++;
         AllPlayerPrefs.ANbKnighty++;
         //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
