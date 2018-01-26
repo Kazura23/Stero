@@ -57,6 +57,7 @@ public class GameController : ManagerParent
 
 	[HideInInspector]
 	public PostProcessingProfile postProfile;
+    public PostProcessVolume postMadnessProfile;
 
 	[HideInInspector]
 	public List<Text> GetBonusText;
@@ -108,6 +109,12 @@ public class GameController : ManagerParent
         postProfile.bloom.settings = thisBloom;
 
         postProfile.chromaticAberration.settings = thisChrom;
+        //float thisMadnessWeight = postMadnessProfile.weight;
+
+        //thisMadnessWeight = weightValue;
+        postMadnessProfile.weight = weightValue;
+
+        Debug.Log(weightValue);
 
         if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
@@ -899,15 +906,16 @@ public class GameController : ManagerParent
 
     public float currentValue = 0;
     public float chromValue = 0;
+    public float weightValue = 0;
 
-   /*public void updateBloom ( )
-	{
-		BloomModel.Settings thisBloom = postProfile.bloom.settings;
+    /*public void updateBloom ( )
+     {
+         BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
-		thisBloom.bloom.intensity = currentValue;
+         thisBloom.bloom.intensity = currentValue;
 
-		postProfile.bloom.settings = thisBloom;
-	}*/
+         postProfile.bloom.settings = thisBloom;
+     }*/
 
     protected override void InitializeManager ( )
 	{
