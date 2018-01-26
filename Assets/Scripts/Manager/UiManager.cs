@@ -332,7 +332,7 @@ public class UiManager : ManagerParent
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
 
-		closeMad = true;
+		closeMad = false;
 		StartCoroutine ( waitMad ( ) );
 
         //textMad.GetComponentInChildren<TextMesh>().text = 
@@ -383,7 +383,7 @@ public class UiManager : ManagerParent
 
         //var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
 	
-		closeMad = false;
+		closeMad = true;
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
