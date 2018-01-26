@@ -2530,13 +2530,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!224 &77291059
 RectTransform:
@@ -9688,13 +9689,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 2
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &302233945
 CanvasGroup:
@@ -15422,13 +15424,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 2
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &470005309
 CanvasGroup:
@@ -18456,13 +18459,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &546255873
 CanvasGroup:
@@ -20548,6 +20552,21 @@ Prefab:
       propertyPath: m_Name
       value: ==> Player
       objectReference: {fileID: 0}
+    - target: {fileID: 114495369278424864, guid: 7684dc0bbc8a7f542837e330bce091b0,
+        type: 2}
+      propertyPath: RatioMaxMadness
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114495369278424864, guid: 7684dc0bbc8a7f542837e330bce091b0,
+        type: 2}
+      propertyPath: MadnessSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114495369278424864, guid: 7684dc0bbc8a7f542837e330bce091b0,
+        type: 2}
+      propertyPath: ratioDownInMadness
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7684dc0bbc8a7f542837e330bce091b0, type: 2}
   m_IsPrefabParent: 0
@@ -21040,13 +21059,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 3
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 50
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!222 &636612748
 CanvasRenderer:
@@ -24942,6 +24962,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: ChunksInfo.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4349711816744528, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -24984,46 +25009,6 @@ Prefab:
       propertyPath: PostProcessMadness
       value: 
       objectReference: {fileID: 1859094895}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 6.649994
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 119.850006
-      objectReference: {fileID: 0}
-    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
       propertyPath: m_AnchorMax.x
@@ -25033,6 +25018,16 @@ Prefab:
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
@@ -25049,64 +25044,93 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114297795631867594, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: TutoObject
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: ChunksInfo.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322313417256420, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224561204044887384, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+      objectReference: {fileID: 11400000, guid: c5f26443d49de0342b8968db33ac7041,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224499006852901958, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224979235485105914, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+      propertyPath: ChunksInfo.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b2a2ce8cacc32442acc2d826122ee8a,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224202226067605278, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224935101450821028, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+      propertyPath: ChunksInfo.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224246910368882884, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 224665789577119122, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+      propertyPath: postMadnessProfile
+      value: 
+      objectReference: {fileID: 1859094897}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
+      propertyPath: AllRank.Array.data[0].Time
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[1].Time
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 224305325380003454, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 7
+      propertyPath: AllRank.Array.data[2].Time
+      value: 4.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224737744182501888, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
+      propertyPath: AllRank.Array.data[3].Time
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 224788409291148108, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
-      propertyPath: m_RootOrder
+      propertyPath: AllRank.Array.data[4].Time
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[5].Time
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: AllRank.Array.data[6].Time
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
@@ -50664,13 +50688,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &1546290176
 CanvasGroup:
@@ -51569,13 +51594,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!222 &1570104995
 CanvasRenderer:
@@ -59998,13 +60024,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &1858808191
 CanvasGroup:
@@ -60125,7 +60152,7 @@ MonoBehaviour:
   sharedProfile: {fileID: 11400000, guid: 0b4829700e0153243bc4e29c70c4768e, type: 2}
   isGlobal: 1
   blendDistance: 7.65
-  weight: 0
+  weight: 1
   priority: 3.19
 --- !u!65 &1859094898
 BoxCollider:
@@ -60499,13 +60526,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!225 &1869446987
 CanvasGroup:
@@ -67663,13 +67691,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!222 &2095360976
 CanvasRenderer:
