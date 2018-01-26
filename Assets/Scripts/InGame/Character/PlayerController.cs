@@ -579,8 +579,6 @@ public class PlayerController : MonoBehaviour
 			GlobalManager.GameCont.NewScore ( DeathType.Madness, nbrPoint );
 		}
 
-		Debug.Log ( thisDeath );
-
 		if ( bonus <= 0 )
 		{
 			bonus = 1;
