@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.Analytics;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.PostProcessing;
-using UnityEditor;
+//using UnityEditor;
 using System;
 
 public class GameController : ManagerParent
