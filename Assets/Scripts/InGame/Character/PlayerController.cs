@@ -1022,9 +1022,9 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && !waitRotate )
 		{
-            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
+            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform, 4f);
             target.transform.DOScale(Vector3.one, 0);
-            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
+			target.transform.localPosition = Vector3.zero;
 
 			RaycastHit[] allHit;
 			bool checkGround = true;
@@ -1064,23 +1064,27 @@ public class PlayerController : MonoBehaviour
 				DOVirtual.DelayedCall(.1f, () => {
 					onAnimeAir = true;
 				});
+
+		
+
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
                 //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, 0).SetEase(Ease.Linear);
                 //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, 0f).SetEase(Ease.Linear);
-                pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
+
+                pTrans.DOLocalMove(pTrans.localPosition + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
 					onAnimeAir = false;
 
                     //MR S RETOMBE
-                    pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
+                    pTrans.DOLocalMove(pTrans.localPosition - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
-
-                            GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
-                            circle.transform.DOScale(10, 4);
-                            circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
-
                         });
+
+						GameObject circle  = GlobalManager.GameCont.FxInstanciate(Vector3.zero, "CircleGround", pTrans, 10f);
+						circle.transform.DOScale(10, 4);
+						circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+						circle.transform.localPosition = Vector3.zero;
 
 						StopPlayer = false;
                         pRig.useGravity = true;
