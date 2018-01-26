@@ -166,7 +166,7 @@ public class GameController : ManagerParent
 					isStay = false;
 					PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
 
-					if ( LaunchTuto )
+					if ( !LaunchTuto )
 					{
 						Animator getAnimator = Player.GetComponent<Animator> ( );
 						getAnimator.enabled = true;

@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
 	public float DashTime = 1.5f;
 	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
 	public float DashSpeed = 2.5f;
+	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
+	public float MadnessSpeed = 1.3f;
 	[Tooltip ("Temps d'invicibilité apres avoir pris des dégats")]
 	public float TimeInvincible = 2;
 
@@ -1290,14 +1292,15 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( InMadness || Dash )
+		if ( Dash )
 		{
 			speed *= DashSpeed;
-			if ( Dash && !InMadness )
-			{
-				AllPlayerPrefs.ATimeDash += delTime;
-			}
+			AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
+		else if ( InMadness )
+		{
+			speed *= MadnessSpeed;
 		}
 		else if ( chargeDp )
 		{
