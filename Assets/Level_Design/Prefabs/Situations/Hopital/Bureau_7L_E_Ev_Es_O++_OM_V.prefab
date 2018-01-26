@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 65565110676459030}
   - component: {fileID: 54998993362386778}
   - component: {fileID: 114305046055211110}
+  - component: {fileID: 114564144152677228}
   m_Layer: 0
   m_Name: Shelf (1)
   m_TagString: ElemDash
@@ -11696,6 +11697,7 @@ GameObject:
   - component: {fileID: 65444875302507490}
   - component: {fileID: 54774552282838756}
   - component: {fileID: 114420032340079532}
+  - component: {fileID: 114535360050686438}
   m_Layer: 0
   m_Name: Shelf (2)
   m_TagString: ElemDash
@@ -13129,6 +13131,7 @@ GameObject:
   - component: {fileID: 65837774152356058}
   - component: {fileID: 54264564502490064}
   - component: {fileID: 114730213676686844}
+  - component: {fileID: 114245122871256730}
   m_Layer: 0
   m_Name: Shelf (5)
   m_TagString: ElemDash
@@ -14594,6 +14597,7 @@ GameObject:
   - component: {fileID: 65504943836832354}
   - component: {fileID: 54641205263855978}
   - component: {fileID: 114476164586536936}
+  - component: {fileID: 114024044757956794}
   m_Layer: 0
   m_Name: Shelf (6)
   m_TagString: ElemDash
@@ -15916,6 +15920,7 @@ GameObject:
   - component: {fileID: 65278198496226130}
   - component: {fileID: 54652421220748048}
   - component: {fileID: 114782057337198546}
+  - component: {fileID: 114663654268293574}
   m_Layer: 0
   m_Name: Shelf
   m_TagString: ElemDash
@@ -52698,6 +52703,26 @@ MonoBehaviour:
   distance: 30
   hauteur: 5
   NewColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &114024044757956794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753281686903298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114046989789978094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53089,6 +53114,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GetAbs: {fileID: 114739091884807014}
+--- !u!114 &114245122871256730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1678023449001000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114251152126463142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53788,6 +53833,26 @@ MonoBehaviour:
   NbrLineLeft: 3
   NbrLineRigh: 3
   CurrLine: 0
+--- !u!114 &114535360050686438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614162715881326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114557581625776044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53816,6 +53881,26 @@ MonoBehaviour:
   NbrLineLeft: 0
   NbrLineRigh: 2
   CurrLine: -1
+--- !u!114 &114564144152677228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016054264735794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114571490071829704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53954,6 +54039,7 @@ MonoBehaviour:
   InfoChunk:
     NbrLaneDebut: {x: 3, y: 3}
     NbrLaneFin: {x: 3, y: 3}
+    calWall: 1
     ThoseExit:
     - LaneParent: 0
       Verticalite: 0
@@ -54187,6 +54273,26 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+--- !u!114 &114663654268293574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821302220457494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114664549178746942
 MonoBehaviour:
   m_ObjectHideFlags: 1

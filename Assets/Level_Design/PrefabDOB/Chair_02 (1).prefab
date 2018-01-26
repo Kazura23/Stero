@@ -24,9 +24,10 @@ GameObject:
   - component: {fileID: 64348982108160144}
   - component: {fileID: 114444036799371012}
   - component: {fileID: 205645691758311846}
+  - component: {fileID: 114421916677729718}
   m_Layer: 0
   m_Name: Chair_02 (1)
-  m_TagString: Untagged
+  m_TagString: ObsPropSafe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -53,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -92,11 +95,31 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 4694d7c52133543459e0404254353a92, type: 3}
+--- !u!114 &114421916677729718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305529572717562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 5
+  onObjForward: 0
+  FreezeAxe: {x: 10, y: 10, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114444036799371012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +134,7 @@ MonoBehaviour:
   ForcePropulse: 5
   DelayDestruc: 1
   nbPunchDestroy: 2
+  DeadByPlayer: 1
 --- !u!205 &205645691758311846
 LODGroup:
   m_ObjectHideFlags: 1

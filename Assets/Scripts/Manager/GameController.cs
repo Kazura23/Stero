@@ -94,7 +94,6 @@ public class GameController : ManagerParent
 	{
 		getRank.fillAmount = rankValue;
 
-
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
         ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
@@ -138,7 +137,6 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
 
-
 				//GameStartedUpdate();
 				break;
 
@@ -163,9 +161,10 @@ public class GameController : ManagerParent
 					SetAllBonus ( );
 
 					isStay = false;
+					PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
+
 					if ( LaunchTuto )
 					{
-						PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
 						Animator getAnimator = Player.GetComponent<Animator> ( );
 						getAnimator.enabled = true;
 
@@ -179,11 +178,11 @@ public class GameController : ManagerParent
 							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 							{
 								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
-
 								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
 								{
 									isReady = true;
 									isStay = true;
+									getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 									//Player.GetComponent<PlayerController>().StopPlayer = false;
 									//Debug.Log("anime fonctionnelle");
 								});
@@ -208,11 +207,12 @@ public class GameController : ManagerParent
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 						{
 							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
-
 							Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
 							{
 								isReady = true;
 								isStay = true;
+								getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
 								//Debug.Log("anime fonctionnelle");
 							});
@@ -838,13 +838,15 @@ public class GameController : ManagerParent
 
         //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
 
-        musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+        	musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
             musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
 
 
             checkStart = true;
             //Debug.Log("player = " + Player);
             Player.GetComponent<PlayerController>().StopPlayer = false;
+			Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
+
 			//thisCam.GetComponent<RainbowRotate>().time = .4f;
 			//thisCam.GetComponent<RainbowMove>().time = .2f;
 

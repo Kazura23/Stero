@@ -68,6 +68,13 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+
+		if ( mainCorps == null )
+		{
+			Debug.LogWarning ( "There no rigidBody" );
+			Destroy ( GetComponent<AbstractObject> ( ) );
+		}
+
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 

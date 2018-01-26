@@ -751,7 +751,10 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		playerFight ( getTime );
+		if ( !waitRotate )
+		{
+			playerFight ( getTime );
+		}
 
 		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
@@ -950,7 +953,7 @@ public class PlayerController : MonoBehaviour
 		{
 			SliderSlow.value += getTime;
 
-			if ( ThisAct == SpecialAction.SlowMot && animeSlo )
+			if ( ( ThisAct == SpecialAction.SlowMot || onTuto ) && animeSlo )
 			{
                 AllPlayerPrefs.ANbTechSpe++;
                 thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
@@ -961,7 +964,7 @@ public class PlayerController : MonoBehaviour
 		}
 		Dash = false;
 
-		if (ThisAct == SpecialAction.SlowMot || onTuto )
+		if ( ThisAct == SpecialAction.SlowMot || onTuto )
         {
             //AllPlayerPrefs.ANbTechSpe++;
             if (SliderContent > 0)
@@ -1375,6 +1378,10 @@ public class PlayerController : MonoBehaviour
 		{
 			calTrans = pTrans.forward * speed * delTime;
 		}
+		else
+		{
+			calTrans = Vector3.zero;
+		}
 
 		pTrans.Translate ( calTrans, Space.World );
 	}
@@ -1412,6 +1419,9 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForEndOfFrame ( );
 		waitRotate = false;
 		useFord = true;
+
+		yield return new WaitForSeconds ( 0.5f );
+		checkRot = false;
 	}
 
 	void changeLine ( float delTime )
@@ -1725,10 +1735,12 @@ public class PlayerController : MonoBehaviour
 		propP = false;
 		propDP = false;
 	}
+
 	Vector3 getNewRot;
+	bool checkRot = false;
 	void OnTriggerEnter ( Collider thisColl )
 	{
-		if ( thisColl.tag == Constants._NewDirec )
+		if ( thisColl.tag == Constants._NewDirec && !checkRot )
 		{
 			Vector3 getThisC = thisColl.transform.position;
 
@@ -1736,6 +1748,8 @@ public class PlayerController : MonoBehaviour
 			{
 				return;
 			}
+
+			checkRot = true;
 
 			if ( !onAnimeAir )
 			{
@@ -1781,7 +1795,11 @@ public class PlayerController : MonoBehaviour
 
                 GlobalManager.Ui.BloodHitDash();
                 GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "Glass_" + rdmValue, false,null,false);
-                thisColl.collider.enabled = false;
+				if ( !onTuto )
+				{
+					thisColl.collider.enabled = false;
+				}
+
 				AbstractObject getAbstra = thisColl.gameObject.GetComponentInChildren<AbstractObject> ( );
 				if ( getAbstra )
 				{
