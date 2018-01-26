@@ -967,20 +967,21 @@ public class GameController : ManagerParent
 			switch ( thisItem.SpecAction )
 			{
 			case SpecialAction.OndeChoc:
-				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
-				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+				currPlayer.delayChocWave = thisItem.SliderTime;
                 AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
-				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
-				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
-                    AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
+				currPlayer.DelayDeadBall = thisItem.SliderTime;
+                AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
-				currPlayer.SliderSlow.maxValue = 10;
-                    AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+                AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+				currPlayer.DelaySlowMot = thisItem.SliderTime;
 				break;
 			}
+
+			currPlayer.SliderSlow.maxValue = thisItem.SliderTime;
+			currPlayer.SliderSlow.value = thisItem.SliderTime;
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 

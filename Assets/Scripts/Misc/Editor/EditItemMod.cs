@@ -36,6 +36,7 @@ public class EditItemMod : Editor
 	SerializedProperty RecovSlider;
 	SerializedProperty SpeedSlowMot;
 	SerializedProperty DeadBallDist;
+	SerializedProperty TimerSpe;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -80,6 +81,7 @@ public class EditItemMod : Editor
 		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
 
 		AddValueStat = serializedObject.FindProperty ( "BonusItem" );
+		TimerSpe = serializedObject.FindProperty ( "SliderTime" );
 	}
 
 	public override void OnInspectorGUI()
@@ -405,6 +407,7 @@ public class EditItemMod : Editor
 		if ( myTarget.SpecAction != SpecialAction.Nothing )
 		{
 			EditorGUILayout.PropertyField ( AddValueStat );
+			EditorGUILayout.PropertyField ( TimerSpe );
 		}
 
 		if ( myTarget.SpecAction == SpecialAction.SlowMot )

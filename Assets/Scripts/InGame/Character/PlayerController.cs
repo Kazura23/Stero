@@ -28,8 +28,12 @@ public class PlayerController : MonoBehaviour
 	public float SpeedEffectTime;
 	[Tooltip ("Force bonus en plus de la gravitée")]
 	public float BonusGrav = 0;
+	[HideInInspector]
 	public float delayChocWave = 5;
+	[HideInInspector]
 	public float DelayDeadBall = 15;
+	[HideInInspector]
+	public float DelaySlowMot = 10;
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
@@ -309,7 +313,6 @@ public class PlayerController : MonoBehaviour
 
 		getPunch = GetComponentInChildren<Punch> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
-		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
 	
@@ -371,6 +374,7 @@ public class PlayerController : MonoBehaviour
 			maxSpeed = MaxSpeed;
 		}
 
+		SliderContent = DelaySlowMot;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
 		impulsionCL = ImpulsionCL;
@@ -994,7 +998,7 @@ public class PlayerController : MonoBehaviour
 
 				Time.timeScale = 1;
             }
-            else if (SliderContent < 10)
+			else if (SliderContent < DelaySlowMot)
             {
                 animeSlo = false;
                 Time.timeScale = 1;
@@ -1009,7 +1013,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 canSpe = true;
-                SliderContent = 10;
+				SliderContent = DelaySlowMot;
             }
 
 			SliderSlow.value = SliderContent;

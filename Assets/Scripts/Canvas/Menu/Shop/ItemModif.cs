@@ -59,7 +59,7 @@ public class ItemModif : MonoBehaviour
 	public float DistTakeDB = 10;
 	#endregion
 	#endregion
-
+	public float SliderTime = 10;
 	#region updateValue
 	public Vector3 CurrPos;
 	List<Image> getExtraH;
