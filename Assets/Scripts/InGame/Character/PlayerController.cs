@@ -28,8 +28,12 @@ public class PlayerController : MonoBehaviour
 	public float SpeedEffectTime;
 	[Tooltip ("Force bonus en plus de la gravitée")]
 	public float BonusGrav = 0;
+	[HideInInspector]
 	public float delayChocWave = 5;
+	[HideInInspector]
 	public float DelayDeadBall = 15;
+	[HideInInspector]
+	public float DelaySlowMot = 10;
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
@@ -66,6 +70,8 @@ public class PlayerController : MonoBehaviour
 	public float DashTime = 1.5f;
 	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
 	public float DashSpeed = 2.5f;
+	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
+	public float MadnessSpeed = 1.3f;
 	[Tooltip ("Temps d'invicibilité apres avoir pris des dégats")]
 	public float TimeInvincible = 2;
 
@@ -309,7 +315,6 @@ public class PlayerController : MonoBehaviour
 
 		getPunch = GetComponentInChildren<Punch> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
-		SliderContent = 10;
 		lastPos = pTrans.position;
 		textDist = GlobalManager.Ui.ScorePoints;
 	
@@ -371,6 +376,7 @@ public class PlayerController : MonoBehaviour
 			maxSpeed = MaxSpeed;
 		}
 
+		SliderContent = DelaySlowMot;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
 		impulsionCL = ImpulsionCL;
@@ -994,7 +1000,7 @@ public class PlayerController : MonoBehaviour
 
 				Time.timeScale = 1;
             }
-            else if (SliderContent < 10)
+			else if (SliderContent < DelaySlowMot)
             {
                 animeSlo = false;
                 Time.timeScale = 1;
@@ -1009,16 +1015,16 @@ public class PlayerController : MonoBehaviour
             else
             {
                 canSpe = true;
-                SliderContent = 10;
+				SliderContent = DelaySlowMot;
             }
 
 			SliderSlow.value = SliderContent;
 		}
 		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && !waitRotate )
 		{
-            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform.parent, 4f);
+            GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform, 4f);
             target.transform.DOScale(Vector3.one, 0);
-            target.transform.position = pTrans.forward * 14 + pTrans.position + Vector3.up * 3;
+			target.transform.localPosition = Vector3.zero;
 
 			RaycastHit[] allHit;
 			bool checkGround = true;
@@ -1058,23 +1064,24 @@ public class PlayerController : MonoBehaviour
 				DOVirtual.DelayedCall(.1f, () => {
 					onAnimeAir = true;
 				});
+
+		
+
                 //MR S SAUTE
 				pTrans.DOLocalRotate((new Vector3(-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase(Ease.InSine);
                 //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, 0).SetEase(Ease.Linear);
                 //target.transform.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, 0f).SetEase(Ease.Linear);
-                pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 5 + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
+
+                pTrans.DOLocalMove(pTrans.localPosition + pTrans.up * 7, .25f).SetEase(Ease.Linear).OnComplete(() => {
 					onAnimeAir = false;
 
                     //MR S RETOMBE
-                    pTrans.DOLocalMove(pTrans.localPosition + pTrans.forward * 3 - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
+                    pTrans.DOLocalMove(pTrans.localPosition - pTrans.up * 2, .1f).SetEase(Ease.Linear).OnComplete(() => {
 						pTrans.DOLocalRotate((new Vector3(35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase(Ease.OutSine).OnComplete(() => {
 							pTrans.DOLocalRotate((new Vector3(0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase(Ease.InBounce);
-
-                            GameObject circle  = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "CircleGround", transform, 10f);
-                            circle.transform.DOScale(10, 4);
-                            circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
-
                         });
+
+					
 
 						StopPlayer = false;
                         pRig.useGravity = true;
@@ -1110,6 +1117,10 @@ public class PlayerController : MonoBehaviour
 			pRig.AddForce(Vector3.down, ForceMode.VelocityChange);
 			yield return thisF;
 		}
+		GameObject circle  = GlobalManager.GameCont.FxInstanciate(Vector3.zero, "CircleGround", pTrans, 10f);
+		circle.transform.DOScale(10, 4);
+		circle.transform.GetComponent<SpriteRenderer>().DOFade(0, 1.5f);
+		circle.transform.localPosition = Vector3.zero;
 
 		thisCam.GetComponent<RainbowMove>().enabled = true;
 		ScreenShake.Singleton.ShakeFall();
@@ -1286,14 +1297,15 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( InMadness || Dash )
+		if ( Dash && !waitRotate)
 		{
 			speed *= DashSpeed;
-			if ( Dash && !InMadness )
-			{
-				AllPlayerPrefs.ATimeDash += delTime;
-			}
+			AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
+		else if ( InMadness && !waitRotate)
+		{
+			speed *= MadnessSpeed;
 		}
 		else if ( chargeDp )
 		{
@@ -1420,7 +1432,7 @@ public class PlayerController : MonoBehaviour
 		waitRotate = false;
 		useFord = true;
 
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 0.25f );
 		checkRot = false;
 	}
 

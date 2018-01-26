@@ -105,16 +105,18 @@ public class UiManager : ManagerParent
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-
-
+            /*
             DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 1.5f, .2f).OnComplete(() => {
                 DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .1f);
             });
 
             DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
-            });
+            });*/
 
+            DOTween.To(() => GlobalManager.GameCont.weightValue, x => GlobalManager.GameCont.weightValue = x, 1f, .6f).OnComplete(() => {
+                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
+            });
         }
     }
 
@@ -227,10 +229,7 @@ public class UiManager : ManagerParent
         });
     }
 
-
-
-
-    public void DoubleCoup()
+	public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
 
@@ -487,8 +486,6 @@ public class UiManager : ManagerParent
             //float intensityBloom = 0;
             //DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
 
-            
-
             DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
                 DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
             });
@@ -496,8 +493,6 @@ public class UiManager : ManagerParent
             DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
                 DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
             });
-
-
 
             //PostProcessGlobal.GetComponent<Bloom>().intensity.value = intensityBloom;
         }

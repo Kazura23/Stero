@@ -45,7 +45,7 @@ public class ItemModif : MonoBehaviour
 	public SpecialAction SpecAction;
 
 	public bool Selected;
-	public bool AddItem;
+	public bool BonusItem;
 
 	#region SpecialSlowMot 
 	public float SlowMotion = 1;
@@ -59,7 +59,7 @@ public class ItemModif : MonoBehaviour
 	public float DistTakeDB = 10;
 	#endregion
 	#endregion
-
+	public float SliderTime = 10;
 	#region updateValue
 	public Vector3 CurrPos;
 	List<Image> getExtraH;
@@ -114,6 +114,11 @@ public class ItemModif : MonoBehaviour
 				getText.text = Price.ToString ( );
 			}
 		}
+	}
+
+	public void ResetPrice ( )
+	{
+		Price = savePrice;
 	}
 
 	public void ResetPos ( )
