@@ -1432,7 +1432,7 @@ public class PlayerController : MonoBehaviour
 		waitRotate = false;
 		useFord = true;
 
-		yield return new WaitForSeconds ( 0.5f );
+		yield return new WaitForSeconds ( 0.25f );
 		checkRot = false;
 	}
 
