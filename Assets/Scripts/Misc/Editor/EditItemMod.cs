@@ -79,7 +79,7 @@ public class EditItemMod : Editor
 		RecovSlider = serializedObject.FindProperty("RecovSlider");
 		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
 
-		AddValueStat = serializedObject.FindProperty ( "AddItem" );
+		AddValueStat = serializedObject.FindProperty ( "BonusItem" );
 	}
 
 	public override void OnInspectorGUI()
@@ -328,7 +328,6 @@ public class EditItemMod : Editor
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
-		EditorGUILayout.PropertyField ( AddValueStat );
 
 		EditorGUILayout.BeginHorizontal();
 
@@ -403,6 +402,10 @@ public class EditItemMod : Editor
 		EditorGUILayout.EndHorizontal();
 
 		EditorGUI.indentLevel = 1;
+		if ( myTarget.SpecAction != SpecialAction.Nothing )
+		{
+			EditorGUILayout.PropertyField ( AddValueStat );
+		}
 
 		if ( myTarget.SpecAction == SpecialAction.SlowMot )
 		{

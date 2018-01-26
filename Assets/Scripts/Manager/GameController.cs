@@ -58,6 +58,9 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public PostProcessingProfile postProfile;
 
+	[HideInInspector]
+	public List<Text> GetBonusText;
+
 	Player inputPlayer;
 	Text textScore;
 
@@ -324,6 +327,14 @@ public class GameController : ManagerParent
 			Destroy ( lastWall );
 		}
 
+		int a;
+		for ( a = 0; a < GetBonusText.Count; a++ )
+		{
+			GetBonusText [ a ].text = "LEVEL 1";
+
+			GetBonusText [ a ].transform.parent.GetComponent<ItemModif> ( ).ResetPrice ( );
+		}
+
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
@@ -346,7 +357,7 @@ public class GameController : ManagerParent
 		DOTween.To ( ( ) => rankValue, x => rankValue = x, 0, 0.1f );
 		Rank [] getListRank = AllRank;
 
-		for ( int a = 0; a < getListRank.Length; a++ )
+		for ( a = 0; a < getListRank.Length; a++ )
 		{
 			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
 			{
@@ -356,7 +367,7 @@ public class GameController : ManagerParent
 
 		currMax = getListRank [ currIndex ].NeededScore;
 
-		for ( int a = 0; a < getListRank.Length; a++ )
+		for ( a = 0; a < getListRank.Length; a++ )
 		{
 			if ( currMax >= currNeeded )
 			{
@@ -982,7 +993,7 @@ public class GameController : ManagerParent
 			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
 				currPlayer.DistDBTake = thisItem.DistTakeDB; 
-				if ( thisItem.AddItem ) 
+				if ( thisItem.BonusItem ) 
 				{ 
 					currPlayer.SlowMotion += thisItem.SlowMotion; 
 					currPlayer.SpeedSlowMot += thisItem.SpeedSlowMot; 
@@ -1003,7 +1014,6 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-      
             currPlayer.Life++;
             AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}
