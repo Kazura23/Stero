@@ -14119,13 +14119,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114034901497771836
 MonoBehaviour:
@@ -20777,13 +20778,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 2
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114259269365138520
 MonoBehaviour:
@@ -20944,13 +20946,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114277506853085180
 MonoBehaviour:
@@ -21124,13 +21127,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 3
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 50
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114296088744492972
 MonoBehaviour:
@@ -21293,13 +21297,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114301963901922114
 MonoBehaviour:
@@ -22362,42 +22367,44 @@ MonoBehaviour:
   thisCam: {fileID: 0}
   LaunchTuto: 0
   postProfile: {fileID: 0}
+  postMadnessProfile: {fileID: 0}
+  GetBonusText: []
   canOpenShop: 1
   TextObj: {fileID: 1877095414442122, guid: 5d0c691383b7a1047ad8a7baeab4cdd4, type: 2}
   AllRank:
   - NameRank: U
     MultiPli: 1
-    Time: 10
+    Time: 1000
     Color: {r: 1, g: 1, b: 1, a: 1}
     NeededScore: 0
   - NameRank: E   dgy
     MultiPli: 2
-    Time: 7
+    Time: 5
     Color: {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
     NeededScore: 500
   - NameRank: D   emoniac
     MultiPli: 3
-    Time: 6.5
+    Time: 4.5
     Color: {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
     NeededScore: 2000
   - NameRank: C   abbaged
     MultiPli: 4
-    Time: 6
+    Time: 4
     Color: {r: 0.47058824, g: 0.6784314, b: 0.7529412, a: 1}
     NeededScore: 4000
   - NameRank: B   angable!
     MultiPli: 5
-    Time: 5
+    Time: 3.5
     Color: {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
     NeededScore: 8000
   - NameRank: A   cidly!!
     MultiPli: 6
-    Time: 4
+    Time: 3
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
     NeededScore: 15000
   - NameRank: S   teroidal!!!
     MultiPli: 6
-    Time: 3
+    Time: 2.5
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
     NeededScore: 20000
   InfScore:
@@ -22438,6 +22445,7 @@ MonoBehaviour:
     CurrSpawn: []
   currentValue: 0
   chromValue: 0
+  weightValue: 0
 --- !u!114 &114428261704872598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -22919,13 +22927,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114468860965777716
 MonoBehaviour:
@@ -23368,13 +23377,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 2
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114524776603632218
 MonoBehaviour:
@@ -24709,13 +24719,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 1
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114692465900042842
 MonoBehaviour:
@@ -25103,13 +25114,14 @@ MonoBehaviour:
   NombreVie: 2
   SpecAction: 0
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114716998265613080
 MonoBehaviour:
@@ -25444,13 +25456,14 @@ MonoBehaviour:
   NombreVie: 1
   SpecAction: 1
   Selected: 0
-  AddItem: 0
+  BonusItem: 0
   SlowMotion: 1.5
   SpeedSlowMot: 1
   SpeedDeacSM: 3
   ReduceSlider: 1
   RecovSlider: 1
   DistTakeDB: 10
+  SliderTime: 10
   CurrPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114752565137831322
 MonoBehaviour:
@@ -25850,7 +25863,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChunksInfo:
-  - {fileID: 11400000, guid: a42245c55b7c3a2479fd3fee6a10e8ae, type: 2}
+  - {fileID: 11400000, guid: c5f26443d49de0342b8968db33ac7041, type: 2}
+  - {fileID: 11400000, guid: 7b2a2ce8cacc32442acc2d826122ee8a, type: 2}
+  - {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be, type: 2}
   ChunkOnScene: []
   DefaultPos: {x: 0, y: 0, z: 30}
   currLevel: 0
@@ -31852,7 +31867,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.7, y: 4.9}
+  m_AnchoredPosition: {x: 5, y: 6}
   m_SizeDelta: {x: 0, y: -0.49999952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224656903761930684
