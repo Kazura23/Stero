@@ -1297,13 +1297,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( Dash )
+		if ( Dash && !waitRotate)
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
-		else if ( InMadness )
+		else if ( InMadness && !waitRotate)
 		{
 			speed *= MadnessSpeed;
 		}
