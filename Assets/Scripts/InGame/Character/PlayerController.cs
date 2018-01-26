@@ -400,7 +400,6 @@ public class PlayerController : MonoBehaviour
 		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
 		canSpe = true;
-		stopMadness ( );
 	}
 
 	public void ResetPosDo ( )
@@ -484,6 +483,7 @@ public class PlayerController : MonoBehaviour
 		thisTok.totalDist = totalDis;
 
 		GlobalManager.Ui.GameOver();
+		stopMadness ( );
 
         DOVirtual.DelayedCall(.2f, () =>
         {
