@@ -1848,6 +1848,7 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ATypeObstacle = Constants._ElemDash;
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+			Debug.Log ( thisColl.gameObject.name );
             GameOver ( );
 		}
 
@@ -1857,6 +1858,7 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
             getObj.GetComponent<MissileBazooka> ( ).Explosion ( );
+			Debug.Log ( thisColl.gameObject.name );
 			GameOver ( );
 		}
 		else if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._Balls )
@@ -1864,6 +1866,7 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ATypeObstacle = getObj.tag;
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+			Debug.Log ( thisColl.gameObject.name );
             GameOver ( );
 		}
 		else if ( getObj.tag == Constants._ObsTag )
@@ -1872,6 +1875,7 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
             Life = 0;
+			Debug.Log ( thisColl.gameObject.name );
 			GameOver ( true );
 		}
 	}
@@ -1887,7 +1891,7 @@ public class PlayerController : MonoBehaviour
 
     private string AnalyticsChunk(Transform p_child)
     {
-		if ( onTuto )
+		if ( onTuto || p_child == null)
 		{
 			return "Tutorial";
 		}
@@ -1897,7 +1901,7 @@ public class PlayerController : MonoBehaviour
         {
             return "Chunk non identifier";
         }
-        while(currentTrans.parent.name != "Chuncks" && currentTrans.parent != null)
+		while(currentTrans.parent != null && currentTrans.parent.name != "Chuncks" )
         {
             currentTrans = currentTrans.parent;
         }

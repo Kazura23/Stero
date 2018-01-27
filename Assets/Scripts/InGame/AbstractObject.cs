@@ -72,9 +72,10 @@ public class AbstractObject : MonoBehaviour
 		if ( mainCorps == null )
 		{
 			Debug.LogWarning ( "There no rigidBody" );
-			Destroy ( GetComponent<AbstractObject> ( ) );
+			Destroy ( gameObject );
+			return;
 		}
-
+			
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
@@ -84,10 +85,24 @@ public class AbstractObject : MonoBehaviour
             PlayerDetected(playerTrans.gameObject, false);
     }*/
 
-	protected virtual void OnEnable ( )
+	IEnumerator waitCol ( )
 	{
+		yield return new WaitForSeconds ( 1 );
+
 		checkDead = false;
 		gameObject.GetComponent <Collider> ( ).enabled = true;
+
+	}
+	protected virtual void OnEnable ( )
+	{
+		if ( gameObject.GetComponent <Collider> ( ) == null )
+		{
+			Destroy ( gameObject );
+			return;
+		}
+
+		StartCoroutine ( waitCol ( ) );
+		gameObject.GetComponent <Collider> ( ).enabled = false;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
 
@@ -265,7 +280,8 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true )
 	{
-		if ( checkDead )
+		Debug.Log ( gameObject.name );
+		if ( checkDead && !getTrans.GetComponentInParent<AbstractObject> ( ))
 		{
 			return;
 		}
@@ -274,6 +290,8 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
+			Debug.Log ( gameObject.name );
+			gameObject.name = "non";
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
