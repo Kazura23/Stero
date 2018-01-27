@@ -153,7 +153,7 @@ public class SpawnChunks : MonoBehaviour
 		spawnAfterThis ( sourceSpawn );
 
 		// Desactivation de chunk
-		if ( getSpc.Count > 5 )
+		if ( getSpc.Count > 4 )
 		{
 			if ( getSpc [ 0 ].ThisChunk != null )
 			{

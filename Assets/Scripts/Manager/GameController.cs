@@ -408,6 +408,7 @@ public class GameController : ManagerParent
 
 		if ( restartGame )
         {
+			onHub = false;
 			isStay = false;
 			Intro = false;
 
@@ -423,7 +424,8 @@ public class GameController : ManagerParent
 		{
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
-			//GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
 		SetAllBonus ( );
@@ -721,6 +723,7 @@ public class GameController : ManagerParent
 
 	void setMusic () 
 	{ 
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
 		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
 
@@ -848,6 +851,9 @@ public class GameController : ManagerParent
 		{
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicTrash );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
 			thisAud.volume *= 1.25f;
 
