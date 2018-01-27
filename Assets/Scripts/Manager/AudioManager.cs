@@ -121,7 +121,7 @@ public class AudioManager : ManagerParent
 									}
 								}
 
-								StartCoroutine ( waitEndAudio ( getAud.clip.length + 0.1f, d, getAud, thisAct ) );
+								StartCoroutine ( waitEndAudio ( getAud.clip.length - 0.1f, d, getAud, thisAct ) );
 								return getAud;
 							}
 						}
@@ -285,12 +285,12 @@ public class AudioManager : ManagerParent
 
 		if ( thisSource != null )
 		{
-			Destroy ( thisSource );
-		}
+			if ( thisAct != null )
+			{
+				thisAct.Invoke ( );
+			}
 
-		if ( thisAct != null )
-		{
-			thisAct.Invoke ( );
+			Destroy ( thisSource );
 		}
 	}
 	#endregion
