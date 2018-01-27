@@ -20811,6 +20811,7 @@ MonoBehaviour:
       WallEndChunk: {fileID: 0}
     GarbageChunk: []
   ToDest: []
+  ToDisable: []
   GarbChunk: []
   OnLine: 0
   AddToList: 1
@@ -24965,11 +24966,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4349711816744528, guid: 3a452aaa15d36a945901cfd1a2e2af46, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -25002,6 +24998,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+        type: 2}
+      propertyPath: postMadnessProfile
+      value: 
+      objectReference: {fileID: 1859094897}
     - target: {fileID: 114297795631867594, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
       propertyPath: PostProcessGlobal
@@ -25021,16 +25022,6 @@ Prefab:
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 7.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 4.415
       objectReference: {fileID: 0}
     - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
@@ -25075,162 +25066,6 @@ Prefab:
     - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 8041b4038a3bc2e4785fc001364270b8,
-        type: 2}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7b2a2ce8cacc32442acc2d826122ee8a,
-        type: 2}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be,
-        type: 2}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: postMadnessProfile
-      value: 
-      objectReference: {fileID: 1859094897}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[0].Time
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[1].Time
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[2].Time
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[3].Time
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[4].Time
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[5].Time
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: AllRank.Array.data[6].Time
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 1.1000061
-      objectReference: {fileID: 0}
-    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -3.9700012
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224706132710468724, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224481972508116640, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224654847335293962, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224850206213052764, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 280
-      objectReference: {fileID: 0}
-    - target: {fileID: 224850206213052764, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 304.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 8041b4038a3bc2e4785fc001364270b8,
-        type: 2}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7b2a2ce8cacc32442acc2d826122ee8a,
-        type: 2}
-    - target: {fileID: 114819952175519006, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: ChunksInfo.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be,
-        type: 2}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: UseTuto
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224036662110283910, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.369999
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: InfScore.Array.data[2].WaitCulmul
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114427353601864774, guid: 3a452aaa15d36a945901cfd1a2e2af46,
-        type: 2}
-      propertyPath: InfScore.Array.data[2].SecCumul
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

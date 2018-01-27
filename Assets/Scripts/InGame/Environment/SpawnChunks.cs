@@ -153,7 +153,7 @@ public class SpawnChunks : MonoBehaviour
 		spawnAfterThis ( sourceSpawn );
 
 		// Desactivation de chunk
-		if ( getSpc.Count > 3 )
+		if ( getSpc.Count > 5 )
 		{
 			if ( getSpc [ 0 ].ThisChunk != null )
 			{
@@ -501,6 +501,7 @@ public class SpawnChunks : MonoBehaviour
 					allNewChunk.Add ( new ToDestChunk ( ) );
 					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
 					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
+					allNewChunk [ allNewChunk.Count - 1 ].DestThis = !isChunkScene;
 
 					currSL.OnScene = isChunkScene;
 
@@ -530,7 +531,14 @@ public class SpawnChunks : MonoBehaviour
 				{
 					if ( a != b )
 					{
-						allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+						if ( allNewChunk [ a ].DestThis )
+						{
+							allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+						}
+						else
+						{
+							allNewChunk [ a ].ThisSL.ToDisable.Add ( allNewChunk [ b ].ThisObj );
+						}
 					}
 				}
 			}
@@ -874,6 +882,7 @@ public class ToDestChunk
 {
 	public GameObject ThisObj;
 	public SpawnNewLvl ThisSL;
+	public bool DestThis;
 }
 
 public class CheckOnScene 

@@ -9,6 +9,8 @@ public class SpawnNewLvl : MonoBehaviour
 
 	[HideInInspector]
 	public List<GameObject> ToDest;
+	[HideInInspector]
+	public List<GameObject> ToDisable;
 
 	[HideInInspector]
 	public List<GameObject> GarbChunk;
@@ -66,7 +68,16 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
+				Debug.Log ( ToDest [ a ].name );
+
 				Destroy ( ToDest [ a ], 1 );
+			}
+
+			for ( int a = 0; a < ToDest.Count; a++ )
+			{
+				Debug.Log ( ToDest [ a ].name );
+
+				ToDest [ a ].SetActive ( false );
 			}
 		}
 	}

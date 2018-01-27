@@ -1887,7 +1887,7 @@ public class PlayerController : MonoBehaviour
 
     private string AnalyticsChunk(Transform p_child)
     {
-		if ( onTuto )
+		if ( onTuto || p_child == null)
 		{
 			return "Tutorial";
 		}
@@ -1897,7 +1897,7 @@ public class PlayerController : MonoBehaviour
         {
             return "Chunk non identifier";
         }
-        while(currentTrans.parent.name != "Chuncks" && currentTrans.parent != null)
+		while(currentTrans.parent != null && currentTrans.parent.name != "Chuncks" )
         {
             currentTrans = currentTrans.parent;
         }
