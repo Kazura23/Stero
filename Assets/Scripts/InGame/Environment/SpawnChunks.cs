@@ -648,7 +648,7 @@ public class SpawnChunks : MonoBehaviour
 					if ( b == 0 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
-						while ( diffLine < 0 )
+						while ( diffLine < 0 && sourceSpawn.calWall )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							//getCunk.GarbageSpawn.Add ( thisObj );
@@ -663,7 +663,7 @@ public class SpawnChunks : MonoBehaviour
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
 						diffLine = -diffLine;
 
-						while ( diffLine > 0 )
+						while ( diffLine > 0 && sourceSpawn.calWall )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );

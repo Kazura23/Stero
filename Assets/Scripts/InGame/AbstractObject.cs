@@ -85,6 +85,13 @@ public class AbstractObject : MonoBehaviour
             PlayerDetected(playerTrans.gameObject, false);
     }*/
 
+	IEnumerator waitCol ( )
+	{
+		yield return new WaitForSeconds ( 1 );
+
+		gameObject.GetComponent <Collider> ( ).enabled = true;
+
+	}
 	protected virtual void OnEnable ( )
 	{
 		checkDead = false;
@@ -93,7 +100,9 @@ public class AbstractObject : MonoBehaviour
 			Destroy ( gameObject );
 			return;
 		}
-		gameObject.GetComponent <Collider> ( ).enabled = true;
+
+		StartCoroutine ( waitCol ( ) );
+		gameObject.GetComponent <Collider> ( ).enabled = false;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
 
