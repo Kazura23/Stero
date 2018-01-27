@@ -423,7 +423,7 @@ public class GameController : ManagerParent
 		{
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
-			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
+			//GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
 		SetAllBonus ( );
