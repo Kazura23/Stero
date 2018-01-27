@@ -190,7 +190,7 @@ public class GameController : ManagerParent
 								{
 									isReady = true;
 									isStay = true;
-									getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+									//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 									//Player.GetComponent<PlayerController>().StopPlayer = false;
 									//Debug.Log("anime fonctionnelle");
 								});
@@ -227,7 +227,7 @@ public class GameController : ManagerParent
 							{
 								isReady = true;
 								isStay = true;
-								getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
 								//Debug.Log("anime fonctionnelle");
@@ -869,7 +869,7 @@ public class GameController : ManagerParent
             checkStart = true;
             //Debug.Log("player = " + Player);
             Player.GetComponent<PlayerController>().StopPlayer = false;
-			Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
+			//Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
 
 			//thisCam.GetComponent<RainbowRotate>().time = .4f;
 			//thisCam.GetComponent<RainbowMove>().time = .2f;
