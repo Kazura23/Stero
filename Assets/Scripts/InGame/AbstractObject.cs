@@ -75,7 +75,7 @@ public class AbstractObject : MonoBehaviour
 			Destroy ( gameObject );
 			return;
 		}
-
+			
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
@@ -89,12 +89,12 @@ public class AbstractObject : MonoBehaviour
 	{
 		yield return new WaitForSeconds ( 1 );
 
+		checkDead = false;
 		gameObject.GetComponent <Collider> ( ).enabled = true;
 
 	}
 	protected virtual void OnEnable ( )
 	{
-		checkDead = false;
 		if ( gameObject.GetComponent <Collider> ( ) == null )
 		{
 			Destroy ( gameObject );
@@ -280,7 +280,8 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true )
 	{
-		if ( checkDead )
+		Debug.Log ( gameObject.name );
+		if ( checkDead && !getTrans.GetComponentInParent<AbstractObject> ( ))
 		{
 			return;
 		}
@@ -289,6 +290,8 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
+			Debug.Log ( gameObject.name );
+			gameObject.name = "non";
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 

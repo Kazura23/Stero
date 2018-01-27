@@ -457,7 +457,13 @@ public class SpawnChunks : MonoBehaviour
 					}
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
-					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+					try{
+						currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+
+					}
+					catch{
+						currSL.OnLine = 0;
+					}
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
