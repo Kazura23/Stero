@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 65376423745715398}
   - component: {fileID: 54508086831853566}
   - component: {fileID: 114632734227224174}
+  - component: {fileID: 114256804841735908}
   m_Layer: 11
   m_Name: Enemy_Shoot
   m_TagString: ElemDash
@@ -1567,6 +1568,26 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114256804841735908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106814425402638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 10
+  onObjForward: 20
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!114 &114632734227224174
 MonoBehaviour:
   m_ObjectHideFlags: 1

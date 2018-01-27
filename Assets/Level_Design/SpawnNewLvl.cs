@@ -68,8 +68,6 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Debug.Log ( ToDest [ a ].name );
-
 				Destroy ( ToDest [ a ], 1 );
 			}
 

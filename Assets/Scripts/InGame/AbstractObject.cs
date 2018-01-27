@@ -72,7 +72,8 @@ public class AbstractObject : MonoBehaviour
 		if ( mainCorps == null )
 		{
 			Debug.LogWarning ( "There no rigidBody" );
-			Destroy ( GetComponent<AbstractObject> ( ) );
+			Destroy ( gameObject );
+			return;
 		}
 
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
@@ -87,6 +88,11 @@ public class AbstractObject : MonoBehaviour
 	protected virtual void OnEnable ( )
 	{
 		checkDead = false;
+		if ( gameObject.GetComponent <Collider> ( ) == null )
+		{
+			Destroy ( gameObject );
+			return;
+		}
 		gameObject.GetComponent <Collider> ( ).enabled = true;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
