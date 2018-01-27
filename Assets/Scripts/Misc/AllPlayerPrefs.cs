@@ -52,7 +52,6 @@ public static class AllPlayerPrefs
 
     public static void SendAnalytics()
     {
-        Debug.Log("entrer");
         if (canSendAnalytics)
         {
             Dictionary<string, object> gameoverAttribut = new Dictionary<string, object>();

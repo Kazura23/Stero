@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 65971436603505994}
   - component: {fileID: 54284276649079614}
   - component: {fileID: 114009472937261392}
+  - component: {fileID: 114966928257878590}
   m_Layer: 11
   m_Name: Enemy_Shoot
   m_TagString: ElemDash
@@ -1576,6 +1577,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GetAbs: {fileID: 114009472937261392}
+--- !u!114 &114966928257878590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1379156540791322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afba2880fdf4454aa92a99ec9537bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  delayDead: 2
+  VelRestant: 10
+  onObjForward: 20
+  FreezeAxe: {x: 0, y: 0, z: 0}
+  FreezeRot: {x: 0, y: 0, z: 0}
+  point: 100
+  BonusMultTimer: 1
+  useGravity: 1
 --- !u!136 &136204437626396116
 CapsuleCollider:
   m_ObjectHideFlags: 1

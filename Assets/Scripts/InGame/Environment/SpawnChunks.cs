@@ -153,7 +153,7 @@ public class SpawnChunks : MonoBehaviour
 		spawnAfterThis ( sourceSpawn );
 
 		// Desactivation de chunk
-		if ( getSpc.Count > 3 )
+		if ( getSpc.Count > 5 )
 		{
 			if ( getSpc [ 0 ].ThisChunk != null )
 			{
@@ -457,7 +457,13 @@ public class SpawnChunks : MonoBehaviour
 					}
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
-					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+					try{
+						currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+
+					}
+					catch{
+						currSL.OnLine = 0;
+					}
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
@@ -501,6 +507,7 @@ public class SpawnChunks : MonoBehaviour
 					allNewChunk.Add ( new ToDestChunk ( ) );
 					allNewChunk [ allNewChunk.Count - 1 ].ThisSL = currSL;
 					allNewChunk [ allNewChunk.Count - 1 ].ThisObj = thisSpawn;
+					allNewChunk [ allNewChunk.Count - 1 ].DestThis = !isChunkScene;
 
 					currSL.OnScene = isChunkScene;
 
@@ -530,7 +537,14 @@ public class SpawnChunks : MonoBehaviour
 				{
 					if ( a != b )
 					{
-						allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+						if ( allNewChunk [ a ].DestThis )
+						{
+							allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+						}
+						else
+						{
+							allNewChunk [ a ].ThisSL.ToDisable.Add ( allNewChunk [ b ].ThisObj );
+						}
 					}
 				}
 			}
@@ -640,7 +654,7 @@ public class SpawnChunks : MonoBehaviour
 					if ( b == 0 )
 					{
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.x + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
-						while ( diffLine < 0 )
+						while ( diffLine < 0 && sourceSpawn.calWall )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							//getCunk.GarbageSpawn.Add ( thisObj );
@@ -655,7 +669,7 @@ public class SpawnChunks : MonoBehaviour
 						diffLine = ( int ) ( getCurrNew [ b ].NbrLaneDebut.y + Mathf.Abs ( getCurrNew [ b ].CurrLane ) - sourceSpawn.ThoseExit [ a ].OtherNbrFin.x );
 						diffLine = -diffLine;
 
-						while ( diffLine > 0 )
+						while ( diffLine > 0 && sourceSpawn.calWall )
 						{
 							thisSpawn = ( GameObject ) Instantiate ( currWall, getCurrNew [ b ].ThisObj.transform );
 							thisSpawn.transform.localPosition = new Vector3 ( Constants.LineDist * ( diffLine + getCurrNew [ b ].NbrLaneDebut.y ) + getChunk.SizeWall.x, 0, getChunk.SizeWall.y );
@@ -874,6 +888,7 @@ public class ToDestChunk
 {
 	public GameObject ThisObj;
 	public SpawnNewLvl ThisSL;
+	public bool DestThis;
 }
 
 public class CheckOnScene 
