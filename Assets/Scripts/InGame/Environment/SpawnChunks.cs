@@ -466,7 +466,7 @@ public class SpawnChunks : MonoBehaviour
 						{
 							getTrans = transform.parent;
 						}
-
+						Debug.Log ( getTrans.name );
 						currSL = getTrans.GetComponentInChildren<SpawnNewLvl> ( true );
 					}
 

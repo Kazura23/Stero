@@ -73,8 +73,6 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Debug.Log ( ToDest [ a ].name );
-
 				ToDest [ a ].SetActive ( false );
 			}
 		}

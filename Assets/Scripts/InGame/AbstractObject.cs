@@ -100,7 +100,12 @@ public class AbstractObject : MonoBehaviour
 			Destroy ( gameObject );
 			return;
 		}
-
+		/*string getName = gameObject.name;
+		foreach (Transform getTran in getTrans.GetComponentsInChildren<Transform>())
+		{
+			getTran.name = "non";
+		}
+		gameObject.name = getName;*/
 		StartCoroutine ( waitCol ( ) );
 		gameObject.GetComponent <Collider> ( ).enabled = false;
 		playerTrans = GlobalManager.GameCont.Player.transform;
@@ -280,18 +285,15 @@ public class AbstractObject : MonoBehaviour
 
 	void onEnemyDead ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true )
 	{
-		Debug.Log ( gameObject.name );
-		if ( checkDead && !getTrans.GetComponentInParent<AbstractObject> ( ))
+		if ( checkDead )
 		{
 			return;
 		}
 
 		checkDead = true;
-
+		Debug.Log ( gameObject.name );
 		if ( playerCont != null )
 		{
-			Debug.Log ( gameObject.name );
-			gameObject.name = "non";
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
@@ -349,13 +351,14 @@ public class AbstractObject : MonoBehaviour
         }
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
-		string getObsT = Constants._ObjDeadTag;
+
+		/*string getObsT = Constants._ObjDeadTag;
 
 		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
 		{
 			thisRig.tag = getObsT;
 		}
-		meshRigid.tag = getObsT;
+		meshRigid.tag = getObsT;*/
 
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );
