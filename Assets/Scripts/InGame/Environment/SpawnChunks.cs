@@ -456,14 +456,27 @@ public class SpawnChunks : MonoBehaviour
 						thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 					}
 
-					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
-					try{
-						currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( true );
 
+					if ( currSL == null )
+					{
+						Transform getTrans = thisSpawn.transform;
+						int count = 0;
+						while ( count < 50 || getTrans.parent.name != "Chunks" )
+						{
+							getTrans = transform.parent;
+						}
+
+						currSL = getTrans.GetComponentInChildren<SpawnNewLvl> ( true );
 					}
-					catch{
-						currSL.OnLine = 0;
+
+					if ( !currSL.gameObject.activeSelf )
+					{
+						currSL.gameObject.SetActive ( true );
 					}
+
+					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
