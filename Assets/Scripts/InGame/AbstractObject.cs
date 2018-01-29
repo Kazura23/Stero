@@ -292,7 +292,7 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		checkDead = true;
-		Debug.Log ( gameObject.name );
+
 		if ( playerCont != null )
 		{
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );

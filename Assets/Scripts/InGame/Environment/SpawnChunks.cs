@@ -539,6 +539,7 @@ public class SpawnChunks : MonoBehaviour
 						getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = isChunkScene;
 						getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = currSL.GarbChunk;
 					}
+					currSL.gameObject.SetActive ( true );
 				}
 			}
 
@@ -749,6 +750,8 @@ public class SpawnChunks : MonoBehaviour
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 				}
 
+				thisSpawn.SetActive ( true );
+
 				getChunkT = thisSpawn.transform;
 				getChunkT.rotation = Quaternion.identity;
 				getChunkT.position = DefaultPos;
@@ -840,6 +843,8 @@ public class SpawnChunks : MonoBehaviour
 
 			if ( getChunk [ getChunk.Count - 1 ].OnScene )
 			{
+				Debug.Log ( getChunk [ getChunk.Count - 1 ].ThisChunk.name);
+
 				getChunk [ getChunk.Count - 1 ].ThisChunk.SetActive ( false );
 				getGarb = getChunk [ getChunk.Count - 1 ].GarbChunk;
 
