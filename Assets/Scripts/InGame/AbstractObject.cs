@@ -93,6 +93,7 @@ public class AbstractObject : MonoBehaviour
 		gameObject.GetComponent <Collider> ( ).enabled = true;
 
 	}
+
 	protected virtual void OnEnable ( )
 	{
 		if ( gameObject.GetComponent <Collider> ( ) == null )
@@ -140,11 +141,12 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-	public void EventEnable (  )
+	public void EventEnable ( Vector3 setPosition )
 	{
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 			gameObject.SetActive ( true );
+			getTrans.position = setPosition;
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
@@ -152,11 +154,6 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
-		if ( playerCont != null )
-		{
-			playerCont.MadnessMana(p_technic);
-		}
-
 		if ( !isDead )
 		{
 			projection = p_damage;
@@ -188,7 +185,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( !isDead )
 		{
-			Dead ( true, DeathType.Punch );
+			Dead ( true, DeathType.Enemy );
 		}
 		else
 		{
@@ -209,21 +206,22 @@ public class AbstractObject : MonoBehaviour
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
-		if ( playerCont != null && playerCont.playerDead )
+		if ( playerCont != null && playerCont.playerDead || gameObject.tag == Constants._ObjDeadTag )
 		{
 			return;
 		}
 
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._EnnemisTag || ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe ) || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
+		if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag && checkDead )
 		{
+			//Debug.Log ( gameObject.name ); 
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
-			if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
+			/*if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
 			{
 				//Debug.Log ( "ennemis touche" );
-			}
+			}*/
 
 			CollDetect ( );
 		}
@@ -291,17 +289,18 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		checkDead = true;
-		Debug.Log ( gameObject.name );
+
 		if ( playerCont != null )
 		{
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
+		//Debug.Log ( gameObject.name + " / " + thisDeath );
 		if ( thisObj == null )
 		{
-			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
 			thisObj.SetActive ( false );
-			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
 			thisObj.transform.localPosition = startPos;
 		}
 
@@ -352,13 +351,22 @@ public class AbstractObject : MonoBehaviour
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 
-		/*string getObsT = Constants._ObjDeadTag;
+		string getObsT = Constants._ObjDeadTag;
+		gameObject.tag = getObsT;
 
-		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+		foreach (Collider thisRig in gameObject.GetComponentsInChildren<Collider>())
 		{
 			thisRig.tag = getObsT;
+			try
+			{
+				thisRig.GetComponent<Rigidbody>().AddForce(forceProp, ForceMode.VelocityChange );
+			}
+			catch
+			{
+				Debug.Log ( "ForceOnBody failed" );
+			}
 		}
-		meshRigid.tag = getObsT;*/
+		//meshRigid.tag = getObsT;
 
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );
@@ -379,7 +387,11 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		//GetComponent<BoxCollider> ( ).enabled = true;
+		try{
+			GetComponent<BoxCollider> ( ).enabled = true;
+		}
+		catch{
+		}
 	}
 
 	void checkConstAxe ( )

@@ -51,7 +51,12 @@ public class ShieldMan : AbstractObject {
 		base.OnCollisionEnter ( thisColl );
 		if ( isDead )
 		{
-			GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+			GlobalManager.GameCont.FxInstanciate ( new Vector3 ( transform.position.x, transform.position.y + .5f, transform.position.z ), "EnemyNormalDeath", transform.parent );
+		}
+		else if ( thisColl.gameObject.tag == Constants._ObsTag && !shieldActive )
+		{
+			getTrans.DOKill ( );
+			CollDetect ( );
 		}
 	}
     #endregion
@@ -120,13 +125,12 @@ public class ShieldMan : AbstractObject {
         {
             if (shieldActive)
             {
-				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
 				thisObj.SetActive ( false );
-				thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+				thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
 				thisObj.transform.localPosition = startPos;
 
                 shieldActive = false;
-                playerCont.MadnessMana(1);
 
 				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay ); 
 
