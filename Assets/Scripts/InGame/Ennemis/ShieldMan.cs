@@ -120,9 +120,9 @@ public class ShieldMan : AbstractObject {
         {
             if (shieldActive)
             {
-				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
 				thisObj.SetActive ( false );
-				thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+				thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
 				thisObj.transform.localPosition = startPos;
 
                 shieldActive = false;
