@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 114262464656599260}
   - component: {fileID: 135971146009546918}
   - component: {fileID: 135083860956375286}
+  - component: {fileID: 65454814375354934}
   m_Layer: 11
   m_Name: Hit Punch
   m_TagString: Punch
@@ -2196,7 +2197,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -2375,6 +2376,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 122
   m_CollisionDetection: 2
+--- !u!65 &65454814375354934
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1119021483193416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.25, z: 5.5}
+  m_Center: {x: 0, y: 0, z: 3}
 --- !u!65 &65513883504248794
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2409,8 +2422,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.25, z: 3.7}
-  m_Center: {x: 0, y: 0, z: 2}
+  m_Size: {x: 1, y: 1.25, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 2.5}
 --- !u!81 &81165457489559682
 AudioListener:
   m_ObjectHideFlags: 1
@@ -2656,6 +2669,7 @@ MonoBehaviour:
   BonusGrav: 400
   delayChocWave: 5
   DelayDeadBall: 15
+  DelaySlowMot: 10
   DistDBTake: 50
   DeadBallPref: {fileID: 1378874648793982, guid: 7dc0cdb3c96af354aabcc1ab0eb05533,
     type: 2}
@@ -2665,7 +2679,7 @@ MonoBehaviour:
   DelayTimerOnMadness: 2
   TimerRecover: 25
   TimerLastRecover: 40
-  TimerSecureRecover: 30
+  TimerSecureRecover: 22
   TimerRecoverOnMadness: 3
   DistIncMaxSpeed: 100
   SpeedIncrease: 1
@@ -2676,6 +2690,7 @@ MonoBehaviour:
   AcceleraCLInc: 5
   DashTime: 1
   DashSpeed: 2
+  MadnessSpeed: 1.5
   TimeInvincible: 0.5
   SlowMotion: 2
   SpeedSlowMot: 3
@@ -2695,10 +2710,6 @@ MonoBehaviour:
   TimePropulseDoublePunch: 0
   SpeedPunchRun: 1
   SpeedDoublePunchRun: 1
-  RatioMaxMadness: 4
-  DelayDownBar: 3
-  SmoothSpeed: 2
-  ratioDownInMadness: 8
   Radius: 15
   SoftNess: 15
   BarMadness: {fileID: 0}
@@ -2713,6 +2724,8 @@ MonoBehaviour:
   Life: 1
   StopPlayer: 0
   totalDis: 0
+  punchBoxSimple: {fileID: 65999109438009934}
+  punchBoxDouble: {fileID: 65454814375354934}
   leftHand: {fileID: 1061951662454474}
   rightHand: {fileID: 1376256238269084}
   currLine: 0
@@ -2845,8 +2858,8 @@ MonoBehaviour:
   volumeLayer:
     serializedVersion: 2
     m_Bits: 8192
-  stopNaNPropagation: 1
-  antialiasingMode: 1
+  stopNaNPropagation: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25

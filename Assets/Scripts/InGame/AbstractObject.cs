@@ -93,6 +93,7 @@ public class AbstractObject : MonoBehaviour
 		gameObject.GetComponent <Collider> ( ).enabled = true;
 
 	}
+
 	protected virtual void OnEnable ( )
 	{
 		if ( gameObject.GetComponent <Collider> ( ) == null )
