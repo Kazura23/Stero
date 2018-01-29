@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 	bool canSpe = true;
     [HideInInspector]
     public bool playerDead = false;
-	bool dpunch = false;
+	bool dpunch = true;
 	bool chargeDp = false;
 	bool canUseDash = true;
     bool onAnimeAir = false;
@@ -457,36 +457,36 @@ public class PlayerController : MonoBehaviour
         return InMadness;
     }
 
-    public void GetPunchIntro()
+	public void GetPunchIntro(  )
     {
-		if (StopPlayer && /*Input.GetAxis("CoupSimple") != 0 && */canPunch /* && resetAxeS*/)
-        {
-            resetAxeS = false;
-            canPunch = false;
-            timeToDP = TimeToDoublePunch;
-            if (Time.timeScale < 1)
-                Time.timeScale = 1;
+		if ( StopPlayer && /*Input.GetAxis("CoupSimple") != 0 && */canPunch /* && resetAxeS*/ )
+		{
+			resetAxeS = false;
+			canPunch = false;
+			timeToDP = TimeToDoublePunch;
+			if ( Time.timeScale < 1 )
+				Time.timeScale = 1;
 
-            ScreenShake.Singleton.ShakeIntro();
+			ScreenShake.Singleton.ShakeIntro ( );
             
-			GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.Other, "PunchSuccess", false );
 
-            if (punchRight)
-            {
-                punch.RightPunch = true;
+			if ( punchRight )
+			{
+				punch.RightPunch = true;
 
-                playAnimator.SetTrigger("Right");
-            }
-            else
-            {
-                punch.RightPunch = false;
+				playAnimator.SetTrigger ( "Right" );
+			}
+			else
+			{
+				punch.RightPunch = false;
 
-                playAnimator.SetTrigger("Left");
-            }
-            punchRight = !punchRight;
+				playAnimator.SetTrigger ( "Left" );
+			}
+			punchRight = !punchRight;
 			punchBoxSimple.enabled = true;
 			startPunch ( 0 );
-        }
+		}
     }
 
 	void startPunch ( int tech )
@@ -683,7 +683,7 @@ public class PlayerController : MonoBehaviour
 			resetAxeS = true;
 		}
 
-		if ( inputPlayer.GetAxis ( "CoupDouble" ) == 0 )
+		/*if ( inputPlayer.GetAxis ( "CoupDouble" ) == 0 )
 		{
 			resetAxeD = true;
 			getFOVDP = FOVIncrease;
@@ -703,7 +703,7 @@ public class PlayerController : MonoBehaviour
 
 				timeToDP = TimeToDoublePunch;
 			}
-		}
+		}*/
 
 		if ( !waitRotate )
 		{
@@ -1460,7 +1460,7 @@ public class PlayerController : MonoBehaviour
 
 	void playerFight ( float getDelta )
 	{
-		if ( inputPlayer.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
+		/*if ( inputPlayer.GetAxis ( "CoupDouble" ) != 0 && resetAxeD )
 		{
 			Dash = false;
 			float calcRatio = ( FOVIncrease / TimeToDoublePunch ) * getDelta;
@@ -1508,7 +1508,7 @@ public class PlayerController : MonoBehaviour
 					thisCam.fieldOfView = Constants.DefFov;
 				}
 			}
-		}
+		}*/
 
 		if(inputPlayer.GetAxis("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished )
         {
@@ -1548,29 +1548,33 @@ public class PlayerController : MonoBehaviour
 			punchBoxSimple.enabled = true;
 			startPunch ( 0 );
 		}
-		else if( dpunch && canPunch )
+		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
         {
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
-            playAnimator.SetBool("ChargingPunch", false);
+			playAnimator.SetBool("ChargingPunch_verif", true);
+			playAnimator.SetBool("ChargingPunch", true);
+			playAnimator.SetTrigger("Double");
+			dpunch = false;
 
-            dpunch = false;
+			DOVirtual.DelayedCall ( 0.25f, ( ) =>
+			{
+				ScreenShake.Singleton.ShakeHitDouble();
+				punchBoxSimple.enabled = true;
+				startPunch ( 1 );
+				GlobalManager.Ui.DoubleCoup();
+				playAnimator.SetBool("ChargingPunch", false);
+				dpunch = true;
+			} );
+
 			canPunch = false;
 
-            ScreenShake.Singleton.ShakeHitDouble();
-
-            GlobalManager.Ui.DoubleCoup();
-
-			if (getDelta < 1)
+			/*if (getDelta < 1)
                 Time.timeScale = 1;
 			
-			punchBoxSimple.enabled = true;
-
-			startPunch ( 1 );
-
-			timeToDP = TimeToDoublePunch;
+			timeToDP = TimeToDoublePunch;*/
         }
 	}
 

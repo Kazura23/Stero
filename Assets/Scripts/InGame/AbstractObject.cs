@@ -357,6 +357,14 @@ public class AbstractObject : MonoBehaviour
 		foreach (Collider thisRig in gameObject.GetComponentsInChildren<Collider>())
 		{
 			thisRig.tag = getObsT;
+			try
+			{
+				thisRig.GetComponent<Rigidbody>().AddForce(forceProp, ForceMode.VelocityChange );
+			}
+			catch
+			{
+				Debug.Log ( "ForceOnBody failed" );
+			}
 		}
 		//meshRigid.tag = getObsT;
 

@@ -218,6 +218,14 @@ public class GameController : ManagerParent
 							DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
 						});
 
+						foreach ( Collider thisColl in lastWall.GetComponentsInChildren<Collider>() )
+						{
+							thisColl.enabled = false;
+						}
+
+						lastWall.GetComponent<CapsuleCollider> ( ).enabled = false;
+						lastWall.transform.Find ( "Porte" ).DOLocalRotate ( new Vector3 ( 0, -90, 0 ), 1 );
+
 						Player.transform.DOLocalMoveX ( 0, 0.7f );
 
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
@@ -227,6 +235,7 @@ public class GameController : ManagerParent
 							{
 								isReady = true;
 								isStay = true;
+								ActiveGame ( );
 								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
