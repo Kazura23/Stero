@@ -141,11 +141,12 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-	public void EventEnable (  )
+	public void EventEnable ( Vector3 setPosition )
 	{
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 			gameObject.SetActive ( true );
+			getTrans.position = setPosition;
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
@@ -199,6 +200,7 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
+		Debug.Log ( "FORCEPROP + " + gameObject.name ); 
 		onEnemyDead ( forceProp, thisDeath, checkConst );
 		if ( gameObject.activeSelf )
 		{
@@ -210,7 +212,7 @@ public class AbstractObject : MonoBehaviour
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
-		if ( playerCont != null && playerCont.playerDead )
+		if ( playerCont != null && playerCont.playerDead || !checkDead )
 		{
 			return;
 		}
@@ -221,10 +223,10 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
-			if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
+			/*if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
 			{
 				//Debug.Log ( "ennemis touche" );
-			}
+			}*/
 
 			CollDetect ( );
 		}
@@ -298,11 +300,12 @@ public class AbstractObject : MonoBehaviour
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
+		//Debug.Log ( gameObject.name + " / " + thisDeath );
 		if ( thisObj == null )
 		{
-			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
+			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
 			thisObj.SetActive ( false );
-			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
 			thisObj.transform.localPosition = startPos;
 		}
 
@@ -353,13 +356,13 @@ public class AbstractObject : MonoBehaviour
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 
-		/*string getObsT = Constants._ObjDeadTag;
+		string getObsT = Constants._ObjDeadTag;
 
-		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+		foreach (Collider thisRig in gameObject.GetComponentsInChildren<Collider>())
 		{
 			thisRig.tag = getObsT;
 		}
-		meshRigid.tag = getObsT;*/
+		//meshRigid.tag = getObsT;
 
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );
@@ -380,7 +383,7 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		//GetComponent<BoxCollider> ( ).enabled = true;
+		GetComponent<BoxCollider> ( ).enabled = true;
 	}
 
 	void checkConstAxe ( )

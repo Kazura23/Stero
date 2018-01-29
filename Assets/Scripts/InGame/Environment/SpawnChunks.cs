@@ -843,8 +843,6 @@ public class SpawnChunks : MonoBehaviour
 
 			if ( getChunk [ getChunk.Count - 1 ].OnScene )
 			{
-				Debug.Log ( getChunk [ getChunk.Count - 1 ].ThisChunk.name);
-
 				getChunk [ getChunk.Count - 1 ].ThisChunk.SetActive ( false );
 				getGarb = getChunk [ getChunk.Count - 1 ].GarbChunk;
 

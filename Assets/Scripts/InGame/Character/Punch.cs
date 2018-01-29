@@ -29,18 +29,19 @@ public class Punch : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
 		//Debug.Log ( other.gameObject.name );
+		Rigidbody getRid = other.GetComponentInChildren<Rigidbody> ( );
+		AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
         if(numTechnic == (int)Technic.onde_choc)
         {
             switch (other.tag)
             {
 				case Constants._EnnemisTag : case Constants._ElemDash :
                     Vector3 dir = Vector3.Normalize(other.transform.position - transform.position);
-                    AbstractObject enn = other.GetComponentInChildren<AbstractObject>();
-                    if (!enn)
+					if (!tryGet)
                     {
                         return;
                     }
-                    enn.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
+					tryGet.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
                     break;
                 case Constants._ObsPropSafe:
 				GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3 );
@@ -50,11 +51,13 @@ public class Punch : MonoBehaviour {
         }
 		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
         {
-			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
 			{
 				other.gameObject.tag = Constants._UnTagg;
-				other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+				if ( getRid != null )
+				{
+					getRid.AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+				}
 			}
 
             if(other.gameObject.tag == Constants._EnnemisTag)
@@ -86,7 +89,10 @@ public class Punch : MonoBehaviour {
 				}
 				else
 				{
-					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
+					if ( getRid != null )
+					{
+						getRid.AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
+					}
 				}
 
                 break;
@@ -101,7 +107,10 @@ public class Punch : MonoBehaviour {
 				}
 				else
 				{
-					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+					if ( getRid != null )
+					{
+						getRid.AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+					}
 				}
 
            	 	break;
