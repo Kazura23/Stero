@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Generic_Colors
   m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
-  m_ShaderKeywords: _BC_SLIDER_ON
+  m_ShaderKeywords: _EMISSIVE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -76,10 +76,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _bc: 0
-    - _bc_slider: 1
+    - _bc_slider: 0
     - _distanceratio: 0.1
-    - _emisive_force: 0
-    - _emissive: 0
+    - _emisive_force: 0.043
+    - _emissive: 1
     - _highlight: 0
     - _highlight__force: 2
     - _highlight_amount: 2
@@ -88,7 +88,7 @@ Material:
     - _met_slider: 0
     - _node_1820: 0
     - _outline_basevalue: 0.1
-    - _rg: 0
+    - _rg: 1
     - _rg_slider: 0
     - _roughForce: 1
     m_Colors:
