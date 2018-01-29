@@ -132,7 +132,8 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public float totalDis = 0;
 
-	private BoxCollider punchBox;
+	public BoxCollider punchBoxSimple;
+	public BoxCollider punchBoxDouble;
     private SphereCollider sphereChocWave;
 	private Punch punch;
     private bool canPunch, punchRight;//, punchLeft, preparRight, preparLeft, defense;
@@ -307,7 +308,6 @@ public class PlayerController : MonoBehaviour
         handleTF = timerFight.transform.GetChild(2).transform.GetChild(0).GetComponent<Image> ( );
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
-		punchBox = pTrans.GetChild(0).GetComponent<BoxCollider>();
 		sphereChocWave = pTrans.Find("ChocWave").GetComponent<SphereCollider>();
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
@@ -1202,13 +1202,13 @@ public class PlayerController : MonoBehaviour
 					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 (  getThis.rotation.x, 0, 0 ) ) );
 				}
 
-				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
+				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.6f, pTrans.localPosition.z );
 				break;
 			}
 			else if (  thisRay.collider.tag == Constants._UnTagg && thisRay.collider.gameObject.layer == 0 )
 			{
 				checkAir = false;
-				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.5f, pTrans.localPosition.z );
+				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.6f, pTrans.localPosition.z );
 				if ( !waitRotate )
 				{
 					pTrans.DOLocalRotate ( new Vector3 ( 0, pTrans.localRotation.eulerAngles.y, pTrans.localRotation.eulerAngles.z ), 0 );
@@ -1411,7 +1411,7 @@ public class PlayerController : MonoBehaviour
 		Transform transPlayer = pTrans;
 		Vector3 currVect;
 		float calcTime = RotationSpeed * delTime;
-
+		StopPlayer = true;
 		if ( InMadness || Dash )
 		{
 			calcTime *= 0.5f;
@@ -1438,6 +1438,7 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForEndOfFrame ( );
 		waitRotate = false;
 		useFord = true;
+		StopPlayer = false;
 
 		yield return new WaitForSeconds ( 0.25f );
 		checkRot = false;
@@ -1671,14 +1672,15 @@ public class PlayerController : MonoBehaviour
 		 
 		if ( type_technic == 1 )
 		{
+			punchBoxDouble.enabled = true;
 			punch.setTechnic ( type_technic );
 		}
 		else
 		{
+			punchBoxSimple.enabled = true;
 			punch.setTechnic ( type_technic );
 		}
 
-        punchBox.enabled = true;
         StartCoroutine("TimerHitbox");
 
         Shader.SetGlobalFloat("_Saturation", 5);
@@ -1703,7 +1705,8 @@ public class PlayerController : MonoBehaviour
 	private IEnumerator TimerHitbox()
 	{
 		yield return new WaitForSeconds(DelayHitbox);
-		punchBox.enabled = false;
+		punchBoxSimple.enabled = false;
+		punchBoxDouble.enabled = false;
         sphereChocWave.enabled = false;
 	}
 

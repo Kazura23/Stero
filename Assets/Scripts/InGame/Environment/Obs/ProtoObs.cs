@@ -13,6 +13,12 @@ public class ProtoObs : AbstractObject
 		base.Awake ( );
 		isObject = true;
 	}
+
+	protected override void OnEnable ( )
+	{
+		GetComponentInChildren<MeshRenderer>().enabled = true;
+		base.OnEnable ( );
+	}
 	#endregion
 
 	#region Public Methods
