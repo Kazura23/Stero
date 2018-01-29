@@ -68,14 +68,30 @@ public class ProtoObs : AbstractObject
 	#region Private Methods
 	protected override void OnCollisionEnter ( Collision thisColl )
 	{
-		base.OnCollisionEnter ( thisColl );
+		GameObject getThis = thisColl.gameObject;
 
-		if ( isDead )
+		if ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe )
 		{
-			
+			return;
+		}
+		else if ( gameObject.tag == Constants._ObjDeadTag && getThis.tag != Constants._UnTagg && getThis.tag != Constants._ObsTag && getThis.tag != Constants._ObjDeadTag )
+		{
+			StartCoroutine ( waitDest ( ) );
+		}
+		else
+		{
+			base.OnCollisionEnter ( thisColl );
 		}
 	}
 
+	IEnumerator waitDest ( )
+	{
+		yield return new WaitForEndOfFrame ( );
+
+		StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+		int randomSong = UnityEngine.Random.Range ( 0, 5 );
+		GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
+	}
 	/*protected override void OnTriggerEnter ( Collider thisColl )
 	{
 		if ( thisColl.tag == Constants._PunchTag )

@@ -126,7 +126,6 @@ public class ShieldMan : AbstractObject {
 				thisObj.transform.localPosition = startPos;
 
                 shieldActive = false;
-                playerCont.MadnessMana(1);
 
 				getTrans.DOLocalMove ( getTrans.localPosition + getTrans.forward * distance, delay ); 
 
