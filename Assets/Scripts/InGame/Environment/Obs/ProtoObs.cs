@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProtoObs : AbstractObject 
 {
 	#region Variables
+	bool checkThis = false;
 	#endregion
 
 	#region Mono
@@ -12,6 +13,12 @@ public class ProtoObs : AbstractObject
 	{
 		base.Awake ( );
 		isObject = true;
+	}
+
+	protected override void OnEnable ( )
+	{
+		GetComponentInChildren<MeshRenderer>().enabled = true;
+		base.OnEnable ( );
 	}
 	#endregion
 
@@ -21,22 +28,34 @@ public class ProtoObs : AbstractObject
 		base.Dead ( enemy, thisDeath );
 	}
 
+	public override void ForceProp( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
+	{
+		if ( !checkThis )
+		{
+			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+			int randomSong = UnityEngine.Random.Range ( 0, 5 );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
+
+			base.ForceProp ( forceProp, thisDeath, checkConst, forceDead );
+			checkThis = true;
+		}
+	}
 	public override void Degat(Vector3 p_damage, int p_technic)
 	{
-		if ( p_technic == 0 )
+		if ( !checkThis )
 		{
-			if ( gameObject.activeSelf )
+			if ( p_technic == 0 )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 75, 3 ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
 				int randomSong = UnityEngine.Random.Range ( 0, 5 );
 				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 				base.Degat ( p_damage, p_technic );
 			}
-		}
-		else if ( p_technic == 1 ) 
-		{
-			ForceProp( p_damage, DeathType.Punch, true, true );
-			base.Degat ( p_damage, p_technic );
+			else if ( p_technic == 1 ) 
+			{
+				base.ForceProp( p_damage, DeathType.Punch, true, true );
+			}
+			checkThis = true;
 		}
 	}
 
