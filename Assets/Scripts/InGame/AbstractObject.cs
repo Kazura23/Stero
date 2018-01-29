@@ -72,9 +72,10 @@ public class AbstractObject : MonoBehaviour
 		if ( mainCorps == null )
 		{
 			Debug.LogWarning ( "There no rigidBody" );
-			Destroy ( GetComponent<AbstractObject> ( ) );
+			Destroy ( gameObject );
+			return;
 		}
-
+			
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
@@ -84,10 +85,29 @@ public class AbstractObject : MonoBehaviour
             PlayerDetected(playerTrans.gameObject, false);
     }*/
 
-	protected virtual void OnEnable ( )
+	IEnumerator waitCol ( )
 	{
+		yield return new WaitForSeconds ( 1 );
+
 		checkDead = false;
 		gameObject.GetComponent <Collider> ( ).enabled = true;
+
+	}
+	protected virtual void OnEnable ( )
+	{
+		if ( gameObject.GetComponent <Collider> ( ) == null )
+		{
+			Destroy ( gameObject );
+			return;
+		}
+		/*string getName = gameObject.name;
+		foreach (Transform getTran in getTrans.GetComponentsInChildren<Transform>())
+		{
+			getTran.name = "non";
+		}
+		gameObject.name = getName;*/
+		StartCoroutine ( waitCol ( ) );
+		gameObject.GetComponent <Collider> ( ).enabled = false;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
 
@@ -271,7 +291,7 @@ public class AbstractObject : MonoBehaviour
 		}
 
 		checkDead = true;
-
+		Debug.Log ( gameObject.name );
 		if ( playerCont != null )
 		{
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
@@ -331,13 +351,14 @@ public class AbstractObject : MonoBehaviour
         }
 
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
-		string getObsT = Constants._ObjDeadTag;
+
+		/*string getObsT = Constants._ObjDeadTag;
 
 		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
 		{
 			thisRig.tag = getObsT;
 		}
-		meshRigid.tag = getObsT;
+		meshRigid.tag = getObsT;*/
 
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );

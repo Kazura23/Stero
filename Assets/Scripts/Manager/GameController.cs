@@ -190,7 +190,7 @@ public class GameController : ManagerParent
 								{
 									isReady = true;
 									isStay = true;
-									getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+									//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 									//Player.GetComponent<PlayerController>().StopPlayer = false;
 									//Debug.Log("anime fonctionnelle");
 								});
@@ -227,7 +227,7 @@ public class GameController : ManagerParent
 							{
 								isReady = true;
 								isStay = true;
-								getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
 								//Debug.Log("anime fonctionnelle");
@@ -408,6 +408,7 @@ public class GameController : ManagerParent
 
 		if ( restartGame )
         {
+			onHub = false;
 			isStay = false;
 			Intro = false;
 
@@ -423,6 +424,7 @@ public class GameController : ManagerParent
 		{
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
@@ -721,6 +723,8 @@ public class GameController : ManagerParent
 
 	void setMusic () 
 	{ 
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
 		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
 
@@ -848,6 +852,9 @@ public class GameController : ManagerParent
 		{
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicTrash );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
 			thisAud.volume *= 1.25f;
 
@@ -869,7 +876,7 @@ public class GameController : ManagerParent
             checkStart = true;
             //Debug.Log("player = " + Player);
             Player.GetComponent<PlayerController>().StopPlayer = false;
-			Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
+			//Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
 
 			//thisCam.GetComponent<RainbowRotate>().time = .4f;
 			//thisCam.GetComponent<RainbowMove>().time = .2f;

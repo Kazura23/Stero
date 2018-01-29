@@ -53,7 +53,8 @@ public class Punch : MonoBehaviour {
 			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
 			{
-				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
+				other.gameObject.tag = Constants._UnTagg;
+				other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
 			}
 
             if(other.gameObject.tag == Constants._EnnemisTag)
@@ -79,7 +80,7 @@ public class Punch : MonoBehaviour {
 					getProj += getPlayer.right;
 				}
 
-				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
 					tryGet.Degat ( getProj * projection_basic, numTechnic );
 				}
@@ -94,7 +95,7 @@ public class Punch : MonoBehaviour {
                 getProj = getPlayer.forward;
 
 				//Debug.Log ( pourcPunch );
-                if ( other.gameObject.tag != Constants._ObjDeadTag )
+				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
