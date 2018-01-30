@@ -1557,7 +1557,7 @@ public class PlayerController : MonoBehaviour
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
-			playAnimator.SetBool("ChargingPunch_verif", true);
+			playAnimator.SetBool("ChargingPunch_verif", false);
 			playAnimator.SetBool("ChargingPunch", true);
 			playAnimator.SetTrigger("Double");
 			dpunch = false;
@@ -1567,13 +1567,16 @@ public class PlayerController : MonoBehaviour
 				ScreenShake.Singleton.ShakeHitDouble();
 				punchBoxSimple.enabled = true;
 				GlobalManager.Ui.DoubleCoup();
+				playAnimator.SetBool("ChargingPunch_verif", true);
 				playAnimator.SetBool("ChargingPunch", false);
 
 				dpunch = true;
 				startPunch ( 1 );
-				playAnimator.SetBool("ChargingPunch_verif", false);
+
 				DOVirtual.DelayedCall(0.25f, ()  =>
 				{
+					playAnimator.SetBool("ChargingPunch_verif", false);
+					playAnimator.SetBool("ChargingPunch", false);
 					/*dpunch = true;
 					startPunch ( 1 );
 					playAnimator.SetBool("ChargingPunch_verif", false);*/

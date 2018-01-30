@@ -117,7 +117,7 @@ public class GameController : ManagerParent
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
         posInitPlayer = Player.transform.position;
-        succes[0].Load();
+//        succes[0].Load();
         AllPlayerPrefs.ANbRun = 0;
 		getRank.fillAmount = rankValue;
 
