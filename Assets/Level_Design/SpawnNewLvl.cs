@@ -31,6 +31,7 @@ public class SpawnNewLvl : MonoBehaviour
 	{
 		detect = false;
 	}
+
 	#endregion
 		
 	#region Public
@@ -46,19 +47,14 @@ public class SpawnNewLvl : MonoBehaviour
 			if (AddToList) 
 			{
 				Transform getParent = transform;
-				while ( getParent.parent != null && getParent.parent.name != "Chuncks" )
+				int count = 0;
+				while ( count < 50 && getParent.parent.tag != Constants._ChunkParent )
 				{
+					count++;
 					getParent = getParent.parent;
 				}
 
-				if ( getParent.parent != null )
-				{
-					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
-				}
-				else
-				{
-					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject, OnScene, GarbChunk );
-				}
+				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
 			}
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
@@ -73,8 +69,6 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Debug.Log ( ToDest [ a ].name );
-
 				ToDest [ a ].SetActive ( false );
 			}
 		}

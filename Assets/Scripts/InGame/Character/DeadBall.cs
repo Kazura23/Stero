@@ -9,7 +9,7 @@ public class DeadBall : MonoBehaviour
 	public float Acceleration = 50;
 
 	Rigidbody getRirig;
-	Transform getTrans;
+	//Transform getTrans;
 	Vector3 getForward;
 	#endregion
 	
@@ -18,7 +18,7 @@ public class DeadBall : MonoBehaviour
 	{
 		getForward = GlobalManager.GameCont.Player.transform.forward;
 		getRirig = GetComponent<Rigidbody> ( );
-		getTrans = transform;
+		//getTrans = transform;
 		getRirig.AddForce ( getForward * Acceleration, ForceMode.VelocityChange );
 		Destroy ( gameObject, 5 );
 	}

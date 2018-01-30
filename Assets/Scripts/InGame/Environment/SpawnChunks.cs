@@ -153,7 +153,7 @@ public class SpawnChunks : MonoBehaviour
 		spawnAfterThis ( sourceSpawn );
 
 		// Desactivation de chunk
-		if ( getSpc.Count > 5 )
+		if ( getSpc.Count > 4 )
 		{
 			if ( getSpc [ 0 ].ThisChunk != null )
 			{
@@ -456,14 +456,26 @@ public class SpawnChunks : MonoBehaviour
 						thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 					}
 
-					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( );
-					try{
-						currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( true );
 
+					Transform getTrans = thisSpawn.transform;
+					int count = 0;
+					while ( count < 50 && getTrans.parent.tag != Constants._ChunkParent )
+					{
+						getTrans = getTrans.parent;
+						count++;
 					}
-					catch{
-						currSL.OnLine = 0;
+
+					if ( currSL == null )
+					{
+						currSL = getTrans.GetComponentInChildren<SpawnNewLvl> ( true );
 					}
+
+					currSL.gameObject.SetActive ( true );
+					getTrans.gameObject.SetActive ( true );
+
+					currSL.OnLine = sourceSpawn.ThoseExit [ a ].LaneParent;
+
 					getChunkT = thisSpawn.transform;
 					getChunkT.rotation = sourceSpawn.ThoseExit [ a ].LevelParent.rotation;
 					getChunkT.position = sourceSpawn.ThoseExit [ a ].LevelParent.position;
@@ -527,6 +539,7 @@ public class SpawnChunks : MonoBehaviour
 						getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = isChunkScene;
 						getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = currSL.GarbChunk;
 					}
+					currSL.gameObject.SetActive ( true );
 				}
 			}
 
@@ -736,6 +749,8 @@ public class SpawnChunks : MonoBehaviour
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 				}
+
+				thisSpawn.SetActive ( true );
 
 				getChunkT = thisSpawn.transform;
 				getChunkT.rotation = Quaternion.identity;

@@ -63,7 +63,7 @@ public class GameController : ManagerParent
 	public List<Text> GetBonusText;
 
 	Player inputPlayer;
-	Text textScore;
+	//Text textScore;
 
 	Image getRank;
 	Image iconeSpe;
@@ -218,6 +218,14 @@ public class GameController : ManagerParent
 							DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
 						});
 
+						foreach ( Collider thisColl in lastWall.GetComponentsInChildren<Collider>() )
+						{
+							thisColl.enabled = false;
+						}
+
+						lastWall.GetComponent<CapsuleCollider> ( ).enabled = false;
+						lastWall.transform.Find ( "Porte" ).DOLocalRotate ( new Vector3 ( 0, -90, 0 ), 1 );
+
 						Player.transform.DOLocalMoveX ( 0, 0.7f );
 
 						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
@@ -227,6 +235,7 @@ public class GameController : ManagerParent
 							{
 								isReady = true;
 								isStay = true;
+								ActiveGame ( );
 								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
@@ -315,7 +324,7 @@ public class GameController : ManagerParent
 	public void IniFromUI ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
-		textScore = GlobalManager.Ui.ScorePoints;
+		//textScore = GlobalManager.Ui.ScorePoints;
 		AllPlayerPrefs.ANbRun = 0;
 		Player.GetComponent<PlayerController> ( ).IniPlayer ( );
 		
@@ -408,6 +417,7 @@ public class GameController : ManagerParent
 
 		if ( restartGame )
         {
+			onHub = false;
 			isStay = false;
 			Intro = false;
 
@@ -423,6 +433,7 @@ public class GameController : ManagerParent
 		{
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
@@ -656,8 +667,6 @@ public class GameController : ManagerParent
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
 
-		Image getRankSlid = getRank;
-
 		int currInd = currIndex;
 
 		for ( a = 0; a < getAllRank.Length; a++ )
@@ -721,6 +730,8 @@ public class GameController : ManagerParent
 
 	void setMusic () 
 	{ 
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
 		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
 
@@ -848,6 +859,9 @@ public class GameController : ManagerParent
 		{
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicTrash );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
 			thisAud.volume *= 1.25f;
 
