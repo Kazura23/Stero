@@ -496,7 +496,7 @@ public class PlayerController : MonoBehaviour
 			StopCoroutine ( geTimerP );
 		}
 
-		geTimerP = TimerHitbox ( );
+		geTimerP = TimerHitbox ( tech );
 
 		StartCoroutine ( geTimerP );
 
@@ -1567,6 +1567,11 @@ public class PlayerController : MonoBehaviour
 				GlobalManager.Ui.DoubleCoup();
 				playAnimator.SetBool("ChargingPunch", false);
 				dpunch = true;
+
+				/*DOVirtual.DelayedCall(0.3f, ()  =>
+				{
+					
+				});*/
 			} );
 
 			canPunch = false;
@@ -1585,9 +1590,16 @@ public class PlayerController : MonoBehaviour
 		canPunch = true;
     }
 
-	private IEnumerator TimerHitbox()
+	private IEnumerator TimerHitbox( int tech )
 	{
-		yield return new WaitForSeconds(0.1f);
+		if ( tech == 0 )
+		{
+			yield return new WaitForSeconds ( 0.1f );
+		}
+		else
+		{
+			yield return new WaitForSeconds ( 0.3f );
+		}
 		punchBoxSimple.enabled = false;
 	}
 
