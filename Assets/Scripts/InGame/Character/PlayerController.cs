@@ -1550,7 +1550,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
         {
-			Debug.Log ( "11111" );
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
@@ -1564,15 +1563,18 @@ public class PlayerController : MonoBehaviour
 			{
 				ScreenShake.Singleton.ShakeHitDouble();
 				punchBoxSimple.enabled = true;
-				startPunch ( 1 );
 				GlobalManager.Ui.DoubleCoup();
 				playAnimator.SetBool("ChargingPunch", false);
-				dpunch = true;
 
-				/*DOVirtual.DelayedCall(0.3f, ()  =>
+				dpunch = true;
+				startPunch ( 1 );
+				playAnimator.SetBool("ChargingPunch_verif", false);
+				DOVirtual.DelayedCall(0.25f, ()  =>
 				{
-					
-				});*/
+					/*dpunch = true;
+					startPunch ( 1 );
+					playAnimator.SetBool("ChargingPunch_verif", false);*/
+				});
 			} );
 
 			canPunch = false;
