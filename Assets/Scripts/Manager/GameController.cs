@@ -119,7 +119,6 @@ public class GameController : ManagerParent
         posInitPlayer = Player.transform.position;
         succes[0].Load();
         AllPlayerPrefs.ANbRun = 0;
-	}
 		getRank.fillAmount = rankValue;
 
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
