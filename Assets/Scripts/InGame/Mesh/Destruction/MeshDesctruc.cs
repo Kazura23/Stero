@@ -171,18 +171,20 @@ public class MeshDesctruc : MonoBehaviour
 				}*/
 				GO = ( GameObject ) Instantiate ( getTri );
 				GO.transform.SetParent ( garbage );
-			
+
+				GO.GetComponent<MeshFilter> ( ).mesh = mesh;
+				GO.layer = LayerMask.NameToLayer ( "Particle" );
+
 				if ( UseMatDeb )
 				{
 					GO.GetComponent<MeshRenderer> ( ).material = DebrisMaterial;
+					GO.GetComponent<MeshRenderer> ( ).material.SetColor ( "_EmissionColor", Random.ColorHSV ( ) );
 				}
 				else
 				{
 					GO.GetComponent<MeshRenderer> ( ).material = materials [ a ];
 				}
 
-				GO.GetComponent<MeshFilter> ( ).mesh = mesh;
-				GO.layer = LayerMask.NameToLayer ( "Particle" );
 
 				GO.transform.position = getTrans.position + new Vector3 ( Random.Range ( -getBound.x, getBound.x ), Random.Range ( -getBound.y, getBound.y ), Random.Range ( -getBound.z, getBound.z ) ) ;
 				GO.transform.rotation = getTrans.rotation;
@@ -193,7 +195,7 @@ public class MeshDesctruc : MonoBehaviour
 					{
 						rightTrans = -rightTrans;
 					}
-					GO.GetComponent<Rigidbody> ( ).AddForce ( calDir * Random.Range ( forcePro * 0.5f, forcePro ) + Vector3.up * Random.Range ( 0, forcePro * 0.75f ) + rightTrans * Random.Range ( 0, forcePro * 0.75f ), ForceMode.VelocityChange );
+					GO.GetComponent<Rigidbody> ( ).AddForce ( calDir * Random.Range ( forcePro * 0.5f, forcePro ) + Vector3.up * Random.Range ( 0, forcePro * 0.5f ) + rightTrans * Random.Range ( 0, forcePro * 0.5f ), ForceMode.VelocityChange );
 				}
 				else
 				{
