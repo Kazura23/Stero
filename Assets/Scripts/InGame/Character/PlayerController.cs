@@ -1550,6 +1550,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
         {
+			Debug.Log ( "11111" );
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
