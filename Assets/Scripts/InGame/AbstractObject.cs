@@ -154,11 +154,6 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
 	{
-		if ( playerCont != null )
-		{
-			playerCont.MadnessMana(p_technic);
-		}
-
 		if ( !isDead )
 		{
 			projection = p_damage;
@@ -190,7 +185,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( !isDead )
 		{
-			Dead ( true, DeathType.Punch );
+			Dead ( true, DeathType.Enemy );
 		}
 		else
 		{
@@ -200,7 +195,6 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
-		Debug.Log ( "FORCEPROP + " + gameObject.name ); 
 		onEnemyDead ( forceProp, thisDeath, checkConst );
 		if ( gameObject.activeSelf )
 		{
@@ -212,15 +206,16 @@ public class AbstractObject : MonoBehaviour
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
-		if ( playerCont != null && playerCont.playerDead || !checkDead )
+		if ( playerCont != null && playerCont.playerDead || gameObject.tag == Constants._ObjDeadTag )
 		{
 			return;
 		}
 
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._EnnemisTag || ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe ) || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag )
+		if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag || getThis.tag == Constants._ObsTag && checkDead )
 		{
+			//Debug.Log ( gameObject.name ); 
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
 			/*if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
@@ -357,10 +352,19 @@ public class AbstractObject : MonoBehaviour
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 
 		string getObsT = Constants._ObjDeadTag;
+		gameObject.tag = getObsT;
 
 		foreach (Collider thisRig in gameObject.GetComponentsInChildren<Collider>())
 		{
 			thisRig.tag = getObsT;
+			try
+			{
+				thisRig.GetComponent<Rigidbody>().AddForce(forceProp, ForceMode.VelocityChange );
+			}
+			catch
+			{
+				Debug.Log ( "ForceOnBody failed" );
+			}
 		}
 		//meshRigid.tag = getObsT;
 
@@ -383,7 +387,11 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		GetComponent<BoxCollider> ( ).enabled = true;
+		try{
+			GetComponent<BoxCollider> ( ).enabled = true;
+		}
+		catch{
+		}
 	}
 
 	void checkConstAxe ( )

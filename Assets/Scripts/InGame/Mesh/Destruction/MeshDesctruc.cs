@@ -16,7 +16,7 @@ public class MeshDesctruc : MonoBehaviour
 		//stockElem = new List<GameObject> ( );
 	}
 
-	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 25, bool little = false, bool explos = false, bool destobj = false )    
+	public IEnumerator SplitMesh ( GameObject objSource, Transform thisPlayer, float forcePro, float deleayDest, int lim = 25, bool explos = false, bool destobj = false )    
 	{
 		WaitForEndOfFrame thisFrame = new WaitForEndOfFrame ( );
 
@@ -66,11 +66,11 @@ public class MeshDesctruc : MonoBehaviour
 		Transform getTrans = objSource.transform;
 		Vector3 getSize = M.bounds.size;
 		Vector3 calDir = thisPlayer.forward;
+		Vector3 rightTrans = thisPlayer.right;
 		GameObject GO;
 		GameObject getTri = TriangPrefb;
 		Mesh mesh;
-
-		float matCD = calDir.magnitude * 0.25f;
+		Vector3 getBound = M.bounds.size;
 
 		int[] indices;
 
@@ -84,7 +84,6 @@ public class MeshDesctruc : MonoBehaviour
 		getSize = new Vector2 ( getSize.x * 0.5f, getSize.y * 0.5f );
 
 		//getAllSt = stockElem;
-
 		for ( a = 0; a < M.subMeshCount; a++ )
 		{
 			indices = M.GetTriangles ( a );
@@ -129,23 +128,14 @@ public class MeshDesctruc : MonoBehaviour
 					newUvs [ c + 6 ] = uvs [ index ];
 					newNormals [ c + 6 ] = normals [ index ];
 
-					if ( !little )
-					{
-						newVerts [ c + 3 ] = new Vector3 ( -verts [ index ].y * Random.Range ( 0.5f, 1.2f ), -verts [ index ].x * Random.Range ( 0.5f, 1.2f ), -verts [ index ].z * Random.Range ( 0.5f, 1.2f ) );
-						newVerts [ c + 6 ] = new Vector3 ( -verts [ index ].y * Random.Range ( 0.5f, 1.2f ), -verts [ index ].x * Random.Range ( 0.5f, 1.2f ), -verts [ index ].z * Random.Range ( 0.5f, 1.2f ) );
-					}
-					else
-					{
-						newVerts [ c + 3 ] = new Vector3 ( verts [ index ].x * Random.Range ( 0.5f, 1f ), verts [ index ].y * Random.Range ( 0.5f, 1f ), verts [ index ].z );
-						newVerts [ c + 6 ] = new Vector3 ( -verts [ index ].x * Random.Range ( 0.1f, 0.5f ), -verts [ index ].y * Random.Range ( 0.1f, 0.5f ), verts [ index ].z );
-					}
+					newVerts [ c + 3 ] = new Vector3 ( Random.Range ( -getBound.x, getBound.x ),Random.Range ( -getBound.y, getBound.y ), Random.Range ( -getBound.z, getBound.z ) );
+					newVerts [ c + 6 ] = new Vector3 ( Random.Range ( -getBound.x, getBound.x ),Random.Range ( -getBound.y, getBound.y ), Random.Range ( -getBound.z, getBound.z ) );
 				}
 					
 				if ( checkLim )
 				{
 					break;
 				}
-
 				mesh = new Mesh ( );
 				mesh.vertices = newVerts;
 				mesh.normals = newNormals;
@@ -192,18 +182,21 @@ public class MeshDesctruc : MonoBehaviour
 				}
 
 				GO.GetComponent<MeshFilter> ( ).mesh = mesh;
-
 				GO.layer = LayerMask.NameToLayer ( "Particle" );
-				GO.transform.position = getTrans.position;
+
+				GO.transform.position = getTrans.position + new Vector3 ( Random.Range ( -getBound.x, getBound.x ), Random.Range ( -getBound.y, getBound.y ), Random.Range ( -getBound.z, getBound.z ) ) ;
 				GO.transform.rotation = getTrans.rotation;
 
 				if ( !explos )
 				{
-					GO.GetComponent<Rigidbody> ( ).AddForce ( ( new Vector3 ( Random.Range ( -matCD, matCD ), Random.Range ( 0, matCD ), Random.Range ( -matCD, matCD ) ) + calDir ) * Random.Range ( forcePro * 0.1f, forcePro ), ForceMode.VelocityChange );
+					if ( Random.Range ( 0, 2 ) == 0 )
+					{
+						rightTrans = -rightTrans;
+					}
+					GO.GetComponent<Rigidbody> ( ).AddForce ( calDir * Random.Range ( forcePro * 0.5f, forcePro ) + Vector3.up * Random.Range ( 0, forcePro * 0.75f ) + rightTrans * Random.Range ( 0, forcePro * 0.75f ), ForceMode.VelocityChange );
 				}
 				else
 				{
-					GO.transform.localPosition += new Vector3 ( Random.Range ( -2, 3 ), Random.Range ( -2, 3 ), Random.Range ( -2, 3 ) );
 					GO.GetComponent<Rigidbody> ( ).AddForce ( new Vector3 ( Random.Range ( -forcePro, forcePro ), Random.Range ( -forcePro, forcePro ), Random.Range ( -forcePro, forcePro ) ), ForceMode.VelocityChange );
 				}
 

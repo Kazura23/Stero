@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 114262464656599260}
   - component: {fileID: 135971146009546918}
   - component: {fileID: 135083860956375286}
-  - component: {fileID: 65454814375354934}
   m_Layer: 11
   m_Name: Hit Punch
   m_TagString: Punch
@@ -2376,18 +2375,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 122
   m_CollisionDetection: 2
---- !u!65 &65454814375354934
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1119021483193416}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.25, z: 5.5}
-  m_Center: {x: 0, y: 0, z: 3}
 --- !u!65 &65513883504248794
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2398,8 +2385,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: -0.08, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.52047193}
+  m_Center: {x: 0, y: -0.080000006, z: -0.23976403}
 --- !u!65 &65701321855079532
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2422,8 +2409,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.25, z: 4.5}
-  m_Center: {x: 0, y: 0, z: 2.5}
+  m_Size: {x: 1, y: 1.25, z: 6}
+  m_Center: {x: 0, y: 0, z: 3}
 --- !u!81 &81165457489559682
 AudioListener:
   m_ObjectHideFlags: 1
@@ -2601,9 +2588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puissanceOnde: 15
-  projection_basic: 75
-  projection_double: 300
-  projection_dash: 200
+  projection_basic: 25
+  projection_double: 70
+  projection_dash: 60
   facteurVitesseRenvoie: 1.5
   RightPunch: 0
 --- !u!114 &114279950590316440
@@ -2660,9 +2647,9 @@ MonoBehaviour:
   MaxSpeed: 18
   Acceleration: 50
   Deceleration: 25
-  MaxSpeedCL: 150
-  AccelerationCL: 150
-  ImpulsionCL: 500
+  MaxSpeedCL: 600
+  AccelerationCL: 600
+  ImpulsionCL: 1500
   DecelerationCL: 0
   RotationSpeed: 6
   SpeedEffectTime: 50
@@ -2673,9 +2660,9 @@ MonoBehaviour:
   DistDBTake: 50
   DeadBallPref: {fileID: 1378874648793982, guid: 7dc0cdb3c96af354aabcc1ab0eb05533,
     type: 2}
-  DelayTimerFight: 7
-  DelayLastTimer: 3
-  DelaySecureTimer: 3
+  DelayTimerStandard: 5
+  DelayTimerToDeath: 2.5
+  DelayTimerToMad: 2.5
   DelayTimerOnMadness: 2
   TimerRecover: 25
   TimerLastRecover: 40
@@ -2698,20 +2685,8 @@ MonoBehaviour:
   RecovSlider: 2
   ReduceSlider: 5
   FOVIncrease: 30
-  DelayPunch: 0.05
   TimeToDoublePunch: 0.75
   CooldownDoublePunch: 0.8
-  DelayHitbox: 0.05
-  DelayPrepare: 0.05
-  debugNumTechnic: 2
-  addPointBarByPunchSimple: 3
-  addPointBarByPunchDouble: 5
-  TimePropulsePunch: 0.15
-  TimePropulseDoublePunch: 0
-  SpeedPunchRun: 1
-  SpeedDoublePunchRun: 1
-  Radius: 15
-  SoftNess: 15
   BarMadness: {fileID: 0}
   ThisAct: 0
   NbrLineRight: 1
@@ -2725,7 +2700,6 @@ MonoBehaviour:
   StopPlayer: 0
   totalDis: 0
   punchBoxSimple: {fileID: 65999109438009934}
-  punchBoxDouble: {fileID: 65454814375354934}
   leftHand: {fileID: 1061951662454474}
   rightHand: {fileID: 1376256238269084}
   currLine: 0
@@ -2802,7 +2776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91b13636b438694296d90b6c58e481f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ratioSlow: 0.3
+  ratioSlow: 0.22
   timeSlow: 0.5
 --- !u!114 &114817791987693078
 MonoBehaviour:
