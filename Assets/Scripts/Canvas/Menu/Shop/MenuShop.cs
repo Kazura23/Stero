@@ -83,7 +83,7 @@ public class MenuShop : UiParent
         if (CanInput)
         {
             // Touche pour pouvoir selectionner les items
-			if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !waitImpSub && !transition)
+			if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !waitImpSub && !transition)
             {
                 transition = true;
                 waitImpSub = true;
@@ -103,7 +103,7 @@ public class MenuShop : UiParent
             }
 
             // Touche pour sortir des items
-			if (inputPlayer.GetAxis("CoupDouble") == 1 && !waitImpCan && !transition)
+			if ( ( inputPlayer.GetAxis("CoupDouble") == 1 || Input.GetKeyDown ( KeyCode.Escape ) ) && !waitImpCan && !transition)
             {
                 waitImpCan = true;
                 transition = true;
@@ -191,9 +191,9 @@ public class MenuShop : UiParent
 			currCatSeled = DefCatSelected;
 			CheckSelectCat ( true );
 
-			CheckSelectItem(false);
+			CheckSelectItem ( false );
             currItemSeled = currCatSeled.DefautItem;
-            CheckSelectItem(true);
+			CheckSelectItem ( true );
         }
     }
 
@@ -213,8 +213,6 @@ public class MenuShop : UiParent
             base.CloseThis();
 
         });
-
-
     }
 
 	// Nouvelle selection de catégorie
@@ -349,6 +347,7 @@ public class MenuShop : UiParent
 	public void BuyItem ( )
 	{
 		string getCons = Constants.ItemBought + currCatSeled.NameCat;
+		int count = 0;
 		bool buy = false;
 		Dictionary <string, ItemModif> getAllBuy = allConfirm;
 		List<ItemModif> getTempItem = allTempItem;
@@ -451,7 +450,6 @@ public class MenuShop : UiParent
 				}
 				else
 				{
-					int count = 0;
 					for ( int a = 0; a < getTempItem.Count; a++ )
 					{
 						if ( getTempItem [ a ] == currItemSeled )
@@ -461,6 +459,10 @@ public class MenuShop : UiParent
 					}
 
 					if ( count > 3 )
+					{
+						return;
+					}
+					else if ( ( currCatSeled.NameCat == "UPGRADES" ) && !AllPlayerPrefs.GetBoolValue ( Constants.ItemBought + "ABILITIES" + currItemSeled.ItemName ) )
 					{
 						return;
 					}
@@ -482,14 +484,27 @@ public class MenuShop : UiParent
 			{
 				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
 				{
-                    SelectObject();
-                    GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+					SelectObject ( );
+					GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
 				}
 				else
 				{
-                    SelectObject();
-                    GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
+					SelectObject ( );
+					GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
 				}
+			}
+			else if ( currCatSeled.NameCat == "UPGRADES" )
+			{
+				List<Text> getGameT = GlobalManager.GameCont.GetBonusText;
+				Text currText = currItemSeled.transform.Find ( "Description" ).GetComponent<Text> ( );
+
+				if ( !getGameT.Contains ( currText ) )
+				{
+					getGameT.Add ( currText );
+				}
+
+				currText.text = "LEVEL " + ( count + 2 ).ToString ( );
+				currItemSeled.Price *= 2;
 			}
 		}
 
@@ -592,10 +607,10 @@ public class MenuShop : UiParent
                 barCategory.transform.DORotate(new Vector3(0,0,423), 0);
                 iconCategory.transform.DOMoveX(thisShop.transform.position.x + 200, 0);
                 iconCategory.transform.DOMoveY(thisShop.transform.position.y ,0);
-                textCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 300, 0);
+                textCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 35, 0);
                 textCategory.transform.DOMoveX(moleculeContainer.transform.position.x -90, 0);
                 barCategory.transform.DOMoveX(moleculeContainer.transform.position.x - 90, 0);
-                barCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 300, 0);
+                barCategory.transform.DOMoveY(moleculeContainer.transform.position.y + 35, 0);
                 iconCategory.DOFade(1, .25f);
                 textCategory.DOFade(1, .25f);
                 barCategory.DOFade(1, .25f);

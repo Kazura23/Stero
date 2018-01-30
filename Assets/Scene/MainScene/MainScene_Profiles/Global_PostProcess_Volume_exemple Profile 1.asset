@@ -14,11 +14,10 @@ MonoBehaviour:
   settings:
   - {fileID: 114011565831588668}
   - {fileID: 114190586433744468}
-  - {fileID: 114414976782090556}
-  - {fileID: 114344345909698628}
   - {fileID: 114334890134246306}
   - {fileID: 114276221680440656}
   - {fileID: 114044612062186138}
+  - {fileID: 114871739142114288}
 --- !u!114 &114011565831588668
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -36,19 +35,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.42
+    value: 1.53
   threshold:
     overrideState: 1
-    value: 0.7
+    value: 0.69
   softKnee:
     overrideState: 1
-    value: 0.21
+    value: 0.223
   diffusion:
     overrideState: 1
-    value: 7.69
+    value: 5.56
   anamorphicRatio:
     overrideState: 1
-    value: 0.75
+    value: 0
   color:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -81,7 +80,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.55
+    value: 0.32
   color:
     overrideState: 1
     value: {r: 0.0038927374, g: 0.023076024, b: 0.029411793, a: 1}
@@ -99,13 +98,13 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 3.58
+    value: 2.97
   directLightingStrength:
     overrideState: 1
     value: 0
   radius:
     overrideState: 1
-    value: 0.16
+    value: 0.19
   quality:
     overrideState: 1
     value: 3
@@ -129,7 +128,7 @@ MonoBehaviour:
     value: {fileID: 2800000, guid: f551c265ffa3cad4089616e1ef840290, type: 3}
   intensity:
     overrideState: 1
-    value: 0.039
+    value: 0.103
   mobileOptimized:
     overrideState: 0
     value: 0
@@ -159,10 +158,10 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.24
+    value: 0.35
   smoothness:
     overrideState: 1
-    value: 0.78
+    value: 0.16
   roundness:
     overrideState: 1
     value: 1
@@ -237,16 +236,16 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 14
+    value: 9
   brightness:
     overrideState: 1
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: 0.29
   contrast:
     overrideState: 1
-    value: 48
+    value: 47
   mixerRedOutRedIn:
     overrideState: 1
     value: 100
@@ -276,13 +275,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.9923267, y: 1, z: 0.9942452, w: 0.0630517}
+    value: {x: 1, y: 0.9499896, z: 0.9361643, w: -0.043956045}
   gamma:
     overrideState: 1
-    value: {x: 0.94510186, y: 1, z: 0.88976735, w: 0.49400815}
+    value: {x: 1, y: 0.9879845, z: 0.887077, w: 0.24175824}
   gain:
     overrideState: 1
-    value: {x: 0.869326, y: 0.9093262, z: 1, w: -0.051418796}
+    value: {x: 0.9654968, y: 1, z: 0.9806264, w: 0.37362638}
   masterCurve:
     overrideState: 1
     value:
@@ -423,11 +422,11 @@ MonoBehaviour:
         m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_RotationOrder: 0
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
---- !u!114 &114344345909698628
+--- !u!114 &114871739142114288
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -435,43 +434,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
-  m_Name: MotionBlur
+  m_Script: {fileID: 11500000, guid: 7a34fa72bd4185749832024e9c8010bf, type: 3}
+  m_Name: ScreenSpaceReflections
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
-  shutterAngle:
-    overrideState: 1
-    value: 100
-  sampleCount:
+  preset:
     overrideState: 1
     value: 4
---- !u!114 &114414976782090556
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
-  m_Name: Grain
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
+  maximumIterationCount:
     overrideState: 1
-    value: 1
-  colored:
+    value: 16
+  resolution:
     overrideState: 1
-    value: 1
-  intensity:
+    value: 0
+  thickness:
     overrideState: 1
-    value: 0.1
-  size:
+    value: 8
+  maximumMarchDistance:
     overrideState: 1
-    value: 0.67
-  lumContrib:
+    value: 0
+  distanceFade:
     overrideState: 1
-    value: 0.36
+    value: 0.058
+  attenuation:
+    overrideState: 1
+    value: 0.656

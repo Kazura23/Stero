@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ceramiks 2
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
+  m_ShaderKeywords: _EMISSIVE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -54,6 +54,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RMA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -71,6 +75,21 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _bc_slider: 0.5019608
+    - _distanceratio: 0.56
+    - _emisive_force: 0.21
+    - _emissive: 1
+    - _highlight: 0
+    - _highlight__force: 2
+    - _highlight_amount: 2
+    - _highlight_speed: 1
+    - _met: 0.37
+    - _node_1820: 0
+    - _outline_basevalue: 0.82
+    - _rg: 0
+    - _rg_slider: 0
+    - _roughForce: 1
     m_Colors:
-    - _Color: {r: 0.96862745, g: 0.9764706, b: 0.99215686, a: 1}
+    - _Color: {r: 0.4705882, g: 0.8247466, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _highlight_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}

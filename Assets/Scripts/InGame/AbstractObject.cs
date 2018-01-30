@@ -28,29 +28,31 @@ public class AbstractObject : MonoBehaviour
     [Tooltip("Lier au score")]
     public int point = 100;
 
-	public float MalusDivTimer = 0;
+	public float BonusMultTimer = 1;
 
     public bool useGravity = true;
 
+	protected GameObject thisObj;
 	protected Rigidbody mainCorps;
 	protected Transform getTrans;
     protected PlayerController playerCont;
     protected Transform playerTrans;
     protected bool activeSlow = true;
 	protected bool isObject = false;
+	protected Vector3 startPos;
 	Rigidbody meshRigid;
     private int techPunch;
 
-	Vector3 startPos;
 	Vector3 projection;
 	float distForDB = 0;
-	GameObject thisObj;
 	bool checkDead = false;
+	bool destGame;
 	#endregion
 
 	#region Mono
 	protected virtual void Awake () 
 	{
+		destGame = true;
 		isDead = false;
 		getTrans = transform;
 		startPos = getTrans.localPosition;
@@ -66,6 +68,14 @@ public class AbstractObject : MonoBehaviour
 		{
 			meshRigid = mainCorps;
 		}
+
+		if ( mainCorps == null )
+		{
+			Debug.LogWarning ( "There no rigidBody" );
+			Destroy ( gameObject );
+			return;
+		}
+			
 		mainCorps.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
@@ -75,10 +85,30 @@ public class AbstractObject : MonoBehaviour
             PlayerDetected(playerTrans.gameObject, false);
     }*/
 
-	protected virtual void OnEnable ( )
+	IEnumerator waitCol ( )
 	{
+		yield return new WaitForSeconds ( 1 );
+
 		checkDead = false;
 		gameObject.GetComponent <Collider> ( ).enabled = true;
+
+	}
+
+	protected virtual void OnEnable ( )
+	{
+		if ( gameObject.GetComponent <Collider> ( ) == null )
+		{
+			Destroy ( gameObject );
+			return;
+		}
+		/*string getName = gameObject.name;
+		foreach (Transform getTran in getTrans.GetComponentsInChildren<Transform>())
+		{
+			getTran.name = "non";
+		}
+		gameObject.name = getName;*/
+		StartCoroutine ( waitCol ( ) );
+		gameObject.GetComponent <Collider> ( ).enabled = false;
 		playerTrans = GlobalManager.GameCont.Player.transform;
 		playerCont = playerTrans.GetComponent<PlayerController>();
 
@@ -111,11 +141,12 @@ public class AbstractObject : MonoBehaviour
 	#endregion
 
 	#region Public Methods
-	public void EventEnable (  )
+	public void EventEnable ( Vector3 setPosition )
 	{
 		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
 		{ 
 			gameObject.SetActive ( true );
+			getTrans.position = setPosition;
 		}; 
 
 		GlobalManager.Event.Register ( checkEnable ); 
@@ -132,24 +163,15 @@ public class AbstractObject : MonoBehaviour
 		{
 			projection = p_damage;
             techPunch = p_technic;
-			Dead ( );
+			Dead ( false, DeathType.Punch );
 		}
 	}
 
-	public virtual void Dead ( bool enemy = false )
+	public virtual void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Enemy )
 	{
-        //Time.timeScale = 1;
-        //StartCoroutine ( disableColl ( ) );
-        
-        
-
-       // Debug.Log("BoneBreak");
-
-        //checkConstAxe ( );
-
         if ( enemy )
 		{
-			onEnemyDead ( getTrans.forward * onObjForward );
+			onEnemyDead ( getTrans.forward * onObjForward, thisDeath );
             int randomSong = UnityEngine.Random.Range(0, 8);
 
             GlobalManager.AudioMa.OpenAudio(AudioType.FxSound, "BodyImpact_" + (randomSong + 1), false);
@@ -159,9 +181,8 @@ public class AbstractObject : MonoBehaviour
 			Vector3 getFor = getTrans.forward * projection.z;
 			Vector3 getRig = getTrans.right * projection.x;
 			Vector3 getUp = transform.up * projection.y;
-			onEnemyDead ( getFor + getRig + getUp );
+			onEnemyDead ( getFor + getRig + getUp, thisDeath );
             GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
-
         }
 	}
 
@@ -169,7 +190,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( !isDead )
 		{
-			Dead ( true );
+			Dead ( true, DeathType.Punch );
 		}
 		else
 		{
@@ -177,17 +198,21 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	public virtual void ForceProp ( Vector3 forceProp, bool checkConst = true, bool forceDead = false )
+	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
-		onEnemyDead ( forceProp, checkConst );
-		StartCoroutine ( enableColl ( ) );
+		Debug.Log ( "FORCEPROP + " + gameObject.name ); 
+		onEnemyDead ( forceProp, thisDeath, checkConst );
+		if ( gameObject.activeSelf )
+		{
+			StartCoroutine ( enableColl ( ) );
+		}
 	}
 	#endregion
 
 	#region Private Methods
 	protected virtual void OnCollisionEnter ( Collision thisColl )
 	{
-		if ( playerCont.playerDead )
+		if ( playerCont != null && playerCont.playerDead || !checkDead )
 		{
 			return;
 		}
@@ -198,10 +223,10 @@ public class AbstractObject : MonoBehaviour
 		{
 			Physics.IgnoreCollision ( thisColl.collider, GetComponent<Collider> ( ) );
 
-			if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
+			/*if ( getThis.tag == Constants._EnnemisTag || getThis.tag == Constants._ObjDeadTag )
 			{
 				//Debug.Log ( "ennemis touche" );
-			}
+			}*/
 
 			CollDetect ( );
 		}
@@ -216,7 +241,7 @@ public class AbstractObject : MonoBehaviour
 	{
 		if ( thisColl.tag == Constants._ChocWave )
 		{
-			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, false, true );
+			ForceProp ( ( Vector3.up + Vector3.Normalize ( getTrans.position - GlobalManager.GameCont.Player.transform.position ) ) * 20, DeathType.SpecialPower, false, true );
 		}
 	}
 
@@ -226,7 +251,8 @@ public class AbstractObject : MonoBehaviour
 		
 		if ( getDist < distForDB ) 
 		{ 
-			onEnemyDead ( Vector3.zero ); 
+			destGame = false;
+			onEnemyDead ( Vector3.zero, DeathType.SpecialPower ); 
 
 			float getConst = Constants.DB_Prepare;
 			meshRigid.useGravity = false;
@@ -260,7 +286,7 @@ public class AbstractObject : MonoBehaviour
 		} 
 	} 
 
-	void onEnemyDead ( Vector3 forceProp, bool checkConst = true )
+	void onEnemyDead ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true )
 	{
 		if ( checkDead )
 		{
@@ -271,16 +297,19 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
-			playerCont.RecoverTimer ( );
+			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
-		thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.parent );
-		thisObj.SetActive ( false );
-		thisObj.transform.localPosition = startPos;
-		thisObj.GetComponent<AbstractObject> ( ).EventEnable ( );
+		//Debug.Log ( gameObject.name + " / " + thisDeath );
+		if ( thisObj == null )
+		{
+			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
+			thisObj.SetActive ( false );
+			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
+			thisObj.transform.localPosition = startPos;
+		}
 
 		isDead = true;
-        AllPlayerPrefs.scoreWhithoutDistance += point;
 
 		if ( !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).StopPlayer )
 		{
@@ -324,18 +353,24 @@ public class AbstractObject : MonoBehaviour
         {
             meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
         }
+
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
+
 		string getObsT = Constants._ObjDeadTag;
-		foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+
+		foreach (Collider thisRig in gameObject.GetComponentsInChildren<Collider>())
 		{
 			thisRig.tag = getObsT;
 		}
-		meshRigid.tag = getObsT;
+		//meshRigid.tag = getObsT;
 
 		//GlobalManager.Event.UnRegister ( checkEnable );
 		//GlobalManager.Event.UnRegister ( checkDBE );
 
-		Destroy ( gameObject, delayDead );
+		if ( destGame )
+		{
+			Destroy ( gameObject, delayDead );
+		}
 	}
 
 	IEnumerator enableColl ( )
@@ -348,7 +383,7 @@ public class AbstractObject : MonoBehaviour
 
 		yield return thisF;
 
-		//GetComponent<BoxCollider> ( ).enabled = true;
+		GetComponent<BoxCollider> ( ).enabled = true;
 	}
 
 	void checkConstAxe ( )
@@ -356,43 +391,64 @@ public class AbstractObject : MonoBehaviour
 		if ( FreezeAxe.x != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionX;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
 		}
 
 		if ( FreezeAxe.y != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionY;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
 		}
 
 		if ( FreezeAxe.z != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionZ;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezePositionZ;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 		}
 
 		if ( FreezeRot.x != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationX;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationX;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
 		}
 
 		if ( FreezeRot.y != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationY;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationY;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
 		}
 
 		if ( FreezeRot.z != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezeRotationZ;
+			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
+			{
+				thisRig.constraints = RigidbodyConstraints.FreezeRotationZ;
+			}
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
 		}
 	}
 		
-	IEnumerator disableColl ( )
-	{
-		WaitForSeconds thisSec = new WaitForSeconds ( 0.0f );
-
-		yield return thisSec;
-
-		getTrans.tag = Constants._ObjDeadTag;
-	}
-
 	public virtual void PlayerDetected ( GameObject thisObj, bool isDetected )
 	{
         //Renderer rend = GetComponentInChildren<Renderer>();

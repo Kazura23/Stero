@@ -4,13 +4,11 @@ public enum TokenType
 	GoTok
 }
 
-
-public enum Direction
+public enum Technic
 {
-	North,
-	South,
-	East,
-	West
+	basic_punch,
+	double_punch,
+	onde_choc
 }
 
 public enum MenuType
@@ -21,7 +19,8 @@ public enum MenuType
 	Shop,
 	Pause,
 	GameOver,
-    Leaderboard
+	Leaderboard,
+	Option
 }
 
 public enum UnLockMethode
@@ -73,4 +72,21 @@ public enum TypeRotate
 {
 	Clockwise,
 	CounterClockwise
+}
+
+public enum OptionMenu 
+{
+	Son,
+	Credits,
+	Commandes,
+	Graphiques
+}
+
+public enum DeathType 
+{
+	SpecialPower,
+	Acceleration,
+	Madness,
+	Punch,
+	Enemy
 }

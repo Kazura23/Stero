@@ -5,20 +5,29 @@ using DG.Tweening;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class UiManager : ManagerParent
 {
 	#region Variables
 	public Slider MotionSlider;
     public Slider Madness;
+	public Image RankSlider;
 	public Image RedScreen;
 	public GameObject speedEffect;
 	public Transform MenuParent;
+	public Transform GameParent;
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
+    public GameObject PostProcessGlobal;
+    public GameObject PostProcessMadness;
+    public Image ArrowTuto;
 
 	public Text ScorePoints;
 	public Text MoneyPoints;
+	public Text RankText;
+	public Text Multiplicateur;
 
 	public Image BallTransition;
 
@@ -73,7 +82,8 @@ public class UiManager : ManagerParent
 			thisUi.OpenThis ( GetTok );
             OpenShop();
 		}
-	}
+
+    }
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
@@ -91,7 +101,39 @@ public class UiManager : ManagerParent
 		}
 	}
 
-	public void SetCam ( Camera newCame )
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            /*
+            DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 1.5f, .2f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .1f);
+            });
+
+            DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
+            });*/
+
+            DOTween.To(() => GlobalManager.GameCont.weightValue, x => GlobalManager.GameCont.weightValue = x, 1f, .6f).OnComplete(() => {
+                //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
+            });
+
+			var volume = PostProcessManager.instance.QuickVolume ( PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray ( ) );
+			volume.weight = 0f;
+
+			DOTween.Sequence()
+				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 1f, 1f))
+				.AppendInterval(1f)
+				.Append(DOTween.To(() => volume.weight, x => volume.weight = x, 0f, 1f))
+				.OnComplete(() =>
+				{
+					RuntimeUtilities.DestroyVolume(volume, true);
+					Destroy(this);
+				});
+        }
+    }
+
+    public void SetCam ( Camera newCame )
 	{
 		thisCam = newCame;
 	}
@@ -200,7 +242,7 @@ public class UiManager : ManagerParent
         });
     }
 
-    public void DoubleCoup()
+	public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
 
@@ -265,23 +307,34 @@ public class UiManager : ManagerParent
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Death_" + rdmValue, false);
+
+        RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
+	int getLayer;
     public void OpenMadness()
     {
         AllPlayerPrefs.ANbPassageMadness++;
         VibrationManager.Singleton.FleshBallVibration();
 
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = true;
-        thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
+        //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = true;
 
-		Transform getPlayer = GlobalManager.GameCont.Player.transform;
+        PostProcessMadness.GetComponent<PostProcessVolume>().enabled = true;
+
+        Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
 
         Destroy(textMadness, 3);
 
+        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
+
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
+
+		closeMad = false;
+		StartCoroutine ( waitMad ( ) );
+
         //textMad.GetComponentInChildren<TextMesh>().text = 
         //thisCam.transform.GetComponent<RainbowMove>().enabled = false;
 
@@ -301,18 +354,45 @@ public class UiManager : ManagerParent
         */
     }
 
+	bool closeMad = false;
+	IEnumerator waitMad () 
+	{
+		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
+
+		var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+		volume.weight = 0f;
+
+		DOTween.To ( ( ) => volume.weight, x => volume.weight = x, 1f, .6f );
+
+		while ( !closeMad )
+		{
+			yield return thisF;
+		}
+
+		DOTween.To ( ( ) => volume.weight, x => volume.weight = x, 0, .3f ).OnComplete ( ( ) =>
+		{
+			PostProcessMadness.GetComponent<PostProcessVolume>().enabled = false;
+		} );
+	}
+
     public void CloseMadness()
     {
-		
+        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .2f);
+
         thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
+
+        //var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+	
+		closeMad = true;
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
-        
+
+
 
         //thisCam.DOKill(true);
 
-		thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
+        thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
        // Debug.Log("CloseMad");
         //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
@@ -348,10 +428,116 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
-	public void StartSpecialAction(string type)
+
+    public void ScorePlus(int number, Color rankColor, int currIndex)
+    {
+
+        float randomPos = UnityEngine.Random.Range(-600, 600);
+        float randomRot = UnityEngine.Random.Range(200, 200);
+        //Debug.Log("score");
+        ScorePoints.text = "" + (int.Parse(ScorePoints.text) + number);
+
+
+        Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
+        scoretxt.text = "+ " + number;
+        scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
+
+        if (currIndex == 6)
+        {
+            scoretxt.GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+            scoretxt.GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+        } else
+        {
+
+            scoretxt.GetComponent<Text>().color = rankColor;
+        }
+
+
+        scoretxt.transform.DOScale(2, 0);
+        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(() => {
+                scoretxt.transform.DOScale(0, .5f);
+                scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
+            });
+        });
+
+        Destroy(scoretxt.gameObject, 4);
+    }
+
+    public void NewRank(int currIndex)
+    {
+        Transform getRank = GlobalManager.Ui.RankSlider.transform.parent; 
+
+        getRank.DOKill(true);
+        //Vector2 localPos = getRank.localPosition;
+        getRank.DOLocalMove(new Vector2(-120, -450), 0);
+        getRank.DOPunchPosition(Vector2.one * 30f, 1f, 18, 1).OnComplete(() => {
+            getRank.DOLocalMove(new Vector2(-833, -200), .3f).OnComplete(()=> {
+
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOShakePosition(.05f, 30f, 12, 360).SetLoops(-1, LoopType.Restart);
+                //GlobalManager.Ui.Multiplicateur.transform.parent.DOPunchPosition(Vector2.one * 90f, .4f, 18, .3f).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+            });
+        });
+
+        DOVirtual.DelayedCall(.2f, () => {
+
+            if(currIndex == 6)
+            {
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[2].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[3].enabled = true;
+            }
+            else
+            {
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+                getRank.GetChild(0).GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[2].enabled = true;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].enabled = false;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[3].enabled = false;
+
+                getRank.GetChild(0).GetComponent<RainbowColor>().colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+                getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[1].colors[1] = GlobalManager.GameCont.AllRank[currIndex].Color;
+            }
+        });
+        // getRank.GetChild(3).GetComponentsInChildren<RainbowColor>()[0].colors[2] = GlobalManager.GameCont.AllRank[currIndex].Color;
+
+
+        //getRank.DOPunchPosition(new Vector3(30, 0, 0), 0.4f);
+
+        getRank.GetComponent<CanvasGroup>().DOFade(0, 0);
+        getRank.GetComponent<CanvasGroup>().DOFade(1, .15f);
+
+        getRank.DOScale(5, 0);
+        getRank.DOScale(1, .5f);
+
+
+    }
+
+    public void StartSpecialAction(string type)
     {
         if (type == "SlowMot")
+        {
             SlowMotion.sprite = AbilitiesSprite[0];
+            //float intensityBloom = 0;
+            //DOTween.To(() => intensityBloom, x => intensityBloom = x, 1, 1);
+
+            DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
+            });
+
+            DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+                DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
+            });
+
+            //PostProcessGlobal.GetComponent<Bloom>().intensity.value = intensityBloom;
+        }
 
         if (type == "OndeChoc")
             SlowMotion.sprite = AbilitiesSprite[1];
@@ -486,7 +672,7 @@ public class UiManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
-
+		getLayer = PostProcessMadness.layer;
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
@@ -505,7 +691,7 @@ public class UiManager : ManagerParent
 		AllMenu = setAllMenu;
 
 		InGame = transform.Find ( "Canvas/InGame" ).gameObject;
-		GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).IniPlayer ( );
+		GlobalManager.GameCont.IniFromUI ( );
 		//GlobalManager.GameCont.StartGame ( );
 	}
 

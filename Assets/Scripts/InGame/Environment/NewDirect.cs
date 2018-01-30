@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class NewDirect : MonoBehaviour 
 {
-	public Direction NewDirection;
+	public bool GoRight;
+	
 }

@@ -52,7 +52,6 @@ public static class AllPlayerPrefs
 
     public static void SendAnalytics()
     {
-        Debug.Log("entrer");
         if (canSendAnalytics)
         {
             Dictionary<string, object> gameoverAttribut = new Dictionary<string, object>();
@@ -137,6 +136,11 @@ public static class AllPlayerPrefs
 	public static int GetIntValue ( string thisString )
 	{
 		return PlayerPrefs.GetInt ( thisString, 10000 );
+	}
+
+	public static int GetIntValueForSong ( string thisString )
+	{
+		return PlayerPrefs.GetInt ( thisString, 100 );
 	}
 
 	public static bool GetBoolValue ( string thisString )

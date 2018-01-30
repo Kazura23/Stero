@@ -50,9 +50,10 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1378874648793982}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,6 +69,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -96,7 +98,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 1
 --- !u!114 &114736148412486002
 MonoBehaviour:
@@ -109,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a88a5a2bb8efc44d8719186a1adc986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceProp: 50
+  ForceProp: 20
   DelayDestruc: 10
-  Acceleration: 60
+  Acceleration: 20
 --- !u!135 &135623189695892140
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -9,6 +9,8 @@ public class SpawnNewLvl : MonoBehaviour
 
 	[HideInInspector]
 	public List<GameObject> ToDest;
+	[HideInInspector]
+	public List<GameObject> ToDisable;
 
 	[HideInInspector]
 	public List<GameObject> GarbChunk;
@@ -29,6 +31,7 @@ public class SpawnNewLvl : MonoBehaviour
 	{
 		detect = false;
 	}
+
 	#endregion
 		
 	#region Public
@@ -44,19 +47,14 @@ public class SpawnNewLvl : MonoBehaviour
 			if (AddToList) 
 			{
 				Transform getParent = transform;
-				while ( getParent.parent != null && getParent.parent.name != "Chuncks" )
+				int count = 0;
+				while ( count < 50 && getParent.parent.tag != Constants._ChunkParent )
 				{
+					count++;
 					getParent = getParent.parent;
 				}
 
-				if ( getParent.parent != null )
-				{
-					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
-				}
-				else
-				{
-					GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( gameObject, OnScene, GarbChunk );
-				}
+				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
 			}
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
@@ -68,6 +66,11 @@ public class SpawnNewLvl : MonoBehaviour
 			{
 				Destroy ( ToDest [ a ], 1 );
 			}
+
+			for ( int a = 0; a < ToDest.Count; a++ )
+			{
+				ToDest [ a ].SetActive ( false );
+			}
 		}
 	}
 	#endregion
@@ -78,6 +81,7 @@ public class NewChunkInfo
 {
 	[Tooltip ("X = nombre de lane a gauche et Y à droite ( ne pas inclure la ligne ou est attaché le script )")]
 	public Vector2 NbrLaneDebut, NbrLaneFin;
+	public bool calWall = true;
 	public List <ChunkExit> ThoseExit;
 	[HideInInspector]
 	public List<GameObject> GarbageChunk;

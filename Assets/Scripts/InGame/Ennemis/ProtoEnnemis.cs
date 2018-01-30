@@ -43,7 +43,7 @@ public class ProtoEnnemis : AbstractObject
 		{
 			if ( CanRun && detected )
 			{
-				getTrans.localPosition -= getTrans.forward * Time.deltaTime * MoveSpeed;
+				getTrans.position -= getTrans.forward * Time.deltaTime * MoveSpeed;
 			}
 		}
 		else if ( detected )
@@ -116,7 +116,7 @@ public class ProtoEnnemis : AbstractObject
 		}
 	}
 
-	public override void Dead ( bool enemy = false ) 
+	public override void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
 	{
         int randomSong = UnityEngine.Random.Range(0, 2);
 
@@ -126,7 +126,7 @@ public class ProtoEnnemis : AbstractObject
         AllPlayerPrefs.ANbTotalEnemyKill++;
         AllPlayerPrefs.ANbCharlotte++;
         //Debug.Log("charlotte "+AllPlayerPrefs.ANbCharlotte);
-        base.Dead ( enemy );
+		base.Dead ( enemy, thisDeath );
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }
 	#endregion

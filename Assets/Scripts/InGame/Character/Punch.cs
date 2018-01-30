@@ -8,13 +8,7 @@ public class Punch : MonoBehaviour {
     public float puissanceOnde = 15;
     private PlayerController control;
 	Transform getPlayer;
-    private enum Technic
-    {
-        basic_punch,
-        double_punch,
-        onde_choc
-    }
-		
+   
     private int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
 	public float projection_basic = 50;
@@ -35,18 +29,19 @@ public class Punch : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
 		//Debug.Log ( other.gameObject.name );
+		Rigidbody getRid = other.GetComponentInChildren<Rigidbody> ( );
+		AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
         if(numTechnic == (int)Technic.onde_choc)
         {
             switch (other.tag)
             {
-					case Constants._EnnemisTag : case Constants._ElemDash :
+				case Constants._EnnemisTag : case Constants._ElemDash :
                     Vector3 dir = Vector3.Normalize(other.transform.position - transform.position);
-                    AbstractObject enn = other.GetComponentInChildren<AbstractObject>();
-                    if (!enn)
+					if (!tryGet)
                     {
                         return;
                     }
-                    enn.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
+					tryGet.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
                     break;
                 case Constants._ObsPropSafe:
 				GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3 );
@@ -54,13 +49,15 @@ public class Punch : MonoBehaviour {
                 //case tag bibli
             }
         }
-
-		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash)) //|| other.gameObject.tag == Constants._ObjDeadTag  ))
+		else if( canPunc && ( other.gameObject.tag == Constants._EnnemisTag || other.gameObject.tag == Constants._ObsPropSafe || other.gameObject.tag == Constants._ElemDash || other.gameObject.tag == Constants._ObjDeadTag  ))
         {
-			AbstractObject tryGet = other.GetComponentInChildren<AbstractObject> ( );
 			if ( !tryGet )
 			{
-				tryGet = other.gameObject.AddComponent<ProtoObs> ( );
+				other.gameObject.tag = Constants._UnTagg;
+				if ( getRid != null )
+				{
+					getRid.AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+				}
 			}
 
             if(other.gameObject.tag == Constants._EnnemisTag)
@@ -69,7 +66,6 @@ public class Punch : MonoBehaviour {
                 GlobalManager.AudioMa.OpenAudio(AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true);
                 GlobalManager.Ui.BloodHit();
             }
-
 
             GlobalManager.AudioMa.OpenAudio(AudioType.Other, "PunchSuccess", false);
 			Vector3 getProj = Vector3.zero;
@@ -87,41 +83,36 @@ public class Punch : MonoBehaviour {
 					getProj += getPlayer.right;
 				}
 
-				if ( other.gameObject.tag != Constants._ObjDeadTag )
+				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
 					tryGet.Degat ( getProj * projection_basic, numTechnic );
 				}
 				else
 				{
-					other.GetComponentInChildren<Rigidbody>().AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
+					if ( getRid != null )
+					{
+						getRid.AddForce ( getProj * projection_basic, ForceMode.VelocityChange );
+					}
 				}
 
-                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-                    {
-                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-                    }
-                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
-
-                    break;
+                break;
 			case (int)Technic.double_punch:
-                    //MadnessMgetProj = getPlayer.forward;ana("Double");
-                    getProj = getPlayer.forward;
-                    //Debug.Log ( pourcPunch );
-                    if ( other.gameObject.tag != Constants._ObjDeadTag )
+                //MadnessMgetProj = getPlayer.forward;ana("Double");
+                getProj = getPlayer.forward;
+
+				//Debug.Log ( pourcPunch );
+				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
 				else
 				{
-					other.GetComponentInChildren<Rigidbody>().AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+					if ( getRid != null )
+					{
+						getRid.AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+					}
 				}
 
-                    foreach (Rigidbody thisRig in other.GetComponentsInChildren<Rigidbody>())
-                    {
-                        thisRig.constraints = RigidbodyConstraints.FreezePositionY;
-                    }
-
-                    other.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
            	 	break;
             }
         }else if (other.gameObject.tag == Constants._MissileBazoo)

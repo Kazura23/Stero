@@ -9,6 +9,10 @@ using TMPro;
 using Rewired;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.PostProcessing;
+//using UnityEditor;
+using System;
 
 public class GameController : ManagerParent
 {
@@ -22,6 +26,9 @@ public class GameController : ManagerParent
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
 	public bool Intro;
+    public bool UseTuto;
+
+	public GameObject Tutoriel;
 
 	[HideInInspector]
 	public Dictionary <string, ItemModif> AllModifItem;
@@ -44,11 +51,32 @@ public class GameController : ManagerParent
 	public GameObject musicObject;
 	[HideInInspector]
 	public Camera thisCam;
-	Player inputPlayer;
 
+	[HideInInspector]
+	public bool LaunchTuto;
+
+	[HideInInspector]
+	public PostProcessingProfile postProfile;
+    public PostProcessVolume postMadnessProfile;
+
+	[HideInInspector]
+	public List<Text> GetBonusText;
+
+	Player inputPlayer;
+	Text textScore;
+
+	Image getRank;
+	Image iconeSpe;
+	Slider sliderSpe;
+	IEnumerator getCurWait;
 	GameObject lastWall;
 	bool restartGame = false;
 	public bool canOpenShop = true;
+
+	[Header ("Score Parametre")]
+	public GameObject TextObj;
+	public Rank[] AllRank;
+	public ScoringInfo [] InfScore;
 
 	bool GameStarted = false;
 	bool onHub = true;
@@ -73,19 +101,43 @@ public class GameController : ManagerParent
     public Vector3 zoomRewardSucces;
     private bool canRotateReward = false;
     public float speedRotateReward = 5;
+
+	float rankValue = 0;
+
+	int currIndex = -1;
+	int currMax = 0;
+	int currNeeded = 0;
+	int lastNeeded = 0;
+
+	int CurrentScore = 0;
 	#endregion
 
 	#region Mono
-	void Start ( )
+	void Update ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
         posInitPlayer = Player.transform.position;
         succes[0].Load();
         AllPlayerPrefs.ANbRun = 0;
 	}
+		getRank.fillAmount = rankValue;
 
-	void Update ( )
-	{
+        BloomModel.Settings thisBloom = postProfile.bloom.settings;
+
+        ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+
+        thisBloom.bloom.intensity = currentValue;
+
+        thisChrom.intensity = chromValue;
+
+        postProfile.bloom.settings = thisBloom;
+
+        postProfile.chromaticAberration.settings = thisChrom;
+        //float thisMadnessWeight = postMadnessProfile.weight;
+
+        //thisMadnessWeight = weightValue;
+        postMadnessProfile.weight = weightValue;
+
 		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
 			coupSimpl = true;
@@ -100,6 +152,7 @@ public class GameController : ManagerParent
 		{
 			GlobalManager.Ui.OpenThisMenu(MenuType.Pause);
 		}
+
         if (!checkStart && isStay && !isReady)
         {
 			switch (chooseOption)
@@ -107,11 +160,14 @@ public class GameController : ManagerParent
 
 			case 0: // Options
 
-				//Debug.Log("Options");
+				if ( (inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl )
+				{
+					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
+					Debug.Log ( "Options" );
+				}
 				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
-
 
 				//GameStartedUpdate();
 				break;
@@ -138,13 +194,77 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
 
-				if (inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame)
+				if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !restartGame)
 				{
 					coupSimpl = false;
 					SetAllBonus ( );
 
 					isStay = false;
-					AnimationStartGame();
+					PlayerController getPlayer = Player.GetComponent<PlayerController> ( );
+
+					if ( !LaunchTuto )
+					{
+						Animator getAnimator = Player.GetComponent<Animator> ( );
+						getAnimator.enabled = true;
+
+						getPlayer.PlayDirect.Play ( );
+						//AnimationStartGame();
+
+						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
+							Player.transform.DOLocalMoveX ( 0, 0.7f );
+
+							getAnimator.enabled = false;
+							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+							{
+								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+								{
+									isReady = true;
+									isStay = true;
+									//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+									//Player.GetComponent<PlayerController>().StopPlayer = false;
+									//Debug.Log("anime fonctionnelle");
+								});
+							});
+						});
+
+						/*
+						 // Cri de Mr S après avoir pris sa dose
+						GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Intro", false);
+
+
+						// Démarrage de la musique du Hub amplifiée après Stéro
+						musicObject.GetComponent<AudioSource>().volume = 0.0004f;
+						musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+						musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+						*/
+					}
+					else
+					{
+						DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
+						});
+
+						DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
+							DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .4f);
+						});
+
+						Player.transform.DOLocalMoveX ( 0, 0.7f );
+
+						thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
+						{
+							//Player.GetComponentInChildren<RainbowMove>().enabled = true;
+							Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+							{
+								isReady = true;
+								isStay = true;
+								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
+
+								//Player.GetComponent<PlayerController>().StopPlayer = false;
+								//Debug.Log("anime fonctionnelle");
+							});
+						});
+					}
 				}
 
 				break;
@@ -158,7 +278,7 @@ public class GameController : ManagerParent
 				textIntroObject.GetComponent<TextMesh> ( ).text = textIntroText [ 3 ];
 
 				ActiveTextIntro ( );
-				if ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 && coupSimpl && GlobalManager.GameCont.canOpenShop )
+				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && GlobalManager.GameCont.canOpenShop )
 				{
 					coupSimpl = false;
 					GlobalManager.Ui.OpenThisMenu(MenuType.Shop);
@@ -175,13 +295,13 @@ public class GameController : ManagerParent
 				break;
 			}
 	           
-			if (!checkStart && inputPlayer.GetAxis("Horizontal") == -1 && horiz)
+			if (inputPlayer.GetAxis("Horizontal") == -1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
 				ChooseRotate(false);
 			}
-			else if (!checkStart && inputPlayer.GetAxis("Horizontal") == 1 && horiz)
+			else if (inputPlayer.GetAxis("Horizontal") == 1 && horiz)
 			{
 				horiz = false;
 				ActiveTextIntro();
@@ -227,6 +347,19 @@ public class GameController : ManagerParent
     #endregion
 
     #region Public Methods
+	public void IniFromUI ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+		textScore = GlobalManager.Ui.ScorePoints;
+		AllPlayerPrefs.ANbRun = 0;
+		Player.GetComponent<PlayerController> ( ).IniPlayer ( );
+		
+		getRank = GlobalManager.Ui.RankSlider;
+		iconeSpe = GlobalManager.Ui.SlowMotion;
+		sliderSpe = GlobalManager.Ui.MotionSlider;
+	}
+
+
     public void ActiveGame()
     {
         GameStartedUpdate();
@@ -241,6 +374,15 @@ public class GameController : ManagerParent
 		{
 			Destroy ( lastWall );
 		}
+
+		int a;
+		for ( a = 0; a < GetBonusText.Count; a++ )
+		{
+			GetBonusText [ a ].text = "LEVEL 1";
+
+			GetBonusText [ a ].transform.parent.GetComponent<ItemModif> ( ).ResetPrice ( );
+		}
+
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
@@ -252,9 +394,56 @@ public class GameController : ManagerParent
 
 		Intro = true;
 		isStay = true;
-        
+
+		currNeeded = 0;
+		currIndex = 0;
+		currMax = 0;
+		CurrentScore = 0;
+		lastNeeded = 0;
+
+		DOTween.Kill ( rankValue );
+		DOTween.To ( ( ) => rankValue, x => rankValue = x, 0, 0.1f );
+		Rank [] getListRank = AllRank;
+
+		for ( a = 0; a < getListRank.Length; a++ )
+		{
+			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
+			{
+				currIndex = a;
+			}
+		}
+
+		currMax = getListRank [ currIndex ].NeededScore;
+
+		for ( a = 0; a < getListRank.Length; a++ )
+		{
+			if ( currMax >= currNeeded )
+			{
+				currNeeded = getListRank [ a ].NeededScore;
+			}
+			else if ( getListRank [ a ].NeededScore > currMax && getListRank [ a ].NeededScore < currNeeded )
+			{
+				currNeeded = getListRank [ a ].NeededScore;
+			}
+		}
+
+		if ( currNeeded <= 0 )
+		{
+			currNeeded = 1;
+		}
+
+		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
+		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
+
+		if ( getCurWait != null )
+		{
+			StopCoroutine ( getCurWait );
+		}
+
 		if ( restartGame )
         {
+			onHub = false;
 			isStay = false;
 			Intro = false;
 
@@ -270,6 +459,7 @@ public class GameController : ManagerParent
 		{
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
@@ -278,7 +468,15 @@ public class GameController : ManagerParent
 		GameStarted = true;
 		checkStart = false;
 
-		SpawnerChunck.FirstSpawn ( );
+		if ( !LaunchTuto )
+		{
+			SpawnerChunck.FirstSpawn ( );
+		}
+		else
+		{
+			AllPlayerPrefs.SetStringValue ( Constants.TutoName );
+			Instantiate ( Tutoriel );
+		}
 
 		thisCam.GetComponent<RainbowRotate>().time = 2;
 		thisCam.GetComponent<RainbowMove>().time = 1;
@@ -368,19 +566,236 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.SetStringValue ( Constants.ChunkUnLock + ThisChunk.name ); 
 	} 
 
-    private IEnumerator TrashFunction()
-    {
-        yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
-        GameStartedUpdate();
-    }
+	public void NewScore ( DeathType thisDeath, int nbrPoint )
+	{
+		//AllPlayerPrefs.scoreWhithoutDistance += point;
+		if ( getCurWait != null )
+		{
+			StopCoroutine ( getCurWait );
+		}
 
+		if ( currIndex >= 0 )
+		{
+			getCurWait = waitRank ( AllRank [ currIndex ].Time );
+
+			StartCoroutine ( getCurWait );
+		}
+
+		ScoringInfo getInfS;
+		GameObject CurrText;
+
+		for ( int a = 0; a < InfScore.Length; a++ )
+		{
+			getInfS = InfScore [ a ];
+			if ( getInfS.TypeDeath == thisDeath )
+			{
+				if ( currIndex >= 0 )
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur * AllRank [ currIndex ].MultiPli;
+				}
+				else
+				{
+					getInfS.AllScore += nbrPoint * getInfS.Multiplicateur;
+				}
+
+				if ( getInfS.WaitCulmul )
+				{
+					CurrText = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+					CurrText.GetComponent<Text> ( ).text = "" + nbrPoint;
+
+					getInfS.CurrSpawn.Add ( CurrText );
+					getInfS.CurrCount++;
+
+					if ( getInfS.CurrWait != null )
+					{
+						StopCoroutine ( getInfS.CurrWait );
+					}
+
+					getInfS.CurrWait = waitScore ( getInfS );
+					StartCoroutine ( getInfS.CurrWait );
+				}
+				else
+				{
+					getInfS.CurrCount ++;
+					addNewScore ( getInfS );
+				}
+				break;
+			}
+	
+		}
+	}
+
+	public void SetAllBonus ( )
+	{
+		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
+
+		if ( !LaunchTuto )
+		{
+			iconeSpe.enabled = false;
+			iconeSpe.DOFade ( 0, 0.3f );
+			sliderSpe.gameObject.SetActive ( false );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
+			currPlayer.SlowMotion = 1.25f; 
+			currPlayer.SpeedSlowMot = 1; 
+			currPlayer.SpeedDeacSM = 5; 
+			currPlayer.ReduceSlider = 1.5f; 
+			currPlayer.RecovSlider = 0.75f; 
+		}
+
+		Dictionary <string, ItemModif> getMod = AllModifItem;
+		List <ItemModif> AllTI = AllTempsItem;
+		ItemModif thisItem;
+		//List<string> getKey = new List<string> ( );
+
+		SpawnerChunck.EndLevel = 1;
+
+		if ( getMod != null )
+		{
+			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
+			{
+				thisItem = thisKV.Value;
+
+				setItemToPlayer ( thisItem, currPlayer );
+			}
+		}
+
+		if ( AllTI != null )
+		{
+			while ( AllTI.Count > 0 )
+			{
+				setItemToPlayer ( AllTI [ 0 ], currPlayer );
+
+				AllTI.RemoveAt ( 0 );
+			}
+		}
+	}
     #endregion
 
     #region Private Methods
+	IEnumerator waitScore ( ScoringInfo thisInf )
+	{
+		yield return new WaitForSeconds ( thisInf.SecCumul );
+
+		addNewScore ( thisInf );
+	}
+
+	void addNewScore ( ScoringInfo thisInf )
+	{
+		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
+		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
+		Rank[] getAllRank = AllRank;
+		int a;
+		for ( a = 0; a < thisInf.CurrSpawn.Count; a++ )
+		{
+			Destroy ( thisInf.CurrSpawn [ a ] );
+		}
+		//Destroy ( newObj, 3 );
+		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
+
+		Image getRankSlid = getRank;
+
+		int currInd = currIndex;
+
+		for ( a = 0; a < getAllRank.Length; a++ )
+        {
+			if ( a != currInd && getAllRank [ a ].NeededScore < CurrentScore && AllRank [ a ].NeededScore > currMax )
+			{
+				currInd = a;
+            }
+        }
+
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
+
+        if ( currInd != currIndex )
+		{
+			GlobalManager.Ui.RankText.color = getAllRank [ currInd ].Color;
+			GlobalManager.Ui.Multiplicateur.text = getAllRank [ currInd ].MultiPli.ToString ( );
+			GlobalManager.Ui.RankText.text = getAllRank [ currInd ].NameRank;
+
+			lastNeeded = currNeeded;
+			currMax = getAllRank [ currInd ].NeededScore;
+		
+			currIndex = currInd;
+
+			for ( a = 0; a < getAllRank.Length; a++ )
+			{
+				if ( currMax >= currNeeded )
+				{
+					currNeeded = getAllRank [ a ].NeededScore;
+				}
+				else if ( getAllRank [ a ].NeededScore > currMax && getAllRank [ a ].NeededScore < currNeeded )
+				{
+					currNeeded = getAllRank [ a ].NeededScore;
+				}
+			}
+
+			if ( getCurWait != null )
+			{
+				StopCoroutine ( getCurWait );
+			}
+
+
+			getCurWait = waitRank ( getAllRank [ currInd ].Time );
+
+
+			StartCoroutine ( getCurWait );
+
+
+            GlobalManager.Ui.NewRank(currInd);
+
+
+            float getNewRank = (float)(CurrentScore - lastNeeded) / (currNeeded - lastNeeded);
+            DOTween.Kill(rankValue);
+            DOTween.To(() => rankValue, x => rankValue = x, getNewRank, 0.1f);
+
+            thisInf.AllScore = 0;
+            thisInf.CurrCount = 0;
+            thisInf.CurrSpawn.Clear();
+        }
+
+    }
+
 	void setMusic () 
 	{ 
-		    GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
+
+	private IEnumerator TrashFunction()
+	{
+		yield return new WaitForSeconds(0.5f); //=> attendre 0.5 seconde ok (mais code deguelasse)
+		GameStartedUpdate();
+	}
+
+	IEnumerator waitRank ( float secs )
+	{
+		yield return new WaitForSeconds ( secs );
+
+		currIndex = 0;
+		Rank [] getListRank = AllRank;
+		Image getRankSlid = getRank;
+
+		for ( int a = 0; a < getListRank.Length; a++ )
+		{
+			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
+			{
+				currIndex = a;
+			}
+		}
+
+		currMax = 0;
+		CurrentScore = 0;
+		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
+		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
+		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
+
+		getRankSlid.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .3f);
+		getRankSlid.transform.parent.transform.DOScale(0, .3f);
+
+		getRankSlid.fillAmount = 0;
+	}
 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
@@ -614,6 +1029,9 @@ public class GameController : ManagerParent
 		{
 			onHub = false;
 			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicBackGround );
+			GlobalManager.AudioMa.CloseAudio ( AudioType.MusicTrash );
+			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+
 			AudioSource thisAud = GlobalManager.AudioMa.OpenAudio ( AudioType.MusicTrash, "", false, setMusic );
 			thisAud.volume *= 1.25f;
 
@@ -628,13 +1046,15 @@ public class GameController : ManagerParent
 
         //GlobalManager.AudioMa.OpenAudio(AudioType.MusicBackGround, "", false);
 
-        musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
+        	musicObject.GetComponent<AudioLowPassFilter>().enabled = false;
             musicObject.GetComponent<AudioDistortionFilter>().enabled = false;
 
 
             checkStart = true;
             //Debug.Log("player = " + Player);
             Player.GetComponent<PlayerController>().StopPlayer = false;
+			//Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
+
 			//thisCam.GetComponent<RainbowRotate>().time = .4f;
 			//thisCam.GetComponent<RainbowMove>().time = .2f;
 
@@ -666,11 +1086,38 @@ public class GameController : ManagerParent
         }
     }
 
+    public float currentValue = 0;
+    public float chromValue = 0;
+    public float weightValue = 0;
+
+    /*public void updateBloom ( )
+     {
+         BloomModel.Settings thisBloom = postProfile.bloom.settings;
+
+         thisBloom.bloom.intensity = currentValue;
+
+         postProfile.bloom.settings = thisBloom;
+     }*/
+
     protected override void InitializeManager ( )
 	{
+		if ( UseTuto )
+		{
+			LaunchTuto = !AllPlayerPrefs.GetBoolValue ( Constants.TutoName );
+		}
+		else
+		{
+			LaunchTuto = false;
+		}
+
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+
+		var behaviour = thisCam.GetComponent<PostProcessingBehaviour>();
+
+		postProfile = Instantiate(behaviour.profile, transform);
+		behaviour.profile = postProfile;
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
@@ -702,60 +1149,38 @@ public class GameController : ManagerParent
 		} 
 	}
 
-	void SetAllBonus ( )
-	{
-		Dictionary <string, ItemModif> getMod = AllModifItem;
-		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
-		List <ItemModif> AllTI = AllTempsItem;
-		ItemModif thisItem;
-		//List<string> getKey = new List<string> ( );
-
-		SpawnerChunck.EndLevel = 1;
-
-		if ( getMod != null )
-		{
-			foreach ( KeyValuePair <string, ItemModif> thisKV in getMod )
-			{
-				thisItem = thisKV.Value;
-
-				setItemToPlayer ( thisItem, currPlayer );
-			}
-		}
-
-		if ( AllTI != null )
-		{
-			while ( AllTI.Count > 0 )
-			{
-				setItemToPlayer ( AllTI [ 0 ], currPlayer );
-
-				AllTI.RemoveAt ( 0 );
-			}
-		}
-	}
-
 	void setItemToPlayer ( ItemModif thisItem, PlayerController currPlayer )
 	{
 		if ( thisItem.ModifSpecial )
 		{
+			iconeSpe.enabled = true;
+			iconeSpe.DOKill ( );
+			iconeSpe.DOFade ( 1, 1 );
+
+			sliderSpe.gameObject.SetActive ( true );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
+			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
+
 			currPlayer.ThisAct = thisItem.SpecAction;
 
 			switch ( thisItem.SpecAction )
 			{
 			case SpecialAction.OndeChoc:
-				currPlayer.SliderSlow.maxValue = currPlayer.delayChocWave;
-				currPlayer.SliderSlow.value = currPlayer.delayChocWave;
+				currPlayer.delayChocWave = thisItem.SliderTime;
                 AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
-				currPlayer.SliderSlow.maxValue = currPlayer.DelayDeadBall;
-				currPlayer.SliderSlow.value = currPlayer.DelayDeadBall;
-                    AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
+				currPlayer.DelayDeadBall = thisItem.SliderTime;
+                AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
-				currPlayer.SliderSlow.maxValue = 10;
-                    AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+                AllPlayerPrefs.ANameTechSpe = "Slow Motion";
+				currPlayer.DelaySlowMot = thisItem.SliderTime;
 				break;
 			}
+
+			currPlayer.SliderSlow.maxValue = thisItem.SliderTime;
+			currPlayer.SliderSlow.value = thisItem.SliderTime;
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 
@@ -768,7 +1193,7 @@ public class GameController : ManagerParent
 			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
 				currPlayer.DistDBTake = thisItem.DistTakeDB; 
-				if ( thisItem.AddItem ) 
+				if ( thisItem.BonusItem ) 
 				{ 
 					currPlayer.SlowMotion += thisItem.SlowMotion; 
 					currPlayer.SpeedSlowMot += thisItem.SpeedSlowMot; 
@@ -789,7 +1214,6 @@ public class GameController : ManagerParent
 
 		if ( thisItem.ModifVie )
 		{
-      
             currPlayer.Life++;
             AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}
@@ -802,7 +1226,6 @@ public class GameController : ManagerParent
 		}
 	}
     #endregion
-
 }
 
 #region Save
@@ -855,7 +1278,6 @@ public class DataSave
     public int score;
     public int piece;
     public float distance;
-
 }
 
 public class ListData
@@ -933,3 +1355,33 @@ public class NewChunk
 	public GameObject ThisChunk; 
 	public UnLockMethode ThisMethod; 
 } 
+
+[System.Serializable] 
+public class Rank  
+{ 
+	public string NameRank; 
+	public int MultiPli = 1;
+	public float Time;
+    public Color Color;
+	public int NeededScore; 
+} 
+
+[System.Serializable] 
+public class ScoringInfo 
+{ 
+	public DeathType TypeDeath;
+	public int Multiplicateur = 1;
+
+	[Header ("Si il faut attendre pour cumuler du score")]
+	public bool WaitCulmul;
+	public float SecCumul = 0;
+
+	[HideInInspector]
+	public IEnumerator CurrWait;
+	[HideInInspector]
+	public int CurrCount = 0;
+	[HideInInspector]
+	public int AllScore = 0;
+	[HideInInspector]
+	public List<GameObject> CurrSpawn;
+}

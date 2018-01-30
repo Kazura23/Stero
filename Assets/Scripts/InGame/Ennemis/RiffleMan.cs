@@ -43,12 +43,12 @@ public class RiffleMan : AbstractObject
 			StartCoroutine ( shootPlayer ( new WaitForSeconds ( SpeedSpawn ), false ) );
 		}
 
+		GetComponentInChildren<Animator> ( ).SetTrigger ( "Attack" );
+
+
         if (!detected)
         {
             detected = true;
-
-
-            GetComponentInChildren<Animator>().SetTrigger("Attack");
 
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoHeadPop", false);
             GlobalManager.AudioMa.OpenAudio(AudioType.OtherSound, "VinoAttack", false);
@@ -58,12 +58,17 @@ public class RiffleMan : AbstractObject
             txt.transform.DOScale(Vector3.one * .15f, 0);
             txt.GetComponent<TextMesh>().text = GlobalManager.DialMa.dial[1].quotes[UnityEngine.Random.Range(0, GlobalManager.DialMa.dial[1].quotes.Length)];
         }
-
     }
 
-	public override void Dead ( bool enemy = false ) 
+	protected override void OnEnable ( )
 	{
-		base.Dead ( enemy );
+		base.OnEnable ( );
+		detected = false;
+	}
+
+	public override void Dead ( bool enemy = false, DeathType thisDeath = DeathType.Punch ) 
+	{
+		base.Dead ( enemy, thisDeath );
         AllPlayerPrefs.ANbVino++;
         AllPlayerPrefs.ANbTotalEnemyKill++;
         //Debug.Log("vino " + AllPlayerPrefs.ANbVino);
@@ -87,10 +92,20 @@ public class RiffleMan : AbstractObject
 		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 
+	public override void Degat(Vector3 p_damage, int p_technic)
+	{
+		return;
+	}
+
 	IEnumerator shootPlayer ( WaitForSeconds thisF, bool checkDir )
 	{
 		int a;
 		GameObject getCurr;
+
+		if ( NbrBalls < 1 )
+		{
+			NbrBalls = 1;
+		}
 
 		for ( a = 0; a < NbrBalls; a++ )
 		{
@@ -123,6 +138,3 @@ public class RiffleMan : AbstractObject
 	}
 	#endregion
 }
-
-
-            
