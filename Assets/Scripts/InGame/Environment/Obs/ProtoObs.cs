@@ -70,11 +70,11 @@ public class ProtoObs : AbstractObject
 	{
 		GameObject getThis = thisColl.gameObject;
 
-		if ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe )
+		if ( getThis.tag == Constants._ObsSafe && gameObject.tag != Constants._ObsSafe || gameObject.tag == Constants._ObjDeadTag && getThis.tag != Constants._ObjDeadTag )
 		{
 			return;
 		}
-		else if ( gameObject.tag == Constants._ObjDeadTag && getThis.tag != Constants._UnTagg && getThis.tag != Constants._ObsTag && getThis.tag != Constants._ObjDeadTag )
+		else if ( gameObject.tag == Constants._ObjDeadTag && getThis.tag != Constants._UnTagg && getThis.tag != Constants._ObsTag )
 		{
 			StartCoroutine ( waitDest ( ) );
 		}
