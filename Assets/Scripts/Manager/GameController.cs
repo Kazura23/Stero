@@ -63,7 +63,7 @@ public class GameController : ManagerParent
 	public List<Text> GetBonusText;
 
 	Player inputPlayer;
-	Text textScore;
+	//Text textScore;
 
 	Image getRank;
 	Image iconeSpe;
@@ -324,7 +324,7 @@ public class GameController : ManagerParent
 	public void IniFromUI ( )
 	{
 		inputPlayer = ReInput.players.GetPlayer(0);
-		textScore = GlobalManager.Ui.ScorePoints;
+		//textScore = GlobalManager.Ui.ScorePoints;
 		AllPlayerPrefs.ANbRun = 0;
 		Player.GetComponent<PlayerController> ( ).IniPlayer ( );
 		
@@ -666,8 +666,6 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
-
-		Image getRankSlid = getRank;
 
 		int currInd = currIndex;
 

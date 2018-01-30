@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 	public float SlowMotion, SpeedSlowMot, SpeedDeacSM, RecovSlider, ReduceSlider;
 
 	[Header ("Caractérique punchs")]
-	public float FOVIncrease = 20;
+	//public float FOVIncrease = 20;
 	public float TimeToDoublePunch = 0.25f;
 	public float CooldownDoublePunch = 1;
 
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
 	float valueSmooth = 0;
     float valueSmoothUse = 0;
 	float timeToDP;
-	float getFOVDP;
+	//float getFOVDP;
 
 	int LastImp = 0;
 	int clDir = 0;
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
 		blockChangeLine = false;
 		canPunch = true; 
 		punchRight = true;
-		getFOVDP = FOVIncrease;
+		//getFOVDP = FOVIncrease;
 		Life = 1;
 		playerDead = false;
 		StopPlayer = true;
@@ -1225,7 +1225,6 @@ public class PlayerController : MonoBehaviour
 
 	void playerMove ( float delTime, float speed )
 	{
-		Transform transPlayer = pTrans;
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 

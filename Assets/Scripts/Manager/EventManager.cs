@@ -80,14 +80,16 @@ public class EventManager : ManagerParent
 		            {
 		                callbacks[i].DynamicInvoke(evnt);
 		            }
-		            catch (System.Reflection.TargetInvocationException e)
+					catch{
+					}
+		           /* catch (System.Reflection.TargetInvocationException e)
 		            {
 		                //Debug.LogError(eventType + " Exception: " + e.InnerException.Message + "\n" + e.InnerException.StackTrace);
 		            }
 		            catch (Exception e)
 		            {
 		                //Debug.LogError("Event with type: " + eventType + " raised with invalid argument. Message: " + e.Message);
-		            }
+		            }*/
 		        }
 		    }
 		}

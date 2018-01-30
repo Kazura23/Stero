@@ -311,7 +311,6 @@ public class UiManager : ManagerParent
         RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
-	int getLayer;
     public void OpenMadness()
     {
         AllPlayerPrefs.ANbPassageMadness++;
@@ -672,7 +671,6 @@ public class UiManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
-		getLayer = PostProcessMadness.layer;
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );

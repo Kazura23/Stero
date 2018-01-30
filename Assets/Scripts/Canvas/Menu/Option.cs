@@ -113,10 +113,7 @@ public class Option :  UiParent
 
 	public void openNewOption ( OptionMenu newOM )
 	{
-		if ( currMenu != null )
-		{
-			closeOptionMenu ( currMenu );
-		}
+		closeOptionMenu ( currMenu );
 
 		currMenu = newOM;
 
