@@ -1550,6 +1550,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
         {
+			Debug.Log ( "11111" );
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
@@ -1585,7 +1586,15 @@ public class PlayerController : MonoBehaviour
 
 	private IEnumerator CooldownPunch ( int type_technic )
     {
-		yield return new WaitForEndOfFrame ( );
+
+		if ( type_technic == 0 )
+		{
+			yield return new WaitForEndOfFrame ( );
+		}
+		else
+		{
+			yield return new WaitForSeconds ( CooldownDoublePunch );
+		}
 	
 		canPunch = true;
     }
