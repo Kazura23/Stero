@@ -1550,7 +1550,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
         {
-			Debug.Log ( "11111" );
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
@@ -1734,7 +1733,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if ( getObj.tag == Constants._Balls )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, true, false, true ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, false, true ) );
 				return;
 			}
 		}
