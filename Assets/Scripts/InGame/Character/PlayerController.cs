@@ -521,6 +521,7 @@ public class PlayerController : MonoBehaviour
 	public void StopCDPunch ()
 	{
 		StopCoroutine ( getCBP );
+		playAnimator.SetBool("DoublePunchEnd", true);
 		canPunch = true;
 	}
 
@@ -706,10 +707,10 @@ public class PlayerController : MonoBehaviour
 			resetAxeS = true;
 		}
 
-		/*if ( inputPlayer.GetAxis ( "CoupDouble" ) == 0 )
+		if ( inputPlayer.GetAxis ( "CoupDouble" ) == 0 )
 		{
 			resetAxeD = true;
-			getFOVDP = FOVIncrease;
+			/*getFOVDP = FOVIncrease;
 
 			if ( timeToDP < TimeToDoublePunch * 0.75f )
 			{
@@ -725,8 +726,8 @@ public class PlayerController : MonoBehaviour
 				playAnimator.SetBool ( "ChargingPunch", false );
 
 				timeToDP = TimeToDoublePunch;
-			}
-		}*/
+			}*/
+		}
 
 		if ( !waitRotate )
 		{
@@ -1570,12 +1571,12 @@ public class PlayerController : MonoBehaviour
 			punchBoxSimple.enabled = true;
 			startPunch ( 0 );
 		}
-		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch )
+		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch && resetAxeD )
         {
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
-
+			resetAxeD = false;
 			playAnimator.SetBool("ChargingPunch_verif", false);
 			playAnimator.SetBool("ChargingPunch", true);
 			playAnimator.SetTrigger("Double");
