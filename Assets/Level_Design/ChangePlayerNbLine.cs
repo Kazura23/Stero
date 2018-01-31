@@ -8,10 +8,30 @@ public class ChangePlayerNbLine : MonoBehaviour {
 	public int NbrLineRigh;
 	public int CurrLine;
 
+	bool checkTrigger = false;
+
+	void OnEnable ( )
+	{
+		checkTrigger = false;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "Player") 
+		if (other.gameObject.tag == "Player" &&!checkTrigger) 
 		{
+			checkTrigger = true;
+			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
+			getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
+			getPlayer.currLine = CurrLine;
+		}
+	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.tag == "Player"&& !checkTrigger) 
+		{
+			checkTrigger = true;
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
 			getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
