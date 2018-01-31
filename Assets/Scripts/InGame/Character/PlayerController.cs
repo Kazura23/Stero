@@ -238,6 +238,9 @@ public class PlayerController : MonoBehaviour
     }
 	#endregion
 
+	int getCull;
+	CameraClearFlags thisClear;
+	Color thisColor ;
 	#region Public Functions
 	public void IniPlayer ( )
 	{
@@ -280,6 +283,10 @@ public class PlayerController : MonoBehaviour
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
 		startRotPlayer = pTrans.localRotation;
+
+		getCull = thisCam.cullingMask;
+		thisClear = thisCam.clearFlags;
+		thisColor = thisCam.backgroundColor;
 	}
 
 	public void ResetPlayer ( )
@@ -344,6 +351,9 @@ public class PlayerController : MonoBehaviour
 		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
 		canSpe = true;
+		thisCam.clearFlags = thisClear;
+		thisCam.cullingMask = getCull;
+		thisCam.backgroundColor = thisColor;
 	}
 
 	public void ResetPosDo ( )
@@ -406,10 +416,6 @@ public class PlayerController : MonoBehaviour
 
 			return;
 		}
-
-		int getCull = thisCam.cullingMask;
-		CameraClearFlags thisClear = thisCam.clearFlags;
-		Color thisColor = thisCam.backgroundColor;
 
 		thisCam.clearFlags = otherCam.clearFlags;
 		thisCam.cullingMask = otherCam.cullingMask;

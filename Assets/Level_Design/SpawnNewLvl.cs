@@ -58,7 +58,7 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Destroy ( ToDest [ a ], 1 );
+				Destroy ( ToDest [ a ], 2 );
 			}
 
 			for ( int a = 0; a < ToDest.Count; a++ )

@@ -554,23 +554,27 @@ public class SpawnChunks : MonoBehaviour
 			}
 
 			// add the other chunk on current chunk in order to destroye them later
-			for ( a = 0; a < allNewChunk.Count; a++ )
+			if ( allNewChunk.Count > 1 )
 			{
-				for ( b = 0; b < allNewChunk.Count; b++ )
+				for ( a = 0; a < allNewChunk.Count; a++ )
 				{
-					if ( a != b )
+					for ( b = 0; b < allNewChunk.Count; b++ )
 					{
-						if ( allNewChunk [ a ].DestThis )
+						if ( a != b )
 						{
-							allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
-						}
-						else
-						{
-							allNewChunk [ a ].ThisSL.ToDisable.Add ( allNewChunk [ b ].ThisObj );
+							if ( allNewChunk [ a ].DestThis )
+							{
+								allNewChunk [ a ].ThisSL.ToDest.Add ( allNewChunk [ b ].ThisObj );
+							}
+							else
+							{
+								allNewChunk [ a ].ThisSL.ToDisable.Add ( allNewChunk [ b ].ThisObj );
+							}
 						}
 					}
 				}
 			}
+
 
 			// re calculate the order by lane parent
 			for ( a = 0; a < getNewChunk.Count; a++ )
