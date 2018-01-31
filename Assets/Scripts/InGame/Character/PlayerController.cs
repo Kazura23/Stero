@@ -1635,7 +1635,6 @@ public class PlayerController : MonoBehaviour
 		canSpe = true;
 	}
 
-	Vector3 getNewRot;
 	public void NewRotation ( GameObject thisColl, bool goRight )
 	{
 		Debug.Log ( "new rotation : " + goRight );
