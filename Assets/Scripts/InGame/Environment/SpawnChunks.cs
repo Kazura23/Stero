@@ -269,8 +269,6 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
-
-		CleanThisList ( otherSpawn, thisSpawn );
 	}
 	#endregion
 	
@@ -574,7 +572,6 @@ public class SpawnChunks : MonoBehaviour
 					}
 				}
 			}
-
 
 			// re calculate the order by lane parent
 			for ( a = 0; a < getNewChunk.Count; a++ )

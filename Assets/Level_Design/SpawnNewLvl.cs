@@ -56,29 +56,29 @@ public class SpawnNewLvl : MonoBehaviour
 				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
 			}
 
-			for ( int a = 0; a < ToDest.Count; a++ )
+
+			for ( int a = 0; a < ToDisable.Count; a++ )
 			{
-				Destroy ( ToDest [ a ], 2 );
+				if ( ToDisable [ a ] != null )
+				{
+					ToDisable [ a ].SetActive ( false );
+				}
 			}
+			ToDisable.Clear ( );
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				ToDest [ a ].SetActive ( false );
+				Destroy ( ToDest [ a ] );
 			}
+			ToDest.Clear ( );
 
-			StartCoroutine ( waitSpawn ( ) );
+			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
+
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
 			getPlayer.currLine -= OnLine;
 			getPlayer.NbrLineRight =  (int)InfoChunk.NbrLaneDebut.y;
 		}
-	}
-
-	IEnumerator waitSpawn ()
-	{
-		yield return new WaitForEndOfFrame ( );
-
-		GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 	}
 	#endregion
 }
