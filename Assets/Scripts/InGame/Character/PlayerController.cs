@@ -1575,7 +1575,7 @@ public class PlayerController : MonoBehaviour
 				dpunch = true;
 				startPunch ( 1 );
 
-				DOVirtual.DelayedCall(0.25f, ()  =>
+				DOVirtual.DelayedCall(0.1f, ()  =>
 				{
 					playAnimator.SetBool("ChargingPunch_verif", false);
 					playAnimator.SetBool("ChargingPunch", false);

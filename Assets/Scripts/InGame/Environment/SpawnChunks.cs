@@ -233,7 +233,10 @@ public class SpawnChunks : MonoBehaviour
 					}
 				}
 
-				getSpc [ 0 ].ThisChunk.GetComponent<ChunkDisable> ( ).ReEnableObject ( );
+				if ( getSpc [ 0 ].ThisChunk.GetComponent<ChunkDisable> ( ) )
+				{
+					getSpc [ 0 ].ThisChunk.GetComponent<ChunkDisable> ( ).ReEnableObject ( );
+				}
 				getSpc [ 0 ].ThisChunk.SetActive ( false );
 			}
 			else
@@ -467,6 +470,10 @@ public class SpawnChunks : MonoBehaviour
 						if ( !getTrans.GetComponent<ChunkDisable> ( ) )
 						{
 							getTrans.gameObject.AddComponent<ChunkDisable> ( );
+						}
+						else
+						{
+							getTrans.GetComponent<ChunkDisable> ( ).Clear ( );	
 						}
 					}
 
@@ -765,6 +772,10 @@ public class SpawnChunks : MonoBehaviour
 					if ( !getTrans.GetComponent<ChunkDisable> ( ) )
 					{
 						getTrans.gameObject.AddComponent<ChunkDisable> ( );
+					}
+					else
+					{
+						getTrans.GetComponent<ChunkDisable> ( ).Clear ( );	
 					}
 				}
 

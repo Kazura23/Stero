@@ -11,7 +11,7 @@ public class ChunkDisable : MonoBehaviour
 		ThosObject = new List<GameObject> ( );
 	}
 
-	void OnEnable ( )
+	public void Clear ( )
 	{
 		ThosObject.Clear ( );
 	}
@@ -29,7 +29,6 @@ public class ChunkDisable : MonoBehaviour
 
 	public void AddNewObj ( GameObject thisObj )
 	{
-		Debug.Log ( thisObj.name );
 		ThosObject.Add ( thisObj );
 	}
 }
