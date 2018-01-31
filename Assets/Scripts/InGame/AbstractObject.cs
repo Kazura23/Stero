@@ -143,13 +143,22 @@ public class AbstractObject : MonoBehaviour
 	#region Public Methods
 	public void EventEnable ( Vector3 setPosition )
 	{
-		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
-		{ 
-			gameObject.SetActive ( true );
-			getTrans.position = setPosition;
-		}; 
+		gameObject.SetActive ( false );
 
-		GlobalManager.Event.Register ( checkEnable ); 
+		Transform getPar = getTrans;
+		int count = 0;
+		while ( count < 50 && getPar.parent.tag != Constants._ChunkParent )
+		{
+			getPar = getPar.parent;
+			count++;
+		}
+
+		if ( getPar.GetComponent<ChunkDisable> ( ) )
+		{
+			getPar.GetComponent<ChunkDisable> ( ).AddNewObj ( gameObject );
+		}
+		
+		getTrans.localPosition = setPosition;
 	}
 
 	public virtual void Degat(Vector3 p_damage, int p_technic)
@@ -298,10 +307,10 @@ public class AbstractObject : MonoBehaviour
 		//Debug.Log ( gameObject.name + " / " + thisDeath );
 		if ( thisObj == null )
 		{
-			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
+			thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position, getTrans.rotation, getTrans.parent );
 			thisObj.SetActive ( false );
-			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
-			thisObj.transform.localPosition = startPos;
+			thisObj.name = gameObject.name;
+			thisObj.GetComponent<AbstractObject> ( ).EventEnable ( startPos );
 		}
 
 		isDead = true;
@@ -326,8 +335,6 @@ public class AbstractObject : MonoBehaviour
 		{
 			animation.enabled = false;
 		}
-
-		mainCorps.constraints = RigidbodyConstraints.None;
 
 		if ( checkConst )
 		{
@@ -363,7 +370,7 @@ public class AbstractObject : MonoBehaviour
 			}
 			catch
 			{
-				Debug.Log ( "ForceOnBody failed" );
+				//Debug.Log ( "ForceOnBody failed" );
 			}
 		}
 		//meshRigid.tag = getObsT;
@@ -396,6 +403,7 @@ public class AbstractObject : MonoBehaviour
 
 	void checkConstAxe ( )
 	{
+		mainCorps.constraints = RigidbodyConstraints.None;
 		if ( FreezeAxe.x != 0 )
 		{
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionX;
@@ -411,9 +419,9 @@ public class AbstractObject : MonoBehaviour
 			mainCorps.constraints = RigidbodyConstraints.FreezePositionY;
 			foreach (Rigidbody thisRig in gameObject.GetComponentsInChildren<Rigidbody>())
 			{
-				thisRig.constraints = RigidbodyConstraints.FreezePositionX;
+				thisRig.constraints = RigidbodyConstraints.FreezePositionY;
 			}
-			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+			gameObject.GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
 		}
 
 		if ( FreezeAxe.z != 0 )

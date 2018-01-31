@@ -142,7 +142,7 @@ public class ShieldMan : AbstractObject {
                 {
 					if ( trans.tag == "Knighty" )
 					{
-						StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( trans.gameObject, GlobalManager.GameCont.Player.transform, 200, 2, 10 ) );
+						StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( trans.gameObject, GlobalManager.GameCont.Player.transform, 200, 2 ) );
 						//Destroy ( trans.gameObject );
 					}
                 }

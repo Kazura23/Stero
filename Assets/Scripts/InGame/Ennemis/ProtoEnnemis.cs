@@ -74,12 +74,20 @@ public class ProtoEnnemis : AbstractObject
 						thisSkin.materials [ a ].SetFloat ( "_highlight", 1.0f );
 					}	
 				}
+
+				if ( thisObj == null )
+				{
+					thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position - Vector3.up * 100, getTrans.rotation, getTrans.parent );
+					thisObj.SetActive ( false );
+					thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
+					thisObj.transform.localPosition = startPos;
+				}
 			}
             //parMat.color = NewColor;
         }
 		else
 		{
-			//parMat.color = saveCol;
+			Destroy ( gameObject, delayDead );
 		}
 		//parMat.color = NewColor;
 

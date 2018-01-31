@@ -165,6 +165,11 @@ public class UiManager : ManagerParent
 
     public void Intro()
     {
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			return;
+		}
+
         Time.timeScale = .05f;
 		float saveFov = thisCam.fieldOfView;
 
@@ -311,7 +316,6 @@ public class UiManager : ManagerParent
         RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
 
-	int getLayer;
     public void OpenMadness()
     {
         AllPlayerPrefs.ANbPassageMadness++;
@@ -648,7 +652,7 @@ public class UiManager : ManagerParent
 
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-
+		
         getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
 		getCurrHeat.DOFade(0, .05f);
         DOVirtual.DelayedCall(.15f, () => {
@@ -672,7 +676,6 @@ public class UiManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
-		getLayer = PostProcessMadness.layer;
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
