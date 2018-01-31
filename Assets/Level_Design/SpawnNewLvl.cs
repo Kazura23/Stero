@@ -56,7 +56,6 @@ public class SpawnNewLvl : MonoBehaviour
 				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
 			}
 
-			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 
 			for ( int a = 0; a < ToDisable.Count; a++ )
 			{
@@ -69,9 +68,11 @@ public class SpawnNewLvl : MonoBehaviour
 
 			for ( int a = 0; a < ToDest.Count; a++ )
 			{
-				Destroy ( ToDest [ a ], 1 );
+				Destroy ( ToDest [ a ] );
 			}
 			ToDest.Clear ( );
+
+			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;

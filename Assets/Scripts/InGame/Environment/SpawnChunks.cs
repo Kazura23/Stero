@@ -269,8 +269,6 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
-
-		CleanThisList ( otherSpawn, thisSpawn );
 	}
 	#endregion
 	
