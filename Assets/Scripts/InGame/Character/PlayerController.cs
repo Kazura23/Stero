@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour
 	[Header ("Caractérique punchs")]
 	//public float FOVIncrease = 20;
 	public float TimeToDoublePunch = 0.25f;
-	public float CooldownDoublePunch = 1;
+    public float DelayDoublePunch = .05f;
+    public float CooldownDoublePunch = 1;
 
 	[HideInInspector]
 	public Slider BarMadness;
@@ -1572,7 +1573,7 @@ public class PlayerController : MonoBehaviour
 			playAnimator.SetTrigger("Double");
 			dpunch = false;
 
-			DOVirtual.DelayedCall ( 0.25f, ( ) =>
+			DOVirtual.DelayedCall ( DelayDoublePunch, ( ) =>
 			{
 				ScreenShake.Singleton.ShakeHitDouble();
 				punchBoxSimple.enabled = true;
@@ -1612,6 +1613,9 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			yield return new WaitForSeconds ( CooldownDoublePunch );
+
+            playAnimator.SetBool("DoublePunchEnd", true);
+
 		}
 	
 		canPunch = true;
