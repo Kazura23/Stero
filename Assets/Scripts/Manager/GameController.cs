@@ -83,6 +83,25 @@ public class GameController : ManagerParent
 	bool coupSimpl = true;
 	bool horiz = true;
 
+
+    // reward menu
+    private bool inReward = false;
+    public Vector3 walkTowardReward;
+    public float delayWalkReward = 1;
+    public Vector3 ajustAngle;
+    private int cursorTypeReward = 0, cursorReward = 0;
+    private bool moveInReward = false;
+    public Vector3[] rotateDeskReward = new Vector3[3];
+    public RewardType[] succes;
+    public RewardType[] defis;
+    private Vector3 posInitPlayer;
+    private bool isLookReward = false;
+    private Transform lookReward;
+    private Vector3 saveRewardPos;
+    public Vector3 zoomRewardSucces;
+    private bool canRotateReward = false;
+    public float speedRotateReward = 5;
+
 	float rankValue = 0;
 
 	int currIndex = -1;
@@ -96,6 +115,10 @@ public class GameController : ManagerParent
 	#region Mono
 	void Update ( )
 	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+        posInitPlayer = Player.transform.position;
+//        succes[0].Load();
+        AllPlayerPrefs.ANbRun = 0;
 		getRank.fillAmount = rankValue;
 
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
@@ -153,7 +176,14 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
-
+                if (inputPlayer.GetAxis("CoupSimple") == 1)
+                {
+                        isStay = false;
+                        Player.transform.DOLocalMove(walkTowardReward, delayWalkReward).OnComplete(() =>
+                        {
+                            inReward = true;
+                        });
+                }
 				break;
 
 			case 2: //Start game
@@ -287,9 +317,13 @@ public class GameController : ManagerParent
 			}
 		}
 		else if (isReady && inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame && isStay )
+	        {
+			    coupSimpl = false;
+	            Player.GetComponent<PlayerController>().GetPunchIntro();
+	        }
+        else
         {
-		coupSimpl = false;
-            Player.GetComponent<PlayerController>().GetPunchIntro();
+            RewardMenu();
         }
         
 	}
@@ -499,7 +533,7 @@ public class GameController : ManagerParent
         AllPlayerPrefs.ResetStaticVar();
 		//SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
         GlobalManager.Ui.DashSpeedEffect(false);
-        SpawnerChunck.RemoveAll ( );
+       
         checkStart = false;
         
         if (AllPlayerPrefs.relance)
@@ -815,6 +849,148 @@ public class GameController : ManagerParent
     {
         yield return new WaitForSeconds(delayRotate);
         isStay = true;
+    }
+
+    private void RewardMenu()
+    {
+        if (inReward && !moveInReward && !isLookReward)
+        {
+            switch (cursorTypeReward)
+            {
+                case 0: // leaderboard
+                    // afficher les leaderboards
+                    break;
+                case 1: // succes
+                    if(succes.Length > 0)
+                    {
+                        if (Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            ChooseViewReward(true, true);
+                        }else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            ChooseViewReward(true, false);
+                        }else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
+                        {
+                            lookReward = succes[cursorReward].transform;
+                            saveRewardPos = lookReward.position;
+                            isLookReward = true;
+                            lookReward.DOMove(zoomRewardSucces, delayWalkReward).OnComplete(()=>
+                            {
+                                canRotateReward = true;
+                            });
+                        }
+                        //afficher effet
+                    }
+                    break;
+                case 2: // defis
+                    if(defis.Length > 0)
+                    {
+                        if (Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            ChooseViewReward(false, true);
+                        }
+                        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            ChooseViewReward(false, false);
+                        }
+                        // afficher effet
+                    }
+                    break;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                moveInReward = true;
+                cursorTypeReward++;
+                if (cursorTypeReward > 2)
+                    cursorTypeReward = 0;
+                RotateViewReward();
+            }else if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                moveInReward = true;
+                cursorTypeReward--;
+                if (cursorTypeReward < 0)
+                    cursorTypeReward = 2;
+                RotateViewReward();
+            }else if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                inReward = false;
+                Player.transform.DOLocalRotate(moveRotate[chooseOption], Player.transform.localEulerAngles == moveRotate[chooseOption] ? 0 : delayRotate).OnComplete(() =>
+                {
+                    Player.transform.DOMove(posInitPlayer, delayWalkReward).OnComplete(() =>
+                    {
+                        isStay = true;
+                    });
+                });
+            }
+        }else if (canRotateReward)
+        {
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                canRotateReward = false;
+                lookReward.eulerAngles = new Vector3(0, 0, 0);
+                lookReward.DOMove(saveRewardPos, delayWalkReward).OnComplete(() =>
+                {
+                    isLookReward = false;
+                });
+            }else if(Input.GetKey(KeyCode.RightArrow))
+            {
+                lookReward.Rotate(0, speedRotateReward * Time.deltaTime, 0);
+            }else if(Input.GetKey(KeyCode.LeftArrow))
+            {
+                lookReward.Rotate(0, -1 * speedRotateReward * Time.deltaTime, 0);
+            }
+            else if (Input.GetKey(KeyCode.UpArrow))
+            {
+                lookReward.Rotate(speedRotateReward * Time.deltaTime, 0, 0);
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                lookReward.Rotate(-1 * speedRotateReward * Time.deltaTime, 0, 0);
+            }
+        }
+    }
+
+    private void RotateViewReward()
+    {
+        cursorReward = 0;
+        Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(()=>
+        {
+            moveInReward = false;
+        });
+    }
+
+    private void ChooseViewReward(bool p_succes, bool p_dir)
+    {
+        if (p_succes)
+        {
+            if (p_dir)
+            {
+                cursorReward++;
+                if (cursorReward >= succes.Length)
+                    cursorReward = 0;
+            }
+            else
+            {
+                cursorReward--;
+                if (cursorReward < 0)
+                    cursorReward = succes.Length - 1;
+            }
+        }
+        else
+        {
+            if (p_dir)
+            {
+                cursorReward++;
+                if (cursorReward >= defis.Length)
+                    cursorReward = 0;
+            }
+            else
+            {
+                cursorReward--;
+                if (cursorReward < 0)
+                    cursorReward = defis.Length - 1;
+            }
+        }
     }
 
     private void ChooseRotate(bool p_add)

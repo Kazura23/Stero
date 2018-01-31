@@ -61,24 +61,17 @@ public class GameOver : UiParent
 		canUpdate = true;
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
+		GlobalManager.GameCont.SpawnerChunck.RemoveAll ( );
       //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
-
-		var e = new RenableAbstObj ( );
-		e.Raise ( );
-
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
 		{
 		};
-		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
-		{ 
-		}; 
 		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
 		{ 
 		}; 
 
 		GlobalManager.Event.UnRegister ( checkDBP );
 		GlobalManager.Event.UnRegister ( checkDBE );
-		GlobalManager.Event.UnRegister ( checkEnable );
 
 		GlobalManager.Ui.ExtraHearts [ 0 ].enabled = false; 
 		GlobalManager.Ui.ExtraHearts [ 1 ].enabled = false; 
@@ -103,6 +96,7 @@ public class GameOver : UiParent
 
 		gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
 		{
+
 			YouGameOver.DOFade(1, .25f);
 			YouGameOver.transform.DOScale(1, .25f).OnComplete(()=> {
 				MadeGameOver.DOFade(1, .25f);

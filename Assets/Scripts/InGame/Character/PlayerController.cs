@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour
 	[Header ("Caractérique punchs")]
 	//public float FOVIncrease = 20;
 	public float TimeToDoublePunch = 0.25f;
-	public float CooldownDoublePunch = 1;
+    public float DelayDoublePunch = .05f;
+    public float CooldownDoublePunch = 1;
 
 	[HideInInspector]
 	public Slider BarMadness;
@@ -238,6 +239,9 @@ public class PlayerController : MonoBehaviour
     }
 	#endregion
 
+	int getCull;
+	CameraClearFlags thisClear;
+	Color thisColor ;
 	#region Public Functions
 	public void IniPlayer ( )
 	{
@@ -263,6 +267,10 @@ public class PlayerController : MonoBehaviour
 
 		inputPlayer = ReInput.players.GetPlayer(0);
 
+
+        //Rewired.ReInput.mapping.GetKeyboardMapInstance(0, 0).GetElementMaps()[0];
+        //inputPlayer.controllers.maps.GetMap(0).ReplaceElementMap(0, 0, Pole.Positive, KeyCode.A, ModifierKeyFlags.None);
+
 		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
 		getObj.transform.localPosition = Vector3.zero;
 		getObj.name = "pivot";
@@ -276,6 +284,10 @@ public class PlayerController : MonoBehaviour
 		startPosRM = thisCam.transform.localPosition;
 		startPlayer = pTrans.localPosition;
 		startRotPlayer = pTrans.localRotation;
+
+		getCull = thisCam.cullingMask;
+		thisClear = thisCam.clearFlags;
+		thisColor = thisCam.backgroundColor;
 	}
 
 	public void ResetPlayer ( )
@@ -340,6 +352,9 @@ public class PlayerController : MonoBehaviour
 		pTrans.localRotation = startRotPlayer;
 		lastPos = startPlayer;
 		canSpe = true;
+		thisCam.clearFlags = thisClear;
+		thisCam.cullingMask = getCull;
+		thisCam.backgroundColor = thisColor;
 	}
 
 	public void ResetPosDo ( )
@@ -402,10 +417,6 @@ public class PlayerController : MonoBehaviour
 
 			return;
 		}
-
-		int getCull = thisCam.cullingMask;
-		CameraClearFlags thisClear = thisCam.clearFlags;
-		Color thisColor = thisCam.backgroundColor;
 
 		thisCam.clearFlags = otherCam.clearFlags;
 		thisCam.cullingMask = otherCam.cullingMask;
@@ -502,7 +513,15 @@ public class PlayerController : MonoBehaviour
 
 		punch.setTechnic ( tech );
 
-		StartCoroutine ( CooldownPunch ( tech ) );
+		getCBP = CooldownPunch ( tech );
+		StartCoroutine ( getCBP );
+	}
+
+	IEnumerator getCBP;
+	public void StopCDPunch ()
+	{
+		StopCoroutine ( getCBP );
+		canPunch = true;
 	}
 
 	public void RecoverTimer ( DeathType thisDeath, int nbrPoint, float bonus )
@@ -550,14 +569,18 @@ public class PlayerController : MonoBehaviour
 			{
 				getCal = 1;
 				InMadness = true;
-				StopPlayer = true;
+
+				float getSpeed = currSpeed;
+				currSpeed *= 0.05f;
 
 				DOVirtual.DelayedCall(2f, () => {
-					StopPlayer = false;
+					currSpeed = getSpeed;
 				});
 
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
+				Dash = false;
+				GlobalManager.Ui.DashSpeedEffect ( false );
 			}
 		}
 		else if ( !lastTimer )
@@ -1295,7 +1318,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( newPos )
+		/*if ( newPos )
 		{
 			befRot -= speed * delTime;
 
@@ -1306,7 +1329,7 @@ public class PlayerController : MonoBehaviour
 				useFord = false;
 				StartCoroutine ( rotPlayer ( delTime ) );
 			}
-		}
+		}*/
 	
 		if ( useFord )
 		{
@@ -1553,23 +1576,26 @@ public class PlayerController : MonoBehaviour
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
 
-			playAnimator.SetBool("ChargingPunch_verif", true);
+			playAnimator.SetBool("ChargingPunch_verif", false);
 			playAnimator.SetBool("ChargingPunch", true);
 			playAnimator.SetTrigger("Double");
 			dpunch = false;
 
-			DOVirtual.DelayedCall ( 0.25f, ( ) =>
+			DOVirtual.DelayedCall ( DelayDoublePunch, ( ) =>
 			{
 				ScreenShake.Singleton.ShakeHitDouble();
 				punchBoxSimple.enabled = true;
 				GlobalManager.Ui.DoubleCoup();
+				playAnimator.SetBool("ChargingPunch_verif", true);
 				playAnimator.SetBool("ChargingPunch", false);
 
 				dpunch = true;
 				startPunch ( 1 );
-				playAnimator.SetBool("ChargingPunch_verif", false);
-				DOVirtual.DelayedCall(0.25f, ()  =>
+
+				DOVirtual.DelayedCall(0.1f, ()  =>
 				{
+					playAnimator.SetBool("ChargingPunch_verif", false);
+					playAnimator.SetBool("ChargingPunch", false);
 					/*dpunch = true;
 					startPunch ( 1 );
 					playAnimator.SetBool("ChargingPunch_verif", false);*/
@@ -1595,6 +1621,9 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			yield return new WaitForSeconds ( CooldownDoublePunch );
+
+            playAnimator.SetBool("DoublePunchEnd", true);
+
 		}
 	
 		canPunch = true;
@@ -1668,15 +1697,24 @@ public class PlayerController : MonoBehaviour
 
 			if ( !onAnimeAir )
 			{
-				newPos = true;
+				StopPlayer = true;
 				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
+
 				blockChangeLine = false;
-				getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
+
+				Vector3 getPtr = thisColl.transform.position;
+				getPtr = new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z );
+
+				pTrans.DOMove ( new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z ), 0.25f ).OnComplete ( ( ) =>
+				{
+					StartCoroutine ( rotPlayer ( Time.deltaTime ) );
+				} );
+				/*getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
 
 				Vector3 getPtr = pTrans.position;
 				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
 				getNewRot = getThisC;
-				befRot = Vector3.Distance ( getThisC, getPtr );
+				befRot = Vector3.Distance ( getThisC, getPtr );*/
 			}
 			else
 			{
@@ -1735,7 +1773,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if ( getObj.tag == Constants._Balls )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, false, true ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, false, true ) );
 				return;
 			}
 		}

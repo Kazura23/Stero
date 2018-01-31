@@ -43,7 +43,6 @@ public class SpawnNewLvl : MonoBehaviour
 		if (other.gameObject.tag == Constants._PlayerTag && !detect ) 
 		{
 			detect = true;
-			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
 			if (AddToList) 
 			{
 				Transform getParent = transform;
@@ -57,20 +56,28 @@ public class SpawnNewLvl : MonoBehaviour
 				GlobalManager.GameCont.SpawnerChunck.AddNewChunk ( getParent.gameObject, OnScene, GarbChunk );
 			}
 
+
+			for ( int a = 0; a < ToDisable.Count; a++ )
+			{
+				if ( ToDisable [ a ] != null )
+				{
+					ToDisable [ a ].SetActive ( false );
+				}
+			}
+			ToDisable.Clear ( );
+
+			for ( int a = 0; a < ToDest.Count; a++ )
+			{
+				Destroy ( ToDest [ a ] );
+			}
+			ToDest.Clear ( );
+
+			GlobalManager.GameCont.SpawnerChunck.NewSpawn ( InfoChunk );
+
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = (int)InfoChunk.NbrLaneDebut.x;
 			getPlayer.currLine -= OnLine;
 			getPlayer.NbrLineRight =  (int)InfoChunk.NbrLaneDebut.y;
-
-			for ( int a = 0; a < ToDest.Count; a++ )
-			{
-				Destroy ( ToDest [ a ], 1 );
-			}
-
-			for ( int a = 0; a < ToDest.Count; a++ )
-			{
-				ToDest [ a ].SetActive ( false );
-			}
 		}
 	}
 	#endregion
