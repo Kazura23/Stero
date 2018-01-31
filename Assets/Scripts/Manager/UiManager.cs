@@ -165,6 +165,11 @@ public class UiManager : ManagerParent
 
     public void Intro()
     {
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			return;
+		}
+
         Time.timeScale = .05f;
 		float saveFov = thisCam.fieldOfView;
 
