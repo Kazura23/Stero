@@ -562,6 +562,8 @@ public class PlayerController : MonoBehaviour
 
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
+				Dash = false;
+				GlobalManager.Ui.DashSpeedEffect ( false );
 			}
 		}
 		else if ( !lastTimer )
@@ -1742,7 +1744,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if ( getObj.tag == Constants._Balls )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, 5, false, true ) );
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( getObj, pTrans, PropulseBalls, 1, false, true ) );
 				return;
 			}
 		}

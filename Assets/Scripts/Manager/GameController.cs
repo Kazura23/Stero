@@ -533,7 +533,7 @@ public class GameController : ManagerParent
         AllPlayerPrefs.ResetStaticVar();
 		//SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
         GlobalManager.Ui.DashSpeedEffect(false);
-        SpawnerChunck.RemoveAll ( );
+       
         checkStart = false;
         
         if (AllPlayerPrefs.relance)

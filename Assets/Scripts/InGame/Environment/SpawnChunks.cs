@@ -159,6 +159,7 @@ public class SpawnChunks : MonoBehaviour
 			{
 				if ( getSpc [ 0 ].OnScene )
 				{
+					getSpc [ 0 ].ThisChunk.GetComponent<ChunkDisable> ( ).ReEnableObject ( );
 					getSpc [ 0 ].ThisChunk.SetActive ( false );
 				}
 				else
@@ -203,18 +204,11 @@ public class SpawnChunks : MonoBehaviour
 		bool doubleFirst = false;
 		int a;
 
-		var e = new RenableAbstObj ( );
-		e.Raise ( );
-
-		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
-		{ 
-		}; 
 		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
 		{ 
 		}; 
 
 		GlobalManager.Event.UnRegister ( checkDBP );
-		GlobalManager.Event.UnRegister ( checkEnable );
 
 		if ( !StartBonus )
 		{
@@ -239,6 +233,7 @@ public class SpawnChunks : MonoBehaviour
 					}
 				}
 
+				getSpc [ 0 ].ThisChunk.GetComponent<ChunkDisable> ( ).ReEnableObject ( );
 				getSpc [ 0 ].ThisChunk.SetActive ( false );
 			}
 			else
@@ -271,6 +266,8 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
+
+		CleanThisList ( otherSpawn, thisSpawn );
 	}
 	#endregion
 	
@@ -353,18 +350,11 @@ public class SpawnChunks : MonoBehaviour
 		GetSpawnable getSble;
 		GameObject currWall;
 
-		var e = new RenableAbstObj ( );
-		e.Raise ( );
-
-		System.Action <RenableAbstObj> checkEnable = delegate ( RenableAbstObj thisEvnt ) 
-		{ 
-		}; 
 		System.Action <DeadBallParent> checkDBP = delegate ( DeadBallParent thisEvnt ) 
 		{ 
 		}; 
 
 		GlobalManager.Event.UnRegister ( checkDBP );
-		GlobalManager.Event.UnRegister ( checkEnable );
 
 		// Si le dernier chunk activé comporte des chunks spécifique à spawn
 		if ( !transitChunk )
@@ -418,7 +408,7 @@ public class SpawnChunks : MonoBehaviour
 			int diffLine;
 			int vertChunk;
 			bool isChunkScene;
-
+			bool checkOpti;
 			for ( a = 0; a < sourceSpawn.ThoseExit.Count; a++ )
 			{
 				currChunk = currNbrCh;
@@ -451,9 +441,15 @@ public class SpawnChunks : MonoBehaviour
 						}
 					}
 
+					checkOpti = false;
+
 					if ( !isChunkScene )
 					{
 						thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+					}
+					else
+					{
+						checkOpti = true;
 					}
 
 					currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( true );
@@ -464,6 +460,14 @@ public class SpawnChunks : MonoBehaviour
 					{
 						getTrans = getTrans.parent;
 						count++;
+					}
+
+					if ( checkOpti )
+					{
+						if ( !getTrans.GetComponent<ChunkDisable> ( ) )
+						{
+							getTrans.gameObject.AddComponent<ChunkDisable> ( );
+						}
 					}
 
 					if ( currSL == null )
@@ -509,7 +513,7 @@ public class SpawnChunks : MonoBehaviour
 
 					vertChunk = getCurrNew.Count - 1;
 					getCurrNew [ vertChunk ].SpawnNL = currSL;
-					getCurrNew [ vertChunk ].ThisObj = getChunkT.gameObject;
+					getCurrNew [ vertChunk ].ThisObj = thisSpawn;
 					getCurrNew [ vertChunk ].NbrLaneDebut = currSL.InfoChunk.NbrLaneDebut;
 					getCurrNew [ vertChunk ].CurrLane = sourceSpawn.ThoseExit [ a ].LaneParent;
 					getCurrNew [ vertChunk ].CurrVert = sourceSpawn.ThoseExit [ a ].Verticalite;
@@ -529,7 +533,6 @@ public class SpawnChunks : MonoBehaviour
 						otherSpawn [ otherSpawn.Count - 1 ].ThisChunk = thisSpawn;
 						otherSpawn [ otherSpawn.Count - 1 ].OnScene = isChunkScene;
 						otherSpawn [ otherSpawn.Count - 1 ].GarbChunk = currSL.GarbChunk;
-
 					} 
 					else 
 					{
@@ -749,6 +752,21 @@ public class SpawnChunks : MonoBehaviour
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
 				}
+				else
+				{
+					Transform getTrans = thisSpawn.transform;
+					int count = 0;
+					while ( count < 50 && getTrans.parent.tag != Constants._ChunkParent )
+					{
+						getTrans = getTrans.parent;
+						count++;
+					}
+
+					if ( !getTrans.GetComponent<ChunkDisable> ( ) )
+					{
+						getTrans.gameObject.AddComponent<ChunkDisable> ( );
+					}
+				}
 
 				thisSpawn.SetActive ( true );
 
@@ -828,7 +846,7 @@ public class SpawnChunks : MonoBehaviour
 	}
 
 	//Désactive tous les chunks de la liste envoyé
-	void CleanThisList ( List<CheckOnScene> getChunk )
+	void CleanThisList ( List<CheckOnScene> getChunk, GameObject checkObj = null )
 	{
 		List<GameObject> getGarb = new List<GameObject> ( );
 		int a;
@@ -840,10 +858,17 @@ public class SpawnChunks : MonoBehaviour
 				getChunk.RemoveAt ( getChunk.Count - 1 );
 				continue;
 			}
+			else if ( checkObj != null && getChunk [ getChunk.Count - 1 ].ThisChunk == checkObj )
+			{
+				getChunk.RemoveAt ( getChunk.Count - 1 );
+				continue;
+			}
 
 			if ( getChunk [ getChunk.Count - 1 ].OnScene )
 			{
+				getChunk [ getChunk.Count - 1 ].ThisChunk.GetComponent<ChunkDisable> ( ).ReEnableObject ( );
 				getChunk [ getChunk.Count - 1 ].ThisChunk.SetActive ( false );
+
 				getGarb = getChunk [ getChunk.Count - 1 ].GarbChunk;
 
 				if ( getGarb != null )
