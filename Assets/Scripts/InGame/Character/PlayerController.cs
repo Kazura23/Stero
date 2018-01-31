@@ -560,10 +560,12 @@ public class PlayerController : MonoBehaviour
 			{
 				getCal = 1;
 				InMadness = true;
-				StopPlayer = true;
+
+				float getSpeed = currSpeed;
+				currSpeed *= 0.05f;
 
 				DOVirtual.DelayedCall(2f, () => {
-					StopPlayer = false;
+					currSpeed = getSpeed;
 				});
 
 				StartCoroutine ( camColor ( true ) );

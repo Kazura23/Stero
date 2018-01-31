@@ -652,7 +652,7 @@ public class UiManager : ManagerParent
 
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
-
+		
         getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
 		getCurrHeat.DOFade(0, .05f);
         DOVirtual.DelayedCall(.15f, () => {
