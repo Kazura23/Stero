@@ -35,13 +35,14 @@ public class Punch : MonoBehaviour {
         {
             switch (other.tag)
             {
-				case Constants._EnnemisTag : case Constants._ElemDash :
-                    Vector3 dir = Vector3.Normalize(other.transform.position - transform.position);
-					if (!tryGet)
-                    {
-                        return;
-                    }
-					tryGet.Degat(dir * puissanceOnde, (int)Technic.onde_choc);
+			case Constants._EnnemisTag:
+			case Constants._ElemDash:
+				Vector3 dir = Vector3.Normalize ( other.transform.position - transform.position );
+				if ( !tryGet )
+				{
+					return;
+				}
+				tryGet.Degat ( dir * puissanceOnde, ( int ) Technic.onde_choc );
                     break;
                 case Constants._ObsPropSafe:
 				GlobalManager.GameCont.MeshDest.SplitMesh(other.gameObject, control.transform, 100, 3 );
@@ -103,6 +104,7 @@ public class Punch : MonoBehaviour {
 				//Debug.Log ( pourcPunch );
 				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
+					control.StopCDPunch ( );
 					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
 				}
 				else

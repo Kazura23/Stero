@@ -513,7 +513,15 @@ public class PlayerController : MonoBehaviour
 
 		punch.setTechnic ( tech );
 
-		StartCoroutine ( CooldownPunch ( tech ) );
+		getCBP = CooldownPunch ( tech );
+		StartCoroutine ( getCBP );
+	}
+
+	IEnumerator getCBP;
+	public void StopCDPunch ()
+	{
+		StopCoroutine ( getCBP );
+		canPunch = true;
 	}
 
 	public void RecoverTimer ( DeathType thisDeath, int nbrPoint, float bonus )
