@@ -1309,7 +1309,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if ( newPos )
+		/*if ( newPos )
 		{
 			befRot -= speed * delTime;
 
@@ -1320,7 +1320,7 @@ public class PlayerController : MonoBehaviour
 				useFord = false;
 				StartCoroutine ( rotPlayer ( delTime ) );
 			}
-		}
+		}*/
 	
 		if ( useFord )
 		{
@@ -1685,15 +1685,24 @@ public class PlayerController : MonoBehaviour
 
 			if ( !onAnimeAir )
 			{
-				newPos = true;
+				StopPlayer = true;
 				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
+
 				blockChangeLine = false;
-				getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
+
+				Vector3 getPtr = thisColl.transform.position;
+				getPtr = new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z );
+
+				pTrans.DOMove ( new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z ), 0.25f ).OnComplete ( ( ) =>
+				{
+					StartCoroutine ( rotPlayer ( Time.deltaTime ) );
+				} );
+				/*getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
 
 				Vector3 getPtr = pTrans.position;
 				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
 				getNewRot = getThisC;
-				befRot = Vector3.Distance ( getThisC, getPtr );
+				befRot = Vector3.Distance ( getThisC, getPtr );*/
 			}
 			else
 			{

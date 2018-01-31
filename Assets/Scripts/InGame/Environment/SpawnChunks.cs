@@ -575,7 +575,6 @@ public class SpawnChunks : MonoBehaviour
 				}
 			}
 
-
 			// re calculate the order by lane parent
 			for ( a = 0; a < getNewChunk.Count; a++ )
 			{
