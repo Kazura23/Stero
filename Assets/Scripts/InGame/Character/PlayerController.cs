@@ -94,8 +94,6 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool Dash = false;
 	[HideInInspector]
-	public bool blockChangeLine = false;
-	[HideInInspector]
 	public bool InMadness = false;
 	[HideInInspector]
 	public Slider SliderSlow;
@@ -118,6 +116,8 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int currLine = 0;
+	[HideInInspector]
+	public bool blockChangeLine = false;
 
 	Transform pTrans;
 	Rigidbody pRig;
@@ -200,7 +200,6 @@ public class PlayerController : MonoBehaviour
 	bool getCamRM = false;
 	bool newDir = false;
 	bool onTuto;
-
     private int[] enemyKill;
     private string[] deadType;
 
@@ -307,7 +306,6 @@ public class PlayerController : MonoBehaviour
 		lastTimer = false;
 		secureTimer = false;
 		newPos = false;
-		blockChangeLine = false;
 		canPunch = true; 
 		punchRight = true;
 		//getFOVDP = FOVIncrease;
@@ -633,6 +631,7 @@ public class PlayerController : MonoBehaviour
 		{
 			getValue = -saveCamMad;
 			inMad = 1;
+
 			targetTime = 1;
 		}
 
@@ -729,10 +728,7 @@ public class PlayerController : MonoBehaviour
 			}*/
 		}
 
-		if ( !waitRotate )
-		{
-			playerFight ( getTime );
-		}
+		playerFight ( getTime );
 
 		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
@@ -754,7 +750,10 @@ public class PlayerController : MonoBehaviour
        
 		if ( !inAir )
 		{
-			changeLine ( getTime );
+			if ( !blockChangeLine )
+			{
+				changeLine ( getTime );
+			}
 			playerMove ( getTime, currSpeed );
 		}
 	}
@@ -976,7 +975,7 @@ public class PlayerController : MonoBehaviour
 
 			SliderSlow.value = SliderContent;
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && !waitRotate )
+		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
 		{
             GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform, 4f);
             target.transform.DOScale(Vector3.one, 0);
@@ -1145,11 +1144,8 @@ public class PlayerController : MonoBehaviour
 				checkAir = false;
 				Transform getThis = thisRay.collider.transform;
 
-				if ( !waitRotate )
-				{
-					pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
-					pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 (  getThis.rotation.x, 0, 0 ) ) );
-				}
+				pTrans.DORotate ( new Vector3 ( getThis.rotation.x, pTrans.rotation.eulerAngles.y, pTrans.rotation.eulerAngles.z ), 0 );
+				pivotTrans.localRotation = Quaternion.Inverse ( Quaternion.Euler ( new Vector3 (  getThis.rotation.x, 0, 0 ) ) );
 
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.6f, pTrans.localPosition.z );
 				break;
@@ -1158,11 +1154,8 @@ public class PlayerController : MonoBehaviour
 			{
 				checkAir = false;
 				pTrans.localPosition = new Vector3 ( pTrans.localPosition.x, thisRay.point.y + 1.6f, pTrans.localPosition.z );
-				if ( !waitRotate )
-				{
-					pTrans.DOLocalRotate ( new Vector3 ( 0, pTrans.localRotation.eulerAngles.y, pTrans.localRotation.eulerAngles.z ), 0 );
-					pivotTrans.localRotation = Quaternion.identity;
-				}
+				pTrans.DOLocalRotate ( new Vector3 ( 0, pTrans.localRotation.eulerAngles.y, pTrans.localRotation.eulerAngles.z ), 0 );
+				pivotTrans.localRotation = Quaternion.identity;
 
 				pRig.constraints = RigidbodyConstraints.FreezeAll;
 			}
@@ -1252,13 +1245,13 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( Dash && !waitRotate)
+		if ( Dash )
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
-		else if ( InMadness && !waitRotate)
+		else if ( InMadness )
 		{
 			speed *= MadnessSpeed;
 		}
@@ -1344,51 +1337,12 @@ public class PlayerController : MonoBehaviour
 		pTrans.Translate ( calTrans, Space.World );
 	}
 
-	bool waitRotate = false;
-	IEnumerator rotPlayer ( float delTime )
-	{
-		Transform transPlayer = pTrans;
-		Vector3 currVect;
-		float calcTime = RotationSpeed * delTime;
-		StopPlayer = true;
-		if ( InMadness || Dash )
-		{
-			calcTime *= 0.5f;
-		}
-
-		waitRotate = true;
-		Vector3 getVec = Vector3.zero;
-
-		transPlayer.DOKill ( );
-
-		if ( newDir )
-		{
-			currVect = new Vector3 ( 0, 90, 0 );
-		}
-		else
-		{
-			currVect = new Vector3 ( 0, -90, 0 );
-		}
-
-		transPlayer.DOLocalRotate ( currVect, calcTime, RotateMode.LocalAxisAdd );
-
-		yield return new WaitForSeconds ( calcTime );
-
-		yield return new WaitForEndOfFrame ( );
-		waitRotate = false;
-		useFord = true;
-		StopPlayer = false;
-
-		yield return new WaitForSeconds ( 0.25f );
-		checkRot = false;
-	}
-
 	void changeLine ( float delTime )
 	{
 		float newImp = inputPlayer.GetAxis ( "Horizontal" );
 		float lineDistance = Constants.LineDist;
 
-		if ( ( canChange || newH == 0 ) && !inAir && !blockChangeLine )
+		if ( ( canChange || newH == 0 ) && !inAir )
 		{
 			if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
 			{
@@ -1681,47 +1635,33 @@ public class PlayerController : MonoBehaviour
 		canSpe = true;
 	}
 
-	Vector3 getNewRot;
-	bool checkRot = false;
-	void OnTriggerEnter ( Collider thisColl )
+	public void NewRotation ( GameObject thisColl, bool goRight )
 	{
-		if ( thisColl.tag == Constants._NewDirec && !checkRot )
+		Debug.Log ( "new rotation : " + goRight );
+		Vector3 getThisC = thisColl.transform.position;
+			
+		StopPlayer = true;
+		newDir = goRight;
+
+		getThisC = new Vector3 ( getThisC.x, pTrans.position.y, getThisC.z );
+		pTrans.DOKill ( );
+		pTrans.DOMove ( new Vector3 ( getThisC.x, pTrans.position.y, getThisC.z ), RotationSpeed );
+
+		if ( newDir )
 		{
-			Vector3 getThisC = thisColl.transform.position;
+			getThisC = new Vector3 ( 0, 90, 0 );
+		}
+		else
+		{
+			getThisC = new Vector3 ( 0, -90, 0 );
+		}
 
-			if ( playerInv )
-			{
-				return;
-			}
-
-			checkRot = true;
-
-			if ( !onAnimeAir )
-			{
-				StopPlayer = true;
-				newDir = thisColl.GetComponent<NewDirect> ( ).GoRight;
-
-				blockChangeLine = false;
-
-				Vector3 getPtr = thisColl.transform.position;
-				getPtr = new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z );
-
-				pTrans.DOMove ( new Vector3 ( getPtr.x, pTrans.position.y, getPtr.z ), 0.25f ).OnComplete ( ( ) =>
-				{
-					StartCoroutine ( rotPlayer ( Time.deltaTime ) );
-				} );
-				/*getThisC = new Vector3 ( getThisC.x, 0, getThisC.z );
-
-				Vector3 getPtr = pTrans.position;
-				getPtr = new Vector3 ( getPtr.x, 0, getPtr.z );
-				getNewRot = getThisC;
-				befRot = Vector3.Distance ( getThisC, getPtr );*/
-			}
-			else
-			{
-				pTrans.position = new Vector3 ( getThisC.x, pTrans.position.y, getThisC.z );
-			}
-		} 
+		pTrans.DOLocalRotate ( getThisC, RotationSpeed, RotateMode.LocalAxisAdd ).OnComplete( ()=>
+		{
+			useFord = true;
+			StopPlayer = false;
+			blockChangeLine = false;
+		});
 	}
 
 	void OnCollisionEnter ( Collision thisColl )
@@ -1813,7 +1753,10 @@ public class PlayerController : MonoBehaviour
 
 	void stopMadness ( )
 	{
-		InMadness = false;
+		DOVirtual.DelayedCall ( 0.25f, ( ) =>
+		{
+			InMadness = false;
+		} );
 
 		StartCoroutine ( camColor ( false ) );
 
