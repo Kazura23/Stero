@@ -105,13 +105,13 @@ public class Punch : MonoBehaviour {
 				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)
 				{
 					control.StopCDPunch ( );
-					tryGet.Degat ( projection_double * getPlayer.forward/* * pourcPunch*/, numTechnic );
+					tryGet.Degat ( projection_double * -other.transform.forward/* * pourcPunch*/, numTechnic );
 				}
 				else
 				{
 					if ( getRid != null )
 					{
-						getRid.AddForce ( projection_double * getPlayer.forward, ForceMode.VelocityChange );
+						getRid.AddForce ( projection_double * -other.transform.forward, ForceMode.VelocityChange );
 					}
 				}
 

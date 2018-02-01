@@ -1762,7 +1762,6 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.Ui.CloseMadness();
 	}
-
     private string AnalyticsChunk(Transform p_child)
     {
 		if ( onTuto || p_child == null)
