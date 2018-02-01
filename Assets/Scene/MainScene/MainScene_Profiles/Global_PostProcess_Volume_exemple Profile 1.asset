@@ -18,6 +18,8 @@ MonoBehaviour:
   - {fileID: 114276221680440656}
   - {fileID: 114044612062186138}
   - {fileID: 114871739142114288}
+  - {fileID: 114114063114817114}
+  - {fileID: 114356899754191332}
 --- !u!114 &114011565831588668
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -35,19 +37,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.53
+    value: 1.8
   threshold:
     overrideState: 1
-    value: 0.69
+    value: 0.9
   softKnee:
     overrideState: 1
-    value: 0.223
+    value: 0.52
   diffusion:
     overrideState: 1
-    value: 5.56
+    value: 6.19
   anamorphicRatio:
     overrideState: 1
-    value: 0
+    value: -1
   color:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -55,11 +57,11 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   dirtTexture:
-    overrideState: 0
-    value: {fileID: 0}
+    overrideState: 1
+    value: {fileID: 2800000, guid: 69e847bbff1cf5449a4ee0bbd045dbc9, type: 3}
   dirtIntensity:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 7.2
 --- !u!114 &114044612062186138
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -80,7 +82,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.32
+    value: 0.84
   color:
     overrideState: 1
     value: {r: 0.0038927374, g: 0.023076024, b: 0.029411793, a: 1}
@@ -108,6 +110,33 @@ MonoBehaviour:
   quality:
     overrideState: 1
     value: 3
+--- !u!114 &114114063114817114
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  focusDistance:
+    overrideState: 1
+    value: 2.74
+  aperture:
+    overrideState: 1
+    value: 16.8
+  focalLength:
+    overrideState: 1
+    value: 16
+  kernelSize:
+    overrideState: 1
+    value: 1
 --- !u!114 &114190586433744468
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -197,7 +226,7 @@ MonoBehaviour:
     value: {fileID: 0}
   tonemapper:
     overrideState: 1
-    value: 2
+    value: 1
   toneCurveToeStrength:
     overrideState: 1
     value: 0
@@ -236,16 +265,16 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 9
+    value: 21
   brightness:
     overrideState: 1
     value: 0
   postExposure:
     overrideState: 1
-    value: 0.29
+    value: 0.96
   contrast:
     overrideState: 1
-    value: 47
+    value: 17
   mixerRedOutRedIn:
     overrideState: 1
     value: 100
@@ -275,13 +304,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 1, y: 0.9499896, z: 0.9361643, w: -0.043956045}
+    value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     overrideState: 1
-    value: {x: 1, y: 0.9879845, z: 0.887077, w: 0.24175824}
+    value: {x: 1, y: 1, z: 1, w: 0}
   gain:
     overrideState: 1
-    value: {x: 0.9654968, y: 1, z: 0.9806264, w: 0.37362638}
+    value: {x: 1, y: 1, z: 1, w: 0}
   masterCurve:
     overrideState: 1
     value:
@@ -426,6 +455,42 @@ MonoBehaviour:
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
+--- !u!114 &114356899754191332
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
+  m_Name: AutoExposure
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  filtering:
+    overrideState: 1
+    value: {x: 9.320757, y: 37.062904}
+  minLuminance:
+    overrideState: 1
+    value: -4.6
+  maxLuminance:
+    overrideState: 1
+    value: -1.3
+  keyValue:
+    overrideState: 1
+    value: 0.04
+  eyeAdaptation:
+    overrideState: 1
+    value: 0
+  speedUp:
+    overrideState: 1
+    value: 16
+  speedDown:
+    overrideState: 1
+    value: 20
 --- !u!114 &114871739142114288
 MonoBehaviour:
   m_ObjectHideFlags: 3

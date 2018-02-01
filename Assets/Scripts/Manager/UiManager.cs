@@ -331,7 +331,9 @@ public class UiManager : ManagerParent
 
         Destroy(textMadness, 3);
 
-        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
+
+		DOTween.Kill ( GlobalManager.GameCont.chromValue );
+		DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
 
         int rdmValue = UnityEngine.Random.Range(0, 3);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Madness_" + rdmValue, false);
@@ -381,13 +383,16 @@ public class UiManager : ManagerParent
 
     public void CloseMadness()
     {
-        DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .2f);
+		DOTween.To ( ( ) => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, 0.25f ).OnComplete ( ( ) =>
+		{
+			thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
+			thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
+			closeMad = true;
+		} );
 
-        thisCam.GetComponent<CameraFilterPack_Distortion_Dream2>().enabled = false;
 
         //var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
 	
-		closeMad = true;
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
         //thisCam.GetComponent<RainbowRotate>().enabled = false;
@@ -396,7 +401,6 @@ public class UiManager : ManagerParent
 
         //thisCam.DOKill(true);
 
-        thisCam.transform.DORotate(new Vector3(0, 0, 3), 0f, RotateMode.LocalAxisAdd);
        // Debug.Log("CloseMad");
         //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
