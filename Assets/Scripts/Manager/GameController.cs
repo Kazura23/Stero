@@ -92,8 +92,8 @@ public class GameController : ManagerParent
     private int cursorTypeReward = 0, cursorReward = 0;
     private bool moveInReward = false;
     public Vector3[] rotateDeskReward = new Vector3[3];
-    public RewardType[] succes;
-    public RewardType[] defis;
+    public RewardObject[] succes;
+    public RewardObject[] defis;
     private Vector3 posInitPlayer;
     private bool isLookReward = false;
     private Transform lookReward;
@@ -110,15 +110,21 @@ public class GameController : ManagerParent
 	int lastNeeded = 0;
 
 	int CurrentScore = 0;
-	#endregion
+    #endregion
 
-	#region Mono
-	void Update ( )
-	{
-		inputPlayer = ReInput.players.GetPlayer(0);
+    #region Mono
+    private void Start()
+    {
         posInitPlayer = Player.transform.position;
-//        succes[0].Load();
         AllPlayerPrefs.ANbRun = 0;
+        inputPlayer = ReInput.players.GetPlayer(0);
+    }
+
+    void Update ( )
+	{
+		
+//        succes[0].Load();
+        
 		getRank.fillAmount = rankValue;
 
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
@@ -181,7 +187,7 @@ public class GameController : ManagerParent
                         isStay = false;
                         Player.transform.DOLocalMove(walkTowardReward, delayWalkReward).OnComplete(() =>
                         {
-                            inReward = true;
+                            Player.transform.DOLocalRotate(ajustAngle, delayRotate).OnComplete(() => inReward = true);
                         });
                 }
 				break;
@@ -869,7 +875,7 @@ public class GameController : ManagerParent
                         }else if (Input.GetKeyDown(KeyCode.LeftArrow))
                         {
                             ChooseViewReward(true, false);
-                        }else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
+                        }/*else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
                         {
                             lookReward = succes[cursorReward].transform;
                             saveRewardPos = lookReward.position;
@@ -878,11 +884,11 @@ public class GameController : ManagerParent
                             {
                                 canRotateReward = true;
                             });
-                        }
+                        }*/
                         //afficher effet
                     }
                     break;
-                case 2: // defis
+                /*case 2: // defis
                     if(defis.Length > 0)
                     {
                         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -895,13 +901,13 @@ public class GameController : ManagerParent
                         }
                         // afficher effet
                     }
-                    break;
+                    break;*/
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 moveInReward = true;
                 cursorTypeReward++;
-                if (cursorTypeReward > 2)
+                if (cursorTypeReward > 1)
                     cursorTypeReward = 0;
                 RotateViewReward();
             }else if(Input.GetKeyDown(KeyCode.DownArrow))
@@ -909,7 +915,7 @@ public class GameController : ManagerParent
                 moveInReward = true;
                 cursorTypeReward--;
                 if (cursorTypeReward < 0)
-                    cursorTypeReward = 2;
+                    cursorTypeReward = 1;
                 RotateViewReward();
             }else if (Input.GetKeyDown(KeyCode.Backspace))
             {
@@ -989,6 +995,29 @@ public class GameController : ManagerParent
                 cursorReward--;
                 if (cursorReward < 0)
                     cursorReward = defis.Length - 1;
+            }
+        }
+    }
+
+    private void LoadRewardInit()
+    {
+        
+        var rewardSave = SaveDataReward.Load();
+        if (rewardSave == null)
+            return;
+
+        var listReward = StaticRewardTarget.listRewardTrans;
+        for (int i = 0; i< listReward.childCount; i++)
+        {
+            var reward = listReward.GetChild(i).GetComponent<RewardObject>();
+            for(int j = 0; j < rewardSave.Count; j++)
+            {
+                if(rewardSave[j].id == reward.idReward)
+                {
+                    if (rewardSave[j].unlock)
+                        reward.Unlock();
+                    break;
+                }
             }
         }
     }
@@ -1128,6 +1157,8 @@ public class GameController : ManagerParent
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
         AllPlayerPrefs.saveData = SaveData.Load();
+        StaticRewardTarget.listRewardTrans = transform.GetChild(0);
+        LoadRewardInit();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -1234,12 +1265,16 @@ public class GameController : ManagerParent
     #endregion
 }
 
-#region Save
+#region Save_Score
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
     {
-        string path1 = Application.dataPath + "/save.bin";
+        if (!Directory.Exists(Application.dataPath + "/Save"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Save");
+        }
+        string path1 = Application.dataPath + "/Save/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
@@ -1248,8 +1283,11 @@ public static class SaveData
 
     public static ListData Load()
     {
-        
-        string path1 = Application.dataPath + "/save.bin";
+        if (!Directory.Exists(Application.dataPath + "/Save"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Save");
+        }
+        string path1 = Application.dataPath + "/Save/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
         {
@@ -1340,6 +1378,7 @@ public static class StreamExtensions
 }
 #endregion
 
+#region other
 [System.Serializable]
 public class FxList 
 {
@@ -1391,3 +1430,4 @@ public class ScoringInfo
 	[HideInInspector]
 	public List<GameObject> CurrSpawn;
 }
+#endregion
