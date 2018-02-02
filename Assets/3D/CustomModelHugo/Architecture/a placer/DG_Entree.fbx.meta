@@ -1,21 +1,34 @@
 fileFormatVersion: 2
-guid: 7333be8a763fffc46b9c040f3ee1d1b1
-timeCreated: 1517525756
+guid: 756310a04b15bc94f82a5ffc1c06540a
+timeCreated: 1517595226
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
+    2100000: Sol
+    2100002: Plafond
+    2100004: Murs
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCube15
+    4300000: polySurface17
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: 1e034cbc0a1e2f9478db6de67f51a758, type: 2}
+      name: Murs
+    second: {fileID: 2100000, guid: aba7faf3fbc90784b8118c00bae9a0d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plafond
+    second: {fileID: 2100000, guid: 023d24f429612364d9c17b45b1fbbaa0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sol
+    second: {fileID: 2100000, guid: 023d24f429612364d9c17b45b1fbbaa0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -58,10 +71,12 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 0
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15
     secondaryUVHardAngle: 88
-    secondaryUVPackMargin: 9
+    secondaryUVPackMargin: 8
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60

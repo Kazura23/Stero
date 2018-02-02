@@ -1,22 +1,24 @@
 fileFormatVersion: 2
-guid: aad2d223e34f01f4d88974e19d392013
-timeCreated: 1517434204
+guid: eddf6bf61ddedba428f8d26f28cd80d1
+timeCreated: 1517590745
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: lambert1
-    2100002: Mur
-    2100004: Sol
-    2100006: Plafond
+    2100000: Mur
+    2100002: Floor
+    2100004: Plafond
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCube10
-    4300002: pCube15
-    9500000: //RootNode
+    4300000: pCube4
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: 0834e8d22322e154aa52d275750839d7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -27,11 +29,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Plafond
     second: {fileID: 2100000, guid: 0834e8d22322e154aa52d275750839d7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Sol
-    second: {fileID: 2100000, guid: 835bfe8aba1350c43972f85ee648ced4, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

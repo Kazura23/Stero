@@ -1,26 +1,29 @@
 fileFormatVersion: 2
-guid: aad2d223e34f01f4d88974e19d392013
-timeCreated: 1517434204
+guid: 93487d600d5c6924eb9d60f07c9cc4f6
+timeCreated: 1517595226
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: lambert1
-    2100002: Mur
-    2100004: Sol
+    2100000: Sol1
+    2100002: Murs
+    2100004: Murs1
     2100006: Plafond
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pCube10
-    4300002: pCube15
-    9500000: //RootNode
+    4300000: pCube5
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mur
+      name: Murs
+    second: {fileID: 2100000, guid: aba7faf3fbc90784b8118c00bae9a0d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Murs1
     second: {fileID: 2100000, guid: aba7faf3fbc90784b8118c00bae9a0d1, type: 2}
   - first:
       type: UnityEngine:Material
@@ -30,8 +33,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Sol
-    second: {fileID: 2100000, guid: 835bfe8aba1350c43972f85ee648ced4, type: 2}
+      name: Sol1
+    second: {fileID: 2100000, guid: 023d24f429612364d9c17b45b1fbbaa0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -71,7 +74,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 0
     preserveHierarchy: 0
@@ -86,7 +89,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
