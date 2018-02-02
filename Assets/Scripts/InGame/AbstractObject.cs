@@ -182,10 +182,7 @@ public class AbstractObject : MonoBehaviour
         }
 		else
 		{
-			Vector3 getFor = getTrans.forward * projection.z;
-			Vector3 getRig = getTrans.right * projection.x;
-			Vector3 getUp = transform.up * projection.y;
-			onEnemyDead ( getFor + getRig + getUp, thisDeath );
+			onEnemyDead ( projection, thisDeath );
             GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
         }
 	}
@@ -350,12 +347,7 @@ public class AbstractObject : MonoBehaviour
 		{
 			GetComponent<BoxCollider> ( ).enabled = false;
 		}
-
-        if (techPunch == 1)
-        {
-            meshRigid.constraints = RigidbodyConstraints.FreezePositionX;
-        }
-
+		
 		meshRigid.AddForce ( forceProp, ForceMode.VelocityChange );
 
 		string getObsT = Constants._ObjDeadTag;
