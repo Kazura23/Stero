@@ -31,7 +31,20 @@ public static class StaticRewardTarget {
 
     public static int SRankSteroidal;
 
-
+    public static void ResetVar()
+    {
+        SCharlotteLV = 0;
+        SDanielLV = 0;
+        SVinoLV = 0;
+        SScoreLV = 0;
+        SScoreWithoutPunchAndTechSpec = 0;
+        STimerSlowMo = 0;
+        SSizeMagicSphere = 0;
+        STimerMadness = 0;
+        SNbObstacleDestoyInMadness = 0;
+        SRedMadness = 0;
+        SRankSteroidal = 0;
+    }
 
     public static void SaveReward()
     {

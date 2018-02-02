@@ -400,6 +400,7 @@ public class GameController : ManagerParent
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
+        StaticRewardTarget.ResetVar();
 	
 		PlayerController thisPcontr = Player.GetComponent<PlayerController> ( );
 
@@ -537,6 +538,7 @@ public class GameController : ManagerParent
 		ScreenShake.Singleton.StopShake ( );
 
         AllPlayerPrefs.ResetStaticVar();
+        StaticRewardTarget.ResetVar();
 		//SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
         GlobalManager.Ui.DashSpeedEffect(false);
        

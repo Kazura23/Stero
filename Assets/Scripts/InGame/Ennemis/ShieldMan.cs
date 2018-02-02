@@ -65,6 +65,7 @@ public class ShieldMan : AbstractObject {
 		base.Dead(enemy, thisDeath);
         AllPlayerPrefs.ANbTotalEnemyKill++;
         AllPlayerPrefs.ANbKnighty++;
+        StaticRewardTarget.SDanielLV++;
         //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }
@@ -174,4 +175,4 @@ public class ShieldMan : AbstractObject {
 }
 
 //getTrans.DOLocalMove(getTrans.localPosition + getTrans.forward* distance, delay, true );
-				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
+				//getTrans.DOMoveY((saveVal = getTrans.position.y) + hauteur, delay / 2).OnComplete<Tweener>(() => getTrans.DOMoveY(saveVal, delay * 0.5f));
