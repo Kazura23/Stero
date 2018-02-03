@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Chair_01_id
   m_Shader: {fileID: 4800000, guid: ad7b830689644534c9b38904e8e091e2, type: 3}
-  m_ShaderKeywords: _BC_SLIDER_ON
+  m_ShaderKeywords: _BC_SLIDER_ON _HIGHLIGHT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -80,9 +80,9 @@ Material:
     - _distanceratio: 0.222
     - _emisive_force: 0
     - _emissive: 0
-    - _highlight: 0
-    - _highlight__force: 2
-    - _highlight_amount: 2
+    - _highlight: 1
+    - _highlight__force: 0.14
+    - _highlight_amount: 5
     - _highlight_speed: 1
     - _met: 0
     - _met_slider: 0
@@ -94,4 +94,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _highlight_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _highlight_Color: {r: 0.35423878, g: 0.62882704, b: 0.7647059, a: 1}
