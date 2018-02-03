@@ -80,7 +80,11 @@ public class UiManager : ManagerParent
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
-            OpenShop();
+
+            if ( thisType != MenuType.Title )
+            {
+                OpenShop();
+            }
 		}
 
     }
@@ -96,8 +100,11 @@ public class UiManager : ManagerParent
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
+            if ( menuOpen != MenuType.Title )
+            {
+                CloseShop();
+            }
 			menuOpen = MenuType.Nothing;
-            CloseShop();
 		}
 	}
 
