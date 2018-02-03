@@ -80,7 +80,7 @@ public class GameController : ManagerParent
 
 	bool GameStarted = false;
 	bool onHub = true;
-	bool coupSimpl = true;
+	bool coupSimpl = false;
 	bool horiz = true;
 
 
@@ -115,6 +115,10 @@ public class GameController : ManagerParent
 	#region Mono
 	void Update ( )
 	{
+		if ( GlobalManager.Ui.OnMenu )
+		{
+			return;
+		}
 		inputPlayer = ReInput.players.GetPlayer(0);
         posInitPlayer = Player.transform.position;
 //        succes[0].Load();
