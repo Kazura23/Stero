@@ -7237,19 +7237,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SampleCount: 19
-  ScatteringCoef: 1
-  ExtinctionCoef: 0.0149
+  ScatteringCoef: 0.288
+  ExtinctionCoef: 0.0327
   SkyboxExtinctionCoef: 0.9
-  MieG: 0.193
+  MieG: 0.586
   HeightFog: 1
-  HeightScale: 0.014
+  HeightScale: 0.053
   GroundLevel: 0
   Noise: 0
   NoiseScale: 0.015
   NoiseIntensity: 1
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 3, y: 3}
-  MaxRayLength: 400
+  MaxRayLength: 4
 --- !u!108 &306243105
 Light:
   m_ObjectHideFlags: 0
@@ -7263,7 +7263,7 @@ Light:
   m_Intensity: 1.3
   m_Range: 10
   m_SpotAngle: 30
-  m_CookieSize: 6.89
+  m_CookieSize: 5
   m_Shadows:
     m_Type: 1
     m_Resolution: -1
@@ -16275,6 +16275,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114170213738010420, guid: 7684dc0bbc8a7f542837e330bce091b0,
+        type: 2}
+      propertyPath: m_Wind
+      value: 
+      objectReference: {fileID: 2067584100}
     - target: {fileID: 1710701008349626, guid: 7684dc0bbc8a7f542837e330bce091b0, type: 2}
       propertyPath: m_Name
       value: ==> Player
