@@ -360,21 +360,22 @@ public class SpawnChunks : MonoBehaviour
 		// Si le dernier chunk activé comporte des chunks spécifique à spawn
 		if ( !transitChunk )
 		{
-			if (currLevel > chunkOrder.Count || CurrRandLvl > chunkOrder.Count) 
+			if (currLevel > chunkOrder.Count - 1 ) 
 			{
 				currLevel = chunkOrder.Count - 1;
 			}
-			if (CurrRandLvl > chunkOrder [currLevel].SpawnAble.Count || CurrRandLvl > chunkOrder [currLevel].ChunkScript.Count) 
+			if (CurrRandLvl > chunkOrder [currLevel].SpawnAble.Count - 1|| CurrRandLvl > chunkOrder [currLevel].ChunkScript.Count - 1) 
 			{
 				if (chunkOrder [currLevel].SpawnAble.Count > chunkOrder [currLevel].ChunkScript.Count) 
 				{
-					CurrRandLvl = chunkOrder [currLevel].SpawnAble.Count - 1;
+					CurrRandLvl = chunkOrder [currLevel].ChunkScript.Count - 1;
 				}
 				else 
 				{
-					CurrRandLvl = chunkOrder [currLevel].ChunkScript.Count - 1;
+					CurrRandLvl = chunkOrder [currLevel].SpawnAble.Count - 1;
 				}
 			}
+
 			getChunk = chunkOrder [ currLevel ].ChunkScript [ CurrRandLvl ];
 			getSble = chunkOrder [ currLevel ].SpawnAble [ CurrRandLvl ];
 		}
