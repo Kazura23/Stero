@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public static class StaticRewardTarget {
 
     //enfant de game controller
     public static Transform listRewardTrans;
+    //icon succes
+    public static Sprite icon_sucess;
+    //list de lecture reward pendant une run
+    public static List<GameObject> ListRewardEnAttente;
 
     // var pendant une run
-    public static ulong SCharlotteLV;
+    public static int SCharlotteLV;
 
-    public static ulong SDanielLV;
+    public static int SDanielLV;
 
-    public static ulong SVinoLV;
+    public static int SVinoLV;
 
-    public static ulong SScoreLV;
+    public static int SScoreLV;
 
-    public static ulong SScoreWithoutPunchAndTechSpec;
+    public static int SScoreWithoutPunchAndTechSpec;
 
     public static float STimerSlowMo;
 
@@ -65,123 +70,133 @@ public static class StaticRewardTarget {
         }
     }
 
+    private static void LoadUnlockReward(RewardObject p_reward)
+    {
+        p_reward.Unlock();
+        p_reward.icon.sprite = icon_sucess;
+        ListRewardEnAttente.Add(GameObject.Instantiate(p_reward.afficheReward.gameObject, p_reward.afficheReward.parent.parent));
+
+    }
+
     private static void LoadRewardId(RewardObject p_reward)
     {
-        switch (p_reward.idReward)
-        {
-            //lier au kill charlotte
-            case 0:
-                if (SCharlotteLV >= 50)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 1:
-                if (SCharlotteLV >= 500)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 2:
-                if (SCharlotteLV >= 1000)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au kill daniel
-            case 3:
-                if (SDanielLV >= 5)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 4:
-                if (SDanielLV >= 30)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au kill vino
-            case 5:
-                if (SVinoLV >= 25)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 6:
-                if (SVinoLV >= 300)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au score
-            case 7:
-                if (SScoreLV >= 100000)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 8:
-                if (SScoreLV >= 500000)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            case 9:
-                if (SScoreLV >= 1000000)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au score hardcore
-            case 10:
-                if (SScoreWithoutPunchAndTechSpec >= 100000)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au temps slow motion
-            case 11:
-                if (STimerSlowMo >= 3)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier a la size de la boule magic
-            case 12:
-                if (SSizeMagicSphere >= 50)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au temps passer en madness
-            case 13:
-                if (STimerMadness >= 66)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au obstacle detruit en madness
-            case 14:
-                if (SNbObstacleDestoyInMadness >= 20)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier a la jauge de madness (dans le rouge)
-            case 15:
-                if (SRedMadness >= 10)
-                {
-                    p_reward.Unlock();
-                }
-                break;
-            //lier au rang S steroidal
-            case 16:
-                if (SRankSteroidal >= 5)
-                {
-                    p_reward.Unlock();
-                }
-                break;
+        if (!p_reward.isUnlock) {
+            switch (p_reward.idReward)
+            {
+                //lier au kill charlotte
+                case 0:
+                    if (SCharlotteLV >= 1)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 1:
+                    if (SCharlotteLV >= 2)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 2:
+                    if (SCharlotteLV >= 3)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au kill daniel
+                case 3:
+                    if (SDanielLV >= 5)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 4:
+                    if (SDanielLV >= 30)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au kill vino
+                case 5:
+                    if (SVinoLV >= 1)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 6:
+                    if (SVinoLV >= 300)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au score
+                case 7:
+                    if (SScoreLV >= 100000)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 8:
+                    if (SScoreLV >= 500000)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                case 9:
+                    if (SScoreLV >= 1000000)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au score hardcore
+                case 10:
+                    if (SScoreWithoutPunchAndTechSpec >= 100000)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au temps slow motion
+                case 11:
+                    if (STimerSlowMo >= 3)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier a la size de la boule magic
+                case 12:
+                    if (SSizeMagicSphere >= 50)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au temps passer en madness
+                case 13:
+                    if (STimerMadness >= 66)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au obstacle detruit en madness
+                case 14:
+                    if (SNbObstacleDestoyInMadness >= 20)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier a la jauge de madness (dans le rouge)
+                case 15:
+                    if (SRedMadness >= 10)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+                //lier au rang S steroidal
+                case 16:
+                    if (SRankSteroidal >= 5)
+                    {
+                        LoadUnlockReward(p_reward);
+                    }
+                    break;
+            }
         }
     }
 }
@@ -222,6 +237,7 @@ public static class SaveDataReward
         {
             FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
             l = fSave.Deserialize<List<RewardSaveAttribut>>();
+            fSave.Close();
             return l;
             //GameObject.Find("Trash_text").GetComponent<Text>().text = l.listScore.Count > 0 ? "score = "+l.listScore[0].finalScore : "no save";
         }
@@ -229,6 +245,7 @@ public static class SaveDataReward
     }
 }
 
+[System.Serializable]
 public class RewardSaveAttribut
 {
     public int id;
