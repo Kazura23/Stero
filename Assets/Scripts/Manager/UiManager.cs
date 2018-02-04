@@ -51,6 +51,8 @@ public class UiManager : ManagerParent
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
 
+    [HideInInspector]
+    public bool OnMenu = false;
 	GameObject InGame;
 	//bool onMainScene = true;
 	#endregion
@@ -70,17 +72,22 @@ public class UiManager : ManagerParent
 			{
 				return;
 			}
-
+            
 			InGame.SetActive ( false );
 			if ( menuOpen != MenuType.Nothing )
 			{
 				CloseThisMenu ( true );
 			}
 
+            OnMenu = true;
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
-            OpenShop();
+
+            if ( thisType != MenuType.Title )
+            {
+                OpenShop();
+            }
 		}
 
     }
@@ -96,8 +103,12 @@ public class UiManager : ManagerParent
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
+            if ( menuOpen != MenuType.Title )
+            {
+                CloseShop();
+            }
 			menuOpen = MenuType.Nothing;
-            CloseShop();
+            OnMenu = false;
 		}
 	}
 
