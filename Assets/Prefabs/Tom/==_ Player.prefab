@@ -2195,11 +2195,11 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!20 &20971263504477086
@@ -2532,7 +2532,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653938153768386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763fae4471321494b9d0f49449893168, type: 3}
   m_Name: 
@@ -2566,12 +2566,12 @@ MonoBehaviour:
   m_NearClip: 3
   m_FarClipMax: 40
   m_GlobalDensityMult: 2.59
-  m_ConstantFog: 2
-  m_HeightFogAmount: 2
+  m_ConstantFog: 3.95
+  m_HeightFogAmount: 0.22
   m_HeightFogExponent: 0.03
-  m_HeightFogOffset: 29.6
-  m_NoiseFogAmount: 0.193
-  m_NoiseFogScale: 1.89
+  m_HeightFogOffset: 10
+  m_NoiseFogAmount: 0.077
+  m_NoiseFogScale: 0.65
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.548
   m_GlobalIntensityMult: 2.42
@@ -2796,7 +2796,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653938153768386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763fae4471321494b9d0f49449893168, type: 3}
   m_Name: 
@@ -3129,13 +3129,13 @@ LightProbeProxyVolume:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1985074973823858}
   m_Enabled: 1
-  m_BoundingBoxMode: 0
+  m_BoundingBoxMode: 2
   m_ResolutionX: 2
   m_ResolutionY: 2
   m_ResolutionZ: 2
-  m_ResolutionProbesPerUnit: 0.5
-  m_BoundingBoxSize: {x: Infinity, y: Infinity, z: Infinity}
-  m_BoundingBoxOrigin: {x: 0, y: 0, z: 0}
+  m_ResolutionProbesPerUnit: 1
+  m_BoundingBoxSize: {x: 1.8612523, y: 2.5437336, z: 1.551158}
+  m_BoundingBoxOrigin: {x: 0.062272787, y: 0.9473458, z: 0.19138277}
   m_ResolutionMode: 0
   m_ProbePositionMode: 0
   m_RefreshMode: 1
