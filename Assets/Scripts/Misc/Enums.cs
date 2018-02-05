@@ -20,7 +20,8 @@ public enum MenuType
 	Pause,
 	GameOver,
 	Leaderboard,
-	Option
+	Option,
+	Title
 }
 
 public enum UnLockMethode

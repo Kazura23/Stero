@@ -13,7 +13,22 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: pCube26
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mur
+    second: {fileID: 2100000, guid: aba7faf3fbc90784b8118c00bae9a0d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plafond
+    second: {fileID: 2100000, guid: 0834e8d22322e154aa52d275750839d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sol
+    second: {fileID: 2100000, guid: 0834e8d22322e154aa52d275750839d7, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -40,7 +55,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -56,8 +71,6 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 0
-    preserveHierarchy: 0
-    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15
     secondaryUVHardAngle: 88
@@ -68,7 +81,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
