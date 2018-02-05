@@ -24,11 +24,32 @@ public class GlobalManager : MonoBehaviour
 
     static DialogueManager dialMa;
     public static DialogueManager DialMa { get { return dialMa; } }
+
+
+    //Variable qui definit l'objectif des rewards
+    public int nbKillCharlotteLv1 = 50;
+    public int nbKillCharlotteLv2 = 500;
+    public int nbKillCharlotteLv3 = 1000;
+    public int nbKillDanielLv1 = 5;
+    public int nbKillDanielLv2 = 30;
+    public int nbKillVinoLv1 = 25;
+    public int nbKillVinoLv2 = 300;
+    public int scoreObjectifLv1 = 100000;
+    public int scoreObjectifLv2 = 500000;
+    public int scoreObjectifLv3 = 1000000;
+    public int scoreSansPoingNiTechSpe = 100000;
+    public float TempsObjectifSlowMtion = 3;
+    public int TailleBouleHumaine = 50;
+    public float TempsPasserEnMadness = 66;
+    public int nbPropSafeDetruitEnMadness = 20;
+    public int nbDansLeRougeMadness = 10;
+    public int nbRangSteroidal = 5;
     #endregion
 
     #region Mono
     void Awake()
 	{
+        StaticRewardTarget.SetObjectifReward(nbKillCharlotteLv1, nbKillCharlotteLv2, nbKillCharlotteLv3, nbKillDanielLv1, nbKillDanielLv2, nbKillVinoLv1, nbKillVinoLv2, scoreObjectifLv1, scoreObjectifLv2, scoreObjectifLv3, scoreSansPoingNiTechSpe, TempsObjectifSlowMtion, TailleBouleHumaine, TempsPasserEnMadness, nbPropSafeDetruitEnMadness, nbDansLeRougeMadness, nbRangSteroidal);
         AllPlayerPrefs.canSendAnalytics = UseAnalytics;
 		PlayerPrefs.DeleteAll ( );
 		if ( mainManagerInstance != null )

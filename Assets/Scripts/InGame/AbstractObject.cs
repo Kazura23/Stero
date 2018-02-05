@@ -251,7 +251,8 @@ public class AbstractObject : MonoBehaviour
 		float getDist = Vector3.Distance ( playerTrans.position, getTrans.position );
 		
 		if ( getDist < distForDB ) 
-		{ 
+		{
+            StaticRewardTarget.SSizeMagicSphere++;
 			destGame = false;
 			onEnemyDead ( Vector3.zero, DeathType.SpecialPower ); 
 
@@ -298,6 +299,8 @@ public class AbstractObject : MonoBehaviour
 
 		if ( playerCont != null )
 		{
+            if (playerCont.InMadness && tag == Constants._ObsPropSafe)
+                StaticRewardTarget.SNbObstacleDestoyInMadness++;
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 

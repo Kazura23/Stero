@@ -487,7 +487,11 @@ public class UiManager : ManagerParent
         float randomPos = UnityEngine.Random.Range(-600, 600);
         float randomRot = UnityEngine.Random.Range(200, 200);
         //Debug.Log("score");
-        ScorePoints.text = "" + (int.Parse(ScorePoints.text) + number);
+        var scoreInt = (int.Parse(ScorePoints.text) + number);
+        ScorePoints.text = "" + scoreInt;
+        StaticRewardTarget.SScoreLV = scoreInt;
+        AllPlayerPrefs.finalScore = scoreInt;
+        AllPlayerPrefs.scoreWhithoutDistance += number;
 
 
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
