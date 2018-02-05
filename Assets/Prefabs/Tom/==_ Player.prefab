@@ -1132,6 +1132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4659201663227790}
   - component: {fileID: 137626218062268820}
+  - component: {fileID: 259262239405933948}
   m_Layer: 14
   m_Name: arms
   m_TagString: Untagged
@@ -2194,11 +2195,11 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!20 &20971263504477086
@@ -2507,7 +2508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Resolution: 0
-  DefaultSpotCookie: {fileID: 2800000, guid: 1e1ae8a8637880241a6eea3f1cbbcc7e, type: 3}
+  DefaultSpotCookie: {fileID: 2800000, guid: 5157bf6d690b6df458f6c0ce0c06d329, type: 3}
 --- !u!114 &114096383040500484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2531,7 +2532,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653938153768386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763fae4471321494b9d0f49449893168, type: 3}
   m_Name: 
@@ -2562,19 +2563,19 @@ MonoBehaviour:
   m_Noise: {fileID: 2800000, guid: 35eb47181d630134c97488476efbda59, type: 3}
   m_Debug: 0
   m_Z: 1
-  m_NearClip: 1.8
-  m_FarClipMax: 70
-  m_GlobalDensityMult: 4
-  m_ConstantFog: 2
-  m_HeightFogAmount: 2
+  m_NearClip: 3
+  m_FarClipMax: 40
+  m_GlobalDensityMult: 2.59
+  m_ConstantFog: 3.95
+  m_HeightFogAmount: 0.22
   m_HeightFogExponent: 0.03
-  m_HeightFogOffset: 29.6
-  m_NoiseFogAmount: 0.02
-  m_NoiseFogScale: 1.89
+  m_HeightFogOffset: 10
+  m_NoiseFogAmount: 0.077
+  m_NoiseFogScale: 0.65
   m_Wind: {fileID: 0}
-  m_Anisotropy: 0.37
-  m_GlobalIntensityMult: 3
-  m_AmbientLightIntensity: 1.2
+  m_Anisotropy: 0.548
+  m_GlobalIntensityMult: 2.42
+  m_AmbientLightIntensity: 3.03
   m_AmbientLightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114262464656599260
 MonoBehaviour:
@@ -2599,7 +2600,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140545502523876}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
@@ -2795,7 +2796,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653938153768386}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763fae4471321494b9d0f49449893168, type: 3}
   m_Name: 
@@ -2995,8 +2996,8 @@ SkinnedMeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 1130310394680326}
+  m_ProbeAnchor: {fileID: 4906462964085586}
+  m_LightProbeVolumeOverride: {fileID: 1985074973823858}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -3121,13 +3122,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.296}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!259 &259262239405933948
+LightProbeProxyVolume:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985074973823858}
+  m_Enabled: 1
+  m_BoundingBoxMode: 2
+  m_ResolutionX: 2
+  m_ResolutionY: 2
+  m_ResolutionZ: 2
+  m_ResolutionProbesPerUnit: 1
+  m_BoundingBoxSize: {x: 1.8612523, y: 2.5437336, z: 1.551158}
+  m_BoundingBoxOrigin: {x: 0.062272787, y: 0.9473458, z: 0.19138277}
+  m_ResolutionMode: 0
+  m_ProbePositionMode: 0
+  m_RefreshMode: 1
 --- !u!259 &259926839582429632
 LightProbeProxyVolume:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1130310394680326}
-  m_Enabled: 1
+  m_Enabled: 0
   m_BoundingBoxMode: 0
   m_ResolutionX: 2
   m_ResolutionY: 2

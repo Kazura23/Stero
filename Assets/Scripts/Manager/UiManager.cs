@@ -703,6 +703,25 @@ public class UiManager : ManagerParent
         });
     }
 
+	public void NewLife ( int currLife )
+	{
+		Image getCurrHeat;
+		if ( currLife == 3 )
+		{
+			getCurrHeat = ExtraHearts [ 1 ];
+		}
+		else if ( currLife == 2 )
+		{
+			getCurrHeat = ExtraHearts [ 0 ];
+		}
+		else
+		{
+			getCurrHeat = BonusLife;
+		}
+
+		getCurrHeat.enabled = true;
+	}
+
     public void StartBonusLife ( int currLife )
     {
 		Image getCurrHeat;

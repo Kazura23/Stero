@@ -111,7 +111,7 @@ public class Punch : MonoBehaviour {
 				{
 					if ( getRid != null )
 					{
-						getRid.AddForce ( projection_double * getProj, ForceMode.VelocityChange );
+						getRid.AddForce ( projection_double * getProj + Vector3.up * 5, ForceMode.VelocityChange );
 					}
 				}
 

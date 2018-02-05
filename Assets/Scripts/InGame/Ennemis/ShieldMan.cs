@@ -17,6 +17,7 @@ public class ShieldMan : AbstractObject {
     Material parMat;
 
     bool detected;
+	bool canColl = true;
     #endregion
 
     #region Mono
@@ -120,12 +121,13 @@ public class ShieldMan : AbstractObject {
 		}
 	}
 
-    public override void Degat(Vector3 p_damage, int p_technic)
+	public override void Degat(Vector3 p_damage, int p_technic)
     {
         if (p_technic == 1)
         {
             if (shieldActive)
             {
+				canColl = false;
 				thisObj = ( GameObject ) Instantiate ( gameObject, getTrans.position, getTrans.rotation, getTrans.parent );
 				thisObj.SetActive ( false );
 				thisObj.GetComponent<AbstractObject> ( ).EventEnable ( getTrans.position );
@@ -133,7 +135,10 @@ public class ShieldMan : AbstractObject {
 
                 shieldActive = false;
 
-				getTrans.DOMove ( getTrans.position + getTrans.forward * distance, delay ); 
+				getTrans.DOMove ( getTrans.position + getTrans.forward * distance, delay ).OnComplete ( () => 
+				{
+					canColl = true;
+				});
 
                 int randomSong = UnityEngine.Random.Range(0, 3);
 
@@ -165,7 +170,7 @@ public class ShieldMan : AbstractObject {
 
 	protected override void CollDetect ( )
 	{
-		if ( !shieldActive )
+		if ( !shieldActive && canColl )
 		{
 			base.CollDetect ( );
 		}
