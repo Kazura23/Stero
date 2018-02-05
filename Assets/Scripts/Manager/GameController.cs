@@ -179,31 +179,34 @@ public class GameController : ManagerParent
 
 			case 0: // Options
 
-				if ( (inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl )
-				{
-					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
-					Debug.Log ( "Options" );
-				}
-				textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
-				textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
-
-				//GameStartedUpdate();
-				break;
-
-			case 1: // Leaderboards
-				//Debug.Log("Leaderboards");
-				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
-				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
-                if (inputPlayer.GetAxis("CoupSimple") == 1)
-                {
+                    //Debug.Log("Leaderboards");
+                    textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
+                    textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
+                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
+                    if (inputPlayer.GetAxis("CoupSimple") == 1)
+                    {
                         isStay = false;
                         Player.transform.DOLocalMove(walkTowardReward, delayWalkReward).OnComplete(() =>
                         {
                             Player.transform.DOLocalRotate(ajustAngle, delayRotate).OnComplete(() => inReward = true);
                         });
-                }
+                    }
+                    break;
+
+                case 1: // Leaderboards
+				
+
+                    
+				if ( (inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl )
+				{
+					GlobalManager.Ui.OpenThisMenu ( MenuType.Option );
+					Debug.Log ( "Options" );
+				}
+				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
+
+				//GameStartedUpdate();
 				break;
 
 			case 2: //Start game
@@ -896,9 +899,6 @@ public class GameController : ManagerParent
         if (inReward && !moveInReward && !isLookReward)
         {
 
-
-            GlobalManager.Ui.OpenRewards();
-
             switch (cursorTypeReward)
             {
                 case 0: // leaderboard
@@ -958,6 +958,9 @@ public class GameController : ManagerParent
             }else if (Input.GetKeyDown(KeyCode.Backspace)) //REWIRED TOUCHE COUP DOUBLE)
             {
                 inReward = false;
+
+                GlobalManager.Ui.CloseRewards();
+
                 if(cursorTypeReward != 0)
                 {
                     var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
@@ -1013,6 +1016,10 @@ public class GameController : ManagerParent
                 Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(() =>
                 {
                     // effacer fleche
+
+                    
+
+                    GlobalManager.Ui.CloseRewards();
                     cursorReward = 0;
                     moveInReward = false;
                 });
@@ -1031,6 +1038,7 @@ public class GameController : ManagerParent
                 DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => 
                 {
                     // affichage fleches
+                    GlobalManager.Ui.OpenRewards();
                     moveInReward = false;
                 });
             });

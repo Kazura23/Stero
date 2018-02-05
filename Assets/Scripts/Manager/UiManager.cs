@@ -53,7 +53,7 @@ public class UiManager : ManagerParent
     public CanvasGroup rewardsArrows;
     public CanvasGroup rewardsKeys;
 
-    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4, arrowLeftTw, arrowRightTw;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
@@ -274,17 +274,33 @@ public class UiManager : ManagerParent
 
         rewardsKeys.DOFade(1, .1f);
         rewardsArrows.DOFade(1, .1f);
+        /*
 
+        float arrowLeftpos = arrowLeft.transform.localPosition.x;
+        float arrowRightpos = arrowRight.transform.localPosition.x;
 
-        arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x - 50, .5f);
-        arrowLeft.DOFade(0, .8f).OnComplete(() => {
-            arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x + 50, .5f);
-        });
         
+        arrowLeft.DOKill(true);
+
+        arrowLeftTw = arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x - 50, .9f).OnComplete(() =>
+        {
+            DOVirtual.DelayedCall(.2f, () =>
+             {
+                 //arrowLeft.DOFade(0, .4f).OnComplete(() =>
+                 //{
+                     arrowLeft.transform.DOLocalMoveX(arrowLeftpos, 0f);
+//                     arrowLeft.DOFade(1, 0);
+
+                 //});
+             });
+        }).SetLoops(-1, LoopType.Restart);
+        */
     }
 
     public void CloseRewards()
     {
+        //arrowLeftTw.Kill(true);
+
         Debug.Log("CloseRewards");
         
         rewardsKeys.DOFade(0, .1f);
@@ -372,6 +388,9 @@ public class UiManager : ManagerParent
 
         Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
+        textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
+        Debug.Log(GlobalManager.GameCont.Player.transform.rotation.y);
+
 
         Destroy(textMadness, 3);
 

@@ -25,7 +25,7 @@ public class GlobalManager : MonoBehaviour
     static DialogueManager dialMa;
     public static DialogueManager DialMa { get { return dialMa; } }
 
-
+    [Header("CHALLENGES")]
     //Variable qui definit l'objectif des rewards
     public int nbKillCharlotteLv1 = 50;
     public int nbKillCharlotteLv2 = 500;
