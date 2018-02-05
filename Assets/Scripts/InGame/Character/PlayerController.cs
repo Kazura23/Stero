@@ -867,7 +867,16 @@ public class PlayerController : MonoBehaviour
                 RaycastHit hit;
                 Physics.Raycast(this.transform.position, Vector3.down, out hit, 20);
                 AllPlayerPrefs.ANameChunk = AnalyticsChunk(hit.transform);
-				GameOver ( true );
+				GameOver ( );
+
+				if ( Life > 0 )
+				{
+					timerFight.value = 0.5f;
+					newStat ( StatePlayer.Normal );
+
+					lastTimer = false;
+					secureTimer = false;
+				}
 			}
 		}
 	}
@@ -1648,7 +1657,7 @@ public class PlayerController : MonoBehaviour
 
 	public void NewRotation ( GameObject thisColl, bool goRight )
 	{
-		Debug.Log ( "new rotation : " + goRight );
+		//Debug.Log ( "new rotation : " + goRight );
 		Vector3 getThisC = thisColl.transform.position;
 			
 		StopPlayer = true;
