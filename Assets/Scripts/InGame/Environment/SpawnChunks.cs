@@ -194,8 +194,6 @@ public class SpawnChunks : MonoBehaviour
 
 				saveLvlForStart++;
 			}
-
-			newLevel ( );
 		}
 	}
 
@@ -277,10 +275,7 @@ public class SpawnChunks : MonoBehaviour
 		{
 			spawnAfterThis ( );
 
-			if ( thisChunk.NbrChunkOneLvl < currNbrCh )
-			{
-				newLevel ( );
-			}
+			
 		}
 	}
 
@@ -291,6 +286,11 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].ThisChunk = thisSpawn;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
+
+		if ( thisChunk.NbrChunkOneLvl < currNbrCh )
+		{
+			newLevel ( );
+		}
 	}
 	#endregion
 	
@@ -300,11 +300,6 @@ public class SpawnChunks : MonoBehaviour
 		yield return new WaitForEndOfFrame ( );
 
 		spawnAfterThis ( );
-
-		if ( thisChunk.NbrChunkOneLvl < currNbrCh )
-		{
-			newLevel ( );
-		}
 	}
 
 	// vérification de si il y a un niveau supérieur disponible ou non (si non alors random)
