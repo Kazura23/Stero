@@ -948,7 +948,6 @@ public class GameController : ManagerParent
                     }
                     break;*/
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow)) //REWIRED TOUCHE HAUT)
             if (getV == 1 && canInputY)
             {
                 moveInReward = true;
@@ -956,7 +955,6 @@ public class GameController : ManagerParent
                 if (cursorTypeReward > 1)
                     cursorTypeReward = 0;
                 RotateViewReward();
-            }else if(Input.GetKeyDown(KeyCode.DownArrow)) //REWIRED TOUCHE BAS)
             }else if(getV == -1 && canInputY)
             {
                 moveInReward = true;
@@ -964,7 +962,6 @@ public class GameController : ManagerParent
                 if (cursorTypeReward < 0)
                     cursorTypeReward = 1;
                 RotateViewReward();
-            }else if (Input.GetKeyDown(KeyCode.Backspace)) //REWIRED TOUCHE COUP DOUBLE)
             }else if (Input.GetKeyDown(KeyCode.Backspace)|| inputPlayer.GetButtonDown("CoupDouble"))
             {
                 inReward = false;
