@@ -312,7 +312,7 @@ public class SpawnChunks : MonoBehaviour
 
 				if ( chunkOrder.Count > 1 )
 				{
-					currLevel = Random.Range ( 1, LvlChunksInfo.Count );
+					currLevel = Random.Range ( 2, LvlChunksInfo.Count );
 				}
 				else
 				{
@@ -366,13 +366,13 @@ public class SpawnChunks : MonoBehaviour
 			}
 			if (CurrRandLvl > chunkOrder [currLevel].SpawnAble.Count - 1|| CurrRandLvl > chunkOrder [currLevel].ChunkScript.Count - 1) 
 			{
-				if (chunkOrder [currLevel].SpawnAble.Count > chunkOrder [currLevel].ChunkScript.Count) 
+				if (chunkOrder [currLevel].SpawnAble.Count < chunkOrder [currLevel].ChunkScript.Count) 
 				{
-					CurrRandLvl = chunkOrder [currLevel].ChunkScript.Count - 1;
+					CurrRandLvl = chunkOrder [currLevel].SpawnAble.Count - 1;
 				}
 				else 
 				{
-					CurrRandLvl = chunkOrder [currLevel].SpawnAble.Count - 1;
+					CurrRandLvl = chunkOrder [currLevel].ChunkScript.Count - 1;
 				}
 			}
 
