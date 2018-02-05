@@ -46,6 +46,13 @@ public class UiManager : ManagerParent
 	[HideInInspector]
     public Camera thisCam;
 
+
+    [Header("REWARDS")]
+    public Image arrowLeft;
+    public Image arrowRight;
+    public CanvasGroup rewardsArrows;
+    public CanvasGroup rewardsKeys;
+
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
@@ -88,6 +95,7 @@ public class UiManager : ManagerParent
             {
                 OpenShop();
             }
+            
 		}
 
     }
@@ -258,7 +266,32 @@ public class UiManager : ManagerParent
         });
     }
 
-	public void DoubleCoup()
+    public void OpenRewards()
+    {
+
+        Debug.Log("OpenRewards");
+
+
+        rewardsKeys.DOFade(1, .1f);
+        rewardsArrows.DOFade(1, .1f);
+
+
+        arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x - 50, .5f);
+        arrowLeft.DOFade(0, .8f).OnComplete(() => {
+            arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x + 50, .5f);
+        });
+        
+    }
+
+    public void CloseRewards()
+    {
+        Debug.Log("CloseRewards");
+        
+        rewardsKeys.DOFade(0, .1f);
+        rewardsArrows.DOFade(0, .1f);
+    }
+
+    public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
 

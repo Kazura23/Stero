@@ -130,8 +130,8 @@ public class GameController : ManagerParent
 		{
 			return;
 		}
-		inputPlayer = ReInput.players.GetPlayer(0);
-        posInitPlayer = Player.transform.position;
+		/*inputPlayer = ReInput.players.GetPlayer(0);
+        posInitPlayer = Player.transform.position;*/
 //        succes[0].Load();
 
         if(StaticRewardTarget.ListRewardEnAttente != null && StaticRewardTarget.ListRewardEnAttente.Count > 0 && corouSucess == null)
@@ -891,6 +891,10 @@ public class GameController : ManagerParent
     {
         if (inReward && !moveInReward && !isLookReward)
         {
+
+
+            GlobalManager.Ui.OpenRewards();
+
             switch (cursorTypeReward)
             {
                 case 0: // leaderboard
@@ -933,21 +937,21 @@ public class GameController : ManagerParent
                     }
                     break;*/
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow)) //REWIRED TOUCHE HAUT)
             {
                 moveInReward = true;
                 cursorTypeReward++;
                 if (cursorTypeReward > 1)
                     cursorTypeReward = 0;
                 RotateViewReward();
-            }else if(Input.GetKeyDown(KeyCode.DownArrow))
+            }else if(Input.GetKeyDown(KeyCode.DownArrow)) //REWIRED TOUCHE BAS)
             {
                 moveInReward = true;
                 cursorTypeReward--;
                 if (cursorTypeReward < 0)
                     cursorTypeReward = 1;
                 RotateViewReward();
-            }else if (Input.GetKeyDown(KeyCode.Backspace))
+            }else if (Input.GetKeyDown(KeyCode.Backspace)) //REWIRED TOUCHE COUP DOUBLE)
             {
                 inReward = false;
                 if(cursorTypeReward != 0)
