@@ -65,6 +65,7 @@ public class ShieldMan : AbstractObject {
 		base.Dead(enemy, thisDeath);
         AllPlayerPrefs.ANbTotalEnemyKill++;
         AllPlayerPrefs.ANbKnighty++;
+        StaticRewardTarget.SDanielLV++;
         //Debug.Log("knighty " + AllPlayerPrefs.ANbKnighty);
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }

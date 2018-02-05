@@ -682,6 +682,7 @@ public class PlayerController : MonoBehaviour
 		}
 
         AllPlayerPrefs.ATimerRun += getTime;
+        StaticRewardTarget.LoadReward();
 
 		TimerCheck ( getTime );
 		distCal ( );
@@ -921,6 +922,7 @@ public class PlayerController : MonoBehaviour
 				maxSpeedCL = MaxSpeedCL + MaxCLInc;
 			}
 		}
+        //StaticRewardTarget.SScoreLV = AllPlayerPrefs.scoreWhithoutDistance + (int)totalDis;
 	}
 
 	void speAction ( float getTime )

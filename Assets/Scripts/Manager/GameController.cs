@@ -92,8 +92,8 @@ public class GameController : ManagerParent
     private int cursorTypeReward = 0, cursorReward = 0;
     private bool moveInReward = false;
     public Vector3[] rotateDeskReward = new Vector3[3];
-    public RewardType[] succes;
-    public RewardType[] defis;
+    /*public RewardObject[] succes;
+    public RewardObject[] defis;*/
     private Vector3 posInitPlayer;
     private bool isLookReward = false;
     private Transform lookReward;
@@ -101,6 +101,10 @@ public class GameController : ManagerParent
     public Vector3 zoomRewardSucces;
     private bool canRotateReward = false;
     public float speedRotateReward = 5;
+    public Sprite icon_sucess;
+    public float delaySmoothPrintSucess = 0.5f;
+    public float delayPrintSucess = 1;
+    private Coroutine corouSucess = null;
 
 	float rankValue = 0;
 
@@ -110,10 +114,17 @@ public class GameController : ManagerParent
 	int lastNeeded = 0;
 
 	int CurrentScore = 0;
-	#endregion
+    #endregion
 
-	#region Mono
-	void Update ( )
+    #region Mono
+    private void Start()
+    {
+        posInitPlayer = Player.transform.position;
+        AllPlayerPrefs.ANbRun = 0;
+        inputPlayer = ReInput.players.GetPlayer(0);
+    }
+
+    void Update ( )
 	{
 		if ( GlobalManager.Ui.OnMenu )
 		{
@@ -122,7 +133,12 @@ public class GameController : ManagerParent
 		inputPlayer = ReInput.players.GetPlayer(0);
         posInitPlayer = Player.transform.position;
 //        succes[0].Load();
-        AllPlayerPrefs.ANbRun = 0;
+
+        if(StaticRewardTarget.ListRewardEnAttente != null && StaticRewardTarget.ListRewardEnAttente.Count > 0 && corouSucess == null)
+        {
+            corouSucess = StartCoroutine(ListExecutionReward());
+        }
+        
 		getRank.fillAmount = rankValue;
 
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
@@ -185,7 +201,7 @@ public class GameController : ManagerParent
                         isStay = false;
                         Player.transform.DOLocalMove(walkTowardReward, delayWalkReward).OnComplete(() =>
                         {
-                            inReward = true;
+                            Player.transform.DOLocalRotate(ajustAngle, delayRotate).OnComplete(() => inReward = true);
                         });
                 }
 				break;
@@ -356,6 +372,20 @@ public class GameController : ManagerParent
         });
     }
 
+    private IEnumerator ListExecutionReward()
+    {
+        var tempReward = StaticRewardTarget.ListRewardEnAttente[0];
+        var tempAttribut = tempReward.GetComponent<CanvasGroup>();
+        DOTween.To(() => tempAttribut.alpha, x => tempAttribut.alpha = x, 1, delaySmoothPrintSucess);
+        yield return new WaitForSeconds(delaySmoothPrintSucess + delayPrintSucess);
+        DOTween.To(() => tempAttribut.alpha, x => tempAttribut.alpha = x, 0, delaySmoothPrintSucess).OnComplete(() =>
+        {
+            StaticRewardTarget.ListRewardEnAttente.Remove(tempReward);
+            Destroy(tempReward);
+            corouSucess = null;
+        });
+
+    }
     #endregion
 
     #region Public Methods
@@ -398,6 +428,7 @@ public class GameController : ManagerParent
 		lastWall = ( GameObject ) Instantiate ( BarrierIntro );
         //Debug.Log("Start");
         AllPlayerPrefs.ResetStaticVar();
+        StaticRewardTarget.ResetVar();
 	
 		PlayerController thisPcontr = Player.GetComponent<PlayerController> ( );
 
@@ -535,6 +566,7 @@ public class GameController : ManagerParent
 		ScreenShake.Singleton.StopShake ( );
 
         AllPlayerPrefs.ResetStaticVar();
+        StaticRewardTarget.ResetVar();
 		//SceneManager.LoadScene ( "MainScene", LoadSceneMode.Single );
         GlobalManager.Ui.DashSpeedEffect(false);
        
@@ -865,15 +897,15 @@ public class GameController : ManagerParent
                     // afficher les leaderboards
                     break;
                 case 1: // succes
-                    if(succes.Length > 0)
+                    if(transform.GetChild(0).childCount > 0)
                     {
                         if (Input.GetKeyDown(KeyCode.RightArrow))
                         {
-                            ChooseViewReward(true, true);
+                            ChooseViewReward(true);
                         }else if (Input.GetKeyDown(KeyCode.LeftArrow))
                         {
-                            ChooseViewReward(true, false);
-                        }else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
+                            ChooseViewReward(false);
+                        }/*else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
                         {
                             lookReward = succes[cursorReward].transform;
                             saveRewardPos = lookReward.position;
@@ -882,11 +914,11 @@ public class GameController : ManagerParent
                             {
                                 canRotateReward = true;
                             });
-                        }
+                        }*/
                         //afficher effet
                     }
                     break;
-                case 2: // defis
+                /*case 2: // defis
                     if(defis.Length > 0)
                     {
                         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -899,13 +931,13 @@ public class GameController : ManagerParent
                         }
                         // afficher effet
                     }
-                    break;
+                    break;*/
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 moveInReward = true;
                 cursorTypeReward++;
-                if (cursorTypeReward > 2)
+                if (cursorTypeReward > 1)
                     cursorTypeReward = 0;
                 RotateViewReward();
             }else if(Input.GetKeyDown(KeyCode.DownArrow))
@@ -913,16 +945,23 @@ public class GameController : ManagerParent
                 moveInReward = true;
                 cursorTypeReward--;
                 if (cursorTypeReward < 0)
-                    cursorTypeReward = 2;
+                    cursorTypeReward = 1;
                 RotateViewReward();
             }else if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 inReward = false;
+                if(cursorTypeReward != 0)
+                {
+                    var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                    DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 0, delaySmoothPrintSucess);
+                    cursorReward = 0;
+                }
                 Player.transform.DOLocalRotate(moveRotate[chooseOption], Player.transform.localEulerAngles == moveRotate[chooseOption] ? 0 : delayRotate).OnComplete(() =>
                 {
                     Player.transform.DOMove(posInitPlayer, delayWalkReward).OnComplete(() =>
                     {
                         isStay = true;
+                        cursorTypeReward = 0;
                     });
                 });
             }
@@ -956,14 +995,68 @@ public class GameController : ManagerParent
 
     private void RotateViewReward()
     {
-        cursorReward = 0;
-        Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(()=>
+        
+        
+        if(cursorTypeReward == 0)
         {
-            moveInReward = false;
-        });
+            var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+            DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 0, delaySmoothPrintSucess).OnComplete(() => 
+            {
+                Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(() =>
+                {
+                    cursorReward = 0;
+                    moveInReward = false;
+                });
+            });
+        }
+        else
+        {
+            Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(() =>
+            {
+                var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => 
+                {
+                    moveInReward = false;
+                });
+            });
+                
+        }
+        
     }
 
-    private void ChooseViewReward(bool p_succes, bool p_dir)
+    private void ChooseViewReward(bool p_dir)
+    {
+        moveInReward = true;
+        if (p_dir)
+        {
+            var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+            DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 0, delaySmoothPrintSucess).OnComplete(() =>
+            {
+                cursorReward++;
+                if (cursorReward >= transform.GetChild(0).childCount)
+                    cursorReward = 0;
+                Debug.Log(cursorReward);
+                var tempAffiche = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => moveInReward = false);
+            });
+            
+        }
+        else
+        {
+            var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+            DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 0, delaySmoothPrintSucess).OnComplete(() =>
+            {
+                cursorReward--;
+                if (cursorReward < 0)
+                    cursorReward = transform.GetChild(0).childCount - 1;
+                Debug.Log(cursorReward);
+                var tempAffiche = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => moveInReward = false);
+            });
+        }
+    }
+
+    /*private void ChooseViewReward(bool p_succes, bool p_dir)
     {
         if (p_succes)
         {
@@ -993,6 +1086,37 @@ public class GameController : ManagerParent
                 cursorReward--;
                 if (cursorReward < 0)
                     cursorReward = defis.Length - 1;
+            }
+        }
+    }*/
+
+    private void LoadRewardInit()
+    {
+        
+        var rewardSave = SaveDataReward.Load();
+        if (rewardSave == null)
+            return;
+        for (int i = 0; i < rewardSave.Count; i++)
+        {
+            Debug.Log("id = " + rewardSave[i].id+", is unlock = "+rewardSave[i].unlock);
+        }
+
+        var listReward = StaticRewardTarget.listRewardTrans;
+        for (int i = 0; i< listReward.childCount; i++)
+        {
+            var reward = listReward.GetChild(i).GetComponent<RewardObject>();
+            for(int j = 0; j < rewardSave.Count; j++)
+            {
+                if(rewardSave[j].id == reward.idReward)
+                {
+                    if (rewardSave[j].unlock)
+                    {
+                        reward.UnlockWithFile();
+                        Debug.Log("sprite find : "+icon_sucess);
+                        reward.icon.sprite = icon_sucess;
+                    }
+                    break;
+                }
             }
         }
     }
@@ -1131,7 +1255,12 @@ public class GameController : ManagerParent
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
+
+        StaticRewardTarget.icon_sucess = icon_sucess;
+        StaticRewardTarget.ListRewardEnAttente = new List<GameObject>();
         AllPlayerPrefs.saveData = SaveData.Load();
+        StaticRewardTarget.listRewardTrans = transform.GetChild(0);
+        LoadRewardInit();
 
 		List<ChunkLock> GetChunk = ChunkToUnLock; 
 		List<NewChunk> CurrList; 
@@ -1238,12 +1367,16 @@ public class GameController : ManagerParent
     #endregion
 }
 
-#region Save
+#region Save_Score
 public static class SaveData
 {
     public static void Save(ListData p_dataSave)
     {
-        string path1 = Application.dataPath + "/save.bin";
+        if (!Directory.Exists(Application.dataPath + "/Save"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Save");
+        }
+        string path1 = Application.dataPath + "/Save/save.bin";
         FileStream fSave = File.Create(path1);
         AllPlayerPrefs.saveData.listScore.SerializeTo(fSave);
         fSave.Close();
@@ -1252,13 +1385,17 @@ public static class SaveData
 
     public static ListData Load()
     {
-        
-        string path1 = Application.dataPath + "/save.bin";
+        if (!Directory.Exists(Application.dataPath + "/Save"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Save");
+        }
+        string path1 = Application.dataPath + "/Save/save.bin";
         ListData l = new ListData();
         if (File.Exists(path1))
         {
             FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
             l.listScore = fSave.Deserialize<List<DataSave>>();
+            fSave.Close();
             //GameObject.Find("Trash_text").GetComponent<Text>().text = l.listScore.Count > 0 ? "score = "+l.listScore[0].finalScore : "no save";
         }
         return l;
@@ -1344,6 +1481,7 @@ public static class StreamExtensions
 }
 #endregion
 
+#region other
 [System.Serializable]
 public class FxList 
 {
@@ -1395,3 +1533,4 @@ public class ScoringInfo
 	[HideInInspector]
 	public List<GameObject> CurrSpawn;
 }
+#endregion
