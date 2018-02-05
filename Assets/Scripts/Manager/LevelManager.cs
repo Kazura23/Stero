@@ -32,6 +32,7 @@ public class LevelManager : ManagerParent
 			//e.Raise ( );
 		
 			GlobalManager.GameCont.StartGame ( );
+			GlobalManager.Ui.OpenThisMenu(MenuType.Title);
 
 				
 			break;

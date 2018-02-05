@@ -505,11 +505,17 @@ public class PlayerController : MonoBehaviour
 			StopCoroutine ( geTimerP );
 		}
 
+		if ( getCBP != null )
+		{
+			StopCoroutine ( getCBP );
+		}
+
 		geTimerP = TimerHitbox ( tech );
 
 		StartCoroutine ( geTimerP );
 
 		punch.setTechnic ( tech );
+
 
 		getCBP = CooldownPunch ( tech );
 		StartCoroutine ( getCBP );
@@ -569,11 +575,22 @@ public class PlayerController : MonoBehaviour
 				getCal = 1;
 				InMadness = true;
 
-				float getSpeed = currSpeed;
-				currSpeed *= 0.05f;
+                
 
-				DOVirtual.DelayedCall(2f, () => {
+                DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete(() => {
+                    //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .1f);
+                });
+
+                //Time.timeScale = .2f;
+
+				float getSpeed = currSpeed;
+				float getAcc = acceleration;
+				currSpeed *= 0.05f;
+				acceleration = 0;
+
+				DOVirtual.DelayedCall(0.3f, () => {
 					currSpeed = getSpeed;
+					acceleration = getAcc;
 				});
 
 				StartCoroutine ( camColor ( true ) );
@@ -1529,6 +1546,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch && resetAxeD )
         {
+			playAnimator.SetBool("DoublePunchEnd", false);
+
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
@@ -1764,7 +1783,6 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.Ui.CloseMadness();
 	}
-
     private string AnalyticsChunk(Transform p_child)
     {
 		if ( onTuto || p_child == null)

@@ -46,11 +46,20 @@ public class UiManager : ManagerParent
 	[HideInInspector]
     public Camera thisCam;
 
+
+    [Header("REWARDS")]
+    public Image arrowLeft;
+    public Image arrowRight;
+    public CanvasGroup rewardsArrows;
+    public CanvasGroup rewardsKeys;
+
     private Tween shopTw1, shopTw2, shopTw3, shopTw4;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
 
+    [HideInInspector]
+    public bool OnMenu = false;
 	GameObject InGame;
 	//bool onMainScene = true;
 	#endregion
@@ -70,17 +79,23 @@ public class UiManager : ManagerParent
 			{
 				return;
 			}
-
+            
 			InGame.SetActive ( false );
 			if ( menuOpen != MenuType.Nothing )
 			{
 				CloseThisMenu ( true );
 			}
 
+            OnMenu = true;
 			menuOpen = thisType;
 			GlobalBack.SetActive ( true );
 			thisUi.OpenThis ( GetTok );
-            OpenShop();
+
+            if ( thisType != MenuType.Title )
+            {
+                OpenShop();
+            }
+            
 		}
 
     }
@@ -96,8 +111,12 @@ public class UiManager : ManagerParent
 			InGame.SetActive ( true );
 			GlobalBack.SetActive ( false );
 			thisUi.CloseThis ( );
+            if ( menuOpen != MenuType.Title )
+            {
+                CloseShop();
+            }
 			menuOpen = MenuType.Nothing;
-            CloseShop();
+            OnMenu = false;
 		}
 	}
 
@@ -247,7 +266,32 @@ public class UiManager : ManagerParent
         });
     }
 
-	public void DoubleCoup()
+    public void OpenRewards()
+    {
+
+        Debug.Log("OpenRewards");
+
+
+        rewardsKeys.DOFade(1, .1f);
+        rewardsArrows.DOFade(1, .1f);
+
+
+        arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x - 50, .5f);
+        arrowLeft.DOFade(0, .8f).OnComplete(() => {
+            arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x + 50, .5f);
+        });
+        
+    }
+
+    public void CloseRewards()
+    {
+        Debug.Log("CloseRewards");
+        
+        rewardsKeys.DOFade(0, .1f);
+        rewardsArrows.DOFade(0, .1f);
+    }
+
+    public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
 
