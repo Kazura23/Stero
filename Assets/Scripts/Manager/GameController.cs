@@ -117,22 +117,18 @@ public class GameController : ManagerParent
 	int CurrentScore = 0;
     #endregion
 
-    #region Mono
-    private void Start()
-    {
-        posInitPlayer = Player.transform.position;
-        AllPlayerPrefs.ANbRun = 0;
-        inputPlayer = ReInput.players.GetPlayer(0);
-    }
-
-    void Update ( )
+	#region Mono
+	void Start ( )
+	{
+		inputPlayer = ReInput.players.GetPlayer(0);
+	}
+	void Update ( )
 	{
 		if ( GlobalManager.Ui.OnMenu )
 		{
 			return;
 		}
-		/*inputPlayer = ReInput.players.GetPlayer(0);
-        posInitPlayer = Player.transform.position;*/
+        posInitPlayer = Player.transform.position;
 //        succes[0].Load();
 
         if(StaticRewardTarget.ListRewardEnAttente != null && StaticRewardTarget.ListRewardEnAttente.Count > 0 && corouSucess == null)
@@ -896,9 +892,13 @@ public class GameController : ManagerParent
         yield return new WaitForSeconds(delayRotate);
         isStay = true;
     }
-
+	bool canInput = true;
+	bool canInputY = true;
     private void RewardMenu()
-    {
+	{
+		float getH = inputPlayer.GetAxis ( "Horizontal" );
+		float getV = inputPlayer.GetAxis ( "Vertical" );
+
         if (inReward && !moveInReward && !isLookReward)
         {
 
@@ -910,13 +910,13 @@ public class GameController : ManagerParent
                 case 1: // succes
                     if(transform.GetChild(0).childCount > 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.RightArrow))
+                        if (getH == 1 && canInput)
                         {
-                            ChooseViewReward(true);
-                        }else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                            ChooseViewReward(true, true);
+                        }else if (getH == -1 && canInput)
                         {
-                            ChooseViewReward(false);
-                        }/*else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
+                            ChooseViewReward(true, false);
+                        }else if ((Input.GetKeyDown(KeyCode.Return) || inputPlayer.GetButtonDown("CoupSimple")) && succes[cursorReward].isUnlock)
                         {
                             lookReward = succes[cursorReward].transform;
                             saveRewardPos = lookReward.position;
@@ -932,11 +932,11 @@ public class GameController : ManagerParent
                 /*case 2: // defis
                     if(defis.Length > 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.RightArrow))
+                        if (getH == 1 && canInput)
                         {
                             ChooseViewReward(false, true);
                         }
-                        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                        else if (getH == -1 && canInput)
                         {
                             ChooseViewReward(false, false);
                         }
@@ -944,21 +944,21 @@ public class GameController : ManagerParent
                     }
                     break;*/
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow)) //REWIRED TOUCHE HAUT)
+            if (getV == 1 && canInputY)
             {
                 moveInReward = true;
                 cursorTypeReward++;
                 if (cursorTypeReward > 1)
                     cursorTypeReward = 0;
                 RotateViewReward();
-            }else if(Input.GetKeyDown(KeyCode.DownArrow)) //REWIRED TOUCHE BAS)
+            }else if(getV == -1 && canInputY)
             {
                 moveInReward = true;
                 cursorTypeReward--;
                 if (cursorTypeReward < 0)
                     cursorTypeReward = 1;
                 RotateViewReward();
-            }else if (Input.GetKeyDown(KeyCode.Backspace)) //REWIRED TOUCHE COUP DOUBLE)
+            }else if (Input.GetKeyDown(KeyCode.Backspace)|| inputPlayer.GetButtonDown("CoupDouble"))
             {
                 inReward = false;
 
@@ -981,7 +981,7 @@ public class GameController : ManagerParent
             }
         }else if (canRotateReward)
         {
-            if (Input.GetKeyDown(KeyCode.Backspace))
+            if (Input.GetKeyDown(KeyCode.Backspace) || inputPlayer.GetButtonDown("CoupDouble"))
             {
                 canRotateReward = false;
                 lookReward.eulerAngles = new Vector3(0, 0, 0);
@@ -989,22 +989,40 @@ public class GameController : ManagerParent
                 {
                     isLookReward = false;
                 });
-            }else if(Input.GetKey(KeyCode.RightArrow))
+            }else if(getH == 1 && canInput)
             {
                 lookReward.Rotate(0, speedRotateReward * Time.deltaTime, 0);
-            }else if(Input.GetKey(KeyCode.LeftArrow))
+            }else if(getH == -1 && canInput)
             {
                 lookReward.Rotate(0, -1 * speedRotateReward * Time.deltaTime, 0);
             }
-            else if (Input.GetKey(KeyCode.UpArrow))
+            else if (getV == 1 && canInputY)
             {
                 lookReward.Rotate(speedRotateReward * Time.deltaTime, 0, 0);
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (getV == -1 && canInputY)
             {
                 lookReward.Rotate(-1 * speedRotateReward * Time.deltaTime, 0, 0);
             }
         }
+
+		if (getH == 0 )
+		{
+			canInput = true;
+		}
+		else
+		{
+			canInput = false;
+		}
+
+		if (getV == 0 )
+		{
+			canInputY = true;
+		}
+		else
+		{
+			canInputY = false;
+		}
     }
 
     private void RotateViewReward()
