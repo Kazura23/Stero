@@ -574,11 +574,20 @@ public class PlayerController : MonoBehaviour
 				getCal = 1;
 				InMadness = true;
 
-				float getSpeed = currSpeed;
-				currSpeed *= 0.05f;
+                
 
-				DOVirtual.DelayedCall(2f, () => {
-					currSpeed = getSpeed;
+                DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete(() => {
+                    //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .1f);
+                });
+
+                //Time.timeScale = .2f;
+
+				float getSpeed = currSpeed;
+				currSpeed *= 0.0f;
+
+				DOVirtual.DelayedCall(1f, () => {
+                    currSpeed = getSpeed;
+                    //Time.timeScale = 1;
 				});
 
 				StartCoroutine ( camColor ( true ) );
