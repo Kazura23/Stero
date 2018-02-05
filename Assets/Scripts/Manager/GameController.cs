@@ -25,6 +25,7 @@ public class GameController : ManagerParent
 	public GameObject Player;
 	public SpawnChunks SpawnerChunck;
 	public GameObject BarrierIntro;
+	public GameObject Hub;
 	public bool Intro;
     public bool UseTuto;
 
@@ -528,6 +529,8 @@ public class GameController : ManagerParent
 
     public void Restart () 
 	{
+		Hub.SetActive ( true );
+
         Time.timeScale = 1;
         AllPlayerPrefs.ATimerRun = 0;
         AllPlayerPrefs.ANbRun++;
