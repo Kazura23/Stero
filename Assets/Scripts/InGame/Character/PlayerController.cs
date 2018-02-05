@@ -505,6 +505,11 @@ public class PlayerController : MonoBehaviour
 			StopCoroutine ( geTimerP );
 		}
 
+		if ( getCBP != null )
+		{
+			StopCoroutine ( getCBP );
+		}
+
 		geTimerP = TimerHitbox ( tech );
 
 		StartCoroutine ( geTimerP );
