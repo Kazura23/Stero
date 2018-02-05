@@ -554,7 +554,6 @@ public class SpawnChunks : MonoBehaviour
 					allNewChunk [ allNewChunk.Count - 1 ].DestThis = !isChunkScene;
 
 					currSL.OnScene = isChunkScene;
-					Debug.Log(isChunkScene );
 
 					if ( sourceSpawn.ThoseExit.Count > 1 ) 
 					{
@@ -779,6 +778,11 @@ public class SpawnChunks : MonoBehaviour
 						break;
 					}
 				}
+
+				if ( !isChunkScene )
+				{
+					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+				}
 				
 				currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( true );
 
@@ -795,14 +799,9 @@ public class SpawnChunks : MonoBehaviour
 					currSL = getTrans.GetComponentInChildren<SpawnNewLvl> ( true );
 				}
 
-				Debug.Log(isChunkScene);
 				currSL.OnScene = isChunkScene;
-
-				if ( !isChunkScene )
-				{
-					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
-				}
-				else
+				
+				if ( isChunkScene )
 				{
 					if ( !getTrans.GetComponent<ChunkDisable> ( ) )
 					{
