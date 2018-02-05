@@ -71,6 +71,7 @@ public class RiffleMan : AbstractObject
 		base.Dead ( enemy, thisDeath );
         AllPlayerPrefs.ANbVino++;
         AllPlayerPrefs.ANbTotalEnemyKill++;
+        StaticRewardTarget.SVinoLV++;
         //Debug.Log("vino " + AllPlayerPrefs.ANbVino);
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;
     }

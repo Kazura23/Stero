@@ -37,7 +37,7 @@ public class RainbowColor : MonoBehaviour
 
         if (ComponentType == Type.Material)
         {
-            GetComponent<Renderer>().material.DOColor(colors[index], time).OnComplete(() => Next());
+            GetComponentInChildren<Renderer>().material.DOColor(colors[index], time).OnComplete(() => Next());
         }
 
         if (ComponentType == Type.MaterialFont)
