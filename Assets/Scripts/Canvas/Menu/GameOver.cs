@@ -58,6 +58,8 @@ public class GameOver : UiParent
 
         AllPlayerPrefs.SendAnalytics();
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
+        StaticRewardTarget.SaveReward();
+
 		canUpdate = true;
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 

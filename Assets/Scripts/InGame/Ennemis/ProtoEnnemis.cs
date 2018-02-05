@@ -133,6 +133,7 @@ public class ProtoEnnemis : AbstractObject
         //GlobalManager.Ui.BloodHit();
         AllPlayerPrefs.ANbTotalEnemyKill++;
         AllPlayerPrefs.ANbCharlotte++;
+        StaticRewardTarget.SCharlotteLV++;
         //Debug.Log("charlotte "+AllPlayerPrefs.ANbCharlotte);
 		base.Dead ( enemy, thisDeath );
         //mainCorps.GetComponent<BoxCollider> ( ).enabled = false;

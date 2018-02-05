@@ -25,7 +25,8 @@ public class Piece : MonoBehaviour
             {
                 AllPlayerPrefs.SetIntValue(Constants.Coin, 5);
             }
-            AllPlayerPrefs.scoreWhithoutDistance += point;
+            //AllPlayerPrefs.scoreWhithoutDistance += point;
+            // Ajouter score
             AllPlayerPrefs.piece++;
             GlobalManager.Ui.MoneyPoints.text = "" + AllPlayerPrefs.GetIntValue(Constants.Coin);
 
