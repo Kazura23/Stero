@@ -516,6 +516,7 @@ public class PlayerController : MonoBehaviour
 
 		punch.setTechnic ( tech );
 
+
 		getCBP = CooldownPunch ( tech );
 		StartCoroutine ( getCBP );
 	}
@@ -583,11 +584,13 @@ public class PlayerController : MonoBehaviour
                 //Time.timeScale = .2f;
 
 				float getSpeed = currSpeed;
-				currSpeed *= 0.0f;
+				float getAcc = acceleration;
+				currSpeed *= 0.05f;
+				acceleration = 0;
 
-				DOVirtual.DelayedCall(1f, () => {
-                    currSpeed = getSpeed;
-                    //Time.timeScale = 1;
+				DOVirtual.DelayedCall(0.3f, () => {
+					currSpeed = getSpeed;
+					acceleration = getAcc;
 				});
 
 				StartCoroutine ( camColor ( true ) );
@@ -1543,6 +1546,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if( inputPlayer.GetAxis("CoupDouble") != 0 && canPunch && dpunch && resetAxeD )
         {
+			playAnimator.SetBool("DoublePunchEnd", false);
+
             AllPlayerPrefs.ANbCoupDouble++;
 			Dash = false;
 			thisCam.fieldOfView = Constants.DefFov;
