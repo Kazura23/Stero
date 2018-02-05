@@ -901,7 +901,7 @@ public class GameController : ManagerParent
     private void RewardMenu()
 	{
 		float getH = inputPlayer.GetAxis ( "Horizontal" );
-		float getV = inputPlayer.GetAxis ( "Vertical" );
+		float getV = Input.GetAxis ( "Vertical" );
 
         if (inReward && !moveInReward && !isLookReward)
         {
