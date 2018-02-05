@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class Wallctrl : MonoBehaviour {
     public GameObject Wall;
+    public GameObject Playerc;
 	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    private void OnTriggerExit(Collider other)
-    {
-        Wall.SetActive(true);
-    }
-    private void OnTriggerEnter(Collider other)
+
+ 
+    private void OnTriggerEnter(Collider Playerc)
     {
         Wall.SetActive(false);
     }
