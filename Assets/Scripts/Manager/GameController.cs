@@ -736,6 +736,7 @@ public class GameController : ManagerParent
 		}
 		//Destroy ( newObj, 3 );
 		CurrentScore += thisInf.AllScore * thisInf.CurrCount;
+        
 
 		int currInd = currIndex;
 
@@ -754,7 +755,10 @@ public class GameController : ManagerParent
 			GlobalManager.Ui.RankText.color = getAllRank [ currInd ].Color;
 			GlobalManager.Ui.Multiplicateur.text = getAllRank [ currInd ].MultiPli.ToString ( );
 			GlobalManager.Ui.RankText.text = getAllRank [ currInd ].NameRank;
-
+            if(currInd == getAllRank.Length - 1)
+            {
+                StaticRewardTarget.SRankSteroidal++;
+            }
 			lastNeeded = currNeeded;
 			currMax = getAllRank [ currInd ].NeededScore;
 		
@@ -1008,6 +1012,7 @@ public class GameController : ManagerParent
             {
                 Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(() =>
                 {
+                    // effacer fleche
                     cursorReward = 0;
                     moveInReward = false;
                 });
@@ -1017,9 +1022,15 @@ public class GameController : ManagerParent
         {
             Player.transform.DOLocalRotate(rotateDeskReward[cursorTypeReward] + moveRotate[chooseOption], delayRotate).OnComplete(() =>
             {
-                var tempEfface = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
-                DOTween.To(() => tempEfface.alpha, x => tempEfface.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => 
+                var rewardS = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>();
+                var tempAffiche = rewardS.afficheReward.GetComponent<CanvasGroup>();
+                if (rewardS.isUnlock)
                 {
+                    rewardS.afficheReward.GetChild(1).gameObject.SetActive(true);
+                }
+                DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => 
+                {
+                    // affichage fleches
                     moveInReward = false;
                 });
             });
@@ -1039,8 +1050,16 @@ public class GameController : ManagerParent
                 cursorReward++;
                 if (cursorReward >= transform.GetChild(0).childCount)
                     cursorReward = 0;
-                Debug.Log(cursorReward);
-                var tempAffiche = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                //Debug.Log(cursorReward);
+
+                var rewardS = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>();
+                var tempAffiche = rewardS.afficheReward.GetComponent<CanvasGroup>();
+                var tempAfficheImage = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetChild(1).gameObject;
+
+                if (rewardS.isUnlock)
+                {
+                    tempAfficheImage.SetActive(true);
+                }
                 DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => moveInReward = false);
             });
             
@@ -1053,8 +1072,15 @@ public class GameController : ManagerParent
                 cursorReward--;
                 if (cursorReward < 0)
                     cursorReward = transform.GetChild(0).childCount - 1;
-                Debug.Log(cursorReward);
-                var tempAffiche = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetComponent<CanvasGroup>();
+                //Debug.Log(cursorReward);
+                var rewardS = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>();
+                var tempAffiche = rewardS.afficheReward.GetComponent<CanvasGroup>();
+                var tempAfficheImage = StaticRewardTarget.listRewardTrans.GetChild(cursorReward).GetComponent<RewardObject>().afficheReward.GetChild(1).gameObject;
+
+                if (rewardS.isUnlock)
+                {
+                    tempAfficheImage.SetActive(true);
+                }
                 DOTween.To(() => tempAffiche.alpha, x => tempAffiche.alpha = x, 1, delaySmoothPrintSucess).OnComplete(() => moveInReward = false);
             });
         }
