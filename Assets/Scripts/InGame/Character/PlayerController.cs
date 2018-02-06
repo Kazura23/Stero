@@ -421,7 +421,6 @@ public class PlayerController : MonoBehaviour
 		thisCam.DOColor ( otherCam.backgroundColor, 0.3f );
 
         AllPlayerPrefs.distance = totalDis;
-		AllPlayerPrefs.finalScore = AllPlayerPrefs.scoreWhithoutDistance + (int) totalDis;
 
 		StopPlayer = true;
 
@@ -429,7 +428,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
 		GameOverTok thisTok = new GameOverTok ( );
-		thisTok.totalDist = totalDis;
+		thisTok.totalDist = AllPlayerPrefs.finalScore;
 
 		GlobalManager.Ui.GameOver();
 		stopMadness ( );
@@ -575,6 +574,14 @@ public class PlayerController : MonoBehaviour
 				getCal = 1;
 				InMadness = true;
 
+                
+
+                DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete(() => {
+                    //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .1f);
+                });
+
+                //Time.timeScale = .2f;
+
 				float getSpeed = currSpeed;
 				float getAcc = acceleration;
 				currSpeed *= 0.05f;
@@ -677,6 +684,7 @@ public class PlayerController : MonoBehaviour
 		}
 
         AllPlayerPrefs.ATimerRun += getTime;
+        StaticRewardTarget.LoadReward();
 
 		TimerCheck ( getTime );
 		distCal ( );
@@ -848,7 +856,7 @@ public class PlayerController : MonoBehaviour
 			if ( timerFight.value < 0.25f )
 			{
 				newStat ( StatePlayer.Danger );
-
+                StaticRewardTarget.SRedMadness++;
 				secureTimer = false;
 				lastTimer = true;
 
@@ -925,6 +933,7 @@ public class PlayerController : MonoBehaviour
 				maxSpeedCL = MaxSpeedCL + MaxCLInc;
 			}
 		}
+        //StaticRewardTarget.SScoreLV = AllPlayerPrefs.scoreWhithoutDistance + (int)totalDis;
 	}
 
 	void speAction ( float getTime )
@@ -955,7 +964,7 @@ public class PlayerController : MonoBehaviour
                     animeSlo = true;
                     GlobalManager.Ui.StartSpecialAction("SlowMot");
                 }
-
+                StaticRewardTarget.STimerSlowMo += getTime;
                 if (Time.timeScale > 1 / SlowMotion)
                 {
                     Time.timeScale -= Time.deltaTime * SpeedSlowMot;
@@ -1133,6 +1142,7 @@ public class PlayerController : MonoBehaviour
 
 		pRig.constraints = thisConst;
 		StopPlayer = false;
+        StaticRewardTarget.SSizeMagicSphere = 0;
 		getCouldown = CooldownDeadBall ( );
 		StartCoroutine( getCouldown );
 	}
@@ -1271,6 +1281,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( InMadness )
 		{
+            StaticRewardTarget.STimerMadness += delTime;
 			speed *= MadnessSpeed;
 		}
 		else if ( chargeDp )

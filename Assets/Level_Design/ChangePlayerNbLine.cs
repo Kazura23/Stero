@@ -19,6 +19,7 @@ public class ChangePlayerNbLine : MonoBehaviour {
 	{
 		if (other.gameObject.tag == Constants._PlayerTag &&!checkTrigger) 
 		{
+			Debug.Log ( "ChangeLine" );
 			checkTrigger = true;
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
@@ -33,6 +34,7 @@ public class ChangePlayerNbLine : MonoBehaviour {
 	{
 		if (other.gameObject.tag == Constants._PlayerTag && !checkTrigger) 
 		{
+			Debug.Log ( "ChangeLine" );
 			checkTrigger = true;
 			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
 			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;

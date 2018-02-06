@@ -46,7 +46,14 @@ public class UiManager : ManagerParent
 	[HideInInspector]
     public Camera thisCam;
 
-    private Tween shopTw1, shopTw2, shopTw3, shopTw4;
+
+    [Header("REWARDS")]
+    public Image arrowLeft;
+    public Image arrowRight;
+    public CanvasGroup rewardsArrows;
+    public CanvasGroup rewardsKeys;
+
+    private Tween shopTw1, shopTw2, shopTw3, shopTw4, arrowLeftTw, arrowRightTw;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
@@ -88,6 +95,7 @@ public class UiManager : ManagerParent
             {
                 OpenShop();
             }
+            
 		}
 
     }
@@ -258,7 +266,48 @@ public class UiManager : ManagerParent
         });
     }
 
-	public void DoubleCoup()
+    public void OpenRewards()
+    {
+
+        Debug.Log("OpenRewards");
+
+
+        rewardsKeys.DOFade(1, .1f);
+        rewardsArrows.DOFade(1, .1f);
+        /*
+
+        float arrowLeftpos = arrowLeft.transform.localPosition.x;
+        float arrowRightpos = arrowRight.transform.localPosition.x;
+
+        
+        arrowLeft.DOKill(true);
+
+        arrowLeftTw = arrowLeft.transform.DOLocalMoveX(arrowLeft.transform.localPosition.x - 50, .9f).OnComplete(() =>
+        {
+            DOVirtual.DelayedCall(.2f, () =>
+             {
+                 //arrowLeft.DOFade(0, .4f).OnComplete(() =>
+                 //{
+                     arrowLeft.transform.DOLocalMoveX(arrowLeftpos, 0f);
+//                     arrowLeft.DOFade(1, 0);
+
+                 //});
+             });
+        }).SetLoops(-1, LoopType.Restart);
+        */
+    }
+
+    public void CloseRewards()
+    {
+        //arrowLeftTw.Kill(true);
+
+        Debug.Log("CloseRewards");
+        
+        rewardsKeys.DOFade(0, .1f);
+        rewardsArrows.DOFade(0, .1f);
+    }
+
+    public void DoubleCoup()
     {
 		float saveFov = thisCam.fieldOfView;
 
@@ -339,6 +388,8 @@ public class UiManager : ManagerParent
 
         Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
+        textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
+
 
         Destroy(textMadness, 3);
 
@@ -454,7 +505,11 @@ public class UiManager : ManagerParent
         float randomPos = UnityEngine.Random.Range(-600, 600);
         float randomRot = UnityEngine.Random.Range(200, 200);
         //Debug.Log("score");
-        ScorePoints.text = "" + (int.Parse(ScorePoints.text) + number);
+        var scoreInt = (int.Parse(ScorePoints.text) + number);
+        ScorePoints.text = "" + scoreInt;
+        StaticRewardTarget.SScoreLV = scoreInt;
+        AllPlayerPrefs.finalScore = scoreInt;
+        AllPlayerPrefs.scoreWhithoutDistance += number;
 
 
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
