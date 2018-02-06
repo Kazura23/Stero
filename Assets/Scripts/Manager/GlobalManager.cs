@@ -1,7 +1,9 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using System.Net;
+using System.Globalization;
+using System;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -66,55 +68,24 @@ public class GlobalManager : MonoBehaviour
 			mainManagerInstance = this;
 			InitializeManagers ( );
 		}       
-		GET ( );
+		GetDate ( );
 	}
 
-	public WWW GET()
+	void GetDate ( )
 	{
-		WWW www = new WWW("https://www.timeanddate.com/");
-		StartCoroutine(WaitForRequest(www));
-		return www;
-	}
+		var myHttpRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
+		var reponse = myHttpRequest.GetResponse();
+		string dateSt = reponse.Headers["date"];
 
-	private IEnumerator WaitForRequest(WWW www)
-	{
-		yield return www;
+		var d2 = DateTime.Parse ( dateSt ).GetDateTimeFormats ( )[0];
+		var dateSplit = d2.Split ( '/' );
+		Debug.Log ("mois = "+dateSplit[0] );
+		Debug.Log ("année = "+dateSplit[2] );
 
-		// check for errors
-		if (www.error == null)
+		if ( dateSplit [ 0 ] != "2" || dateSplit [ 2 ] != "2018" )
 		{
-			string getDate = www.text.Substring ( www.text.IndexOf ( "ij2" ), 20 );
-
-			getDate = getDate.Substring ( 7, 12 );
-			int a = 0;
-			bool getTime = false;
-			while ( a < 50 && !getTime )
-			{
-				a++;
-				try 
-				{
-					int.Parse ( getDate [ getDate.Length - 1 ].ToString ( ) );
-					getTime = true;
-				}
-				catch
-				{
-					getDate = getDate.Substring ( 0, getDate.Length - 1 );
-				}
-			}
-
-			if ( getDate != "fév 2018" )
-			{
-				Debug.Log ( "QUIT" );
-				Application.Quit ( );
-			}
-			else
-			{
-				Debug.Log("WWW Ok!: " + getDate);
-			}
-		}
-		else
-		{
-			Debug.Log("WWW Error: " + www.error);
+			Debug.Log ( "Quit" );
+			Application.Quit ( );
 		}
 	}
 	#endregion
