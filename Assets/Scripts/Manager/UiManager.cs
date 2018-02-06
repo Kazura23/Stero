@@ -708,10 +708,12 @@ public class UiManager : ManagerParent
 		if ( ExtraHearts [ 0 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 0 ];
+			getCurrHeat.transform.localPosition = new Vector3 (105, -29.5f,0);
 		}
 		else if ( ExtraHearts [ 1 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 1 ];
+			getCurrHeat.transform.localPosition = new Vector3 (195,-29.9f);
 		}
 		else
 		{
@@ -720,7 +722,11 @@ public class UiManager : ManagerParent
 
 		getCurrHeat.enabled = true;
 		getCurrHeat.DOKill ( );
+		getCurrHeat.transform.localScale = new Vector3 ( 1, 1, 1 );
+		CircleFeel.DOFade ( 0, 0 );
 		getCurrHeat.DOFade(1, .5f);
+		getCurrHeat.GetComponent<RainbowScale>().enabled = true;
+
 	}
 
     public void StartBonusLife ( int currLife )

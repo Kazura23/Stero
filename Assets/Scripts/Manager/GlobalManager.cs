@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Net;
+using System.Globalization;
+using System;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -49,6 +54,7 @@ public class GlobalManager : MonoBehaviour
     #region Mono
     void Awake()
 	{
+		
         StaticRewardTarget.SetObjectifReward(nbKillCharlotteLv1, nbKillCharlotteLv2, nbKillCharlotteLv3, nbKillDanielLv1, nbKillDanielLv2, nbKillVinoLv1, nbKillVinoLv2, scoreObjectifLv1, scoreObjectifLv2, scoreObjectifLv3, scoreSansPoingNiTechSpe, TempsObjectifSlowMtion, TailleBouleHumaine, TempsPasserEnMadness, nbPropSafeDetruitEnMadness, nbDansLeRougeMadness, nbRangSteroidal);
         AllPlayerPrefs.canSendAnalytics = UseAnalytics;
 		PlayerPrefs.DeleteAll ( );
@@ -62,6 +68,32 @@ public class GlobalManager : MonoBehaviour
 			mainManagerInstance = this;
 			InitializeManagers ( );
 		}       
+		GetDate ( );
+	}
+
+	void GetDate ( )
+	{
+		try{
+			var myHttpRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
+			var reponse = myHttpRequest.GetResponse();
+			string dateSt = reponse.Headers["date"];
+
+			var d2 = DateTime.Parse ( dateSt ).GetDateTimeFormats ( )[0];
+			var dateSplit = d2.Split ( '/' );
+			Debug.Log ("mois = "+dateSplit[0] );
+			Debug.Log ("année = "+dateSplit[2] );
+
+			if ( dateSplit [ 0 ] != "2" || dateSplit [ 2 ] != "2018" )
+			{
+				Debug.Log ( "Quit" );
+				Application.Quit ( );
+			}
+		}
+		catch{
+			Debug.Log ( "Quit" );
+			Application.Quit ( );
+		}
+
 	}
 	#endregion
 

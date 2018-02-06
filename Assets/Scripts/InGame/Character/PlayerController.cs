@@ -295,8 +295,10 @@ public class PlayerController : MonoBehaviour
 		{
 			StopCoroutine ( getCouldown );
 		}
+        GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
-		textDist.text = "0";
+
+        textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
 		onTuto = GlobalManager.GameCont.LaunchTuto;
 
@@ -604,7 +606,9 @@ public class PlayerController : MonoBehaviour
 
 			if ( getCal > 0.75f )
 			{
-				newStat ( StatePlayer.Madness );
+                GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Green", true);
+
+                newStat( StatePlayer.Madness );
 
 				secureTimer = true;
 			}
@@ -826,16 +830,20 @@ public class PlayerController : MonoBehaviour
 		if ( secureTimer )
 		{
 			if ( InMadness )
-			{
-				timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
+            {
+                GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
+
+                timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
 			}
 			else
 			{
 				timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
-			}
+
+            }
 
 			if ( timerFight.value < 0.75f )
 			{
+
 				secureTimer = false;
 				lastTimer = false;
                 
@@ -850,11 +858,15 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( !lastTimer )
 		{
-			timerFight.value -= ( getTime / DelayTimerStandard ) * 0.5f;
+            GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
+
+            timerFight.value -= ( getTime / DelayTimerStandard ) * 0.5f;
 
 			if ( timerFight.value < 0.25f )
 			{
-				newStat ( StatePlayer.Danger );
+                GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Red", true);
+
+                newStat( StatePlayer.Danger );
                 StaticRewardTarget.SRedMadness++;
 				secureTimer = false;
 				lastTimer = true;
@@ -864,9 +876,8 @@ public class PlayerController : MonoBehaviour
 		else if ( !onTuto )
 		{
 			timerFight.value -= ( getTime / DelayTimerToDeath ) * 0.25f;
-
-			if ( timerFight.value <= 0 )
-			{
+			if ( timerFight.value <= 0)
+            {
 				secureTimer = false;
 				lastTimer = false;
                 AllPlayerPrefs.ATypeObstacle = "Madness";

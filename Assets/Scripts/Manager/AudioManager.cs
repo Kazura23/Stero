@@ -246,9 +246,10 @@ public class AudioManager : ManagerParent
 		setDict.Add ( AudioType.Acceleration, currT.Find ( "Acceleration" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.SteroKill, currT.Find ( "SteroKill" ).GetComponent<AudioSource> ( ) );
 		setDict.Add ( AudioType.PunchVoice, currT.Find ( "PunchVoice" ).GetComponent<AudioSource> ( ) );
-		setDict.Add ( AudioType.MusicTrash, currT.Find ( "MusicTrash" ).GetComponent<AudioSource> ( ) );
+        setDict.Add(AudioType.MusicTrash, currT.Find("MusicTrash").GetComponent<AudioSource>());
+        setDict.Add(AudioType.Madnesse, currT.Find("MusicMadness").GetComponent<AudioSource>());
 
-		setVol.Add ( AudioType.OtherMusic, 1 );
+        setVol.Add ( AudioType.OtherMusic, 1 );
 		setVol.Add ( AudioType.OtherSound, 1 );
 		setVol.Add ( AudioType.MusicTrash, 1);
 		setVol.Add ( AudioType.MusicBackGround, 1 );
