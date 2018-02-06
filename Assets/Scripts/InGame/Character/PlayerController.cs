@@ -749,8 +749,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
 		{				
-			int rdmValue = UnityEngine.Random.Range(0, 3);
-			GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "MrStero_Acceleration_" + rdmValue, false, null, true );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "", false, null, true );
 			Time.timeScale = 1;
 			Dash = true;
 			canUseDash = false;
