@@ -704,14 +704,23 @@ public class UiManager : ManagerParent
 
 	public void NewLife ( int currLife )
 	{
+		Image getCurrHeat;
 		if ( ExtraHearts [ 0 ].enabled == false )
 		{
-			ExtraHearts [ 0 ].enabled = true;
+			getCurrHeat = ExtraHearts [ 0 ];
 		}
 		else if ( ExtraHearts [ 1 ].enabled == false )
 		{
-			ExtraHearts [ 1 ].enabled = true;
+			getCurrHeat = ExtraHearts [ 1 ];
 		}
+		else
+		{
+			return;
+		}
+
+		getCurrHeat.enabled = true;
+		getCurrHeat.DOKill ( );
+		getCurrHeat.DOFade(1, .5f);
 	}
 
     public void StartBonusLife ( int currLife )
@@ -729,6 +738,8 @@ public class UiManager : ManagerParent
 		{
 			getCurrHeat = BonusLife;
 		}
+
+		getCurrHeat.DOKill ( );
 
         getCurrHeat.GetComponent<RainbowScale>().enabled = false;
 
