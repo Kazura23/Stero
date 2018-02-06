@@ -586,13 +586,12 @@ public class PlayerController : MonoBehaviour
 
 				float getSpeed = currSpeed;
 				float getAcc = acceleration;
-				currSpeed *= 0.05f;
 				acceleration = 0;
 
-				DOVirtual.DelayedCall(0.3f, () => {
-					currSpeed = getSpeed;
+				DOTween.To ( ( ) => 0, x => currSpeed = x, currSpeed, 0.5f ).SetEase ( Ease.InBack ).OnComplete ( ( ) =>
+				{
 					acceleration = getAcc;
-				});
+				} );
 
 				StartCoroutine ( camColor ( true ) );
 				GlobalManager.Ui.OpenMadness ( );
