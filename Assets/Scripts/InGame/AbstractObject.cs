@@ -382,7 +382,6 @@ public class AbstractObject : MonoBehaviour
 	IEnumerator enableColl ( )
 	{
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
-		Transform savePos = transform;
 		Transform playPos = GlobalManager.GameCont.Player.transform;
 
 		Physics.IgnoreCollision ( playPos.GetComponent<Collider> ( ), GetComponent<Collider> ( ) );
