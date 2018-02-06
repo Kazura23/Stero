@@ -428,7 +428,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowRotate>().enabled = false;
 
 		GameOverTok thisTok = new GameOverTok ( );
-		thisTok.totalDist = AllPlayerPrefs.finalScore;
+		thisTok.totalDist = AllPlayerPrefs.finalScore + totalDis;
 
 		GlobalManager.Ui.GameOver();
 		stopMadness ( );

@@ -508,7 +508,7 @@ public class UiManager : ManagerParent
         var scoreInt = (int.Parse(ScorePoints.text) + number);
         ScorePoints.text = "" + scoreInt;
         StaticRewardTarget.SScoreLV = scoreInt;
-        AllPlayerPrefs.finalScore = scoreInt;
+		AllPlayerPrefs.finalScore += number;
         AllPlayerPrefs.scoreWhithoutDistance += number;
 
 
@@ -704,21 +704,14 @@ public class UiManager : ManagerParent
 
 	public void NewLife ( int currLife )
 	{
-		Image getCurrHeat;
-		if ( currLife == 3 )
+		if ( ExtraHearts [ 0 ].enabled == false )
 		{
-			getCurrHeat = ExtraHearts [ 1 ];
+			ExtraHearts [ 0 ].enabled = true;
 		}
-		else if ( currLife == 2 )
+		else if ( ExtraHearts [ 1 ].enabled == false )
 		{
-			getCurrHeat = ExtraHearts [ 0 ];
+			ExtraHearts [ 1 ].enabled = true;
 		}
-		else
-		{
-			getCurrHeat = BonusLife;
-		}
-
-		getCurrHeat.enabled = true;
 	}
 
     public void StartBonusLife ( int currLife )
