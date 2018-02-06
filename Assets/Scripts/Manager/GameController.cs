@@ -117,18 +117,22 @@ public class GameController : ManagerParent
 	int CurrentScore = 0;
     #endregion
 
-	#region Mono
-	void Start ( )
-	{
-		inputPlayer = ReInput.players.GetPlayer(0);
-	}
-	void Update ( )
+    #region Mono
+    private void Start()
+    {
+        posInitPlayer = Player.transform.position;
+        AllPlayerPrefs.ANbRun = 0;
+        inputPlayer = ReInput.players.GetPlayer(0);
+    }
+
+    void Update ( )
 	{
 		if ( GlobalManager.Ui.OnMenu )
 		{
 			return;
 		}
-        posInitPlayer = Player.transform.position;
+		/*inputPlayer = ReInput.players.GetPlayer(0);
+        posInitPlayer = Player.transform.position;*/
 //        succes[0].Load();
 
         if(StaticRewardTarget.ListRewardEnAttente != null && StaticRewardTarget.ListRewardEnAttente.Count > 0 && corouSucess == null)
@@ -897,7 +901,7 @@ public class GameController : ManagerParent
     private void RewardMenu()
 	{
 		float getH = inputPlayer.GetAxis ( "Horizontal" );
-		float getV = inputPlayer.GetAxis ( "Vertical" );
+		float getV = Input.GetAxis ( "Vertical" );
 
         if (inReward && !moveInReward && !isLookReward)
         {
@@ -912,11 +916,11 @@ public class GameController : ManagerParent
                     {
                         if (getH == 1 && canInput)
                         {
-                            ChooseViewReward(true, true);
+                            ChooseViewReward(true);
                         }else if (getH == -1 && canInput)
                         {
-                            ChooseViewReward(true, false);
-                        }else if ((Input.GetKeyDown(KeyCode.Return) || inputPlayer.GetButtonDown("CoupSimple")) && succes[cursorReward].isUnlock)
+                            ChooseViewReward(false);
+                        }/*else if (Input.GetKeyDown(KeyCode.W) && succes[cursorReward].isUnlock)
                         {
                             lookReward = succes[cursorReward].transform;
                             saveRewardPos = lookReward.position;
