@@ -22,6 +22,7 @@ public class SpawnChunks : MonoBehaviour
 	List<CheckOnScene> getSpawnChunks;
 	List<CheckOnScene> otherSpawn;
 	GameObject[] GetSceneChunk;
+	List<GameObject> ToDelete;
 
 	ChunksScriptable thisChunk;
 	GameObject WallOnLastChunk;
@@ -43,11 +44,22 @@ public class SpawnChunks : MonoBehaviour
 	{
 		CleanThisList ( otherSpawn );
 		CleanThisList ( getSpawnChunks );
+
+		for ( int a = 0; a < ToDelete.Count; a++ )
+		{
+			if ( ToDelete [ a ] != null )
+			{
+				Destroy ( ToDelete [ a ] );
+			}
+		}
+
+		ToDelete.Clear ( );
 	}
 
 	// Initilisation des chunks ( Organisation / tri des chunks enregistrer + sauvegarde des éléments qui servent de spawn d'obstacle ou autres )
 	public void InitChunck ( )
 	{
+		ToDelete = new List<GameObject> ( );
 		getSpawnChunks = new List<CheckOnScene> ( );
 		otherSpawn = new List<CheckOnScene> ( );
 		thisT = transform;
@@ -465,6 +477,7 @@ public class SpawnChunks : MonoBehaviour
 					if ( !isChunkScene )
 					{
 						thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+						ToDelete.Add ( thisSpawn );
 					}
 					else
 					{
@@ -777,6 +790,7 @@ public class SpawnChunks : MonoBehaviour
 				if ( !isChunkScene )
 				{
 					thisSpawn = ( GameObject ) Instantiate ( thisSpawn, thisT );
+					ToDelete.Add ( thisSpawn );
 				}
 				
 				currSL = thisSpawn.GetComponentInChildren<SpawnNewLvl> ( true );
@@ -864,6 +878,7 @@ public class SpawnChunks : MonoBehaviour
 				Instantiate ( getChunks [ currLevel ].WallEndChunk, thisLvl.transform );
 			}
 		}*/
+
 	}
 
 	// Spawn de divers éléments (en random) sur les emplacements prévue

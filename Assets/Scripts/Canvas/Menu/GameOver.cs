@@ -64,7 +64,7 @@ public class GameOver : UiParent
         //float distPlayer = GlobalManager.GameCont.Player.GetComponent<PlayerController>().totalDis;
 
 		GlobalManager.GameCont.SpawnerChunck.RemoveAll ( );
-      //  Highscore.text = "" + AllPlayerPrefs.saveData.listScore[0].finalScore;
+		Highscore.text = ( AllPlayerPrefs.saveData.listScore.Count > 0 ? AllPlayerPrefs.saveData.listScore [ 0 ].finalScore : 0 ).ToString ( );
 		System.Action <DeadBallEvent> checkDBE = delegate ( DeadBallEvent thisEvnt )
 		{
 		};
