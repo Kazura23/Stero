@@ -63,8 +63,7 @@ public class Punch : MonoBehaviour {
 
             if(other.gameObject.tag == Constants._EnnemisTag)
             {
-                int rdmValue = UnityEngine.Random.Range(0, 5);
-                GlobalManager.AudioMa.OpenAudio(AudioType.SteroKill, "MrStero_Kill_" + rdmValue, false, null, true);
+                GlobalManager.AudioMa.OpenAudio(AudioType.SteroKill, "", false, null, true);
                 GlobalManager.Ui.BloodHit();
             }
 
