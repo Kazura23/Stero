@@ -389,7 +389,6 @@ public class UiManager : ManagerParent
         Transform getPlayer = GlobalManager.GameCont.Player.transform;
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
         textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
-        Debug.Log(GlobalManager.GameCont.Player.transform.rotation.y);
 
 
         Destroy(textMadness, 3);

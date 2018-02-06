@@ -62,6 +62,7 @@ public class GameController : ManagerParent
 
 	[HideInInspector]
 	public List<Text> GetBonusText;
+	public Transform ListScoreUI;
 
 	Player inputPlayer;
 	//Text textScore;
@@ -1318,10 +1319,11 @@ public class GameController : ManagerParent
 
         SpawnerChunck = GetComponentInChildren<SpawnChunks> ( );
 		SpawnerChunck.InitChunck ( );
-
+		AllPlayerPrefs.ListScoreUI = ListScoreUI;
         StaticRewardTarget.icon_sucess = icon_sucess;
         StaticRewardTarget.ListRewardEnAttente = new List<GameObject>();
         AllPlayerPrefs.saveData = SaveData.Load();
+		AllPlayerPrefs.saveData.PrintScoreUI ( );
         StaticRewardTarget.listRewardTrans = transform.GetChild(0);
         LoadRewardInit();
 
@@ -1526,8 +1528,17 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
+		PrintScoreUI ( );
         SaveData.Save(this);
     }
+
+	public void PrintScoreUI ( )
+	{
+		for ( int a = 0; a < AllPlayerPrefs.ListScoreUI.childCount; a++ )
+		{
+			AllPlayerPrefs.ListScoreUI.GetChild ( a ).GetChild ( 1 ).GetComponent<Text> ( ).text = ( a < listScore.Count ? listScore [ a ].finalScore : 0 ).ToString ( );
+		}
+	}
 }
 
 public static class StreamExtensions
