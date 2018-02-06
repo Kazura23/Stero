@@ -73,20 +73,27 @@ public class GlobalManager : MonoBehaviour
 
 	void GetDate ( )
 	{
-		var myHttpRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
-		var reponse = myHttpRequest.GetResponse();
-		string dateSt = reponse.Headers["date"];
+		try{
+			var myHttpRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
+			var reponse = myHttpRequest.GetResponse();
+			string dateSt = reponse.Headers["date"];
 
-		var d2 = DateTime.Parse ( dateSt ).GetDateTimeFormats ( )[0];
-		var dateSplit = d2.Split ( '/' );
-		Debug.Log ("mois = "+dateSplit[0] );
-		Debug.Log ("année = "+dateSplit[2] );
+			var d2 = DateTime.Parse ( dateSt ).GetDateTimeFormats ( )[0];
+			var dateSplit = d2.Split ( '/' );
+			Debug.Log ("mois = "+dateSplit[0] );
+			Debug.Log ("année = "+dateSplit[2] );
 
-		if ( dateSplit [ 0 ] != "2" || dateSplit [ 2 ] != "2018" )
-		{
+			if ( dateSplit [ 0 ] != "2" || dateSplit [ 2 ] != "2018" )
+			{
+				Debug.Log ( "Quit" );
+				Application.Quit ( );
+			}
+		}
+		catch{
 			Debug.Log ( "Quit" );
 			Application.Quit ( );
 		}
+
 	}
 	#endregion
 
