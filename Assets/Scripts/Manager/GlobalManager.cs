@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -49,6 +52,7 @@ public class GlobalManager : MonoBehaviour
     #region Mono
     void Awake()
 	{
+		
         StaticRewardTarget.SetObjectifReward(nbKillCharlotteLv1, nbKillCharlotteLv2, nbKillCharlotteLv3, nbKillDanielLv1, nbKillDanielLv2, nbKillVinoLv1, nbKillVinoLv2, scoreObjectifLv1, scoreObjectifLv2, scoreObjectifLv3, scoreSansPoingNiTechSpe, TempsObjectifSlowMtion, TailleBouleHumaine, TempsPasserEnMadness, nbPropSafeDetruitEnMadness, nbDansLeRougeMadness, nbRangSteroidal);
         AllPlayerPrefs.canSendAnalytics = UseAnalytics;
 		PlayerPrefs.DeleteAll ( );
@@ -62,6 +66,56 @@ public class GlobalManager : MonoBehaviour
 			mainManagerInstance = this;
 			InitializeManagers ( );
 		}       
+		GET ( );
+	}
+
+	public WWW GET()
+	{
+		WWW www = new WWW("https://www.timeanddate.com/");
+		StartCoroutine(WaitForRequest(www));
+		return www;
+	}
+
+	private IEnumerator WaitForRequest(WWW www)
+	{
+		yield return www;
+
+		// check for errors
+		if (www.error == null)
+		{
+			string getDate = www.text.Substring ( www.text.IndexOf ( "ij2" ), 20 );
+
+			getDate = getDate.Substring ( 7, 12 );
+			int a = 0;
+			bool getTime = false;
+			while ( a < 50 && !getTime )
+			{
+				a++;
+				try 
+				{
+					int.Parse ( getDate [ getDate.Length - 1 ].ToString ( ) );
+					getTime = true;
+				}
+				catch
+				{
+					getDate = getDate.Substring ( 0, getDate.Length - 1 );
+				}
+			}
+
+			if ( getDate != "fév 2018" )
+			{
+				Debug.Log ( "QUIT" );
+				Application.Quit ( );
+			}
+			else
+			{
+				Debug.Log("WWW Ok!: " + getDate);
+			}
+		}
+		else
+		{
+			Debug.Log("WWW Error: " + www.error);
+		}
 	}
 	#endregion
 
