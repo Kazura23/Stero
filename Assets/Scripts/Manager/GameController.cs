@@ -688,10 +688,7 @@ public class GameController : ManagerParent
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
 
 			currPlayer.SlowMotion = 1.25f; 
-			currPlayer.SpeedSlowMot = 1; 
-			currPlayer.SpeedDeacSM = 5; 
-			currPlayer.ReduceSlider = 1.5f; 
-			currPlayer.RecovSlider = 0.75f; 
+			currPlayer.MadnessUse = 1; 
 		}
 
 		Dictionary <string, ItemModif> getMod = AllModifItem;
@@ -1370,48 +1367,51 @@ public class GameController : ManagerParent
 			switch ( thisItem.SpecAction )
 			{
 			case SpecialAction.OndeChoc:
-				currPlayer.delayChocWave = thisItem.SliderTime;
                 AllPlayerPrefs.ANameTechSpe = "Onde de choc";
 				break;
 			case SpecialAction.DeadBall:
-				currPlayer.DelayDeadBall = thisItem.SliderTime;
                 AllPlayerPrefs.ANameTechSpe = "Boule de la mort";
 				break;
 			default:
                 AllPlayerPrefs.ANameTechSpe = "Slow Motion";
-				currPlayer.DelaySlowMot = thisItem.SliderTime;
 				break;
 			}
 
-			currPlayer.SliderSlow.maxValue = thisItem.SliderTime;
-			currPlayer.SliderSlow.value = thisItem.SliderTime;
+			if ( !thisItem.BonusItem )
+			{
+				currPlayer.MadnessUse = thisItem.MadnessUsePourc; 
+				currPlayer.MadNeed = thisItem.MinMadNeedPourc; 
+				currPlayer.MadnessMult = thisItem.MadnessMulti; 
+			}
+			else
+			{
+				currPlayer.MadnessUse += thisItem.MadnessUsePourc; 
+				currPlayer.MadNeed += thisItem.MinMadNeedPourc; 
+				currPlayer.MadnessMult += thisItem.MadnessMulti; 
+			}
 
 			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 
-				currPlayer.SlowMotion = thisItem.SlowMotion; 
-				currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot; 
-				currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM; 
-				currPlayer.ReduceSlider = thisItem.ReduceSlider; 
-				currPlayer.RecovSlider = thisItem.RecovSlider; 
+				if ( !thisItem.BonusItem )
+				{
+					currPlayer.SlowMotion = thisItem.SlowTime; 
+				}
+				else
+				{
+					currPlayer.SlowMotion += thisItem.SlowTime; 
+				}
 			} 
 			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
 				currPlayer.DistDBTake = thisItem.DistTakeDB; 
 				if ( thisItem.BonusItem ) 
 				{ 
-					currPlayer.SlowMotion += thisItem.SlowMotion; 
-					currPlayer.SpeedSlowMot += thisItem.SpeedSlowMot; 
-					currPlayer.SpeedDeacSM += thisItem.SpeedDeacSM; 
-					currPlayer.ReduceSlider += thisItem.ReduceSlider; 
-					currPlayer.RecovSlider += thisItem.RecovSlider; 
+					currPlayer.SlowMotion += thisItem.SlowTime; 
 				} 
 				else 
 				{ 
-					currPlayer.SlowMotion = thisItem.SlowMotion; 
-					currPlayer.SpeedSlowMot = thisItem.SpeedSlowMot; 
-					currPlayer.SpeedDeacSM = thisItem.SpeedDeacSM; 
-					currPlayer.ReduceSlider = thisItem.ReduceSlider; 
-					currPlayer.RecovSlider = thisItem.RecovSlider; 
+					currPlayer.SlowMotion = thisItem.SlowTime; 
+					currPlayer.MadnessMult = thisItem.MadnessMulti; 
 				} 
 			} 
 		}

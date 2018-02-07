@@ -31,12 +31,10 @@ public class EditItemMod : Editor
 
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
-	SerializedProperty SpeedDeacSM;
-	SerializedProperty ReduceSlider;
-	SerializedProperty RecovSlider;
-	SerializedProperty SpeedSlowMot;
+	SerializedProperty MadnessUse;
 	SerializedProperty DeadBallDist;
-	SerializedProperty TimerSpe;
+	SerializedProperty MadnessMulti;
+	SerializedProperty MinMadNeedPourc;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -73,15 +71,14 @@ public class EditItemMod : Editor
 		LeftItem = serializedObject.FindProperty("LeftItem");
 
 		SpecAction = serializedObject.FindProperty("SpecAction");
-		SlowMotion = serializedObject.FindProperty("SlowMotion");
-		SpeedSlowMot = serializedObject.FindProperty("SpeedSlowMot");
-		SpeedDeacSM = serializedObject.FindProperty("SpeedDeacSM");
-		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
-		RecovSlider = serializedObject.FindProperty("RecovSlider");
+		SlowMotion = serializedObject.FindProperty("SlowTime");
+		MadnessUse = serializedObject.FindProperty("MadnessUsePourc");
 		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
 
 		AddValueStat = serializedObject.FindProperty ( "BonusItem" );
-		TimerSpe = serializedObject.FindProperty ( "SliderTime" );
+
+		MadnessMulti = serializedObject.FindProperty ( "MadnessMulti" );
+		MinMadNeedPourc = serializedObject.FindProperty ( "MinMadNeedPourc" );
 	}
 
 	public override void OnInspectorGUI()
@@ -407,21 +404,26 @@ public class EditItemMod : Editor
 		if ( myTarget.SpecAction != SpecialAction.Nothing )
 		{
 			EditorGUILayout.PropertyField ( AddValueStat );
-			EditorGUILayout.PropertyField ( TimerSpe );
+
+			EditorGUILayout.PropertyField ( MadnessUse );
+			EditorGUILayout.PropertyField ( MinMadNeedPourc );
+
+			if ( myTarget.SpecAction != SpecialAction.SlowMot )
+			{
+				EditorGUILayout.PropertyField ( MadnessMulti );
+			}
 		}
 
 		if ( myTarget.SpecAction == SpecialAction.SlowMot )
 		{
 			EditorGUILayout.PropertyField ( SlowMotion );
-			EditorGUILayout.PropertyField ( SpeedSlowMot );
-			EditorGUILayout.PropertyField ( SpeedDeacSM );
-			EditorGUILayout.PropertyField ( ReduceSlider );
-			EditorGUILayout.PropertyField ( RecovSlider );
 		}
 		else if ( myTarget.SpecAction == SpecialAction.DeadBall )
 		{
 			EditorGUILayout.PropertyField ( DeadBallDist );
 		}
+
+
 		#endregion
 
 		serializedObject.ApplyModifiedProperties ( );

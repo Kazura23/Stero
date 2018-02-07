@@ -48,18 +48,20 @@ public class ItemModif : MonoBehaviour
 	public bool BonusItem;
 
 	#region SpecialSlowMot 
-	public float SlowMotion = 1;
-	public float SpeedSlowMot = 1;
-	public float SpeedDeacSM = 3;
-	public float ReduceSlider;
-	public float RecovSlider;
+	[Range(0.1f,1)]
+	public float SlowTime = 1;
 	#endregion
 
 	#region SpecialSlowMot 
 	public float DistTakeDB = 10;
 	#endregion
 	#endregion
-	public float SliderTime = 10;
+	[Range(-1,1)]
+	public float MadnessMulti = 0.5f;
+	[Range ( -100,100)]
+	public float MinMadNeedPourc = 25;
+	[Range ( -100,100)]
+	public float MadnessUsePourc = 1;
 	#region updateValue
 	public Vector3 CurrPos;
 	List<Image> getExtraH;

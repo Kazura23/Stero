@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
 	public float delayChocWave = 5;
 	[HideInInspector]
 	public float DelayDeadBall = 15;
-	[HideInInspector]
-	public float DelaySlowMot = 10;
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
@@ -76,7 +74,7 @@ public class PlayerController : MonoBehaviour
 	public float TimeInvincible = 2;
 
 	[HideInInspector]
-	public float SlowMotion, SpeedSlowMot, SpeedDeacSM, RecovSlider, ReduceSlider;
+	public float SlowMotion, MadnessUse, MadnessMult, MadNeed;
 
 	[Header ("Caractérique punchs")]
 	//public float FOVIncrease = 20;
@@ -168,7 +166,6 @@ public class PlayerController : MonoBehaviour
 	float saveDist;
 	float nextIncrease = 0;
 	float befRot = 0;
-	float SliderContent;
     float rationUse = 1;
 
 	float valueSmooth = 0;
@@ -328,7 +325,6 @@ public class PlayerController : MonoBehaviour
 			maxSpeed = MaxSpeed;
 		}
 
-		SliderContent = DelaySlowMot;
 		maxSpeedCL = MaxSpeedCL;
 		accelerationCL = AccelerationCL;
 		impulsionCL = ImpulsionCL;
@@ -554,6 +550,10 @@ public class PlayerController : MonoBehaviour
 		if ( thisDeath == DeathType.Acceleration )
 		{
 			bonus *= 0.5f;
+		}
+		else if ( thisDeath == DeathType.SpecialPower )
+		{
+			bonus *= MadnessMult;
 		}
 
 		float getCal;
@@ -949,70 +949,47 @@ public class PlayerController : MonoBehaviour
 	{
 		if ( inputPlayer.GetAxis ( "SpecialAction" ) == 0 || !canSpe )
 		{
-			SliderSlow.value += getTime;
-
-			if ( ( ThisAct == SpecialAction.SlowMot || onTuto ) && animeSlo )
+			if ( ( ThisAct == SpecialAction.SlowMot || onTuto ) )
 			{
-                AllPlayerPrefs.ANbTechSpe++;
-                thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
-				animeSlo = false;
-				Time.timeScale = 1;
+				canSpe = true;
+
+				if ( animeSlo )
+				{
+					AllPlayerPrefs.ANbTechSpe++;
+					thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
+					animeSlo = false;
+					Time.timeScale = 1;
+				}
 			}
 			return;
 		}
 		Dash = false;
-
+		float getPourc = ( timerFight.maxValue * 0.01f ) * MadnessUse;
+		float getCurrPourc = ( timerFight.value / timerFight.maxValue ) * 100 ;
 		if ( ThisAct == SpecialAction.SlowMot || onTuto )
         {
-            if (SliderContent > 0)
-            {
-                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = true;
+			if ( getCurrPourc > MadNeed )
+			{
+				thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = true;
 
-                if (!animeSlo)
-                {
-                    animeSlo = true;
-                    GlobalManager.Ui.StartSpecialAction("SlowMot");
-                }
-                StaticRewardTarget.STimerSlowMo += getTime;
-                if (Time.timeScale > 1 / SlowMotion)
-                {
-                    Time.timeScale -= Time.deltaTime * SpeedSlowMot;
-                }
+				if ( !animeSlo )
+				{
+					animeSlo = true;
+					GlobalManager.Ui.StartSpecialAction ( "SlowMot" );
+				}
+				StaticRewardTarget.STimerSlowMo += getTime;
 
-                SliderContent -= ReduceSlider * Time.deltaTime;
-            }
-            else if (Time.timeScale < 1)
-            {
-                if (SliderContent < 0)
-                {
-                    canSpe = false;
-                    SliderContent = 0;
-                }
-
-				Time.timeScale = 1;
-            }
-			else if (SliderContent < DelaySlowMot)
-            {
-                animeSlo = false;
-                Time.timeScale = 1;
-                SliderContent += RecovSlider * getTime;
-                thisCam.GetComponent<CameraFilterPack_Vision_Aura>().enabled = false;
-
-                if (SliderContent > 2)
-                {
-                    canSpe = true;
-                }
-            }
-            else
-            {
-                canSpe = true;
-				SliderContent = DelaySlowMot;
-            }
-
-			SliderSlow.value = SliderContent;
+				Time.timeScale = SlowMotion;
+				timerFight.value -= getPourc * Time.deltaTime;
+			}
+			else
+			{
+				canSpe = false;
+			}
 		}
-		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 )
+		else if ( ThisAct == SpecialAction.OndeChoc && newH == 0 && getCurrPourc > MadNeed )
 		{
+			timerFight.value -= getPourc;
             GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform, 4f);
             target.transform.DOScale(Vector3.one, 0);
 			target.transform.localPosition = Vector3.zero;
@@ -1080,8 +1057,9 @@ public class PlayerController : MonoBehaviour
             });
 
 		}
-		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 )
+		else if ( ThisAct == SpecialAction.DeadBall && newH == 0 && getCurrPourc > MadNeed )
 		{
+			timerFight.value -= getPourc;
             AllPlayerPrefs.ANbTechSpe++;
             pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
