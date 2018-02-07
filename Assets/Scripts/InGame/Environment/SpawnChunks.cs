@@ -102,7 +102,7 @@ public class SpawnChunks : MonoBehaviour
 				getSpawnable [ a ] [ b ].getObstacleDestrucSpawnable = new List<GameObject> ( );
 				getSpawnable [ a ] [ b ].getObstacleSpawnable = new List<GameObject> ( );
 
-				getChildrenChunk = getChunks [ a ].TheseChunks [ b ].GetComponentsInChildren<Transform> ( true );
+				/*getChildrenChunk = getChunks [ a ].TheseChunks [ b ].GetComponentsInChildren<Transform> ( true );
 
 				for ( c = 0; c < getChildrenChunk.Length; c++ )
 				{
@@ -121,7 +121,7 @@ public class SpawnChunks : MonoBehaviour
 						getSpawnable [ a ] [ b ].getEnnemySpawnable.Add ( getChildrenChunk [ c ].gameObject );
 						break;
 					}
-				}
+				}*/
 			}
 			chunkOrder [ currChunkLvl ].ChunkScript.Add ( getChunks [ a ] );
 			chunkOrder [ currChunkLvl ].SpawnAble.AddRange ( getSpawnable [ a ] );
