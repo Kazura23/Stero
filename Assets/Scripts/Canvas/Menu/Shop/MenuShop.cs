@@ -46,6 +46,7 @@ public class MenuShop : UiParent
 
 	Dictionary <string, ItemModif> allConfirm;
 	List<ItemModif> allTempItem;
+	SpecialAction getLastItm;
 	GameObject fixBackShop;
 	Transform saveParentAb;
 	Transform saveParentBo;
@@ -343,6 +344,7 @@ public class MenuShop : UiParent
             });
         });
     }
+
 	// achete ou confirme un item
 	public void BuyItem ( )
 	{
@@ -354,6 +356,10 @@ public class MenuShop : UiParent
 		ItemModif getThis;
 
 		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
+		{
+			return;	
+		}
+		else if ( currItemSeled.BonusItem && currItemSeled.SpecAction != getLastItm )
 		{
 			return;	
 		}
@@ -404,6 +410,7 @@ public class MenuShop : UiParent
 
             GlobalManager.Ui.SelectShop();
 
+			getLastItm = getThis.SpecAction;
             getAllBuy.Add ( getCons, getThis );
 		}
 		else 
@@ -441,6 +448,8 @@ public class MenuShop : UiParent
 					{
 						getAllBuy.Remove ( getCons );
 					}
+
+					getLastItm = currItemSeled.SpecAction;
 					getAllBuy.Add ( getCons, currItemSeled );
 					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
 
@@ -532,6 +541,7 @@ public class MenuShop : UiParent
 
 	protected override void InitializeUi()
 	{
+		getLastItm = SpecialAction.Nothing;
 		currCatSeled = DefCatSelected;
 		currItemSeled = currCatSeled.DefautItem;
 
@@ -559,7 +569,7 @@ public class MenuShop : UiParent
 
 				try{
 					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
-
+					getLastItm = currItem.SpecAction;
 				}catch{
                     //Debug.Log("key same");
                 }
