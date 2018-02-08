@@ -232,6 +232,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
             PlayerPrefs.DeleteAll();
 
+		Debug.Log ( NbrLineRight + " / " + currLine + " / " + NbrLineLeft );
+
     }
 	#endregion
 
@@ -1358,38 +1360,41 @@ public class PlayerController : MonoBehaviour
 		float newImp = inputPlayer.GetAxis ( "Horizontal" );
 		float lineDistance = Constants.LineDist;
 
-		if ( ( canChange || newH == 0 ) && !inAir )
+		if ( NbrLineRight != 0 || NbrLineLeft != 0 )
 		{
-			if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
+			if ( ( canChange || newH == 0 ) && !inAir )
 			{
-                if(Time.timeScale < 1)
-                {
-                    Time.timeScale = 1;
-                }
+				if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
+				{
+					if(Time.timeScale < 1)
+					{
+						Time.timeScale = 1;
+					}
 
-				canChange = false;
-				currLine++;
-				LastImp = 1;
-				clDir = 1;
-				newH = newH + lineDistance;
-				saveDist = newH;
-			}
-			else if ( newImp == -1 && LastImp != -1 && currLine - 1 >= -NbrLineLeft && ( clDir == -1 || newH == 0 ) )
-			{
-                if (Time.timeScale < 1)
-                {
-                    Time.timeScale = 1;
-                }
-				canChange = false;
-				currLine--;
-				LastImp = -1;
-				clDir = -1;
-				newH = newH - lineDistance;
-				saveDist = newH;
-			}
-			else if ( newImp == 0 )
-			{
-				LastImp = 0;
+					canChange = false;
+					currLine++;
+					LastImp = 1;
+					clDir = 1;
+					newH = newH + lineDistance;
+					saveDist = newH;
+				}
+				else if ( newImp == -1 && LastImp != -1 && currLine - 1 >= -NbrLineLeft && ( clDir == -1 || newH == 0 ) )
+				{
+					if (Time.timeScale < 1)
+					{
+						Time.timeScale = 1;
+					}
+					canChange = false;
+					currLine--;
+					LastImp = -1;
+					clDir = -1;
+					newH = newH - lineDistance;
+					saveDist = newH;
+				}
+				else if ( newImp == 0 )
+				{
+					LastImp = 0;
+				}
 			}
 		}
 
