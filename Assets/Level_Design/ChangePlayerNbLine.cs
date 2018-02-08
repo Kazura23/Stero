@@ -21,10 +21,14 @@ public class ChangePlayerNbLine : MonoBehaviour {
 		{
 			Debug.Log ( "ChangeLine" );
 			checkTrigger = true;
-			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
-			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
-			getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
-			getPlayer.currLine = CurrLine;
+
+			if ( !GetComponent<SpawnNewLvl> ( ) )
+			{
+				PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+				getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
+				getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
+				getPlayer.currLine = CurrLine;
+			}
 
 //			Debug.Log ( getPlayer.currLine + " / " + getPlayer.NbrLineLeft + " / " + getPlayer.NbrLineRight );
 		}
@@ -36,11 +40,21 @@ public class ChangePlayerNbLine : MonoBehaviour {
 		{
 			Debug.Log ( "ChangeLine" );
 			checkTrigger = true;
-			PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
-			getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
-			getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
-			getPlayer.currLine = CurrLine;
+			if ( !GetComponent<SpawnNewLvl> ( ) )
+			{
+				PlayerController getPlayer = other.gameObject.GetComponent<PlayerController> ( );
+				getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
+				getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
+				getPlayer.currLine = CurrLine;
+			}
 			//Debug.Log ( getPlayer.currLine + " / " + getPlayer.NbrLineLeft + " / " + getPlayer.NbrLineRight );
 		}
+	}
+
+	public void UpdateManually ( PlayerController getPlayer )
+	{
+		getPlayer.NbrLineLeft = NbrLineLeft - CurrLine;
+		getPlayer.NbrLineRight = NbrLineRigh + CurrLine;
+		getPlayer.currLine = CurrLine;
 	}
 }
