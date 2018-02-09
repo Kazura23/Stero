@@ -1364,32 +1364,44 @@ public class PlayerController : MonoBehaviour
 		{
 			if ( ( canChange || newH == 0 ) && !inAir )
 			{
-				if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
-				{
-					if(Time.timeScale < 1)
-					{
-						Time.timeScale = 1;
-					}
+				RaycastHit[] allHit;
+				bool checkWall = false;
 
-					canChange = false;
-					currLine++;
-					LastImp = 1;
-					clDir = 1;
-					newH = newH + lineDistance;
-					saveDist = newH;
-				}
-				else if ( newImp == -1 && LastImp != -1 && currLine - 1 >= -NbrLineLeft && ( clDir == -1 || newH == 0 ) )
+				allHit = Physics.RaycastAll ( pTrans.position, pTrans.right * newImp, 5 );
+
+				foreach ( RaycastHit thisRay in allHit )
 				{
-					if (Time.timeScale < 1)
+					if ( thisRay.collider.tag == Constants._UnTagg )
 					{
-						Time.timeScale = 1;
+						checkWall = true;
+						break;
 					}
-					canChange = false;
-					currLine--;
-					LastImp = -1;
-					clDir = -1;
-					newH = newH - lineDistance;
-					saveDist = newH;
+				}
+
+				if ( !checkWall )
+				{
+					if ( newImp == 1 && LastImp != 1 && currLine + 1 <= NbrLineRight && ( clDir == 1 || newH == 0 ) )
+					{
+						canChange = false;
+						currLine++;
+						LastImp = 1;
+						clDir = 1;
+						newH = newH + lineDistance;
+						saveDist = newH;
+					}
+					else if ( newImp == -1 && LastImp != -1 && currLine - 1 >= -NbrLineLeft && ( clDir == -1 || newH == 0 ) )
+					{
+						canChange = false;
+						currLine--;
+						LastImp = -1;
+						clDir = -1;
+						newH = newH - lineDistance;
+						saveDist = newH;
+					}
+					else if ( newImp == 0 )
+					{
+						LastImp = 0;
+					}
 				}
 				else if ( newImp == 0 )
 				{
