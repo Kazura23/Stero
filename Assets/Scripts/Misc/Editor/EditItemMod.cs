@@ -11,6 +11,7 @@ public class EditItemMod : Editor
 	// bool var;
 	SerializedProperty ItemName;
 	SerializedProperty Price;
+	SerializedProperty GetSprite;
 
 	SerializedProperty ColorConfirm;
 	SerializedProperty ColorSelected;
@@ -51,6 +52,7 @@ public class EditItemMod : Editor
 
 		ItemName = serializedObject.FindProperty("ItemName");
 		Price = serializedObject.FindProperty("Price");
+		GetSprite = serializedObject.FindProperty("GetSprite");
 
 		ColorConfirm = serializedObject.FindProperty("ColorConfirm");
 		ColorSelected = serializedObject.FindProperty("ColorSelected");
@@ -83,6 +85,7 @@ public class EditItemMod : Editor
 		serializedObject.Update ( );
 		EditorGUILayout.PropertyField ( ItemName );
 		EditorGUILayout.PropertyField ( Price );
+		EditorGUILayout.PropertyField ( GetSprite );
 
 		#region MainButton
 
