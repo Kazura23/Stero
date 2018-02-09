@@ -75,8 +75,11 @@ public class ItemModif : MonoBehaviour
 			}
 		}
 
-		getCurr.sprite = ThisItem.GetSprite.sprite;
-		getCurr.color = ThisItem.GetSprite.color;
+		if ( ThisItem.GetSprite != null )
+		{
+			getCurr.sprite = ThisItem.GetSprite.sprite;
+			getCurr.color = ThisItem.GetSprite.color;
+		}
 	}
 
 	public void ResetPrice ( )
