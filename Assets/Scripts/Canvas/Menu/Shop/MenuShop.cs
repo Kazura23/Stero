@@ -355,41 +355,41 @@ public class MenuShop : UiParent
 		List<ItemModif> getTempItem = allTempItem;
 		ItemModif getThis;
 
-		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
+		if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie && GlobalManager.Ui.ExtraHearts [ 1 ].enabled )
 		{
 			return;	
 		}
-		else if ( currItemSeled.BonusItem && currItemSeled.SpecAction != getLastItm )
+		else if ( currItemSeled.ThisItem.BonusItem && currItemSeled.ThisItem.SpecAction != getLastItm )
 		{
 			return;	
 		}
 
-		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ItemName ) )
+		if ( AllPlayerPrefs.GetBoolValue ( getCons + currItemSeled.ThisItem.ItemName ) )
 		{
-			AllPlayerPrefs.SetStringValue ( getCons + currItemSeled.ItemName, "Confirm" );
+			AllPlayerPrefs.SetStringValue ( getCons + currItemSeled.ThisItem.ItemName, "Confirm" );
 
             if ( getAllBuy.TryGetValue ( getCons, out getThis ) )
 			{
-				AllPlayerPrefs.SetStringValue ( getCons + getThis.ItemName, "ok" );
+				AllPlayerPrefs.SetStringValue ( getCons + getThis.ThisItem.ItemName, "ok" );
 
-                if ( getThis.UseOtherSprite )
+				if ( getThis.ThisItem.UseOtherSprite )
 				{
-					getThis.GetComponent<Image> ( ).sprite = currItemSeled.BoughtSpriteUnselected;
+					getThis.GetComponent<Image> ( ).sprite = currItemSeled.ThisItem.BoughtSpriteUnselected;
 				}
 				else
 				{
-					getThis.GetComponent<Image> ( ).sprite = currItemSeled.SpriteUnselected;
+					getThis.GetComponent<Image> ( ).sprite = currItemSeled.ThisItem.SpriteUnselected;
 				}
 
-				if ( getThis.UseColor )
+				if ( getThis.ThisItem.UseColor )
 				{
-					if ( getThis.UseOtherColor )
+					if ( getThis.ThisItem.UseOtherColor )
 					{
-						getThis.GetComponent<Image> ( ).color = currItemSeled.BoughtColorUnSelected;
+						getThis.GetComponent<Image> ( ).color = currItemSeled.ThisItem.BoughtColorUnSelected;
 					}
 					else
 					{
-						getThis.GetComponent<Image> ( ).color = currItemSeled.ColorUnSelected;
+						getThis.GetComponent<Image> ( ).color = currItemSeled.ThisItem.ColorUnSelected;
 					}
 				}
 
@@ -397,11 +397,11 @@ public class MenuShop : UiParent
 			}
 
 			getThis = currItemSeled;
-			getThis.GetComponent<Image> ( ).sprite = getThis.SpriteConfirm;
+			getThis.GetComponent<Image> ( ).sprite = getThis.ThisItem.SpriteConfirm;
 
-			if ( getThis.UseColor )
+			if ( getThis.ThisItem.UseColor )
 			{
-				getThis.GetComponent<Image> ( ).color = getThis.ColorConfirm;
+				getThis.GetComponent<Image> ( ).color = getThis.ThisItem.ColorConfirm;
 			}
 
 			buy = true;
@@ -410,7 +410,7 @@ public class MenuShop : UiParent
 
             GlobalManager.Ui.SelectShop();
 
-			getLastItm = getThis.SpecAction;
+			getLastItm = getThis.ThisItem.SpecAction;
             getAllBuy.Add ( getCons, getThis );
 		}
 		else 
@@ -420,7 +420,7 @@ public class MenuShop : UiParent
 
 			if ( currCatSeled.Progression )
 			{
-				if ( currIT.LeftItem.ItemBought || currIT.RightItem.ItemBought )
+				if ( currIT.LeftItem.ThisItem.ItemBought || currIT.RightItem.ThisItem.ItemBought )
 				{
 					checkProg = true;
 				}
@@ -430,7 +430,7 @@ public class MenuShop : UiParent
 				checkProg = true;	
 			}
 
-			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.Price )
+			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.ThisItem.Price )
 			{
 				buy = true;
 
@@ -449,9 +449,9 @@ public class MenuShop : UiParent
 						getAllBuy.Remove ( getCons );
 					}
 
-					getLastItm = currItemSeled.SpecAction;
+					getLastItm = currItemSeled.ThisItem.SpecAction;
 					getAllBuy.Add ( getCons, currItemSeled );
-					AllPlayerPrefs.SetStringValue ( getCons + currIT.ItemName );
+					AllPlayerPrefs.SetStringValue ( getCons + currIT.ThisItem.ItemName );
 
                     //float ease = DOVirtual.EasedValue(0, 1,1,AnimationCurve.Linear);
                     currItemSeled.transform.GetChild(0).DOPunchScale(Vector3.one * 1.2f, .5f, 10, 1);
@@ -471,7 +471,7 @@ public class MenuShop : UiParent
 					{
 						return;
 					}
-					else if ( ( currCatSeled.NameCat == "UPGRADES" ) && !AllPlayerPrefs.GetBoolValue ( Constants.ItemBought + "ABILITIES" + currItemSeled.ItemName ) )
+					else if ( ( currCatSeled.NameCat == "UPGRADES" ) && !AllPlayerPrefs.GetBoolValue ( Constants.ItemBought + "ABILITIES" + currItemSeled.ThisItem.ItemName ) )
 					{
 						return;
 					}
@@ -479,7 +479,7 @@ public class MenuShop : UiParent
 					getTempItem.Add ( currItemSeled );
 				}
 
-				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.Price );
+				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.ThisItem.Price );
 			}
 		}
 
@@ -489,7 +489,7 @@ public class MenuShop : UiParent
 			{
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
-			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ModifVie )
+			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
 			{
 				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
 				{
@@ -513,7 +513,7 @@ public class MenuShop : UiParent
 				}
 
 				currText.text = "LEVEL " + ( count + 2 ).ToString ( );
-				currItemSeled.Price *= 2;
+				currItemSeled.ThisItem.Price *= 2;
 			}
 		}
 
@@ -563,22 +563,22 @@ public class MenuShop : UiParent
 
 		for ( int a = 0; a < checkAllItem.Length; a++ )
 		{
-			if ( AllPlayerPrefs.GetBoolValue ( getCons + currCatSeled.NameCat + checkAllItem [ a ].ItemName ) )
+			if ( AllPlayerPrefs.GetBoolValue ( getCons + currCatSeled.NameCat + checkAllItem [ a ].ThisItem.ItemName ) )
 			{
 				currItem = checkAllItem [ a ];
 
 				try{
 					getItemConf.Add ( getCons + currCatSeled.NameCat, currItem ); 
-					getLastItm = currItem.SpecAction;
+					getLastItm = currItem.ThisItem.SpecAction;
 				}catch{
                     //Debug.Log("key same");
                 }
 
-				currItem.GetComponent<Image> ( ).sprite = currItem.SpriteConfirm;
+				currItem.GetComponent<Image> ( ).sprite = currItem.ThisItem.SpriteConfirm;
 
-				if ( currItem.UseColor )
+				if ( currItem.ThisItem.UseColor )
 				{
-					currItem.GetComponent<Image> ( ).color = currItem.ColorConfirm;
+					currItem.GetComponent<Image> ( ).color = currItem.ThisItem.ColorConfirm;
 				}
 			}
 		}
@@ -808,27 +808,27 @@ public class MenuShop : UiParent
 		ItemModif thisItem = currItemSeled;
 		Vector3 savePos;
 
-		thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+		thisItem.transform.DOMove ( thisItem.RightItem.ThisItem.CurrPos, 1, true );
 		thisItem = thisItem.RightItem;
 
 		while ( thisItem != currItemSeled )
 		{
-			thisItem.transform.DOMove ( thisItem.RightItem.CurrPos, 1, true );
+			thisItem.transform.DOMove ( thisItem.RightItem.ThisItem.CurrPos, 1, true );
 			thisItem = thisItem.RightItem;
 
 			NewItemSelect ( thisItem, false );
 		}
 
 		thisItem = currItemSeled;
-		savePos = thisItem.CurrPos;
+		savePos = thisItem.ThisItem.CurrPos;
 
 		do
 		{
-			thisItem.CurrPos = thisItem.RightItem.CurrPos;
+			thisItem.ThisItem.CurrPos = thisItem.RightItem.ThisItem.CurrPos;
 			thisItem = thisItem.RightItem;
 		} while ( thisItem != currItemSeled.LeftItem );
 
-		currItemSeled.LeftItem.CurrPos = savePos;
+		currItemSeled.LeftItem.ThisItem.CurrPos = savePos;
 
 		currItemSeled = currItemSeled.LeftItem;
 		NewItemSelect ( currItemSeled, true );
@@ -838,27 +838,27 @@ public class MenuShop : UiParent
     {
 		ItemModif thisItem = currItemSeled;
 		Vector3 savePos;
-		thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+		thisItem.transform.DOMove ( thisItem.LeftItem.ThisItem.CurrPos, 1, true );
 		thisItem = thisItem.LeftItem;
 
 		while ( thisItem != currItemSeled )
 		{
-			thisItem.transform.DOMove ( thisItem.LeftItem.CurrPos, 1, true );
+			thisItem.transform.DOMove ( thisItem.LeftItem.ThisItem.CurrPos, 1, true );
 			thisItem = thisItem.LeftItem;
 
 			NewItemSelect ( thisItem, false );
 		}
 
 		thisItem = currItemSeled;
-		savePos = thisItem.CurrPos;
+		savePos = thisItem.ThisItem.CurrPos;
 
 		do
 		{
-			thisItem.CurrPos = thisItem.LeftItem.CurrPos;
+			thisItem.ThisItem.CurrPos = thisItem.LeftItem.ThisItem.CurrPos;
 			thisItem = thisItem.LeftItem;
 		} while ( thisItem != currItemSeled.RightItem );
 
-		currItemSeled.RightItem.CurrPos = savePos;
+		currItemSeled.RightItem.ThisItem.CurrPos = savePos;
 
         //thisItem.transform.DOLocalMove(new Vector2(-448, 800), .5f);
 		currItemSeled = currItemSeled.RightItem;
@@ -886,45 +886,45 @@ public class MenuShop : UiParent
 
 		if ( selected )
 		{
-			thisItem.Selected = true;
+			thisItem.ThisItem.Selected = true;
 
-			if ( thisItem.ItemBought && thisItem.UseOtherColor )
+			if ( thisItem.ThisItem.ItemBought && thisItem.ThisItem.UseOtherColor )
 			{
-				thisItem.GetComponent<Image> ( ).color = thisItem.BoughtColorSelected;
+				thisItem.GetComponent<Image> ( ).color = thisItem.ThisItem.BoughtColorSelected;
 			}
-			else if ( thisItem.UseColor )
+			else if ( thisItem.ThisItem.UseColor )
 			{
-				thisItem.GetComponent<Image> ( ).color = thisItem.ColorSelected;
+				thisItem.GetComponent<Image> ( ).color = thisItem.ThisItem.ColorSelected;
 			}
 
-			if ( thisItem.ItemBought && thisItem.UseOtherSprite )
+			if ( thisItem.ThisItem.ItemBought && thisItem.ThisItem.UseOtherSprite )
 			{
-				thisItem.GetComponent<Image> ( ).sprite = thisItem.BoughtSpriteSelected;
+				thisItem.GetComponent<Image> ( ).sprite = thisItem.ThisItem.BoughtSpriteSelected;
 			}
 			else
 			{
-				thisItem.GetComponent<Image> ( ).sprite = thisItem.SpriteSelected;
+				thisItem.GetComponent<Image> ( ).sprite = thisItem.ThisItem.SpriteSelected;
 			}
 		}
 		else
 		{
-			thisItem.Selected = false;
-			if ( thisItem.ItemBought && thisItem.UseOtherColor )
+			thisItem.ThisItem.Selected = false;
+			if ( thisItem.ThisItem.ItemBought && thisItem.ThisItem.UseOtherColor )
 			{
-				thisItem.GetComponent<Image> ( ).color = thisItem.BoughtColorUnSelected;
+				thisItem.GetComponent<Image> ( ).color = thisItem.ThisItem.BoughtColorUnSelected;
 			}
-			else if ( thisItem.UseColor )
+			else if ( thisItem.ThisItem.UseColor )
 			{
-				thisItem.GetComponent<Image> ( ).color = thisItem.ColorUnSelected;
+				thisItem.GetComponent<Image> ( ).color = thisItem.ThisItem.ColorUnSelected;
 			}
 
-			if ( thisItem.ItemBought && thisItem.UseOtherSprite )
+			if ( thisItem.ThisItem.ItemBought && thisItem.ThisItem.UseOtherSprite )
 			{
-				thisItem.GetComponent<Image> ( ).sprite = thisItem.BoughtSpriteUnselected;
+				thisItem.GetComponent<Image> ( ).sprite = thisItem.ThisItem.BoughtSpriteUnselected;
 			}
 			else
 			{
-				thisItem.GetComponent<Image> ( ).sprite = thisItem.SpriteUnselected;
+				thisItem.GetComponent<Image> ( ).sprite = thisItem.ThisItem.SpriteUnselected;
 			}
 		}
 	}

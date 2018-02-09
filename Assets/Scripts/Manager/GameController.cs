@@ -1352,7 +1352,7 @@ public class GameController : ManagerParent
 
 	void setItemToPlayer ( ItemModif thisItem, PlayerController currPlayer )
 	{
-		if ( thisItem.ModifSpecial )
+		if ( thisItem.ThisItem.ModifSpecial )
 		{
 			iconeSpe.enabled = true;
 			iconeSpe.DOKill ( );
@@ -1362,9 +1362,9 @@ public class GameController : ManagerParent
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
 
-			currPlayer.ThisAct = thisItem.SpecAction;
+			currPlayer.ThisAct = thisItem.ThisItem.SpecAction;
 
-			switch ( thisItem.SpecAction )
+			switch ( thisItem.ThisItem.SpecAction )
 			{
 			case SpecialAction.OndeChoc:
                 AllPlayerPrefs.ANameTechSpe = "Onde de choc";
@@ -1377,52 +1377,52 @@ public class GameController : ManagerParent
 				break;
 			}
 
-			if ( !thisItem.BonusItem )
+			if ( !thisItem.ThisItem.BonusItem )
 			{
-				currPlayer.MadnessUse = thisItem.MadnessUsePourc; 
-				currPlayer.MadNeed = thisItem.MinMadNeedPourc; 
-				currPlayer.MadnessMult = thisItem.MadnessMulti; 
+				currPlayer.MadnessUse = thisItem.ThisItem.MadnessUsePourc; 
+				currPlayer.MadNeed = thisItem.ThisItem.MinMadNeedPourc; 
+				currPlayer.MadnessMult = thisItem.ThisItem.MadnessMulti; 
 			}
 			else
 			{
-				currPlayer.MadnessUse += thisItem.MadnessUsePourc; 
-				currPlayer.MadNeed += thisItem.MinMadNeedPourc; 
-				currPlayer.MadnessMult += thisItem.MadnessMulti; 
+				currPlayer.MadnessUse += thisItem.ThisItem.MadnessUsePourc; 
+				currPlayer.MadNeed += thisItem.ThisItem.MinMadNeedPourc; 
+				currPlayer.MadnessMult += thisItem.ThisItem.MadnessMulti; 
 			}
 
-			if ( thisItem.SpecAction == SpecialAction.SlowMot ) 
+			if ( thisItem.ThisItem.SpecAction == SpecialAction.SlowMot ) 
 			{ 
-				if ( !thisItem.BonusItem )
+				if ( !thisItem.ThisItem.BonusItem )
 				{
-					currPlayer.SlowMotion = thisItem.SlowTime; 
+					currPlayer.SlowMotion = thisItem.ThisItem.SlowTime; 
 				}
 				else
 				{
-					currPlayer.SlowMotion += thisItem.SlowTime; 
+					currPlayer.SlowMotion += thisItem.ThisItem.SlowTime; 
 				}
 			} 
-			else if ( thisItem.SpecAction == SpecialAction.DeadBall ) 
+			else if ( thisItem.ThisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
-				currPlayer.DistDBTake = thisItem.DistTakeDB; 
-				if ( thisItem.BonusItem ) 
+				currPlayer.DistDBTake = thisItem.ThisItem.DistTakeDB; 
+				if ( thisItem.ThisItem.BonusItem ) 
 				{ 
-					currPlayer.SlowMotion += thisItem.SlowTime; 
+					currPlayer.SlowMotion += thisItem.ThisItem.SlowTime; 
 				} 
 				else 
 				{ 
-					currPlayer.SlowMotion = thisItem.SlowTime; 
-					currPlayer.MadnessMult = thisItem.MadnessMulti; 
+					currPlayer.SlowMotion = thisItem.ThisItem.SlowTime; 
+					currPlayer.MadnessMult = thisItem.ThisItem.MadnessMulti; 
 				} 
 			} 
 		}
 
-		if ( thisItem.ModifVie )
+		if ( thisItem.ThisItem.ModifVie )
 		{
             currPlayer.Life++;
             AllPlayerPrefs.AHeartUse = currPlayer.Life;
 		}
 
-		if ( thisItem.StartBonus )
+		if ( thisItem.ThisItem.StartBonus )
 		{
 			SpawnerChunck.StartBonus = true;
 			SpawnerChunck.EndLevel++;
