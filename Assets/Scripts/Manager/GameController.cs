@@ -1358,7 +1358,7 @@ public class GameController : ManagerParent
 			iconeSpe.DOKill ( );
 			iconeSpe.DOFade ( 1, 1 );
 
-			sliderSpe.gameObject.SetActive ( true );
+			//sliderSpe.gameObject.SetActive ( true );
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
 
