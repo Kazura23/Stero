@@ -6,62 +6,11 @@ using DG.Tweening;
 
 public class ItemModif : MonoBehaviour 
 {
-	#region Variables
-	public bool buyFLife = false;
-	public bool ItemBought;
-	public string ItemName;
-	public int Price;
-
-	public bool UseSprite;
-	public bool UseOtherSprite;
-	public bool UseColor;
-	public bool UseOtherColor;
-
-	#region ColorSprite
-	public Color ColorConfirm;
-	public Color ColorSelected;
-	public Color ColorUnSelected;
-
-	public Color BoughtColorSelected;
-	public Color BoughtColorUnSelected;
-	#endregion
-
-	#region Sprite
-	public Sprite SpriteConfirm;
-	public Sprite SpriteSelected;
-	public Sprite SpriteUnselected;
-	public Sprite BoughtSpriteUnselected;
-	public Sprite BoughtSpriteSelected;
-	#endregion
-
+	public ItemScriptable ThisItem;
 	public ItemModif RightItem;
 	public ItemModif LeftItem;
 
-	public bool ModifVie;
-	public bool StartBonus;
-	public bool ModifSpecial;
-
-	public int NombreVie;
-	public SpecialAction SpecAction;
-
-	public bool Selected;
-	public bool BonusItem;
-
-	#region SpecialSlowMot 
-	public float SlowMotion = 1;
-	public float SpeedSlowMot = 1;
-	public float SpeedDeacSM = 3;
-	public float ReduceSlider;
-	public float RecovSlider;
-	#endregion
-
-	#region SpecialSlowMot 
-	public float DistTakeDB = 10;
-	#endregion
-	#endregion
-	public float SliderTime = 10;
-	#region updateValue
-	public Vector3 CurrPos;
+	Image getCurr;
 	List<Image> getExtraH;
 	Vector3 saveStartPos;
 	Text getText;
@@ -70,8 +19,19 @@ public class ItemModif : MonoBehaviour
 
 	void Start ()
 	{
+		if ( RightItem == null )
+		{
+			RightItem = GetComponent<ItemModif> ( );
+		}
+
+		if ( LeftItem == null )
+		{
+			LeftItem = GetComponent<ItemModif> ( );
+		}
+
 		getExtraH = GlobalManager.Ui.ExtraHearts;
-		savePrice = Price;
+		getCurr = GetComponent<Image> ( );
+		savePrice = ThisItem.Price;
 
 		if ( transform.Find ( "Cost Number" ) != null )
 		{
@@ -84,7 +44,7 @@ public class ItemModif : MonoBehaviour
 		}
 
 		saveStartPos = transform.position;
-		CurrPos = saveStartPos;
+		ThisItem.CurrPos = saveStartPos;
 	}
 
 	void Update ()
@@ -94,7 +54,7 @@ public class ItemModif : MonoBehaviour
 			return;
 		}
 
-		if ( ModifVie )
+		if ( ThisItem.ModifVie )
 		{
 			if ( getExtraH [ 1 ].enabled )
 			{
@@ -104,28 +64,33 @@ public class ItemModif : MonoBehaviour
 			{
 				if ( getExtraH [ 0 ].enabled )
 				{
-					Price = savePrice * 2;
+					ThisItem.Price = savePrice * 2;
 				}
 				else
 				{
-					Price = savePrice;
+					ThisItem.Price = savePrice;
 				}
 
-				getText.text = Price.ToString ( );
+				getText.text = ThisItem.Price.ToString ( );
 			}
+		}
+
+		if ( ThisItem.GetSprite != null )
+		{
+			getCurr.sprite = ThisItem.GetSprite.sprite;
+			getCurr.color = ThisItem.GetSprite.color;
 		}
 	}
 
 	public void ResetPrice ( )
 	{
-		Price = savePrice;
+		ThisItem.Price = savePrice;
 	}
 
 	public void ResetPos ( )
 	{
 		transform.DOKill ( false );
 		transform.DOMove ( saveStartPos, 0, true );
-		CurrPos = saveStartPos;
+		ThisItem.CurrPos = saveStartPos;
 	}
-	#endregion
 }

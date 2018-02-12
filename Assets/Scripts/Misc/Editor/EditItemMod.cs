@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
-[CustomEditor (typeof (ItemModif))]
+[CustomEditor (typeof (ItemScriptable))]
 public class EditItemMod : Editor 
 {
 	#region Variables
 	// bool var;
 	SerializedProperty ItemName;
 	SerializedProperty Price;
+	SerializedProperty GetSprite;
 
 	SerializedProperty ColorConfirm;
 	SerializedProperty ColorSelected;
@@ -24,19 +25,14 @@ public class EditItemMod : Editor
 	SerializedProperty BoughtSpriteSelected;
 	SerializedProperty BoughtSpriteUnselected;
 
-	SerializedProperty RightItem;
-	SerializedProperty LeftItem;
-
 	SerializedProperty AddValueStat;
 
 	SerializedProperty SpecAction;
 	SerializedProperty SlowMotion;
-	SerializedProperty SpeedDeacSM;
-	SerializedProperty ReduceSlider;
-	SerializedProperty RecovSlider;
-	SerializedProperty SpeedSlowMot;
+	SerializedProperty MadnessUse;
 	SerializedProperty DeadBallDist;
-	SerializedProperty TimerSpe;
+	SerializedProperty MadnessMulti;
+	SerializedProperty MinMadNeedPourc;
 
 	GUIContent Confirm;
 	GUIContent Select;
@@ -56,6 +52,7 @@ public class EditItemMod : Editor
 
 		ItemName = serializedObject.FindProperty("ItemName");
 		Price = serializedObject.FindProperty("Price");
+		GetSprite = serializedObject.FindProperty("GetSprite");
 
 		ColorConfirm = serializedObject.FindProperty("ColorConfirm");
 		ColorSelected = serializedObject.FindProperty("ColorSelected");
@@ -69,29 +66,26 @@ public class EditItemMod : Editor
 		BoughtSpriteSelected = serializedObject.FindProperty("BoughtSpriteSelected");
 		BoughtSpriteUnselected = serializedObject.FindProperty("BoughtSpriteUnselected");
 
-		RightItem = serializedObject.FindProperty("RightItem");
-		LeftItem = serializedObject.FindProperty("LeftItem");
-
 		SpecAction = serializedObject.FindProperty("SpecAction");
-		SlowMotion = serializedObject.FindProperty("SlowMotion");
-		SpeedSlowMot = serializedObject.FindProperty("SpeedSlowMot");
-		SpeedDeacSM = serializedObject.FindProperty("SpeedDeacSM");
-		ReduceSlider = serializedObject.FindProperty("ReduceSlider");
-		RecovSlider = serializedObject.FindProperty("RecovSlider");
+		SlowMotion = serializedObject.FindProperty("SlowTime");
+		MadnessUse = serializedObject.FindProperty("MadnessUsePourc");
 		DeadBallDist = serializedObject.FindProperty("DistTakeDB");
 
 		AddValueStat = serializedObject.FindProperty ( "BonusItem" );
-		TimerSpe = serializedObject.FindProperty ( "SliderTime" );
+
+		MadnessMulti = serializedObject.FindProperty ( "MadnessMulti" );
+		MinMadNeedPourc = serializedObject.FindProperty ( "MinMadNeedPourc" );
 	}
 
 	public override void OnInspectorGUI()
 	{
 		EditorGUILayout.LabelField("Inspector Item Info", EditorStyles.boldLabel);
-		ItemModif myTarget = (ItemModif)target;
+		ItemScriptable myTarget = (ItemScriptable)target;
 
 		serializedObject.Update ( );
 		EditorGUILayout.PropertyField ( ItemName );
 		EditorGUILayout.PropertyField ( Price );
+		EditorGUILayout.PropertyField ( GetSprite );
 
 		#region MainButton
 
@@ -195,63 +189,70 @@ public class EditItemMod : Editor
 			EditorGUILayout.PropertyField ( ColorSelected, Select );
 			EditorGUILayout.PropertyField ( ColorUnSelected, UnSelect );
 
-			if ( myTarget.UseOtherColor )
+			if( myTarget.GetSprite != null )
 			{
-				EditorGUI.indentLevel = 2;
-
-				EditorGUILayout.Space ( );
-
-				EditorGUILayout.PropertyField ( BoughtColorSelected, BuySelect );
-				EditorGUILayout.PropertyField ( BoughtColorUnSelected, BuyUnSelect );
-
-				if ( myTarget.ItemBought )
+				if ( myTarget.UseOtherColor )
 				{
-					if ( myTarget.Selected )
+					EditorGUI.indentLevel = 2;
+
+					EditorGUILayout.Space ( );
+
+					EditorGUILayout.PropertyField ( BoughtColorSelected, BuySelect );
+					EditorGUILayout.PropertyField ( BoughtColorUnSelected, BuyUnSelect );
+
+					if ( myTarget.ItemBought )
 					{
-						myTarget.GetComponent<Image> ( ).color = myTarget.BoughtColorSelected;
+						if ( myTarget.Selected )
+						{
+							myTarget.GetSprite.color = myTarget.BoughtColorSelected;
+						}
+						else
+						{
+							myTarget.GetSprite.color = myTarget.BoughtColorUnSelected;
+						}
 					}
-					else
-					{
-						myTarget.GetComponent<Image> ( ).color = myTarget.BoughtColorUnSelected;
-					}
-				}
-			}
-			else
-			{
-				if ( myTarget.Selected )
-				{
-					myTarget.GetComponent<Image> ( ).color = myTarget.ColorSelected;
 				}
 				else
 				{
-					myTarget.GetComponent<Image> ( ).color = myTarget.ColorUnSelected;
-				}
+					if ( myTarget.Selected )
+					{
+						myTarget.GetSprite.color = myTarget.ColorSelected;
+					}
+					else
+					{
+						myTarget.GetSprite.color = myTarget.ColorUnSelected;
+					}
+				}	
 			}
 		}
 		#endregion
 
 		#region Sprite
-		if ( myTarget.SpriteConfirm == null )
+		if ( myTarget.GetSprite != null )
 		{
-			myTarget.SpriteConfirm = myTarget.GetComponent<Image> ( ).sprite;
-		}
-		if ( myTarget.SpriteSelected == null )
-		{
-			myTarget.SpriteSelected = myTarget.GetComponent<Image> ( ).sprite;
-		}
-		if ( myTarget.SpriteUnselected == null )
-		{
-			myTarget.SpriteUnselected = myTarget.GetComponent<Image> ( ).sprite;
-		}
+			if ( myTarget.SpriteConfirm == null )
+			{
+				myTarget.SpriteConfirm = myTarget.GetSprite.sprite;
+			}
+			if ( myTarget.SpriteSelected == null )
+			{
+				myTarget.SpriteSelected = myTarget.GetSprite.sprite;
+			}
+			if ( myTarget.SpriteUnselected == null )
+			{
+				myTarget.SpriteUnselected = myTarget.GetSprite.sprite;
+			}
 
-		if ( myTarget.BoughtSpriteSelected == null )
-		{
-			myTarget.BoughtSpriteSelected = myTarget.GetComponent<Image> ( ).sprite;
+			if ( myTarget.BoughtSpriteSelected == null )
+			{
+				myTarget.BoughtSpriteSelected = myTarget.GetSprite.sprite;
+			}
+			if ( myTarget.BoughtSpriteUnselected == null )
+			{
+				myTarget.BoughtSpriteUnselected = myTarget.GetSprite.sprite;
+			}	
 		}
-		if ( myTarget.BoughtSpriteUnselected == null )
-		{
-			myTarget.BoughtSpriteUnselected = myTarget.GetComponent<Image> ( ).sprite;
-		}
+	
 
 		if ( myTarget.UseSprite )
 		{
@@ -293,28 +294,28 @@ public class EditItemMod : Editor
 				EditorGUILayout.PropertyField ( BoughtSpriteSelected, BuySelect );
 				EditorGUILayout.PropertyField ( BoughtSpriteUnselected, BuyUnSelect );
 
-				if ( myTarget.ItemBought )
+				if ( myTarget.ItemBought && myTarget.GetSprite != null)
 				{
 					if ( myTarget.Selected )
 					{
-						myTarget.GetComponent<Image> ( ).sprite = myTarget.BoughtSpriteSelected;
+						myTarget.GetSprite.sprite = myTarget.BoughtSpriteSelected;
 					}
 					else
 					{
-						myTarget.GetComponent<Image> ( ).sprite = myTarget.BoughtSpriteUnselected;
+						myTarget.GetSprite.sprite = myTarget.BoughtSpriteUnselected;
 					}
 				}
 
 			}
-			else
+			else if ( myTarget.GetSprite != null )
 			{
 				if ( myTarget.Selected )
 				{
-					myTarget.GetComponent<Image> ( ).sprite = myTarget.SpriteSelected;
+					myTarget.GetSprite.sprite = myTarget.SpriteSelected;
 				}
 				else
 				{
-					myTarget.GetComponent<Image> ( ).sprite = myTarget.SpriteUnselected;
+					myTarget.GetSprite.sprite = myTarget.SpriteUnselected;
 				}
 			}
 
@@ -325,8 +326,6 @@ public class EditItemMod : Editor
 		EditorGUI.indentLevel = 0;
 
 		EditorGUILayout.LabelField("Around Information", EditorStyles.boldLabel);
-		EditorGUILayout.PropertyField ( RightItem );
-		EditorGUILayout.PropertyField ( LeftItem );
 
 		EditorGUILayout.Space ( );
 		EditorGUILayout.LabelField("Modification", EditorStyles.boldLabel);
@@ -407,35 +406,31 @@ public class EditItemMod : Editor
 		if ( myTarget.SpecAction != SpecialAction.Nothing )
 		{
 			EditorGUILayout.PropertyField ( AddValueStat );
-			EditorGUILayout.PropertyField ( TimerSpe );
+
+			EditorGUILayout.PropertyField ( MadnessUse );
+			EditorGUILayout.PropertyField ( MinMadNeedPourc );
+
+			if ( myTarget.SpecAction != SpecialAction.SlowMot )
+			{
+				EditorGUILayout.PropertyField ( MadnessMulti );
+			}
 		}
 
 		if ( myTarget.SpecAction == SpecialAction.SlowMot )
 		{
 			EditorGUILayout.PropertyField ( SlowMotion );
-			EditorGUILayout.PropertyField ( SpeedSlowMot );
-			EditorGUILayout.PropertyField ( SpeedDeacSM );
-			EditorGUILayout.PropertyField ( ReduceSlider );
-			EditorGUILayout.PropertyField ( RecovSlider );
 		}
 		else if ( myTarget.SpecAction == SpecialAction.DeadBall )
 		{
 			EditorGUILayout.PropertyField ( DeadBallDist );
 		}
+
+
 		#endregion
 
 		serializedObject.ApplyModifiedProperties ( );
 	
 		EditorGUI.indentLevel = 0;
-
-		if ( myTarget.RightItem == null )
-		{
-			myTarget.RightItem = myTarget.GetComponent<ItemModif> ( );
-		}
-		if ( myTarget.LeftItem == null )
-		{
-			myTarget.LeftItem = myTarget.GetComponent<ItemModif> ( );
-		}
 	}
 	#endregion
 
