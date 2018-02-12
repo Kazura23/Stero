@@ -143,8 +143,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4026158725621412}
-  - component: {fileID: 259926839582429632}
-  - component: {fileID: 108756357773222832}
   m_Layer: 0
   m_Name: SteroProxyVolume
   m_TagString: Untagged
@@ -1218,13 +1216,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1130310394680326}
-  m_LocalRotation: {x: -0, y: -0.0000000074505797, z: -6.984919e-10, w: -1}
-  m_LocalPosition: {x: -0.030000005, y: 1.3200002, z: -0.008346436}
+  m_LocalRotation: {x: -0.16742656, y: 0.02425585, z: -0.020255128, w: -0.98537797}
+  m_LocalPosition: {x: -0.768, y: 2.175, z: -1.228}
   m_LocalScale: {x: 1.7780038, y: 1.7780044, z: 1.7780043}
   m_Children: []
   m_Father: {fileID: 4906462964085586}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.326, y: -2.4910002, z: 1.9310001}
 --- !u!4 &4035475228068982
 Transform:
   m_ObjectHideFlags: 1
@@ -2478,42 +2476,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!108 &108756357773222832
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1130310394680326}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2.74
-  m_Range: 17.58
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!114 &114050033574697178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2602,12 +2564,12 @@ MonoBehaviour:
   m_Z: 1
   m_NearClip: 3
   m_FarClipMax: 40
-  m_GlobalDensityMult: 2
+  m_GlobalDensityMult: 3.02
   m_ConstantFog: 16.76
   m_HeightFogAmount: 0.22
   m_HeightFogExponent: 0.03
   m_HeightFogOffset: 10
-  m_NoiseFogAmount: 0.915
+  m_NoiseFogAmount: 0.13
   m_NoiseFogScale: 0.67
   m_Wind: {fileID: 0}
   m_Anisotropy: 0.5
@@ -2694,7 +2656,6 @@ MonoBehaviour:
   BonusGrav: 400
   delayChocWave: 5
   DelayDeadBall: 15
-  DelaySlowMot: 10
   DistDBTake: 50
   DeadBallPref: {fileID: 1378874648793982, guid: 7dc0cdb3c96af354aabcc1ab0eb05533,
     type: 2}
@@ -2718,10 +2679,9 @@ MonoBehaviour:
   MadnessSpeed: 1.5
   TimeInvincible: 0.5
   SlowMotion: 2
-  SpeedSlowMot: 3
-  SpeedDeacSM: 5
-  RecovSlider: 2
-  ReduceSlider: 5
+  MadnessUse: 0
+  MadnessMult: 0
+  MadNeed: 0
   TimeToDoublePunch: 0
   DelayDoublePunch: 0.05
   CooldownDoublePunch: 0.35
@@ -3175,23 +3135,6 @@ LightProbeProxyVolume:
   m_BoundingBoxOrigin: {x: 0.062272787, y: 0.9473458, z: 0.19138277}
   m_ResolutionMode: 0
   m_ProbePositionMode: 0
-  m_RefreshMode: 1
---- !u!259 &259926839582429632
-LightProbeProxyVolume:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1130310394680326}
-  m_Enabled: 0
-  m_BoundingBoxMode: 0
-  m_ResolutionX: 2
-  m_ResolutionY: 2
-  m_ResolutionZ: 2
-  m_ResolutionProbesPerUnit: 0.16
-  m_BoundingBoxSize: {x: Infinity, y: Infinity, z: Infinity}
-  m_BoundingBoxOrigin: {x: 0, y: 0, z: 0}
-  m_ResolutionMode: 1
-  m_ProbePositionMode: 1
   m_RefreshMode: 1
 --- !u!320 &320580776546412448
 PlayableDirector:
