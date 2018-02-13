@@ -86,6 +86,7 @@ public class MenuShop : UiParent
             // Touche pour pouvoir selectionner les items
 			if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !waitImpSub && !transition)
             {
+				GlobalManager.Ui.CheckContr ( );
                 transition = true;
                 waitImpSub = true;
                 if (!catCurrSelected)
@@ -106,6 +107,7 @@ public class MenuShop : UiParent
             // Touche pour sortir des items
 			if ( ( inputPlayer.GetAxis("CoupDouble") == 1 || Input.GetKeyDown ( KeyCode.Escape ) ) && !waitImpCan && !transition)
             {
+				GlobalManager.Ui.CheckContr ( );
                 waitImpCan = true;
                 transition = true;
 
@@ -129,6 +131,7 @@ public class MenuShop : UiParent
 		// Navigation horizontale des catégories ou items
 		if ( getH != 0 && !waitInputH && !transition )
 		{
+			GlobalManager.Ui.CheckContr ( );
 			waitInputH = true;
 
             if ( catCurrSelected )
