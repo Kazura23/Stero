@@ -1132,8 +1132,10 @@ public class PlayerController : MonoBehaviour
 		pRig.constraints = thisConst;
 		StopPlayer = false;
         StaticRewardTarget.SSizeMagicSphere = 0;
-		getCouldown = CooldownDeadBall ( );
-		StartCoroutine( getCouldown );
+		//getCouldown = CooldownDeadBall ( );
+		//sStartCoroutine( getCouldown );
+
+		canSpe = true;
 	}
 
 	void waitInvDmg ( )
@@ -1651,7 +1653,7 @@ public class PlayerController : MonoBehaviour
 		canSpe = true;
     }
 
-	IEnumerator CooldownDeadBall()
+	/*IEnumerator CooldownDeadBall()
 	{
 		float countTime = 0;
 		WaitForEndOfFrame thisF = new WaitForEndOfFrame ( );
@@ -1668,7 +1670,7 @@ public class PlayerController : MonoBehaviour
 		SliderSlow.value = DelayDeadBall;
 
 		canSpe = true;
-	}
+	}*/
 
 	public void NewRotation ( GameObject thisColl, bool goRight )
 	{

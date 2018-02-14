@@ -8,10 +8,16 @@ public class canBeDest : MonoBehaviour
 	public float DelayDestruc = 3;
     public int nbPunchDestroy = 5;
 	public bool DeadByPlayer = true;
+	public bool UseThis = true;
 	bool onColl = false;
 
 	void OnCollisionEnter ( Collision collision )
 	{
+		if ( !UseThis )
+		{
+			return;
+		}
+
 		string getTag = collision.collider.tag;
 		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer && ( gameObject.tag != Constants._ElemDash || GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash ) || getTag == Constants._ObjDeadTag )
 		{
@@ -42,7 +48,7 @@ public class canBeDest : MonoBehaviour
 
     private void OnTriggerEnter ( Collider other )
     {
-        if ( other.tag == Constants._PunchTag && tag == Constants._Intro )
+		if ( UseThis && other.tag == Constants._PunchTag && tag == Constants._Intro )
         {
             nbPunchDestroy--;
             if(nbPunchDestroy == 0)
