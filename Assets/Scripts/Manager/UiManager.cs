@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
-
+using Rewired;
 
 public class UiManager : ManagerParent
 {
@@ -33,6 +33,7 @@ public class UiManager : ManagerParent
 
     [Header("MAIN MENU")]
     public int MenuSelection = 1;
+	public List<UpdateImage> ImageController;
 
     [Header("SHOP STUFF")]
     public Image SlowMotion;
@@ -61,6 +62,7 @@ public class UiManager : ManagerParent
     [HideInInspector]
     public bool OnMenu = false;
 	GameObject InGame;
+	Player inputPlayer;
 	//bool onMainScene = true;
 	#endregion
 
@@ -70,6 +72,7 @@ public class UiManager : ManagerParent
 	#region Public Methods
 	public void OpenThisMenu ( MenuType thisType, MenuTokenAbstract GetTok = null )
 	{
+		CheckContr ( );
 		UiParent thisUi;
 		//Debug.Log ( "open " + thisType );
 
@@ -95,7 +98,6 @@ public class UiManager : ManagerParent
             {
                 OpenShop();
             }
-            
 		}
 
     }
@@ -769,12 +771,39 @@ public class UiManager : ManagerParent
             });
         });
     }
+
+
+	public void CheckContr ( )
+	{
+		Controller controller = inputPlayer.controllers.GetLastActiveController();
+		if ( controller != null )
+		{
+			UpdateImage [] getImg = ImageController.ToArray ( );
+			switch ( controller.type )
+			{
+			case ControllerType.Keyboard:
+			case ControllerType.Mouse:
+				for ( int a = 0; a < getImg.Length; a++ )
+				{
+					getImg [ a ].ThisImage.sprite = getImg [ a ].SpriteMouse;
+				}
+				break;
+			case ControllerType.Joystick:
+				for ( int a = 0; a < getImg.Length; a++ )
+				{
+					getImg [ a ].ThisImage.sprite = getImg [ a ].SpriteJoyst;
+				}
+				break;
+			}
+		}
+	}
 	#endregion
 
 	#region Private Methods
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
+		inputPlayer = ReInput.players.GetPlayer(0);
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
 		Dictionary<MenuType, UiParent> setAllMenu = new Dictionary<MenuType, UiParent> ( getAllMenu.Length );
@@ -834,4 +863,13 @@ public class UiManager : ManagerParent
 		}
 	}
 	#endregion
+}
+
+
+[System.Serializable]
+public class UpdateImage 
+{
+	public Image ThisImage;
+	public Sprite SpriteMouse;
+	public Sprite SpriteJoyst;
 }

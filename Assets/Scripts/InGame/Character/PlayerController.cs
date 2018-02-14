@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
             PlayerPrefs.DeleteAll();
 
-		Debug.Log ( NbrLineRight + " / " + currLine + " / " + NbrLineLeft );
+//		Debug.Log ( NbrLineRight + " / " + currLine + " / " + NbrLineLeft );
 
     }
 	#endregion
