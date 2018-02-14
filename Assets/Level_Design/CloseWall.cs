@@ -16,7 +16,7 @@ public class CloseWall : MonoBehaviour {
     private void Awake()
     {
         timeBetweenClose /= 100;
-        speed /= 100;
+        speed /= 10;
 
 		wallRPos = WallRight.transform.localPosition;
 		wallLPos = WallLeft.transform.localPosition;

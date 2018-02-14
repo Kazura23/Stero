@@ -15,7 +15,9 @@ public class CloseRoof : MonoBehaviour {
 
     private void Awake()
     {
-		speed *= 0.01f;
+		timeBetweenClose /= 100;
+		speed /= 50;
+
 		otherPos = new List<Vector3> ( );
 		roofPos = Roof.transform.localPosition;
 
