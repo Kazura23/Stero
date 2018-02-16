@@ -327,6 +327,7 @@ public class SpawnChunks : MonoBehaviour
 			if ( AllLevelReplay[a].ThisLevel == currLevel && AllLevelReplay[a].NbrReplay > currLevelReplay )
 			{
 				currLevelReplay ++;
+				currNbrCh = 0;
 				return;
 			}
 		}
