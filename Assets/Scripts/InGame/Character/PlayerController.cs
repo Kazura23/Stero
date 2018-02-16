@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -30,8 +31,8 @@ public class PlayerController : MonoBehaviour
 	public float BonusGrav = 0;
 	[HideInInspector]
 	public float delayChocWave = 5;
-	[HideInInspector]
-	public float DelayDeadBall = 15;
+	//[HideInInspector]
+	//public float DelayDeadBall = 15;
 	public float DistDBTake = 25;
 	public GameObject DeadBallPref;
 
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
     [Header("Caractéristique Dash")]
     /*public float delayLeft = 1;
 	public float delayRight = 1;*/
-	public float DashTime = 1.5f;
+	//public float DashTime = 1.5f;
 	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
 	public float DashSpeed = 2.5f;
 	[Tooltip ("La valeur de DashSpeed est un multiplicateur sur la vitesse du joueur")]
@@ -82,8 +83,8 @@ public class PlayerController : MonoBehaviour
     public float DelayDoublePunch = .05f;
     public float CooldownDoublePunch = 1;
 
-	[HideInInspector]
-	public Slider BarMadness;
+	//[HideInInspector]
+	//public Slider BarMadness;
 	public SpecialAction ThisAct;
 	[HideInInspector]
 	public int NbrLineRight = 1;
@@ -162,10 +163,9 @@ public class PlayerController : MonoBehaviour
 
 	float PropulseBalls = 100;
 	float newH = 0;
-	float newDist;
+	//float newDist;
 	float saveDist;
 	float nextIncrease = 0;
-	float befRot = 0;
     float rationUse = 1;
 
 	float valueSmooth = 0;
@@ -197,8 +197,8 @@ public class PlayerController : MonoBehaviour
 	bool getCamRM = false;
 	bool newDir = false;
 	bool onTuto;
-    private int[] enemyKill;
-    private string[] deadType;
+   	//private int[] enemyKill;
+    //private string[] deadType;
 
     #endregion
 
@@ -388,7 +388,7 @@ public class PlayerController : MonoBehaviour
 			currSpeed = 0;
 			StopPlayer = true;
 
-			pTrans.DOMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
+			pTrans.DOLocalMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
 			{
 				textDist.text = "" + ( int.Parse ( textDist.text ) - 10 );
 				totalDis -= 10;
@@ -1704,7 +1704,10 @@ public class PlayerController : MonoBehaviour
 	void OnCollisionEnter ( Collision thisColl )
 	{
         if (playerDead)
+		{
             return;
+		}
+
 		GameObject getObj = thisColl.gameObject;
 		if ( onAnimeAir && thisColl.collider.tag == Constants._UnTagg )
 		{
@@ -1783,8 +1786,42 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ATypeObstacle = Constants._ObsTag;
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
-            Life = 0;
-			GameOver ( true );
+
+			if ( Life > 1 )
+			{
+				StopPlayer = true;
+				currSpeed = 0;
+
+				RaycastHit[] allHit;
+				float getDist = 12;
+
+				allHit = Physics.RaycastAll ( pTrans.position, -pTrans.forward, 12 );
+				foreach ( RaycastHit thisRay in allHit )
+				{
+					if ( thisRay.collider.tag == Constants._UnTagg || thisRay.collider.tag == Constants._ObsTag )
+					{
+						if ( getDist > thisRay.distance )
+						{
+							getDist = thisRay.distance;
+						}
+
+						break;
+					}
+					else if ( thisRay.collider.tag == Constants._EnnemisTag || thisRay.collider.tag == Constants._ElemDash )
+					{
+						Destroy ( thisRay.collider.gameObject );
+					}
+				}
+
+				getDist -= 2;
+
+				pTrans.DOLocalMove ( pTrans.localPosition - pTrans.forward * getDist, 1 ).OnComplete ( ( ) =>
+				{
+					StopPlayer = false;
+				} );
+				
+			}
+			GameOver ( );
 		}
 	}
 
