@@ -1814,13 +1814,19 @@ public class PlayerController : MonoBehaviour
 				}
 
 				getDist -= 2;
-
-				pTrans.DOLocalMove ( pTrans.localPosition - pTrans.forward * getDist, 1 ).OnComplete ( ( ) =>
-				{
-					StopPlayer = false;
-				} );
 				
+				GlobalManager.GameCont.PlayerCollider = true;
+				pTrans.localPosition -= pTrans.forward;
+
+        		thisCam.transform.DOShakePosition(0.5f, 5, 2, 5).OnComplete ( () => 
+				{
+					pTrans.DOLocalMove ( pTrans.localPosition - pTrans.forward * getDist, 0.5f ).OnComplete ( ( ) =>
+					{
+						StopPlayer = false;
+					} );
+				});
 			}
+
 			GameOver ( );
 		}
 	}

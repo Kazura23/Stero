@@ -212,18 +212,27 @@ public class SpawnChunks : MonoBehaviour
 			}
 		}
 	}
-
+	
 	IEnumerator waitDeSpawn ( GameObject thisObj, bool dest )
 	{
 		yield return new WaitForSeconds(1.5f);
 
-		if ( dest )
+		if ( GlobalManager.GameCont.PlayerCollider )
 		{
-			Destroy(thisObj);
+			GlobalManager.GameCont.PlayerCollider = false;
+
+			StartCoroutine ( waitDeSpawn ( thisObj , dest ) );
 		}
-		else 
+		else
 		{
-			thisObj.SetActive(false);
+			if ( dest )
+			{
+				Destroy(thisObj);
+			}
+			else 
+			{
+				thisObj.SetActive(false);
+			}
 		}
 	}
 	// Premier chunk à spawn
@@ -291,8 +300,6 @@ public class SpawnChunks : MonoBehaviour
 		else
 		{
 			spawnAfterThis ( );
-
-			
 		}
 	}
 

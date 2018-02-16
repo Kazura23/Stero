@@ -64,6 +64,8 @@ public class GameController : ManagerParent
 	public List<Text> GetBonusText;
 	public Transform ListScoreUI;
 
+	[HideInInspector]
+	public bool PlayerCollider = false;
 	Player inputPlayer;
 	//Text textScore;
 
