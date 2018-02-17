@@ -728,7 +728,6 @@ public class UiManager : ManagerParent
 		CircleFeel.DOFade ( 0, 0 );
 		getCurrHeat.DOFade(1, .5f);
 		getCurrHeat.GetComponent<RainbowScale>().enabled = true;
-
 	}
 
     public void StartBonusLife ( int currLife )

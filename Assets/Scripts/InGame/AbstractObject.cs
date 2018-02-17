@@ -252,6 +252,11 @@ public class AbstractObject : MonoBehaviour
 		
 		if ( getDist < distForDB ) 
 		{
+			if ( GetComponent<canBeDest> ( ) )
+			{
+				GetComponent<canBeDest> ( ).UseThis = false;
+			}
+
             StaticRewardTarget.SSizeMagicSphere++;
 			destGame = false;
 			onEnemyDead ( Vector3.zero, DeathType.SpecialPower ); 

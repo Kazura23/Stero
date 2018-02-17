@@ -64,6 +64,8 @@ public class GameController : ManagerParent
 	public List<Text> GetBonusText;
 	public Transform ListScoreUI;
 
+	[HideInInspector]
+	public bool PlayerCollider = false;
 	Player inputPlayer;
 	//Text textScore;
 
@@ -1404,13 +1406,8 @@ public class GameController : ManagerParent
 			else if ( thisItem.ThisItem.SpecAction == SpecialAction.DeadBall ) 
 			{ 
 				currPlayer.DistDBTake = thisItem.ThisItem.DistTakeDB; 
-				if ( thisItem.ThisItem.BonusItem ) 
+				if ( !thisItem.ThisItem.BonusItem ) 
 				{ 
-					currPlayer.SlowMotion += thisItem.ThisItem.SlowTime; 
-				} 
-				else 
-				{ 
-					currPlayer.SlowMotion = thisItem.ThisItem.SlowTime; 
 					currPlayer.MadnessMult = thisItem.ThisItem.MadnessMulti; 
 				} 
 			} 

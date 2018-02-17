@@ -32,7 +32,10 @@ public class ProtoObs : AbstractObject
 	{
 		if ( !checkThis )
 		{
-			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+			if ( !GetComponent<canBeDest> ( ) || GetComponent<canBeDest> ( ).UseThis )
+			{
+				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+			}
 			int randomSong = UnityEngine.Random.Range ( 0, 5 );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 
@@ -46,7 +49,10 @@ public class ProtoObs : AbstractObject
 		{
 			if ( p_technic == 0 )
 			{
-				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+				if ( !GetComponent<canBeDest> ( ) || GetComponent<canBeDest> ( ).UseThis )
+				{
+					StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+				}
 				int randomSong = UnityEngine.Random.Range ( 0, 5 );
 				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 				base.Degat ( p_damage, p_technic );
@@ -88,7 +94,11 @@ public class ProtoObs : AbstractObject
 	{
 		yield return new WaitForEndOfFrame ( );
 
-		StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+		if ( !GetComponent<canBeDest> ( ) || GetComponent<canBeDest> ( ).UseThis )
+		{
+			StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, playerCont.transform, 30, 3 ) );
+		}
+
 		int randomSong = UnityEngine.Random.Range ( 0, 5 );
 		GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );
 	}

@@ -497,12 +497,12 @@ public class MenuShop : UiParent
 				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
 				{
 					SelectObject ( );
-					GlobalManager.Ui.ExtraHearts [ 1 ].enabled = true;
+					GlobalManager.Ui.NewLife ( 2 );
 				}
 				else
 				{
 					SelectObject ( );
-					GlobalManager.Ui.ExtraHearts [ 0 ].enabled = true;
+					GlobalManager.Ui.NewLife ( 1 );
 				}
 			}
 			else if ( currCatSeled.NameCat == "UPGRADES" )

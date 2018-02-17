@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class SpawnChunks : MonoBehaviour 
 {
 	#region Variable
-	public List<ChunksScriptable> ChunksInfo;
-	public List<GameObject> ChunkOnScene;
+	public ChunksScriptable[] ChunksInfo;
+	public LevelReplay[] AllLevelReplay;
+	public GameObject[] ChunkOnScene;
+	
 	public Vector3 DefaultPos;
 
 	[HideInInspector]
@@ -31,9 +33,11 @@ public class SpawnChunks : MonoBehaviour
 	int currChunk = 0;
 	int CurrRandLvl = 0;
 	int saveLvlForStart = 0;
+	int currLevelReplay = 0;
+	int minLevel = 0;
+	
 	bool randAllChunk = false;
 	bool transitChunk = false;
-	int minLevel = 0;
 	#endregion
 	
 	#region Mono
@@ -63,9 +67,9 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks = new List<CheckOnScene> ( );
 		otherSpawn = new List<CheckOnScene> ( );
 		thisT = transform;
-		GetSceneChunk = ChunkOnScene.ToArray ( );
+		GetSceneChunk = ChunkOnScene;
 
-		List<ChunksScriptable> getChunks = ChunksInfo;
+		ChunksScriptable[] getChunks = ChunksInfo;
 		List<List<GetSpawnable>> getSpawnable = new List<List<GetSpawnable>> ( );
 		List<ChunkCombineSpawnble> chunkOrder = new List<ChunkCombineSpawnble> ( );
 		Transform[] getChildrenChunk;
@@ -75,7 +79,7 @@ public class SpawnChunks : MonoBehaviour
 		int c;
 		int currChunkLvl;
 
-		for ( a = 0; a < getChunks.Count; a++ )
+		for ( a = 0; a < getChunks.Length; a++ )
 		{
 			getSpawnable.Add ( new List<GetSpawnable> ( ) );
 
@@ -208,23 +212,33 @@ public class SpawnChunks : MonoBehaviour
 			}
 		}
 	}
-
+	
 	IEnumerator waitDeSpawn ( GameObject thisObj, bool dest )
 	{
 		yield return new WaitForSeconds(1.5f);
 
-		if ( dest )
+		if ( GlobalManager.GameCont.PlayerCollider )
 		{
-			Destroy(thisObj);
+			GlobalManager.GameCont.PlayerCollider = false;
+
+			StartCoroutine ( waitDeSpawn ( thisObj , dest ) );
 		}
-		else 
+		else
 		{
-			thisObj.SetActive(false);
+			if ( dest )
+			{
+				Destroy(thisObj);
+			}
+			else 
+			{
+				thisObj.SetActive(false);
+			}
 		}
 	}
 	// Premier chunk à spawn
 	public void FirstSpawn ( )
 	{
+		currLevelReplay = 0;
 		randAllChunk = false;
 		currNbrCh = 0;
 		currLevel = 0;
@@ -286,8 +300,6 @@ public class SpawnChunks : MonoBehaviour
 		else
 		{
 			spawnAfterThis ( );
-
-			
 		}
 	}
 
@@ -317,6 +329,16 @@ public class SpawnChunks : MonoBehaviour
 	// vérification de si il y a un niveau supérieur disponible ou non (si non alors random)
 	void newLevel ( )
 	{
+		for (int a = 0; a < AllLevelReplay.Length; a++)
+		{
+			if ( AllLevelReplay[a].ThisLevel == currLevel && AllLevelReplay[a].NbrReplay > currLevelReplay )
+			{
+				currLevelReplay ++;
+				currNbrCh = 0;
+				return;
+			}
+		}
+
 		ChunksScriptable getCunk = thisChunk;
 		List<CheckOnScene> getSpc = getSpawnChunks;
 		Transform getChunkT = getSpc [ getSpc.Count - 1 ].ThisChunk.transform;
@@ -991,4 +1013,11 @@ public class CheckOnScene
 	public List<GameObject> GarbChunk;
 	public GameObject ThisChunk;
 	public bool OnScene;
+}
+
+[System.Serializable]
+public class LevelReplay
+{
+	public int ThisLevel = 0;
+	public int NbrReplay = 0;
 }
