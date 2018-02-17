@@ -30,7 +30,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1003632236527360
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -999,6 +999,38 @@ GameObject:
   - component: {fileID: 4238936765479642}
   m_Layer: 0
   m_Name: Character1_RightFoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1387058966813582
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4916542707959398}
+  - component: {fileID: 64001898096301736}
+  - component: {fileID: 65817537457395256}
+  m_Layer: 0
+  m_Name: WallLeft
+  m_TagString: objectEnv
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1387198983708520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4495737136821012}
+  m_Layer: 0
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2154,6 +2186,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1994337965950902
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4240157570816878}
+  - component: {fileID: 64215084227087396}
+  - component: {fileID: 65136909773438796}
+  m_Layer: 0
+  m_Name: WallRight
+  m_TagString: objectEnv
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4008849479511526
 Transform:
   m_ObjectHideFlags: 1
@@ -2256,8 +2305,8 @@ Transform:
   - {fileID: 4920690279139264}
   - {fileID: 4928114471138208}
   - {fileID: 4413334760103514}
-  - {fileID: 4986658451248558}
   - {fileID: 4564571277901170}
+  - {fileID: 4495737136821012}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2518,6 +2567,19 @@ Transform:
   - {fileID: 4147803372759714}
   m_Father: {fileID: 4842904712410486}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4240157570816878
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994337965950902}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15, y: 0, z: 27}
+  m_LocalScale: {x: 1, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 4495737136821012}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4248065261489436
 Transform:
@@ -3028,6 +3090,22 @@ Transform:
   m_Father: {fileID: 4749496632309254}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!4 &4495737136821012
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387198983708520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4986658451248558}
+  - {fileID: 4916542707959398}
+  - {fileID: 4240157570816878}
+  m_Father: {fileID: 4074102553737628}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4513210795225412
 Transform:
   m_ObjectHideFlags: 1
@@ -3124,7 +3202,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 4074102553737628}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4568158857874952
 Transform:
@@ -3734,6 +3812,19 @@ Transform:
   m_Father: {fileID: 4749496632309254}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!4 &4916542707959398
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387058966813582}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15, y: 0, z: 27}
+  m_LocalScale: {x: 1, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 4495737136821012}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4919278113557966
 Transform:
   m_ObjectHideFlags: 1
@@ -3857,8 +3948,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 27}
   m_LocalScale: {x: 5, y: 1, z: 10.2}
   m_Children: []
-  m_Father: {fileID: 4074102553737628}
-  m_RootOrder: 7
+  m_Father: {fileID: 4495737136821012}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4989663686490456
 Transform:
@@ -5772,6 +5863,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &64001898096301736
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387058966813582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
+--- !u!64 &64215084227087396
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994337965950902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
 --- !u!64 &64330449591768604
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -5896,6 +6015,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.38955933, y: 0.43547857, z: 0.2907244}
   m_Center: {x: 0.000000014901161, y: 0.21773946, z: -0.022714168}
+--- !u!65 &65136909773438796
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994337965950902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.75, z: 6}
+  m_Center: {x: 0, y: 2.9, z: 0}
 --- !u!65 &65138247100175684
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -6184,6 +6315,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.70328426, y: 0.9058916, z: 2.240426}
   m_Center: {x: -0.00000031292439, y: 0.4430193, z: 0.00000059604645}
+--- !u!65 &65817537457395256
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387058966813582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.75, z: 6}
+  m_Center: {x: 0, y: 2.9, z: 0}
 --- !u!65 &65862921582883154
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -6876,6 +7019,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114032070944722786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6911,6 +7055,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114052193205852794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6926,6 +7071,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114075047465928640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6941,6 +7087,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114101561488775170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6999,6 +7146,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114177761885684116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7034,6 +7182,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114194519385573390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7049,6 +7198,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114205478072629920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7124,6 +7274,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114271269438668312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7139,6 +7290,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114287280080136024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7154,6 +7306,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114327081079823234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7223,6 +7376,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114426650291157520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7318,6 +7472,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114462585482686550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7333,6 +7488,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114471055380491832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7408,6 +7564,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114523672120420674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7423,6 +7580,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114538169851664504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7498,6 +7656,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114596824976948594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7513,6 +7672,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114607474109476368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7528,6 +7688,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114608040094373484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7543,6 +7704,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114656902352502750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7682,6 +7844,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114723427309649730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7697,6 +7860,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114743757419249234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7764,6 +7928,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114967871188506110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7799,6 +7964,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!135 &135753108669575924
 SphereCollider:
   m_ObjectHideFlags: 1
