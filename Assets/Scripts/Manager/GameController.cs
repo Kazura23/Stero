@@ -417,6 +417,7 @@ public class GameController : ManagerParent
 	public void StartGame ( )
 	{
         //GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+
         AllPlayerPrefs.ATimerRun = 0;
         AllPlayerPrefs.ANbRun++;
 		if ( lastWall != null )
@@ -491,8 +492,19 @@ public class GameController : ManagerParent
 			StopCoroutine ( getCurWait );
 		}
 
+		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOKill ( );
+		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
+		GlobalManager.Ui.MotionSlider.GetComponent<CanvasGroup> ( ).DOKill ( );
+		GlobalManager.Ui.MotionSlider.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+
+		iconeSpe.enabled = false;
+		iconeSpe.DOFade ( 0, 0.3f );
+
 		if ( restartGame )
         {
+			SetAllBonus ( );
+
 			onHub = false;
 			isStay = false;
 			Intro = false;
@@ -513,7 +525,6 @@ public class GameController : ManagerParent
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
-		SetAllBonus ( );
 
 		GameStarted = true;
 		checkStart = false;
@@ -685,6 +696,7 @@ public class GameController : ManagerParent
 		if ( !LaunchTuto )
 		{
 			iconeSpe.enabled = false;
+			iconeSpe.DOKill ( );
 			iconeSpe.DOFade ( 0, 0.3f );
 			sliderSpe.gameObject.SetActive ( false );
 			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
@@ -699,6 +711,8 @@ public class GameController : ManagerParent
 		//List<string> getKey = new List<string> ( );
 
 		SpawnerChunck.EndLevel = 1;
+		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOKill ( );
+		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
 
 		if ( getMod != null )
 		{
