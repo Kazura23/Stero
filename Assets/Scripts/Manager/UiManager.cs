@@ -525,6 +525,7 @@ public class UiManager : ManagerParent
         RedScreen.DOFade(0f, .05f);*/
 
         RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+        RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 
     public void MadnessGreenStart()
@@ -544,6 +545,7 @@ public class UiManager : ManagerParent
     {
 
         RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+        RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 
     public void ScorePlus(int number, Color rankColor, int currIndex, string type)

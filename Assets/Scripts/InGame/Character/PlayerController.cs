@@ -296,6 +296,7 @@ public class PlayerController : MonoBehaviour
 		}
         GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
+        GlobalManager.Ui.MadnessGreenEnd();
 
         textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
@@ -626,7 +627,6 @@ public class PlayerController : MonoBehaviour
 			{
 				newStat ( StatePlayer.Normal );
 
-                GlobalManager.Ui.MadnessGreenEnd();
                 GlobalManager.Ui.MadnessRedEnd();
                 lastTimer = false;
 				secureTimer = false;
@@ -840,11 +840,12 @@ public class PlayerController : MonoBehaviour
             {
                 GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
+                GlobalManager.Ui.MadnessGreenEnd();
                 timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
 			}
 			else
-			{
-				timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
+            {
+                timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
 
             }
 
@@ -866,7 +867,7 @@ public class PlayerController : MonoBehaviour
 		else if ( !lastTimer )
 		{
             GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
-
+            GlobalManager.Ui.MadnessGreenEnd();
             timerFight.value -= ( getTime / DelayTimerStandard ) * 0.5f;
 
 			if ( timerFight.value < 0.25f )

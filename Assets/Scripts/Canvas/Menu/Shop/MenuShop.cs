@@ -281,7 +281,7 @@ public class MenuShop : UiParent
         backgroundColor.transform.SetParent(currItemSeled.transform.parent.parent);
         UnlockObject.transform.SetParent(currItemSeled.transform.parent.parent);
         
-        currItemSeled.GetComponentsInChildren<Text>()[2].text = "SOLD!";
+        currItemSeled.GetComponentsInChildren<Text>()[2].text = "EQUIPPED!";
 
         CanInput = false;
 
