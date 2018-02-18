@@ -21,7 +21,9 @@ public class UiManager : ManagerParent
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
     public GameObject PostProcessGlobal;
-    public GameObject PostProcessMadness;
+	public GameObject PostProcessMadness;
+	public GameObject GetHubDir;
+
     public Image ArrowTuto;
 
 	public Text ScorePoints;
@@ -100,12 +102,14 @@ public class UiManager : ManagerParent
             {
                 OpenShop();
             }
-		}
 
+			GetHubDir.SetActive ( false );
+		}
     }
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
+		GetHubDir.SetActive ( true );
 
 		UiParent thisUi;
 

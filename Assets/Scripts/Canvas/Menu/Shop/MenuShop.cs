@@ -180,8 +180,12 @@ public class MenuShop : UiParent
             GlobalManager.GameCont.canOpenShop = false;
             base.OpenThis(GetTok);
 
-            GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
-            GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
+			GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+
+			GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
+			GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
 
 			CanInput = false;
             //GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
@@ -207,21 +211,12 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
-		if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
-		{
-			GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0.1f ).OnComplete ( ( ) =>
-			{
-				GlobalManager.Ui.SlowMotion.enabled = false;
-			} );
-		}
-		else
-		{
-			GlobalManager.Ui.SlowMotion.enabled = false;
-			GlobalManager.Ui.SlowMotion.gameObject.SetActive ( false );
-		}
-
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
+
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
 
         GlobalManager.Ui.CloseShop();
 
