@@ -477,6 +477,7 @@ public class GameController : ManagerParent
 			currNeeded = 1;
 		}
 
+		GlobalManager.Ui.GetHubDir.SetActive ( true );
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
 		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
@@ -700,6 +701,7 @@ public class GameController : ManagerParent
 		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
 		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
 		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.GetHubDir.SetActive ( false );
 
 		if ( !LaunchTuto )
 		{
@@ -943,8 +945,8 @@ public class GameController : ManagerParent
 
         if (inReward && !moveInReward && !isLookReward)
         {
-
-            switch (cursorTypeReward)
+			GlobalManager.Ui.GetHubDir.transform.Find ( "Keys - Rewards" ).gameObject.SetActive ( true );
+			switch (cursorTypeReward)
             {
                 case 0: // leaderboard
                     // afficher les leaderboards
@@ -1002,6 +1004,7 @@ public class GameController : ManagerParent
                 RotateViewReward();
             }else if (Input.GetKeyDown(KeyCode.Backspace)|| inputPlayer.GetButtonDown("CoupDouble"))
             {
+				GlobalManager.Ui.GetHubDir.transform.Find ( "Keys - Rewards" ).gameObject.SetActive ( false );
                 inReward = false;
 
                 GlobalManager.Ui.CloseRewards();
