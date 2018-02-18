@@ -477,7 +477,6 @@ public class GameController : ManagerParent
 			currNeeded = 1;
 		}
 
-
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
 		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
@@ -487,14 +486,16 @@ public class GameController : ManagerParent
 			StopCoroutine ( getCurWait );
 		}
 
-		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOKill ( );
-		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
-
-		GlobalManager.Ui.MotionSlider.GetComponent<CanvasGroup> ( ).DOKill ( );
-		GlobalManager.Ui.MotionSlider.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MotionSlider.gameObject.SetActive ( false );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( false );
 
 		iconeSpe.enabled = false;
 		iconeSpe.DOFade ( 0, 0.3f );
+
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
 
 		if ( restartGame )
         {
@@ -693,19 +694,20 @@ public class GameController : ManagerParent
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		iconeSpe.gameObject.SetActive ( true );
 
+		GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+
 		if ( !LaunchTuto )
 		{
 			iconeSpe.enabled = false;
 			iconeSpe.DOKill ( );
 			iconeSpe.DOFade ( 0, 0.3f );
-			if ( sliderSpe.GetComponent<CanvasGroup> ( ) )
-			{
-				sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
-			}
-			else
-			{
-				sliderSpe.gameObject.SetActive ( false );
-			}
+
+			sliderSpe.gameObject.SetActive ( false );
 
 			currPlayer.SlowMotion = 1.25f; 
 			currPlayer.MadnessUse = 1; 
@@ -717,8 +719,6 @@ public class GameController : ManagerParent
 		//List<string> getKey = new List<string> ( );
 
 		SpawnerChunck.EndLevel = 1;
-		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOKill ( );
-		GlobalManager.Ui.Madness.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
 
 		if ( getMod != null )
 		{
@@ -1399,15 +1399,8 @@ public class GameController : ManagerParent
 			iconeSpe.DOFade ( 1, 1 );
 
 			//sliderSpe.gameObject.SetActive ( true );
-			if ( sliderSpe.GetComponent<CanvasGroup> ( ) )
-			{
-				sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
-				sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
-			}
-			else
-			{
-				sliderSpe.gameObject.SetActive ( true );
-			}
+
+			sliderSpe.gameObject.SetActive ( true );
 
 			currPlayer.ThisAct = thisItem.ThisItem.SpecAction;
 
