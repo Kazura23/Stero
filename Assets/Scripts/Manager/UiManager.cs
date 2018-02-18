@@ -710,12 +710,12 @@ public class UiManager : ManagerParent
 		if ( ExtraHearts [ 0 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 0 ];
-			getCurrHeat.transform.localPosition = new Vector3 (105, -29.5f,0);
+			getCurrHeat.transform.localPosition = new Vector3 (105, -45,0);
 		}
 		else if ( ExtraHearts [ 1 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 1 ];
-			getCurrHeat.transform.localPosition = new Vector3 (195,-29.9f);
+			getCurrHeat.transform.localPosition = new Vector3 (195,-45f);
 		}
 		else
 		{

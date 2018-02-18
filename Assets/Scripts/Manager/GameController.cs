@@ -477,6 +477,7 @@ public class GameController : ManagerParent
 			currNeeded = 1;
 		}
 
+
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
 		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
