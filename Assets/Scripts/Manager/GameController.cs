@@ -690,6 +690,7 @@ public class GameController : ManagerParent
 	public void SetAllBonus ( )
 	{
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
+		iconeSpe.gameObject.SetActive ( true );
 
 		if ( !LaunchTuto )
 		{

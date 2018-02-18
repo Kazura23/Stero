@@ -207,6 +207,19 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
+		if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
+		{
+			GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0.1f ).OnComplete ( ( ) =>
+			{
+				GlobalManager.Ui.SlowMotion.enabled = false;
+			} );
+		}
+		else
+		{
+			GlobalManager.Ui.SlowMotion.enabled = false;
+			GlobalManager.Ui.SlowMotion.gameObject.SetActive ( false );
+		}
+
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
 
@@ -494,6 +507,18 @@ public class MenuShop : UiParent
 		{
 			if ( currCatSeled.NameCat == "ABILITIES" )
 			{
+				if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
+				{
+					GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 1, 0.1f );
+				}
+				else
+				{
+					GlobalManager.Ui.SlowMotion.gameObject.SetActive ( true );
+				}
+
+				GlobalManager.Ui.SlowMotion.color = new Color ( 1, 1, 1, 1 );
+				GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
 			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
