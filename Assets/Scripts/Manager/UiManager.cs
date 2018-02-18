@@ -56,6 +56,8 @@ public class UiManager : ManagerParent
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4, arrowLeftTw, arrowRightTw;
 
+    public Tween madnessRedTw;
+
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
 
@@ -500,8 +502,51 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
+    public void MadnessRedStart()
+    {
 
-    public void ScorePlus(int number, Color rankColor, int currIndex)
+        Debug.Log("MadnessRed Start");
+        madnessRedTw = null;/*
+        madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
+            RedScreen.DOFade(0, .2f);
+        }).SetLoops(-1,LoopType.Restart);*/
+
+        RedScreen.GetComponents<RainbowColor>()[0].enabled = true;
+
+    }
+
+    public void MadnessRedEnd()
+    {
+
+        Debug.Log("MadnessRed Stop");
+
+        /*
+        madnessRedTw.Kill(true);
+        RedScreen.DOFade(0f, .05f);*/
+
+        RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+    }
+
+    public void MadnessGreenStart()
+    {
+
+        Debug.Log("MadnessRed Start");
+        madnessRedTw = null;/*
+        madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
+            RedScreen.DOFade(0, .2f);
+        }).SetLoops(-1,LoopType.Restart);*/
+
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = true;
+
+    }
+
+    public void MadnessGreenEnd()
+    {
+
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+    }
+
+    public void ScorePlus(int number, Color rankColor, int currIndex, string type)
     {
 
         float randomPos = UnityEngine.Random.Range(-600, 600);
@@ -514,8 +559,10 @@ public class UiManager : ManagerParent
         AllPlayerPrefs.scoreWhithoutDistance += number;
 
 
+
+
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
-        scoretxt.text = "+ " + number;
+        scoretxt.text = "+ " + number + "\n" + type;
         scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
 
         if (currIndex == 6)

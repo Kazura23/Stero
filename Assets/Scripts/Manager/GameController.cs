@@ -777,7 +777,7 @@ public class GameController : ManagerParent
             }
         }
 
-		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex, thisInf.TypeDeath.ToString() );
 
 		if ( currInd != currIndex )
 		{

@@ -538,7 +538,8 @@ public class PlayerController : MonoBehaviour
 		if ( !InMadness || thisDeath == DeathType.Enemy )
 		{
 			GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
-		}
+
+        }
 		else
 		{
 			GlobalManager.GameCont.NewScore ( DeathType.Madness, nbrPoint );
@@ -611,7 +612,10 @@ public class PlayerController : MonoBehaviour
 
                 newStat( StatePlayer.Madness );
 
-				secureTimer = true;
+
+                GlobalManager.Ui.MadnessGreenStart();
+
+                secureTimer = true;
 			}
 		}
 		else
@@ -621,8 +625,10 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.25f )
 			{
 				newStat ( StatePlayer.Normal );
-                
-				lastTimer = false;
+
+                GlobalManager.Ui.MadnessGreenEnd();
+                GlobalManager.Ui.MadnessRedEnd();
+                lastTimer = false;
 				secureTimer = false;
 			}
 		}
@@ -847,14 +853,14 @@ public class PlayerController : MonoBehaviour
 
 				secureTimer = false;
 				lastTimer = false;
-                
-				newStat ( StatePlayer.Normal );
+
+                newStat ( StatePlayer.Normal );
 
                 if ( InMadness )
 				{
 					timerFight.DOValue ( 0.5f, 0.1f );
 					stopMadness ( );
-				}
+                }
 			}
 		}
 		else if ( !lastTimer )
@@ -866,6 +872,8 @@ public class PlayerController : MonoBehaviour
 			if ( timerFight.value < 0.25f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Red", true);
+
+                GlobalManager.Ui.MadnessRedStart();
 
                 newStat( StatePlayer.Danger );
                 StaticRewardTarget.SRedMadness++;
