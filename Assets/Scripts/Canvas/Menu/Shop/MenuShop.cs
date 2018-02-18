@@ -183,8 +183,12 @@ public class MenuShop : UiParent
             GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
             GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
 
+			CanInput = false;
             //GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
-            GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
+			GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .7f).OnComplete( ()=>
+			{
+				CanInput = true;
+			});
 
             GlobalManager.Ui.OpenShop();
 
@@ -203,6 +207,19 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
+		if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
+		{
+			GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 0, 0.1f ).OnComplete ( ( ) =>
+			{
+				GlobalManager.Ui.SlowMotion.enabled = false;
+			} );
+		}
+		else
+		{
+			GlobalManager.Ui.SlowMotion.enabled = false;
+			GlobalManager.Ui.SlowMotion.gameObject.SetActive ( false );
+		}
+
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
 
@@ -490,6 +507,18 @@ public class MenuShop : UiParent
 		{
 			if ( currCatSeled.NameCat == "ABILITIES" )
 			{
+				if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
+				{
+					GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 1, 0.1f );
+				}
+				else
+				{
+					GlobalManager.Ui.SlowMotion.gameObject.SetActive ( true );
+				}
+
+				GlobalManager.Ui.SlowMotion.color = new Color ( 1, 1, 1, 1 );
+				GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
 			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
@@ -597,6 +626,7 @@ public class MenuShop : UiParent
 	void ChangeToItem ( bool goItem )
 	{
         CatShop thisShop = currCatSeled;
+		CanInput = false;
 
         if ( goItem && catCurrSelected ) // Changement de cat a item
 		{
@@ -651,6 +681,7 @@ public class MenuShop : UiParent
 				}
 
 				NewItemSelect ( currItemSeled, true );
+				CanInput = true;
             });
         }
 		else if ( !goItem && !catCurrSelected ) // Changement de item a cat
@@ -662,7 +693,7 @@ public class MenuShop : UiParent
     void ChangeToCat()
     {
         CatShop thisShop = currCatSeled;
-
+		CanInput = false;
         //Debug.Log(thisShop.transform.GetChild(0));
 
         iconCategory.DOFade(0, .05f);
@@ -695,6 +726,7 @@ public class MenuShop : UiParent
             iconCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 160, 0);
             textCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 75, 0);
             barCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 75, 0);
+			CanInput = true;
         });
 
         //On remet les molécules à leur couleur initiale
