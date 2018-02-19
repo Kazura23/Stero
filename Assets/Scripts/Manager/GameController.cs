@@ -110,8 +110,6 @@ public class GameController : ManagerParent
     public float delayPrintSucess = 1;
     private Coroutine corouSucess = null;
 
-	float rankValue = 0;
-
 	int currIndex = -1;
 	int currMax = 0;
 	int currNeeded = 0;
@@ -143,8 +141,6 @@ public class GameController : ManagerParent
             corouSucess = StartCoroutine(ListExecutionReward());
         }
         
-		getRank.fillAmount = rankValue;
-
         BloomModel.Settings thisBloom = postProfile.bloom.settings;
 
         ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
@@ -417,6 +413,7 @@ public class GameController : ManagerParent
 	public void StartGame ( )
 	{
         //GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+		getRank.fillAmount = 1;
         AllPlayerPrefs.ATimerRun = 0;
         AllPlayerPrefs.ANbRun++;
 		if ( lastWall != null )
@@ -451,8 +448,6 @@ public class GameController : ManagerParent
 		CurrentScore = 0;
 		lastNeeded = 0;
 
-		DOTween.Kill ( rankValue );
-		DOTween.To ( ( ) => rankValue, x => rankValue = x, 0, 0.1f );
 		Rank [] getListRank = AllRank;
 
 		for ( a = 0; a < getListRank.Length; a++ )
@@ -482,6 +477,7 @@ public class GameController : ManagerParent
 			currNeeded = 1;
 		}
 
+		GlobalManager.Ui.GetHubDir.SetActive ( true );
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
 		GlobalManager.Ui.RankText.text = getListRank [ currIndex ].NameRank;
@@ -491,8 +487,21 @@ public class GameController : ManagerParent
 			StopCoroutine ( getCurWait );
 		}
 
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MotionSlider.gameObject.SetActive ( false );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( false );
+
+		iconeSpe.enabled = false;
+		iconeSpe.DOFade ( 0, 0.3f );
+
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
+
 		if ( restartGame )
         {
+			SetAllBonus ( );
+
 			onHub = false;
 			isStay = false;
 			Intro = false;
@@ -513,7 +522,6 @@ public class GameController : ManagerParent
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
 
-		SetAllBonus ( );
 
 		GameStarted = true;
 		checkStart = false;
@@ -627,6 +635,10 @@ public class GameController : ManagerParent
 			StopCoroutine ( getCurWait );
 		}
 
+		getRank.DOKill ( );
+		getRank.fillAmount = 1;
+		getRank.DOFillAmount ( 0, AllRank [ currIndex ].Time );
+
 		if ( currIndex >= 0 )
 		{
 			getCurWait = waitRank ( AllRank [ currIndex ].Time );
@@ -681,13 +693,23 @@ public class GameController : ManagerParent
 	public void SetAllBonus ( )
 	{
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
+		iconeSpe.gameObject.SetActive ( true );
+
+		GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.GetHubDir.SetActive ( false );
 
 		if ( !LaunchTuto )
 		{
 			iconeSpe.enabled = false;
+			iconeSpe.DOKill ( );
 			iconeSpe.DOFade ( 0, 0.3f );
+
 			sliderSpe.gameObject.SetActive ( false );
-			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 0, .3f );
 
 			currPlayer.SlowMotion = 1.25f; 
 			currPlayer.MadnessUse = 1; 
@@ -732,6 +754,9 @@ public class GameController : ManagerParent
 
 	void addNewScore ( ScoringInfo thisInf )
 	{
+		getRank.DOKill ( );
+		getRank.fillAmount = 1;
+
 		//GameObject newObj = ( GameObject ) Instantiate ( TextObj, GlobalManager.Ui.GameParent );
 		//newObj.GetComponent<Text> ( ).text = "" + thisInf.AllScore;
 		Rank[] getAllRank = AllRank;
@@ -754,17 +779,18 @@ public class GameController : ManagerParent
             }
         }
 
-		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex );
+		GlobalManager.Ui.ScorePlus ( thisInf.AllScore, getAllRank [ currInd ].Color, currIndex, thisInf.TypeDeath.ToString() );
 
-        if ( currInd != currIndex )
+		if ( currInd != currIndex )
 		{
 			GlobalManager.Ui.RankText.color = getAllRank [ currInd ].Color;
 			GlobalManager.Ui.Multiplicateur.text = getAllRank [ currInd ].MultiPli.ToString ( );
 			GlobalManager.Ui.RankText.text = getAllRank [ currInd ].NameRank;
-            if(currInd == getAllRank.Length - 1)
-            {
-                StaticRewardTarget.SRankSteroidal++;
-            }
+
+			if ( currInd == getAllRank.Length - 1 )
+			{
+				StaticRewardTarget.SRankSteroidal++;
+			}
 			lastNeeded = currNeeded;
 			currMax = getAllRank [ currInd ].NeededScore;
 		
@@ -794,18 +820,14 @@ public class GameController : ManagerParent
 			StartCoroutine ( getCurWait );
 
 
-            GlobalManager.Ui.NewRank(currInd);
+			GlobalManager.Ui.NewRank ( currInd );
 
+			thisInf.AllScore = 0;
+			thisInf.CurrCount = 0;
+			thisInf.CurrSpawn.Clear ( );
+		}
 
-            float getNewRank = (float)(CurrentScore - lastNeeded) / (currNeeded - lastNeeded);
-            DOTween.Kill(rankValue);
-            DOTween.To(() => rankValue, x => rankValue = x, getNewRank, 0.1f);
-
-            thisInf.AllScore = 0;
-            thisInf.CurrCount = 0;
-            thisInf.CurrSpawn.Clear();
-        }
-
+		getRank.DOFillAmount ( 0, getAllRank [ currInd ].Time );
     }
 
 	void setMusic () 
@@ -828,8 +850,8 @@ public class GameController : ManagerParent
 		currIndex = 0;
 		Rank [] getListRank = AllRank;
 		Image getRankSlid = getRank;
-
-		for ( int a = 0; a < getListRank.Length; a++ )
+		int a;
+		for ( a = 0; a < getListRank.Length; a++ )
 		{
 			if ( getListRank [ a ].NeededScore < getListRank [ currIndex ].NeededScore )
 			{
@@ -837,7 +859,25 @@ public class GameController : ManagerParent
 			}
 		}
 
-		currMax = 0;
+		currMax = AllRank [ currIndex ].NeededScore;
+		currNeeded = 0;
+
+		for ( a = 0; a < getListRank.Length; a++ )
+		{
+			if ( currMax >= currNeeded )
+			{
+				currNeeded = getListRank [ a ].NeededScore;
+			}
+			else if ( getListRank [ a ].NeededScore > currMax && getListRank [ a ].NeededScore < currNeeded )
+			{
+				currNeeded = getListRank [ a ].NeededScore;
+			}
+		}
+
+		if ( currNeeded <= 0 )
+		{
+			currNeeded = 1;
+		}
 		CurrentScore = 0;
 		GlobalManager.Ui.Multiplicateur.text = getListRank [ currIndex ].MultiPli.ToString ( );
 		GlobalManager.Ui.RankText.color = getListRank [ currIndex ].Color;
@@ -905,8 +945,8 @@ public class GameController : ManagerParent
 
         if (inReward && !moveInReward && !isLookReward)
         {
-
-            switch (cursorTypeReward)
+			GlobalManager.Ui.GetHubDir.transform.Find ( "Keys - Rewards" ).gameObject.SetActive ( true );
+			switch (cursorTypeReward)
             {
                 case 0: // leaderboard
                     // afficher les leaderboards
@@ -964,6 +1004,7 @@ public class GameController : ManagerParent
                 RotateViewReward();
             }else if (Input.GetKeyDown(KeyCode.Backspace)|| inputPlayer.GetButtonDown("CoupDouble"))
             {
+				GlobalManager.Ui.GetHubDir.transform.Find ( "Keys - Rewards" ).gameObject.SetActive ( false );
                 inReward = false;
 
                 GlobalManager.Ui.CloseRewards();
@@ -1361,8 +1402,8 @@ public class GameController : ManagerParent
 			iconeSpe.DOFade ( 1, 1 );
 
 			//sliderSpe.gameObject.SetActive ( true );
-			sliderSpe.GetComponent<CanvasGroup> ( ).DOKill ( );
-			sliderSpe.GetComponent<CanvasGroup> ( ).DOFade ( 1, .3f );
+
+			sliderSpe.gameObject.SetActive ( true );
 
 			currPlayer.ThisAct = thisItem.ThisItem.SpecAction;
 

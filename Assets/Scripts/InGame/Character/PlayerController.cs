@@ -296,6 +296,7 @@ public class PlayerController : MonoBehaviour
 		}
         GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
+        GlobalManager.Ui.MadnessGreenEnd();
 
         textDist.text = "0";
 		SliderSlow.value = SliderSlow.maxValue;
@@ -538,7 +539,8 @@ public class PlayerController : MonoBehaviour
 		if ( !InMadness || thisDeath == DeathType.Enemy )
 		{
 			GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
-		}
+
+        }
 		else
 		{
 			GlobalManager.GameCont.NewScore ( DeathType.Madness, nbrPoint );
@@ -611,7 +613,10 @@ public class PlayerController : MonoBehaviour
 
                 newStat( StatePlayer.Madness );
 
-				secureTimer = true;
+
+                GlobalManager.Ui.MadnessGreenStart();
+
+                secureTimer = true;
 			}
 		}
 		else
@@ -621,8 +626,9 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.25f )
 			{
 				newStat ( StatePlayer.Normal );
-                
-				lastTimer = false;
+
+                GlobalManager.Ui.MadnessRedEnd();
+                lastTimer = false;
 				secureTimer = false;
 			}
 		}
@@ -834,11 +840,12 @@ public class PlayerController : MonoBehaviour
             {
                 GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
+                GlobalManager.Ui.MadnessGreenEnd();
                 timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
 			}
 			else
-			{
-				timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
+            {
+                timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
 
             }
 
@@ -847,25 +854,27 @@ public class PlayerController : MonoBehaviour
 
 				secureTimer = false;
 				lastTimer = false;
-                
-				newStat ( StatePlayer.Normal );
+
+                newStat ( StatePlayer.Normal );
 
                 if ( InMadness )
 				{
 					timerFight.DOValue ( 0.5f, 0.1f );
 					stopMadness ( );
-				}
+                }
 			}
 		}
 		else if ( !lastTimer )
 		{
             GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
-
+            GlobalManager.Ui.MadnessGreenEnd();
             timerFight.value -= ( getTime / DelayTimerStandard ) * 0.5f;
 
 			if ( timerFight.value < 0.25f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Red", true);
+
+                GlobalManager.Ui.MadnessRedStart();
 
                 newStat( StatePlayer.Danger );
                 StaticRewardTarget.SRedMadness++;

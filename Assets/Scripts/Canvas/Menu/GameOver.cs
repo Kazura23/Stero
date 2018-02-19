@@ -96,6 +96,10 @@ public class GameOver : UiParent
 			PatternGameOver.transform.DOLocalMoveY(1092, 0);
 		}).SetLoops(-1, LoopType.Restart);
 
+		
+		PointsGameOver.text = NbrString ( PointsGameOver.text );
+		Highscore.text = NbrString ( Highscore.text );
+
 		gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
 		{
 
@@ -154,6 +158,32 @@ public class GameOver : UiParent
 	#region Private Methods
 	protected override void InitializeUi()
 	{
+	}
+
+
+	string NbrString ( string getText )
+	{
+		string getNew = string.Empty;
+		int count = 0;
+		int a;
+		for  ( a = getText.Length - 1; a >= 0; a -- )
+		{
+			if ( count > 0 && count % 3 == 0 )
+			{
+				getNew += " ";
+			}
+			count++;
+			getNew += getText [ a ];
+		}
+
+		getText = string.Empty;
+
+		for  ( a = getNew.Length - 1; a >= 0; a -- )
+		{
+			getText += getNew [ a ];
+		}
+
+		return getText;
 	}
 	#endregion
 }

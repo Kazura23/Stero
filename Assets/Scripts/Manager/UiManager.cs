@@ -21,7 +21,9 @@ public class UiManager : ManagerParent
 	public GameObject PatternBackground;
 	public GameObject GlobalBack;
     public GameObject PostProcessGlobal;
-    public GameObject PostProcessMadness;
+	public GameObject PostProcessMadness;
+	public GameObject GetHubDir;
+
     public Image ArrowTuto;
 
 	public Text ScorePoints;
@@ -55,6 +57,8 @@ public class UiManager : ManagerParent
     public CanvasGroup rewardsKeys;
 
     private Tween shopTw1, shopTw2, shopTw3, shopTw4, arrowLeftTw, arrowRightTw;
+
+    public Tween madnessRedTw;
 
     Dictionary <MenuType, UiParent> AllMenu;
 	public MenuType menuOpen;
@@ -98,12 +102,14 @@ public class UiManager : ManagerParent
             {
                 OpenShop();
             }
-		}
 
+			GetHubDir.SetActive ( false );
+		}
     }
 
 	public void CloseThisMenu ( bool openNew = false )
 	{
+		GetHubDir.SetActive ( true );
 
 		UiParent thisUi;
 
@@ -500,8 +506,53 @@ public class UiManager : ManagerParent
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
     }
 
+    public void MadnessRedStart()
+    {
 
-    public void ScorePlus(int number, Color rankColor, int currIndex)
+        Debug.Log("MadnessRed Start");
+        madnessRedTw = null;/*
+        madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
+            RedScreen.DOFade(0, .2f);
+        }).SetLoops(-1,LoopType.Restart);*/
+
+        RedScreen.GetComponents<RainbowColor>()[0].enabled = true;
+
+    }
+
+    public void MadnessRedEnd()
+    {
+
+        Debug.Log("MadnessRed Stop");
+
+        /*
+        madnessRedTw.Kill(true);
+        RedScreen.DOFade(0f, .05f);*/
+
+        RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+        RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
+    }
+
+    public void MadnessGreenStart()
+    {
+
+        Debug.Log("MadnessRed Start");
+        madnessRedTw = null;/*
+        madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
+            RedScreen.DOFade(0, .2f);
+        }).SetLoops(-1,LoopType.Restart);*/
+
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = true;
+
+    }
+
+    public void MadnessGreenEnd()
+    {
+
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+        RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
+    }
+
+    public void ScorePlus(int number, Color rankColor, int currIndex, string type)
     {
 
         float randomPos = UnityEngine.Random.Range(-600, 600);
@@ -514,8 +565,10 @@ public class UiManager : ManagerParent
         AllPlayerPrefs.scoreWhithoutDistance += number;
 
 
+
+
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
-        scoretxt.text = "+ " + number;
+        scoretxt.text = "+ " + number + "\n" + type;
         scoretxt.transform.localPosition = new Vector2(randomPos, randomRot);
 
         if (currIndex == 6)
@@ -710,12 +763,12 @@ public class UiManager : ManagerParent
 		if ( ExtraHearts [ 0 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 0 ];
-			getCurrHeat.transform.localPosition = new Vector3 (105, -29.5f,0);
+			getCurrHeat.transform.localPosition = new Vector3 (105, -45,0);
 		}
 		else if ( ExtraHearts [ 1 ].enabled == false )
 		{
 			getCurrHeat = ExtraHearts [ 1 ];
-			getCurrHeat.transform.localPosition = new Vector3 (195,-29.9f);
+			getCurrHeat.transform.localPosition = new Vector3 (195,-45f);
 		}
 		else
 		{

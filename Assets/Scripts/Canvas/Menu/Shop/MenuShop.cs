@@ -180,11 +180,19 @@ public class MenuShop : UiParent
             GlobalManager.GameCont.canOpenShop = false;
             base.OpenThis(GetTok);
 
-            GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
-            GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
+			GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
 
+			GlobalManager.Ui.SlowMotion.transform.parent.SetParent(transform);
+			GlobalManager.Ui.BonusLife.transform.parent.SetParent(transform);
+
+			CanInput = false;
             //GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 0);
-            GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
+			GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .7f).OnComplete( ()=>
+			{
+				CanInput = true;
+			});
 
             GlobalManager.Ui.OpenShop();
 
@@ -205,6 +213,10 @@ public class MenuShop : UiParent
 	{
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
+
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
 
         GlobalManager.Ui.CloseShop();
 
@@ -264,7 +276,7 @@ public class MenuShop : UiParent
         backgroundColor.transform.SetParent(currItemSeled.transform.parent.parent);
         UnlockObject.transform.SetParent(currItemSeled.transform.parent.parent);
         
-        currItemSeled.GetComponentsInChildren<Text>()[2].text = "SOLD!";
+        currItemSeled.GetComponentsInChildren<Text>()[2].text = "EQUIPPED!";
 
         CanInput = false;
 
@@ -490,6 +502,18 @@ public class MenuShop : UiParent
 		{
 			if ( currCatSeled.NameCat == "ABILITIES" )
 			{
+				if ( GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ) )
+				{
+					GlobalManager.Ui.SlowMotion.GetComponent<CanvasGroup> ( ).DOFade ( 1, 0.1f );
+				}
+				else
+				{
+					GlobalManager.Ui.SlowMotion.gameObject.SetActive ( true );
+				}
+
+				GlobalManager.Ui.SlowMotion.color = new Color ( 1, 1, 1, 1 );
+				GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
 			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
@@ -597,6 +621,7 @@ public class MenuShop : UiParent
 	void ChangeToItem ( bool goItem )
 	{
         CatShop thisShop = currCatSeled;
+		CanInput = false;
 
         if ( goItem && catCurrSelected ) // Changement de cat a item
 		{
@@ -651,6 +676,7 @@ public class MenuShop : UiParent
 				}
 
 				NewItemSelect ( currItemSeled, true );
+				CanInput = true;
             });
         }
 		else if ( !goItem && !catCurrSelected ) // Changement de item a cat
@@ -662,7 +688,7 @@ public class MenuShop : UiParent
     void ChangeToCat()
     {
         CatShop thisShop = currCatSeled;
-
+		CanInput = false;
         //Debug.Log(thisShop.transform.GetChild(0));
 
         iconCategory.DOFade(0, .05f);
@@ -695,6 +721,7 @@ public class MenuShop : UiParent
             iconCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 160, 0);
             textCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 75, 0);
             barCategory.transform.DOMoveY(thisShop.GetComponent<Image>().transform.position.y + 75, 0);
+			CanInput = true;
         });
 
         //On remet les molécules à leur couleur initiale
