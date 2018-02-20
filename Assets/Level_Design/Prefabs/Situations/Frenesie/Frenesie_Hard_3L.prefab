@@ -258,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4325360013207982}
   m_Layer: 0
-  m_Name: Reset_3L_ChangePlayerNbLine
+  m_Name: ChangePlayerNbLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,23 +564,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
---- !u!1 &1402639223460282
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4523167006066898}
-  - component: {fileID: 65229607153567562}
-  - component: {fileID: 114358653899338960}
-  m_Layer: 0
-  m_Name: ChangePlayerNbLine (19)
-  m_TagString: DebutFinChunk
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1411720039520184
 GameObject:
   m_ObjectHideFlags: 1
@@ -790,23 +773,6 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!1 &1495652840228550
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4213925710026486}
-  - component: {fileID: 65748497635030514}
-  - component: {fileID: 114280753795749292}
-  m_Layer: 0
-  m_Name: ChangePlayerNbLine (8)
-  m_TagString: DebutFinChunk
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1513606530685228
 GameObject:
@@ -1572,19 +1538,6 @@ Transform:
   m_Father: {fileID: 4954249219515296}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4213925710026486
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495652840228550}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 3}
-  m_Children: []
-  m_Father: {fileID: 4325360013207982}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4231018948936624
 Transform:
   m_ObjectHideFlags: 1
@@ -1673,9 +1626,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4213925710026486}
   - {fileID: 4829525850822922}
-  - {fileID: 4523167006066898}
   m_Father: {fileID: 4954249219515296}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1891,19 +1842,6 @@ Transform:
   m_Father: {fileID: 4581487469752258}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!4 &4523167006066898
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402639223460282}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 3}
-  m_Children: []
-  m_Father: {fileID: 4325360013207982}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4526994516976802
 Transform:
   m_ObjectHideFlags: 1
@@ -2106,7 +2044,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 4325360013207982}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4835950237330878
 Transform:
@@ -4411,9 +4349,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64026926908066642
@@ -4425,9 +4363,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64050615445868590
@@ -4439,9 +4377,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
 --- !u!64 &64117985705678886
@@ -4453,9 +4391,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64187359952779678
@@ -4467,9 +4405,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64197436995476588
@@ -4481,9 +4419,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
 --- !u!64 &64222405541298404
@@ -4495,9 +4433,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64254479723091758
@@ -4509,9 +4447,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300004, guid: d557ab4a381fb044aa9e3ccc9981b24e, type: 3}
 --- !u!64 &64292301700170748
@@ -4523,9 +4461,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
 --- !u!64 &64355323985886984
@@ -4537,9 +4475,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64563757468354818
@@ -4551,9 +4489,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64607108415433666
@@ -4565,9 +4503,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64616464278565242
@@ -4579,9 +4517,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64619959939873210
@@ -4593,9 +4531,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64686925678113960
@@ -4607,9 +4545,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64697702462943202
@@ -4621,9 +4559,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64704727876545058
@@ -4635,9 +4573,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64769757247235296
@@ -4649,9 +4587,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
 --- !u!64 &64847266104486580
@@ -4663,9 +4601,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!64 &64850583648944802
@@ -4677,9 +4615,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 0
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300014, guid: 6c823a569ab4348479597ed4693bc618, type: 3}
 --- !u!64 &64980132275403170
@@ -4691,9 +4629,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Convex: 1
-  m_InflateMesh: 0
+  m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e08833750a698f34fb5a142001988dee, type: 3}
 --- !u!65 &65029693958563560
@@ -4804,18 +4742,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0022973, y: 1.1089991, z: 0.97957397}
   m_Center: {x: -0.12167601, y: 0.5464975, z: 0.000112921}
---- !u!65 &65229607153567562
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402639223460282}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6, y: 6, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65286533759233592
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -4948,18 +4874,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0022973, y: 1.1089991, z: 0.97957397}
   m_Center: {x: -0.12167601, y: 0.5464975, z: 0.000112921}
---- !u!65 &65748497635030514
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495652840228550}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6, y: 6, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65839840881069266
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -5442,6 +5356,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114070542154864068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5537,6 +5452,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114140076542655902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5552,6 +5468,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114146971918839144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5567,6 +5484,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114147731595298662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5582,6 +5500,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114159261935068992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5597,6 +5516,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114159991055175860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5672,6 +5592,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114228775368602720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5707,6 +5628,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114235469744327262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5742,6 +5664,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114268763059656336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5782,20 +5705,6 @@ MonoBehaviour:
   point: 25
   BonusMultTimer: 1
   useGravity: 1
---- !u!114 &114280753795749292
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1495652840228550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c5eb305b96f1ba428daacde6ecba2b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NbrLineLeft: 0
-  NbrLineRigh: 2
-  CurrLine: -1
 --- !u!114 &114289706481016518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5811,6 +5720,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114299641899842134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5846,6 +5756,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114312279301829266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5861,6 +5772,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114323266333194564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5901,20 +5813,6 @@ MonoBehaviour:
   point: 25
   BonusMultTimer: 1
   useGravity: 1
---- !u!114 &114358653899338960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402639223460282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c5eb305b96f1ba428daacde6ecba2b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NbrLineLeft: 2
-  NbrLineRigh: 0
-  CurrLine: 1
 --- !u!114 &114366420027564946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5930,6 +5828,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114409545881788158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5945,6 +5844,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114412225698109426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5980,6 +5880,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114437791056167578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6035,6 +5936,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114468189323077778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6050,6 +5952,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114474196382130696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6114,6 +6017,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114566963629213410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6149,6 +6053,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114675789944054340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6164,6 +6069,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114676593979806956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6179,6 +6085,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114690605313002202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6214,6 +6121,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114691477380435924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6229,6 +6137,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114755759119010790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6264,6 +6173,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114770159155129410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6279,6 +6189,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114781042678013794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6294,6 +6205,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114797317391111758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6369,6 +6281,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114847425866903096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6404,6 +6317,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114879155253131502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6439,6 +6353,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114925171985640166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6454,6 +6369,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114935833808599450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6489,6 +6405,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114940625831488926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6504,6 +6421,7 @@ MonoBehaviour:
   DelayDestruc: 0.1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114945967330601748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6519,6 +6437,7 @@ MonoBehaviour:
   DelayDestruc: 1
   nbPunchDestroy: 5
   DeadByPlayer: 1
+  UseThis: 1
 --- !u!114 &114960947010269650
 MonoBehaviour:
   m_ObjectHideFlags: 1
