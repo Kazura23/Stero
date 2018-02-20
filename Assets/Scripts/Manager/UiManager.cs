@@ -206,12 +206,18 @@ public class UiManager : ManagerParent
             {
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
-				thisCam.DOFieldOfView(4, .25f);
+
+                if ( !GlobalManager.GameCont.LaunchTuto )
+                {
+                    thisCam.DOFieldOfView(4, .25f); 
+				    thisCam.DOFieldOfView(100, .15f);
+                }
+				
+
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
                 });
-				thisCam.DOFieldOfView(100, .15f);
 
                 DOVirtual.DelayedCall(.25f, () => { 
                     thisCam.transform.DOKill(true);
@@ -224,17 +230,22 @@ public class UiManager : ManagerParent
                     thisCam.GetComponent<RainbowRotate>().time = .4f;
                     thisCam.GetComponent<RainbowMove>().time = .2f;
                     thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                DOVirtual.DelayedCall(.75f,()=>{
 
-                    thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
-                    // thisCam.GetComponent<RainbowRotate>().reStart();
-                });
-                    DOVirtual.DelayedCall(2f, () =>
-                    {
-						thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
-                        });
+                    DOVirtual.DelayedCall(.75f,()=>{
+
+                        thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                        thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
+                        // thisCam.GetComponent<RainbowRotate>().reStart();
                     });
+
+                    if ( !GlobalManager.GameCont.LaunchTuto )
+                    {
+                        DOVirtual.DelayedCall(2f, () =>
+                        {
+                            thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
+                            });
+                        });
+                    }
                 });
             });
         });
@@ -379,10 +390,15 @@ public class UiManager : ManagerParent
             Time.fixedDeltaTime = .02F;
             ScreenShake.Singleton.ShakeGameOver();
         //});
+        RedScreen.DOKill ( );
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
             RedScreen.DOFade(0, .0f);
             MadnessRedEnd();
             MadnessGreenEnd();
+
+			RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+			RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+
         });
 
         int rdmValue = UnityEngine.Random.Range(0, 4);

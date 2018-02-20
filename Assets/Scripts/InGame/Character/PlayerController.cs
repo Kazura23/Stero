@@ -358,6 +358,17 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPosDo ( )
 	{
+		GlobalManager.Ui.RedScreen.DOKill ( );
+		GlobalManager.Ui.RedScreen.DOFade(.7f, .25f).OnComplete(() => {
+			GlobalManager.Ui.RedScreen.DOFade(0, .0f);
+			GlobalManager.Ui.MadnessRedEnd();
+			GlobalManager.Ui.MadnessGreenEnd();
+
+			GlobalManager.Ui.RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+			GlobalManager.Ui.RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+
+		});
+
 		StopPlayer = true;
 
 		GlobalManager.GameCont.LaunchTuto = false;
@@ -840,7 +851,6 @@ public class PlayerController : MonoBehaviour
             {
                 GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
-                GlobalManager.Ui.MadnessGreenEnd();
                 timerFight.value -= ( getTime / DelayTimerOnMadness ) * 0.25f;
 			}
 			else
@@ -859,6 +869,7 @@ public class PlayerController : MonoBehaviour
 
                 if ( InMadness )
 				{
+                	GlobalManager.Ui.MadnessGreenEnd();
 					timerFight.DOValue ( 0.5f, 0.1f );
 					stopMadness ( );
                 }
@@ -867,7 +878,6 @@ public class PlayerController : MonoBehaviour
 		else if ( !lastTimer )
 		{
             GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
-            GlobalManager.Ui.MadnessGreenEnd();
             timerFight.value -= ( getTime / DelayTimerStandard ) * 0.5f;
 
 			if ( timerFight.value < 0.25f )
