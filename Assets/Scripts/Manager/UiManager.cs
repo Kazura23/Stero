@@ -197,6 +197,18 @@ public class UiManager : ManagerParent
 			return;
         }*/
 
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+			thisCam.GetComponent<RainbowRotate>().time = .4f;
+			thisCam.GetComponent<RainbowMove>().time = .2f;
+
+			thisCam.GetComponent<RainbowRotate>().enabled = true; 
+			thisCam.GetComponent<RainbowMove>().enabled = true;
+
+			return;
+		}
+
         Time.timeScale = .05f;
 		float saveFov = thisCam.fieldOfView;
 
@@ -207,12 +219,8 @@ public class UiManager : ManagerParent
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
 
-                if ( !GlobalManager.GameCont.LaunchTuto )
-                {
-                    thisCam.DOFieldOfView(4, .25f); 
-				    thisCam.DOFieldOfView(100, .15f);
-                }
-				
+                thisCam.DOFieldOfView(4, .25f); 
+			    thisCam.DOFieldOfView(100, .15f);
 
                 DOVirtual.DelayedCall(1f, () =>
                 {
@@ -238,14 +246,11 @@ public class UiManager : ManagerParent
                         // thisCam.GetComponent<RainbowRotate>().reStart();
                     });
 
-                    if ( !GlobalManager.GameCont.LaunchTuto )
+                    DOVirtual.DelayedCall(2f, () =>
                     {
-                        DOVirtual.DelayedCall(2f, () =>
-                        {
-                            thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
-                            });
+                        thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
                         });
-                    }
+                    });
                 });
             });
         });

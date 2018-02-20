@@ -141,21 +141,23 @@ public class GameController : ManagerParent
             corouSucess = StartCoroutine(ListExecutionReward());
         }
         
-        BloomModel.Settings thisBloom = postProfile.bloom.settings;
+		if ( GameStarted )
+		{
+			BloomModel.Settings thisBloom = postProfile.bloom.settings;
+			ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
 
-        ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+			thisBloom.bloom.intensity = currentValue;
+			thisChrom.intensity = chromValue;
 
-        thisBloom.bloom.intensity = currentValue;
+			postProfile.bloom.settings = thisBloom;
+			postProfile.chromaticAberration.settings = thisChrom;
+			postMadnessProfile.weight = weightValue;
+		}
+        
 
-        thisChrom.intensity = chromValue;
-
-        postProfile.bloom.settings = thisBloom;
-
-        postProfile.chromaticAberration.settings = thisChrom;
         //float thisMadnessWeight = postMadnessProfile.weight;
 
         //thisMadnessWeight = weightValue;
-        postMadnessProfile.weight = weightValue;
 
 		if ( inputPlayer.GetAxis ( "CoupSimple" ) == 0 )
 		{
@@ -340,10 +342,10 @@ public class GameController : ManagerParent
 			}
 		}
 		else if (isReady && inputPlayer.GetAxis("CoupSimple") == 1 && coupSimpl && !restartGame && isStay )
-	        {
-			    coupSimpl = false;
-	            Player.GetComponent<PlayerController>().GetPunchIntro();
-	        }
+        {
+		    coupSimpl = false;
+            Player.GetComponent<PlayerController>().GetPunchIntro();
+        }
         else
         {
             RewardMenu();
@@ -412,20 +414,6 @@ public class GameController : ManagerParent
     
 	public void StartGame ( )
 	{
-		DOTween.Kill ( chromValue );
-
-		chromValue = 0;
-		currentValue = 0;
-
-		BloomModel.Settings thisBloom = postProfile.bloom.settings;
-		ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
-
-		thisBloom.bloom.intensity = 0;
-		thisChrom.intensity = 0;
-
-		postProfile.bloom.settings = thisBloom;
-		postProfile.chromaticAberration.settings = thisChrom;
-
 		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
 		getRank.fillAmount = 1;
         AllPlayerPrefs.ATimerRun = 0;
@@ -501,6 +489,21 @@ public class GameController : ManagerParent
 			StopCoroutine ( getCurWait );
 		}
 
+		DOTween.Kill ( chromValue );
+
+		chromValue = 0;
+		currentValue = 0;
+
+		BloomModel.Settings thisBloom = postProfile.bloom.settings;
+		ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+
+		thisBloom.bloom.intensity = 0;
+		thisChrom.intensity = 0;
+
+		postProfile.bloom.settings = thisBloom;
+		postProfile.chromaticAberration.settings = thisChrom;
+		postMadnessProfile.weight = weightValue;
+
 		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( false );
 		GlobalManager.Ui.MotionSlider.gameObject.SetActive ( false );
 		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( false );
@@ -535,7 +538,6 @@ public class GameController : ManagerParent
 			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
 		}
-
 
 		GameStarted = true;
 		checkStart = false;
