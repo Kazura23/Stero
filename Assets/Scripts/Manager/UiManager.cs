@@ -337,6 +337,7 @@ public class UiManager : ManagerParent
 
 		float saveFov = thisCam.fieldOfView;
 		thisCam.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
+        RedScreen.DOColor(new Color32 (0xCA, 0x23, 0x23, 0x21),0);
 		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
 			RedScreen.DOFade(0, .12f);
 			thisCam.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
@@ -367,6 +368,9 @@ public class UiManager : ManagerParent
     {
 
         //Debug.Log("ShakeOver");
+        MadnessGreenEnd();
+        MadnessRedEnd();
+
         VibrationManager.Singleton.GameOverVibration();
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
