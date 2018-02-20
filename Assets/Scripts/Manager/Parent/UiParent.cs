@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class UiParent : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public abstract class UiParent : MonoBehaviour
 	{
 		get;
 	}
+
+	public Color BackGroundColor;
 	#endregion
 
 	#region Mono
@@ -15,12 +18,17 @@ public abstract class UiParent : MonoBehaviour
 	#region Public Methods
 	public void Initialize()
 	{
+		if ( BackGroundColor == new Color ( ) )
+		{
+			BackGroundColor = Color.white;
+		}
 		InitializeUi();
 		CloseThis ( );
 	}
 
 	public virtual void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
+		GlobalManager.Ui.GlobalBack.transform.GetChild ( 0 ).GetComponent<Image> ( ).color = BackGroundColor;
 		gameObject.SetActive ( true );
 	}
 
