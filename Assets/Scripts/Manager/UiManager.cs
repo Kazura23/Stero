@@ -365,6 +365,7 @@ public class UiManager : ManagerParent
 
     public void GameOver()
     {
+
         //Debug.Log("ShakeOver");
         VibrationManager.Singleton.GameOverVibration();
         //Time.timeScale = 0f;
@@ -376,6 +377,8 @@ public class UiManager : ManagerParent
         //});
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
             RedScreen.DOFade(0, .0f);
+            MadnessRedEnd();
+            MadnessGreenEnd();
         });
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
@@ -509,7 +512,7 @@ public class UiManager : ManagerParent
     public void MadnessRedStart()
     {
 
-        Debug.Log("MadnessRed Start");
+        //Debug.Log("MadnessRed Start");
         madnessRedTw = null;/*
         madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
             RedScreen.DOFade(0, .2f);
@@ -522,7 +525,7 @@ public class UiManager : ManagerParent
     public void MadnessRedEnd()
     {
 
-        Debug.Log("MadnessRed Stop");
+        //Debug.Log("MadnessRed Stop");
 
         /*
         madnessRedTw.Kill(true);
@@ -535,7 +538,7 @@ public class UiManager : ManagerParent
     public void MadnessGreenStart()
     {
 
-        Debug.Log("MadnessRed Start");
+        //Debug.Log("MadnessRed Start");
         madnessRedTw = null;/*
         madnessRedTw = RedScreen.DOFade(.3f, .2f).OnComplete(() => {
             RedScreen.DOFade(0, .2f);
@@ -548,7 +551,7 @@ public class UiManager : ManagerParent
     public void MadnessGreenEnd()
     {
 
-        RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+        //RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
         RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 
@@ -582,9 +585,9 @@ public class UiManager : ManagerParent
         }
 
 
-        scoretxt.transform.DOScale(2, 0);
-        scoretxt.transform.DOScale(1, .1f).OnComplete(() => {
-            scoretxt.transform.DOPunchScale((Vector3.one * .6f), .25f, 15, 1).OnComplete(() => {
+        scoretxt.transform.DOScale(1.4f, 0);
+        scoretxt.transform.DOScale(.55f, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .45f), .25f, 15, 1).OnComplete(() => {
                 scoretxt.transform.DOScale(0, .5f);
                 scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
             });
