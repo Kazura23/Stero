@@ -571,7 +571,7 @@ public class UiManager : ManagerParent
     public void MadnessGreenEnd()
     {
 
-        //RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
         RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 

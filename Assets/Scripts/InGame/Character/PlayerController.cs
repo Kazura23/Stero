@@ -358,16 +358,8 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPosDo ( )
 	{
-		GlobalManager.Ui.RedScreen.DOKill ( );
-		GlobalManager.Ui.RedScreen.DOFade(.7f, .25f).OnComplete(() => {
-			GlobalManager.Ui.RedScreen.DOFade(0, .0f);
-			GlobalManager.Ui.MadnessRedEnd();
-			GlobalManager.Ui.MadnessGreenEnd();
-
-			GlobalManager.Ui.RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
-			GlobalManager.Ui.RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
-
-		});
+		GlobalManager.Ui.MadnessRedEnd();
+		GlobalManager.Ui.MadnessGreenEnd();
 
 		StopPlayer = true;
 
@@ -861,7 +853,7 @@ public class PlayerController : MonoBehaviour
 
 			if ( timerFight.value < 0.75f )
 			{
-
+				GlobalManager.Ui.MadnessGreenEnd();
 				secureTimer = false;
 				lastTimer = false;
 
@@ -869,7 +861,6 @@ public class PlayerController : MonoBehaviour
 
                 if ( InMadness )
 				{
-                	GlobalManager.Ui.MadnessGreenEnd();
 					timerFight.DOValue ( 0.5f, 0.1f );
 					stopMadness ( );
                 }

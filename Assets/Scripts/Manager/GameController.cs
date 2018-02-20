@@ -412,7 +412,21 @@ public class GameController : ManagerParent
     
 	public void StartGame ( )
 	{
-        //GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
+		DOTween.Kill ( chromValue );
+
+		chromValue = 0;
+		currentValue = 0;
+
+		BloomModel.Settings thisBloom = postProfile.bloom.settings;
+		ChromaticAberrationModel.Settings thisChrom = postProfile.chromaticAberration.settings;
+
+		thisBloom.bloom.intensity = 0;
+		thisChrom.intensity = 0;
+
+		postProfile.bloom.settings = thisBloom;
+		postProfile.chromaticAberration.settings = thisChrom;
+
+		//GameObject thisObj = ( GameObject ) Instantiate ( BarrierIntro );
 		getRank.fillAmount = 1;
         AllPlayerPrefs.ATimerRun = 0;
         AllPlayerPrefs.ANbRun++;
