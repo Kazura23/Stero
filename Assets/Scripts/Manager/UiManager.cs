@@ -382,7 +382,6 @@ public class UiManager : ManagerParent
 
     public void GameOver()
     {
-
 		GlobalManager.GameCont.soundFootSteps.Kill ( );
         //Debug.Log("ShakeOver");
         MadnessGreenEnd();

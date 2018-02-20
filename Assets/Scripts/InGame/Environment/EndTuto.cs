@@ -13,7 +13,7 @@ public class EndTuto : MonoBehaviour
 		{
 			GlobalManager.GameCont.thisCam.fieldOfView = Constants.DefFov;
 			GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).ResetPosDo ( );
-			Destroy ( DestroyThis );
+			Destroy ( DestroyThis, 0.58f );
 		}
 	}
 }

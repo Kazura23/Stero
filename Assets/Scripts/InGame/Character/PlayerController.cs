@@ -358,8 +358,10 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPosDo ( )
 	{
+		GlobalManager.Ui.DashSpeedEffect ( false );
 		GlobalManager.Ui.MadnessRedEnd();
 		GlobalManager.Ui.MadnessGreenEnd();
+
 
 		StopPlayer = true;
 
@@ -368,6 +370,7 @@ public class PlayerController : MonoBehaviour
 
 		thisCam.GetComponent<RainbowMove> ( ).enabled = false;
 		thisCam.GetComponent<RainbowRotate> ( ).enabled = false;
+		thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = false;
 
 		thisCam.transform.DOLocalRotateQuaternion ( startRotRR, 0.5f );
 		thisCam.transform.DOLocalMove ( startPosRM, 0.5f );
@@ -428,13 +431,11 @@ public class PlayerController : MonoBehaviour
 
 		StopPlayer = true;
 
-		thisCam.GetComponent<RainbowMove>().enabled = false;
-		thisCam.GetComponent<RainbowRotate>().enabled = false;
+
 
 		GameOverTok thisTok = new GameOverTok ( );
 		thisTok.totalDist = AllPlayerPrefs.finalScore + totalDis;
 
-		GlobalManager.Ui.GameOver();
 		stopMadness ( );
 
         DOVirtual.DelayedCall(.2f, () =>
@@ -446,6 +447,10 @@ public class PlayerController : MonoBehaviour
         playerDead = true;
 		thisCam.fieldOfView = Constants.DefFov;
 
+		thisCam.GetComponent<RainbowMove>().enabled = false;
+		thisCam.GetComponent<RainbowRotate>().enabled = false;
+		thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = false;
+
         GlobalManager.GameCont.soundFootSteps.Kill();
 
         DOVirtual.DelayedCall(1f, () =>
@@ -456,6 +461,7 @@ public class PlayerController : MonoBehaviour
 			thisCam.cullingMask = getCull;
 			thisCam.backgroundColor = thisColor;
         });
+		GlobalManager.Ui.GameOver();
     }
 
     public void AddSmoothCurve(float p_value)
@@ -767,7 +773,6 @@ public class PlayerController : MonoBehaviour
 			Time.timeScale = 1;
 			Dash = true;
 			canUseDash = false;
-			GlobalManager.Ui.DashSpeedEffect ( true );
 		}
 		else if ( inputPlayer.GetAxis ( "Dash" ) == 0 )
 		{
