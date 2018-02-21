@@ -12,6 +12,7 @@ public static class AllPlayerPrefs
     public static float distance;
     public static ListData saveData;
     public static bool relance;
+    public static Transform ListScoresUI;
 
     //var and function analytics
     public static bool canSendAnalytics;
