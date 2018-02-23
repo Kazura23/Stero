@@ -60,6 +60,8 @@ public class GameController : ManagerParent
 	public PostProcessingProfile postProfile;
     public PostProcessVolume postMadnessProfile;
 
+	[HideInInspector] 
+	public bool PlayerCollider = false; 
 	[HideInInspector]
 	public List<Text> GetBonusText;
 	public Transform ListScoreUI;
@@ -1364,7 +1366,7 @@ public class GameController : ManagerParent
 			LaunchTuto = false;
 		}
 
-        AllPlayerPrefs.ListScoresUI = ListScoresUi;
+		AllPlayerPrefs.ListScoreUI = ListScoresUi;
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
@@ -1589,9 +1591,9 @@ public class ListData
 
     public void PrintScoreUI()
     {
-        for (int i = 0; i < AllPlayerPrefs.ListScoresUI.childCount; i++)
+		for (int i = 0; i < AllPlayerPrefs.ListScoreUI.childCount; i++)
         {
-            AllPlayerPrefs.ListScoresUI.GetChild(i).GetChild(1).GetComponent<Text>().text = (i < listScore.Count ? listScore[i].finalScore : 0).ToString();
+			AllPlayerPrefs.ListScoreUI.GetChild(i).GetChild(1).GetComponent<Text>().text = (i < listScore.Count ? listScore[i].finalScore : 0).ToString();
         }
     }
 }
