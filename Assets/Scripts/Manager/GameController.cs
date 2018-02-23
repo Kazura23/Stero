@@ -214,7 +214,6 @@ public class GameController : ManagerParent
 				break;
 
 			case 2: //Start game
-
 				//Debug.Log("Start");
 				textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
@@ -230,6 +229,7 @@ public class GameController : ManagerParent
 
 					if ( !LaunchTuto )
 					{
+						Player.GetComponent<Animator>().enabled = true;
 						Animator getAnimator = Player.GetComponent<Animator> ( );
 						getAnimator.enabled = true;
 
