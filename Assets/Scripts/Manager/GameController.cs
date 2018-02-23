@@ -64,8 +64,8 @@ public class GameController : ManagerParent
 	public List<Text> GetBonusText;
 	public Transform ListScoreUI;
 
-	[HideInInspector]
-	public bool PlayerCollider = false;
+    public Transform ListScoresUi;
+
 	Player inputPlayer;
 	//Text textScore;
 
@@ -1348,6 +1348,7 @@ public class GameController : ManagerParent
 			LaunchTuto = false;
 		}
 
+        AllPlayerPrefs.ListScoresUI = ListScoresUi;
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
         musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
@@ -1363,7 +1364,7 @@ public class GameController : ManagerParent
         StaticRewardTarget.icon_sucess = icon_sucess;
         StaticRewardTarget.ListRewardEnAttente = new List<GameObject>();
         AllPlayerPrefs.saveData = SaveData.Load();
-		AllPlayerPrefs.saveData.PrintScoreUI ( );
+        AllPlayerPrefs.saveData.PrintScoreUI();
         StaticRewardTarget.listRewardTrans = transform.GetChild(0);
         LoadRewardInit();
 
@@ -1566,17 +1567,17 @@ public class ListData
             Tri_Insert();
             listScore.RemoveAt(listScore.Count - 1);
         }
-		PrintScoreUI ( );
+        PrintScoreUI();
         SaveData.Save(this);
     }
 
-	public void PrintScoreUI ( )
-	{
-		for ( int a = 0; a < AllPlayerPrefs.ListScoreUI.childCount; a++ )
-		{
-			AllPlayerPrefs.ListScoreUI.GetChild ( a ).GetChild ( 1 ).GetComponent<Text> ( ).text = ( a < listScore.Count ? listScore [ a ].finalScore : 0 ).ToString ( );
-		}
-	}
+    public void PrintScoreUI()
+    {
+        for (int i = 0; i < AllPlayerPrefs.ListScoresUI.childCount; i++)
+        {
+            AllPlayerPrefs.ListScoresUI.GetChild(i).GetChild(1).GetComponent<Text>().text = (i < listScore.Count ? listScore[i].finalScore : 0).ToString();
+        }
+    }
 }
 
 public static class StreamExtensions
