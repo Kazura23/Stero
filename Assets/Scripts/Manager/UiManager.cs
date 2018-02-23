@@ -192,10 +192,10 @@ public class UiManager : ManagerParent
 
     public void Intro()
     {
-		if ( GlobalManager.GameCont.LaunchTuto )
+		/*if ( GlobalManager.GameCont.LaunchTuto )
 		{
 			return;
-		}
+        }*/
 
         Time.timeScale = .05f;
 		float saveFov = thisCam.fieldOfView;
@@ -206,12 +206,18 @@ public class UiManager : ManagerParent
             {
                 Time.timeScale = 1f;
                 GlobalManager.GameCont.Intro = false;
-				thisCam.DOFieldOfView(4, .25f);
+
+                if ( !GlobalManager.GameCont.LaunchTuto )
+                {
+                    thisCam.DOFieldOfView(4, .25f); 
+				    thisCam.DOFieldOfView(100, .15f);
+                }
+				
+
                 DOVirtual.DelayedCall(1f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
                 });
-				thisCam.DOFieldOfView(100, .15f);
 
                 DOVirtual.DelayedCall(.25f, () => { 
                     thisCam.transform.DOKill(true);
@@ -224,17 +230,22 @@ public class UiManager : ManagerParent
                     thisCam.GetComponent<RainbowRotate>().time = .4f;
                     thisCam.GetComponent<RainbowMove>().time = .2f;
                     thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                DOVirtual.DelayedCall(.75f,()=>{
 
-                    thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
-                    thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
-                    // thisCam.GetComponent<RainbowRotate>().reStart();
-                });
-                    DOVirtual.DelayedCall(2f, () =>
-                    {
-						thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
-                        });
+                    DOVirtual.DelayedCall(.75f,()=>{
+
+                        thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+                        thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
+                        // thisCam.GetComponent<RainbowRotate>().reStart();
                     });
+
+                    if ( !GlobalManager.GameCont.LaunchTuto )
+                    {
+                        DOVirtual.DelayedCall(2f, () =>
+                        {
+                            thisCam.DOFieldOfView(saveFov, .25f).OnComplete(()=> {
+                            });
+                        });
+                    }
                 });
             });
         });
@@ -337,6 +348,7 @@ public class UiManager : ManagerParent
 
 		float saveFov = thisCam.fieldOfView;
 		thisCam.DOFieldOfView(25.5f, .16f);//.SetEase(Ease.InBounce);
+        RedScreen.DOColor(new Color32 (0xCA, 0x23, 0x23, 0x21),0);
 		RedScreen.DOFade(.4f, .16f).OnComplete(() => {
 			RedScreen.DOFade(0, .12f);
 			thisCam.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
@@ -366,7 +378,11 @@ public class UiManager : ManagerParent
     public void GameOver()
     {
 
+		GlobalManager.GameCont.soundFootSteps.Kill ( );
         //Debug.Log("ShakeOver");
+        MadnessGreenEnd();
+        MadnessRedEnd();
+
         VibrationManager.Singleton.GameOverVibration();
         //Time.timeScale = 0f;
         //Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -375,10 +391,15 @@ public class UiManager : ManagerParent
             Time.fixedDeltaTime = .02F;
             ScreenShake.Singleton.ShakeGameOver();
         //});
+        RedScreen.DOKill ( );
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
             RedScreen.DOFade(0, .0f);
             MadnessRedEnd();
             MadnessGreenEnd();
+
+			RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+			RedScreen.GetComponents<RainbowColor>()[0].enabled = false;
+
         });
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
@@ -551,7 +572,7 @@ public class UiManager : ManagerParent
     public void MadnessGreenEnd()
     {
 
-        //RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
+        RedScreen.GetComponents<RainbowColor>()[1].enabled = false;
         RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 

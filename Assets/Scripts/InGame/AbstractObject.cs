@@ -143,6 +143,10 @@ public class AbstractObject : MonoBehaviour
 	#region Public Methods
 	public void EventEnable ( Vector3 setPosition )
 	{
+		if ( GlobalManager.GameCont.LaunchTuto )
+		{
+			return;
+		}
 		gameObject.SetActive ( false );
 
 		Transform getPar = getTrans;
