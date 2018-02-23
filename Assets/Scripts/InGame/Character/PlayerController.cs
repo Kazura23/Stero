@@ -269,14 +269,8 @@ public class PlayerController : MonoBehaviour
         //Rewired.ReInput.mapping.GetKeyboardMapInstance(0, 0).GetElementMaps()[0];
         //inputPlayer.controllers.maps.GetMap(0).ReplaceElementMap(0, 0, Pole.Positive, KeyCode.A, ModifierKeyFlags.None);
 
-		GameObject getObj = ( GameObject ) Instantiate ( new GameObject ( ), pTrans );
-		getObj.transform.localPosition = Vector3.zero;
-		getObj.name = "pivot";
-		getObj.transform.localPosition = Vector3.zero;
 		thisCam = GlobalManager.GameCont.thisCam;
-		thisCam.transform.SetParent ( getObj.transform );
-		otherCam = thisCam.transform.Find ( "OtherCam" ).GetComponent<Camera> ( );
-		pivotTrans = getObj.transform;
+		pivotTrans = thisCam.transform.parent;
 
 		startRotRR = thisCam.transform.localRotation;
 		startPosRM = thisCam.transform.localPosition;
