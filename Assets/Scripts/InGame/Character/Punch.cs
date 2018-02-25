@@ -8,8 +8,8 @@ public class Punch : MonoBehaviour {
     public float puissanceOnde = 15;
     private PlayerController control;
 	Transform getPlayer;
-   
-    private int numTechnic;
+	[HideInInspector]
+	public int numTechnic;
 	[Tooltip ("X = force droite / gauche - Y = force haut / bas - Z = force Devant / derriere" )]
 	public float projection_basic = 50;
 	public float projection_double = 100;

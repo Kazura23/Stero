@@ -101,6 +101,7 @@ public class AbstractObject : MonoBehaviour
 			Destroy ( gameObject );
 			return;
 		}
+		newPar = false;
 		/*string getName = gameObject.name;
 		foreach (Transform getTran in getTrans.GetComponentsInChildren<Transform>())
 		{
@@ -250,12 +251,14 @@ public class AbstractObject : MonoBehaviour
 		}
 	}
 
-	void startDeadBall ( ) 
+	bool newPar = false;
+	public void startDeadBall ( bool pass = false , Transform getPar = null ) 
 	{ 
 		float getDist = Vector3.Distance ( playerTrans.position, getTrans.position );
 		
-		if ( getDist < distForDB ) 
+		if ( getDist < distForDB && ( playerCont.CurrNbrBall < 20 || gameObject.tag == Constants._EnnemisTag ) || pass ) 
 		{
+			playerCont.CurrNbrBall++;
 			if ( GetComponent<canBeDest> ( ) )
 			{
 				GetComponent<canBeDest> ( ).UseThis = false;
@@ -269,29 +272,60 @@ public class AbstractObject : MonoBehaviour
 			meshRigid.useGravity = false;
 			meshRigid.velocity = Vector3.zero;
 
-			meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( Random.Range ( -0.6f, 0.7f ), Random.Range ( -0.6f, 0.7f ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
+			if ( !pass )
+			{
+				meshRigid.transform.DOMove ( playerTrans.position + new Vector3 ( Random.Range ( -0.6f, 0.7f ), Random.Range ( -0.6f, 0.7f ), Random.Range ( 3, 6 ) ), Random.Range ( getConst * 0.25f, getConst  ), true ).OnComplete(() => {
 
+					foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody>())
+					{
+						thisRig.constraints = RigidbodyConstraints.FreezePosition;
+						thisRig.useGravity = false;
+
+						if ( thisRig.GetComponent<Collider>())
+						{
+							thisRig.GetComponent<Collider>().enabled = false;
+						}
+					}
+
+					System.Action <DeadBallParent> SetParent = delegate ( DeadBallParent thisEvnt ) 
+					{ 
+						if ( newPar )
+						{
+							return;
+						}
+						newPar = true;
+						foreach(Collider thisColl in gameObject.GetComponentsInChildren<Collider>())
+						{
+							thisColl.enabled = false;
+						}
+
+						getTrans.SetParent ( thisEvnt.NewParent );
+						getTrans.localPosition = new Vector3 ( Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ) );
+						getTrans.localRotation = new Quaternion ( Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), 0 );
+						meshRigid.transform.position = getTrans.position;
+					}; 
+
+					GlobalManager.Event.Register ( SetParent ); 
+				});
+			}
+			else
+			{
 				foreach ( Rigidbody thisRig in getTrans.GetComponentsInChildren<Rigidbody>())
 				{
 					thisRig.constraints = RigidbodyConstraints.FreezePosition;
 					thisRig.useGravity = false;
-				}
 
-				System.Action <DeadBallParent> SetParent = delegate ( DeadBallParent thisEvnt ) 
-				{ 
-					foreach(Collider thisColl in gameObject.GetComponentsInChildren<Collider>())
+					foreach(Collider thisColl in thisRig.GetComponentsInChildren<Collider>())
 					{
 						thisColl.enabled = false;
 					}
+				}
 
-					getTrans.SetParent ( thisEvnt.NewParent );
-					getTrans.localPosition = new Vector3 ( Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ) );
-					getTrans.localRotation = new Quaternion ( Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), 0 );
-					meshRigid.transform.position = getTrans.position;
-				}; 
-
-				GlobalManager.Event.Register ( SetParent ); 
-			});
+				getTrans.SetParent ( getPar );
+				getTrans.DOLocalMove ( new Vector3 ( Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ), Random.Range ( -0.25f, 0.3f ) ), 0.5f );
+				getTrans.DOLocalRotateQuaternion ( new Quaternion ( Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), Random.Range ( 0, 1.0f ), 0 ), 0.5f );
+				meshRigid.transform.position = getTrans.position;
+			}
 
 			meshRigid.transform.DOScale ( new Vector3 ( Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ), Random.Range ( 0.7f, 1 ) ), Random.Range ( getConst * 0.25f, getConst ) );
 		} 
