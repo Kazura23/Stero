@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool blockChangeLine = false;
 
+	[HideInInspector]
+	public int CurrNbrBall = 0;
 	Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
@@ -270,6 +272,7 @@ public class PlayerController : MonoBehaviour
         //inputPlayer.controllers.maps.GetMap(0).ReplaceElementMap(0, 0, Pole.Positive, KeyCode.A, ModifierKeyFlags.None);
 
 		thisCam = GlobalManager.GameCont.thisCam;
+		otherCam = thisCam.transform.Find ( "OtherCam" ).GetComponent<Camera> ( ); 
 		pivotTrans = thisCam.transform.parent;
 
 		startRotRR = thisCam.transform.localRotation;
@@ -1131,13 +1134,13 @@ public class PlayerController : MonoBehaviour
 		if ( DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null )
 		{
 			GameObject currObj = ( GameObject ) Instantiate ( DeadBallPref );
-			currObj.transform.position = pTrans.position + pTrans.forward * 8;
+			currObj.transform.position = pTrans.position + pTrans.forward * 12;
 
 			var e = new DeadBallParent ( );
 			e.NewParent = currObj.transform;
 			e.Raise ( );
 		}
-
+		CurrNbrBall = 0;
 		pRig.constraints = thisConst;
 		StopPlayer = false;
         StaticRewardTarget.SSizeMagicSphere = 0;

@@ -68,10 +68,10 @@ public class GlobalManager : MonoBehaviour
 			mainManagerInstance = this;
 			InitializeManagers ( );
 		}       
-		GetDate ( );
+		//GetDate ( );
 	}
 
-	void GetDate ( )
+	/*void GetDate ( )
 	{
 		try{
 			var myHttpRequest = (HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
@@ -94,7 +94,7 @@ public class GlobalManager : MonoBehaviour
 			Application.Quit ( );
 		}
 
-	}
+	}*/
 	#endregion
 
 	#region Public Methods

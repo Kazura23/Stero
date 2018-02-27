@@ -21,12 +21,13 @@ GameObject:
   - component: {fileID: 4698226296121934}
   - component: {fileID: 33784957927546818}
   - component: {fileID: 135623189695892140}
+  - component: {fileID: 135014763470244736}
   - component: {fileID: 23759596556162220}
   - component: {fileID: 54431814193270134}
   - component: {fileID: 114736148412486002}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: DeadBall
-  m_TagString: ObjDead
+  m_TagString: deadball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +51,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1378874648793982}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -111,16 +112,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a88a5a2bb8efc44d8719186a1adc986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceProp: 100
-  DelayDestruc: 5
-  Acceleration: 150
---- !u!135 &135623189695892140
+  StartForce: 10
+  AccelWhenPunch: 25
+  AccelWhenDBPunch: 50
+  ProjectilForce: 25
+--- !u!135 &135014763470244736
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1378874648793982}
   m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135623189695892140
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1378874648793982}
+  m_Material: {fileID: 13400000, guid: eccb904dfa9d56e4285d03b509702443, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
