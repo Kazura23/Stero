@@ -24,6 +24,11 @@ public class UiManager : ManagerParent
 	public GameObject PostProcessMadness;
 	public GameObject GetHubDir;
 
+    [Header("INTRO MAD")]
+    public GameObject SwearWordsObject;
+    public string[] SwearWordsName;
+    public Tween SwearWordTw;
+
     public Image ArrowTuto;
 
 	public Text ScorePoints;
@@ -192,10 +197,11 @@ public class UiManager : ManagerParent
 
     public void Intro()
     {
-		/*if ( GlobalManager.GameCont.LaunchTuto )
+        /*if ( GlobalManager.GameCont.LaunchTuto )
 		{
 			return;
         }*/
+        SwearWordTw.Kill(true);
 
 		if ( GlobalManager.GameCont.LaunchTuto )
 		{
@@ -411,6 +417,43 @@ public class UiManager : ManagerParent
 
         RankSlider.transform.parent.GetComponent<CanvasGroup>().DOFade(0,0.1f);
     }
+
+    public void IntroWord()
+    {
+        //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
+      
+
+        SwearWordTw = DOVirtual.DelayedCall(.1f, () =>
+        {
+
+            var word = Instantiate(SwearWordsObject, transform.position, Quaternion.identity, transform.transform.GetChild(0).transform.GetChild(0));
+            word.transform.localScale = Vector3.one;
+            float randomX = UnityEngine.Random.Range(-900, 900);
+            float randomY = UnityEngine.Random.Range(-450, 450);
+            float randomRotate = UnityEngine.Random.Range(-25, 25);
+            int randomSize = UnityEngine.Random.Range(45, 70);
+            int randomWord = UnityEngine.Random.Range(0, SwearWordsName.Length);
+            Vector2 tmpPos = word.transform.localPosition;
+            tmpPos.x = randomX;
+            tmpPos.y = randomY;
+            word.transform.localPosition = tmpPos;
+            word.transform.DORotate(new Vector3(0, 0, randomRotate), 0);
+            word.GetComponent<Text>().fontSize = randomSize;
+            word.GetComponent<Text>().text = SwearWordsName[randomWord];
+
+            word.transform.DOScale(3, 0);
+            word.transform.DOScale(1, .15f);
+            word.GetComponent<Text>().DOFade(1, 0.15f);
+            word.GetComponent<RainbowColor>().enabled = true;
+            word.transform.SetAsFirstSibling();
+
+            Destroy(word, .7f);
+        }).SetLoops(-1, LoopType.Restart);
+
+
+
+    }
+
 
     public void OpenMadness()
     {

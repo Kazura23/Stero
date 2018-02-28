@@ -244,8 +244,9 @@ public class GameController : ManagerParent
 							{
 								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
 								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
-								{
-									isReady = true;
+                                {
+                                    GlobalManager.Ui.IntroWord();
+                                    isReady = true;
 									isStay = true;
 									//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 									//Player.GetComponent<PlayerController>().StopPlayer = false;
@@ -347,6 +348,7 @@ public class GameController : ManagerParent
         {
 		    coupSimpl = false;
             Player.GetComponent<PlayerController>().GetPunchIntro();
+            
         }
         else
         {
@@ -931,7 +933,8 @@ public class GameController : ManagerParent
                     musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
                     musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
 
-					thisCam.transform.DOLocalMoveY(0.312f, 1).OnComplete(() =>
+
+                    thisCam.transform.DOLocalMoveY(0.312f, 1).OnComplete(() =>
                     {
                         //Player.GetComponentInChildren<RainbowMove>().enabled = true;
 
@@ -1329,6 +1332,7 @@ public class GameController : ManagerParent
             }
         }*/
 
+        /*
         if (Input.GetKeyDown(KeyCode.T))
         {
             Vector3 playerPos = GlobalManager.GameCont.Player.transform.position;
@@ -1339,7 +1343,7 @@ public class GameController : ManagerParent
             GameObject thisGOLeft = GlobalManager.GameCont.FxInstanciate(new Vector3(.16f, 0.12f, 0.134f) + playerPos, "PlayerReady", GlobalManager.GameCont.Player.transform, 1f);
             thisGOLeft.transform.SetParent(GlobalManager.GameCont.Player.GetComponent<PlayerController>().leftHand.transform);
             thisGOLeft.transform.DOLocalMove(Vector3.zero, 0);
-        }
+        }*/
     }
 
     public float currentValue = 0;
