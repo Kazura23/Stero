@@ -5,7 +5,11 @@ using DG.Tweening;
 
 public class TitleScreen : UiParent 
 {
-	#region Variables
+    #region Variables
+
+    public bool ready;
+    public float delayBeforeReady;
+
 	public override MenuType ThisMenu
 	{
 		get
@@ -19,7 +23,7 @@ public class TitleScreen : UiParent
 	#region Mono
 	void Update()
 	{
-		if(Input.anyKeyDown)
+		if(Input.anyKeyDown && ready)
 		{
 			GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete( () =>
 			{
@@ -38,6 +42,11 @@ public class TitleScreen : UiParent
 	#region Private
 	protected override void InitializeUi()
 	{
+        DOVirtual.DelayedCall(delayBeforeReady, () => {
+            ready = true;
+            GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = true;
+            GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = true;
+        });
 	}
 
 	public override void OpenThis(MenuTokenAbstract GetTok = null)

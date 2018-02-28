@@ -222,6 +222,11 @@ public class MenuShop : UiParent
 
         GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete(()=> {
 
+
+            GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = true;
+            GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = true;
+
+
             fixBackShop.SetActive(false);
 
             GlobalManager.GameCont.canOpenShop = true;
