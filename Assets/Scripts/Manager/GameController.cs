@@ -519,8 +519,10 @@ public class GameController : ManagerParent
 		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
 		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
 
+		GlobalManager.Ui.CloseThisMenu ( );
 		if ( restartGame )
         {
+			GlobalManager.Ui.GetHubDir.SetActive ( false );
 			SetAllBonus ( );
 
 			onHub = false;
@@ -558,7 +560,6 @@ public class GameController : ManagerParent
 
 		thisCam.GetComponent<RainbowRotate>().time = 2;
 		thisCam.GetComponent<RainbowMove>().time = 1;
-		GlobalManager.Ui.CloseThisMenu ( );
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
