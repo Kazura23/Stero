@@ -499,7 +499,8 @@ public class MenuShop : UiParent
 					getTempItem.Add ( currItemSeled );
 				}
 
-				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.ThisItem.Price );
+				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.ThisItem.Price, true );
+				GlobalManager.Ui.MoneyPoints.text = AllPlayerPrefs.GetIntValue ( Constants.Coin ).ToString ( );
 			}
 		}
 
