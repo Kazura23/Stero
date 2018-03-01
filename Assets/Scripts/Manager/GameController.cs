@@ -56,7 +56,6 @@ public class GameController : ManagerParent
 	[HideInInspector]
 	public bool LaunchTuto;
 
-	[HideInInspector]
 	public PostProcessingProfile postProfile;
     public PostProcessVolume postMadnessProfile;
 
@@ -1299,7 +1298,6 @@ public class GameController : ManagerParent
 
         if (GameStarted && !checkStart)
         {
-
             GlobalManager.Ui.Intro();
             isStay = false;
 
