@@ -134,6 +134,11 @@ public class SpawnChunks : MonoBehaviour
 		LvlChunksInfo = chunkOrder;
 		bool checkZero = false;
 			
+		if ( chunkOrder.Count > 1 )
+		{
+			currLevel = 1;
+		}
+
 		// Init du level minimun disponible
 		while ( chunkOrder [ currLevel ].ChunkScript.Count == 0 )
 		{
@@ -195,22 +200,6 @@ public class SpawnChunks : MonoBehaviour
 
 			getSpc.RemoveAt ( 0 );
 		}
-
-		// Verifie si on passe au niveau superieur
-		if ( thisChunk.NbrChunkOneLvl < currNbrCh )
-		{
-			// Pour le démarrage bonus
-			if ( StartBonus )
-			{
-				if ( saveLvlForStart >= EndLevel )
-				{
-					currLevel = saveLvlForStart;
-					StartBonus = false;
-				}
-
-				saveLvlForStart++;
-			}
-		}
 	}
 	
 	IEnumerator waitDeSpawn ( GameObject thisObj, bool dest )
@@ -259,6 +248,10 @@ public class SpawnChunks : MonoBehaviour
 		if ( !StartBonus )
 		{
 			currLevel = minLevel;
+		}
+		else
+		{
+			GlobalManager.GameCont.Player.GetComponent<PlayerController>().onBonusStart = true;
 		}
 
 		// Désactive les chunks encore activés
@@ -311,9 +304,28 @@ public class SpawnChunks : MonoBehaviour
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].OnScene = onScene;
 		getSpawnChunks [ getSpawnChunks.Count - 1 ].GarbChunk = thisGarb;
 
+		// Verifie si on passe au niveau superieur
 		if ( thisChunk.NbrChunkOneLvl < currNbrCh )
 		{
-			newLevel ( );
+			// Pour le démarrage bonus
+			if ( StartBonus )
+			{
+				saveLvlForStart++;
+				currNbrCh = 0;
+
+				if ( saveLvlForStart >= EndLevel )
+				{
+					currLevel = saveLvlForStart;
+					StartBonus = false;
+					newLevel ( );
+				}
+			}
+			else
+			{
+				GlobalManager.GameCont.Player.GetComponent<PlayerController>().onBonusStart = false;
+				
+				newLevel ( );
+			}
 		}
 	}
 	#endregion

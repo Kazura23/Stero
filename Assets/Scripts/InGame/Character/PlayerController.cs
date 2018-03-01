@@ -120,6 +120,9 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int CurrNbrBall = 0;
+
+	[HideInInspector]
+	public bool onBonusStart = false;
 	Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
@@ -287,6 +290,7 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		onBonusStart = false;
 		if ( getCouldown != null )
 		{
 			StopCoroutine ( getCouldown );
@@ -764,7 +768,7 @@ public class PlayerController : MonoBehaviour
 
 		playerFight ( getTime );
 
-		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
+		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash  )
 		{				
 			GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "", false, null, true );
 			Time.timeScale = 1;
@@ -839,6 +843,11 @@ public class PlayerController : MonoBehaviour
 
 	void TimerCheck ( float getTime )
 	{
+		if ( onBonusStart )
+		{
+			return;
+		}
+
 		if ( secureTimer )
 		{
 			if ( InMadness )
@@ -1276,7 +1285,7 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( Dash )
+		if ( Dash || onBonusStart )
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
