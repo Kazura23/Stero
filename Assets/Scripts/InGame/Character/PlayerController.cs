@@ -1285,7 +1285,7 @@ public class PlayerController : MonoBehaviour
 		Vector3 calTrans = Vector3.zero;
 		delTime = Time.deltaTime;
 
-		if ( Dash || onBonusStart )
+		if ( Dash )
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
@@ -1300,6 +1300,11 @@ public class PlayerController : MonoBehaviour
 		{
 			GlobalManager.Ui.DashSpeedEffect ( false );
 			speed /= 1.60f;
+		}
+		else if ( onBonusStart )
+		{
+			speed *= DashSpeed * 2;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else
 		{
@@ -1738,7 +1743,7 @@ public class PlayerController : MonoBehaviour
             GameOver ( true );
 		}
 
-		if ( Dash || InMadness || playerInv )
+		if ( Dash || InMadness || playerInv || onBonusStart )
 		{
             if (getObj.tag == Constants._EnnemisTag)
             {

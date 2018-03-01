@@ -143,6 +143,7 @@ public class GameController : ManagerParent
             corouSucess = StartCoroutine(ListExecutionReward());
         }
         
+
 		if ( GameStarted )
 		{
 			BloomModel.Settings thisBloom = postProfile.bloom.settings;
@@ -419,6 +420,13 @@ public class GameController : ManagerParent
 
     public void ActiveGame()
     {
+		GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+			
         GameStartedUpdate();
     }
     
