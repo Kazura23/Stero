@@ -544,7 +544,14 @@ public class MenuShop : UiParent
 					getGameT.Add ( currText );
 				}
 
-				currText.text = "LEVEL " + ( count + 2 ).ToString ( );
+				if (count + 2 == 5)
+				{
+					currText.text = "MAX";
+				}
+				else
+				{
+					currText.text = "LEVEL " + ( count + 2 ).ToString ( );
+				}
 				currItemSeled.ThisItem.Price *= 2;
 			}
 		}
