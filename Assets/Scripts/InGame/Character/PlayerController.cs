@@ -120,6 +120,9 @@ public class PlayerController : MonoBehaviour
 
 	[HideInInspector]
 	public int CurrNbrBall = 0;
+
+	[HideInInspector]
+	public bool onBonusStart = false;
 	Transform pTrans;
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
@@ -287,6 +290,7 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		onBonusStart = false;
 		if ( getCouldown != null )
 		{
 			StopCoroutine ( getCouldown );
@@ -764,7 +768,7 @@ public class PlayerController : MonoBehaviour
 
 		playerFight ( getTime );
 
-		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash )
+		if ( inputPlayer.GetAxis ( "Dash" ) != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash  )
 		{				
 			GlobalManager.AudioMa.OpenAudio ( AudioType.Acceleration, "", false, null, true );
 			Time.timeScale = 1;
@@ -839,6 +843,11 @@ public class PlayerController : MonoBehaviour
 
 	void TimerCheck ( float getTime )
 	{
+		if ( onBonusStart )
+		{
+			return;
+		}
+
 		if ( secureTimer )
 		{
 			if ( InMadness )
@@ -1292,6 +1301,11 @@ public class PlayerController : MonoBehaviour
 			GlobalManager.Ui.DashSpeedEffect ( false );
 			speed /= 1.60f;
 		}
+		else if ( onBonusStart )
+		{
+			speed *= DashSpeed * 2;
+			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
+		}
 		else
 		{
 			GlobalManager.Ui.DashSpeedEffect ( false );
@@ -1729,7 +1743,7 @@ public class PlayerController : MonoBehaviour
             GameOver ( true );
 		}
 
-		if ( Dash || InMadness || playerInv )
+		if ( Dash || InMadness || playerInv || onBonusStart )
 		{
             if (getObj.tag == Constants._EnnemisTag)
             {

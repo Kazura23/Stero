@@ -142,6 +142,7 @@ public class GameController : ManagerParent
             corouSucess = StartCoroutine(ListExecutionReward());
         }
         
+
 		if ( GameStarted )
 		{
 			BloomModel.Settings thisBloom = postProfile.bloom.settings;
@@ -218,6 +219,8 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
 
+				
+
 				if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !restartGame)
 				{
 					coupSimpl = false;
@@ -228,6 +231,7 @@ public class GameController : ManagerParent
 
 					if ( !LaunchTuto )
 					{
+						SpawnerChunck.FirstSpawn ( );
 						Player.GetComponent<Animator>().enabled = true;
 						Animator getAnimator = Player.GetComponent<Animator> ( );
 						getAnimator.enabled = true;
@@ -267,6 +271,9 @@ public class GameController : ManagerParent
 					}
 					else
 					{
+						AllPlayerPrefs.SetStringValue ( Constants.TutoName );
+						Instantiate ( Tutoriel );
+
 						DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
 							DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
 						});
@@ -364,10 +371,10 @@ public class GameController : ManagerParent
             {
                 { "Nombre total de run", AllPlayerPrefs.ANbRun}
             });
-            if (resultat.Equals(AnalyticsResult.Ok))
+           /* if (resultat.Equals(AnalyticsResult.Ok))
                 Debug.Log(resultat);
             else
-                Debug.LogWarning(resultat);
+                Debug.LogWarning(resultat);*/
         }
     }
 
@@ -412,6 +419,13 @@ public class GameController : ManagerParent
 
     public void ActiveGame()
     {
+		GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+			
         GameStartedUpdate();
     }
     
@@ -518,8 +532,22 @@ public class GameController : ManagerParent
 		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( false );
 		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( false );
 
+		GlobalManager.Ui.CloseThisMenu ( );
+		SpawnerChunck.StartBonus = false;
+
 		if ( restartGame )
         {
+			if ( !LaunchTuto )
+			{
+				SpawnerChunck.FirstSpawn ( );
+			}
+			else
+			{
+				AllPlayerPrefs.SetStringValue ( Constants.TutoName );
+				Instantiate ( Tutoriel );
+			}
+
+			GlobalManager.Ui.GetHubDir.SetActive ( false );
 			SetAllBonus ( );
 
 			onHub = false;
@@ -545,19 +573,8 @@ public class GameController : ManagerParent
 		GameStarted = true;
 		checkStart = false;
 
-		if ( !LaunchTuto )
-		{
-			SpawnerChunck.FirstSpawn ( );
-		}
-		else
-		{
-			AllPlayerPrefs.SetStringValue ( Constants.TutoName );
-			Instantiate ( Tutoriel );
-		}
-
 		thisCam.GetComponent<RainbowRotate>().time = 2;
 		thisCam.GetComponent<RainbowMove>().time = 1;
-		GlobalManager.Ui.CloseThisMenu ( );
     }
 
 	public GameObject FxInstanciate ( Vector3 thisPos, string fxName, Transform parentObj = null, float timeDest = 0.35f )
@@ -714,12 +731,6 @@ public class GameController : ManagerParent
 		PlayerController currPlayer = Player.GetComponent<PlayerController> ( );
 		iconeSpe.gameObject.SetActive ( true );
 
-		GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
-		GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
-		GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
-		GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
-		GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
-		GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
 		GlobalManager.Ui.GetHubDir.SetActive ( false );
 
 		if ( !LaunchTuto )
@@ -1220,10 +1231,10 @@ public class GameController : ManagerParent
         var rewardSave = SaveDataReward.Load();
         if (rewardSave == null)
             return;
-        for (int i = 0; i < rewardSave.Count; i++)
+       /* for (int i = 0; i < rewardSave.Count; i++)
         {
             Debug.Log("id = " + rewardSave[i].id+", is unlock = "+rewardSave[i].unlock);
-        }
+		}*/
 
         var listReward = StaticRewardTarget.listRewardTrans;
         for (int i = 0; i< listReward.childCount; i++)
@@ -1236,7 +1247,7 @@ public class GameController : ManagerParent
                     if (rewardSave[j].unlock)
                     {
                         reward.UnlockWithFile();
-                        Debug.Log("sprite find : "+icon_sucess);
+                        //Debug.Log("sprite find : "+icon_sucess);
                         reward.icon.sprite = icon_sucess;
                     }
                     break;
@@ -1486,6 +1497,7 @@ public class GameController : ManagerParent
 			SpawnerChunck.StartBonus = true;
 			SpawnerChunck.EndLevel++;
             AllPlayerPrefs.AExtraStart = SpawnerChunck.EndLevel;
+			Debug.Log(SpawnerChunck.EndLevel);
 		}
 	}
     #endregion

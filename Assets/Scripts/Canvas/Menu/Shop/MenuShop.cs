@@ -499,7 +499,8 @@ public class MenuShop : UiParent
 					getTempItem.Add ( currItemSeled );
 				}
 
-				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.ThisItem.Price );
+				AllPlayerPrefs.SetIntValue ( Constants.Coin, -currIT.ThisItem.Price, true );
+				GlobalManager.Ui.MoneyPoints.text = AllPlayerPrefs.GetIntValue ( Constants.Coin ).ToString ( );
 			}
 		}
 
@@ -544,7 +545,14 @@ public class MenuShop : UiParent
 					getGameT.Add ( currText );
 				}
 
-				currText.text = "LEVEL " + ( count + 2 ).ToString ( );
+				if (count + 2 == 5)
+				{
+					currText.text = "MAX";
+				}
+				else
+				{
+					currText.text = "LEVEL " + ( count + 2 ).ToString ( );
+				}
 				currItemSeled.ThisItem.Price *= 2;
 			}
 		}
