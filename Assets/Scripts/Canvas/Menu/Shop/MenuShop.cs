@@ -487,7 +487,7 @@ public class MenuShop : UiParent
 						}
 					}
 
-					if ( count > 3 )
+					if ( count > 3 ||count > 2 && currCatSeled.NameCat == "BONUS" )
 					{
 						return;
 					}
@@ -522,17 +522,24 @@ public class MenuShop : UiParent
 				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
-			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
+			else if ( currCatSeled.NameCat == "BONUS" )
 			{
-				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+				if ( currItemSeled.ThisItem.ModifVie )
 				{
-					SelectObject ( );
-					GlobalManager.Ui.NewLife ( 2 );
+					if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+					{
+						SelectObject ( );
+						GlobalManager.Ui.NewLife ( 2 );
+					}
+					else
+					{
+						SelectObject ( );
+						GlobalManager.Ui.NewLife ( 1 );
+					}
 				}
 				else
 				{
 					SelectObject ( );
-					GlobalManager.Ui.NewLife ( 1 );
 				}
 			}
 			else if ( currCatSeled.NameCat == "UPGRADES" )
