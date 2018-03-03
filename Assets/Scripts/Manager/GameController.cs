@@ -547,6 +547,14 @@ public class GameController : ManagerParent
 				Instantiate ( Tutoriel );
 			}
 
+			GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
+			GlobalManager.Ui.BonusLife.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.MoneyPoints.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.Madness.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.SlowMotion.transform.parent.gameObject.SetActive ( true );
+			GlobalManager.Ui.ScorePoints.transform.parent.gameObject.SetActive ( true );
+			
+			GlobalManager.Ui.GameParent.gameObject.SetActive(true);
 			GlobalManager.Ui.GetHubDir.SetActive ( false );
 			SetAllBonus ( );
 
