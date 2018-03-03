@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 [CreateAssetMenu(fileName = "ItemScript", menuName = "Scriptable/ItemScript", order = 4)]
 public class ItemScriptable : ScriptableObject
@@ -13,6 +14,7 @@ public class ItemScriptable : ScriptableObject
 	public string ItemName;
 	public int Price;
 
+	public VideoClip VideoShow;
 	public bool UseSprite;
 	public bool UseOtherSprite;
 	public bool UseColor;

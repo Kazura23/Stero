@@ -46,6 +46,7 @@ public class TitleScreen : UiParent
             ready = true;
             GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = true;
             GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = true;
+			GlobalManager.Ui.GlobalBack.transform.Find("BackgroundColor").GetComponent<RainbowColor>().enabled = true;
         });
 	}
 
@@ -58,6 +59,8 @@ public class TitleScreen : UiParent
 	}
 	public override void CloseThis ( )
 	{
+		GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = false;
+		GlobalManager.Ui.GlobalBack.transform.Find("BackgroundColor").GetComponent<RainbowColor>().enabled = false;
 		base.CloseThis();
 	}
 	#endregion

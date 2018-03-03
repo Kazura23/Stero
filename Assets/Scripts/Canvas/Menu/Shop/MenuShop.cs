@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -30,7 +31,7 @@ public class MenuShop : UiParent
     public Image backgroundColor;
     public string[] quoteShop;
     
-
+	public VideoPlayer GetVideoPlayer;
     public GameObject UnlockObject;
     private string itemName;
     //private Sprite itemIcon;
@@ -177,6 +178,7 @@ public class MenuShop : UiParent
 	{
         if (GlobalManager.GameCont.canOpenShop)
         {
+			GetVideoPlayer.gameObject.SetActive(false);
             GlobalManager.GameCont.canOpenShop = false;
             base.OpenThis(GetTok);
 
@@ -487,7 +489,7 @@ public class MenuShop : UiParent
 						}
 					}
 
-					if ( count > 3 )
+					if ( count > 3 ||count > 2 && currCatSeled.NameCat == "BONUS" )
 					{
 						return;
 					}
@@ -522,17 +524,24 @@ public class MenuShop : UiParent
 				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
 			}
-			else if ( currCatSeled.NameCat == "BONUS" && currItemSeled.ThisItem.ModifVie )
+			else if ( currCatSeled.NameCat == "BONUS" )
 			{
-				if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+				if ( currItemSeled.ThisItem.ModifVie )
 				{
-					SelectObject ( );
-					GlobalManager.Ui.NewLife ( 2 );
+					if ( GlobalManager.Ui.ExtraHearts [ 0 ].enabled )
+					{
+						SelectObject ( );
+						GlobalManager.Ui.NewLife ( 2 );
+					}
+					else
+					{
+						SelectObject ( );
+						GlobalManager.Ui.NewLife ( 1 );
+					}
 				}
 				else
 				{
 					SelectObject ( );
-					GlobalManager.Ui.NewLife ( 1 );
 				}
 			}
 			else if ( currCatSeled.NameCat == "UPGRADES" )
@@ -912,6 +921,13 @@ public class MenuShop : UiParent
 	{
 		if ( selected )
 		{
+			if ( thisItem.ThisItem.VideoShow != null )
+			{
+				GetVideoPlayer.gameObject.SetActive(true);
+				GetVideoPlayer.clip = thisItem.ThisItem.VideoShow;
+				GetVideoPlayer.Play();
+			}
+
 			thisItem.GetComponent<CanvasGroup>().DOFade(1, 1);
 			thisItem.transform.DOScale(.75f, 0);
 		}
@@ -919,6 +935,9 @@ public class MenuShop : UiParent
 		{
 			thisItem.GetComponent<CanvasGroup>().DOFade(0.5f, 1);
 			thisItem.transform.DOScale(.5f, 0);
+
+			GetVideoPlayer.gameObject.SetActive(false);
+			GetVideoPlayer.Stop();
 		}
 	}
 
