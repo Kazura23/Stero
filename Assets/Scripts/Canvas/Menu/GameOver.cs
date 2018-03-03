@@ -17,7 +17,11 @@ public class GameOver : UiParent
 	}
 
 	public GameObject PatternGameOver, BarGameOver;
-	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, newScore, quoteScore;
+	public Transform MoneyMut;
+	public int RatioScorePiece = 1000;
+	public Text YouGameOver, MadeGameOver, PointsGameOver, PressPunch, PressSteroland, Highscore, quoteScore;
+	public Text newScore;
+	public Text CoinWin;
 	float TimeFade = 0;
 	bool canUpdate = false;
 	Player inputPlayer;
@@ -81,6 +85,11 @@ public class GameOver : UiParent
 		GameOverTok thisTok = GetTok as GameOverTok;
         GetComponent<CanvasGroup>().DOFade(0, 0);
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
+		CoinWin.text = ((int)thisTok.totalDist / RatioScorePiece).ToString();
+		CoinWin.transform.localScale = Vector3.zero;
+
+		AllPlayerPrefs.SetIntValue(Constants.Coin, (int)thisTok.totalDist / RatioScorePiece, true);
+			
 		YouGameOver.DOFade(0, 0);
 		MadeGameOver.DOFade(0, 0);
 		PointsGameOver.DOFade(0, 0);
@@ -122,7 +131,20 @@ public class GameOver : UiParent
                         PressPunch.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
                         PressSteroland.transform.GetComponent<CanvasGroup>().DOFade(1, .5f);
                         quoteScore.DOFade(1, 2f);
+
+						
                     });
+
+					CoinWin.transform.DOScale(1, .1f).OnComplete(() => {
+						CoinWin.transform.DOPunchScale((Vector3.one * .45f), .25f, 15, 1).OnComplete(() => {
+							CoinWin.transform.DOScale(0, .5f);
+							CoinWin.transform.DOMove(MoneyMut.gameObject.transform.position, .5f).OnComplete( () =>
+							{
+								GlobalManager.Ui.MoneyPoints.text = AllPlayerPrefs.GetIntValue(Constants.Coin).ToString();
+								MoneyMut.GetComponent<Text>().text = GlobalManager.Ui.MoneyPoints.text;
+							});
+						});
+					});
 
                     if (AllPlayerPrefs.finalScore >= AllPlayerPrefs.saveData.listScore[0].finalScore)
                     {
@@ -130,6 +152,8 @@ public class GameOver : UiParent
                         newScore.transform.DOScale(1, .3f);
                         newScore.GetComponent<CanvasGroup>().DOFade(0, 0);
                         newScore.GetComponent<CanvasGroup>().DOFade(1, .3f);
+
+
                         /*
                         DOVirtual.DelayedCall(1, () =>
                         {
