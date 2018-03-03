@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -30,7 +31,7 @@ public class MenuShop : UiParent
     public Image backgroundColor;
     public string[] quoteShop;
     
-
+	public VideoPlayer GetVideoPlayer;
     public GameObject UnlockObject;
     private string itemName;
     //private Sprite itemIcon;
@@ -177,6 +178,7 @@ public class MenuShop : UiParent
 	{
         if (GlobalManager.GameCont.canOpenShop)
         {
+			GetVideoPlayer.gameObject.SetActive(false);
             GlobalManager.GameCont.canOpenShop = false;
             base.OpenThis(GetTok);
 
@@ -919,6 +921,13 @@ public class MenuShop : UiParent
 	{
 		if ( selected )
 		{
+			if ( thisItem.ThisItem.VideoShow != null )
+			{
+				GetVideoPlayer.gameObject.SetActive(true);
+				GetVideoPlayer.clip = thisItem.ThisItem.VideoShow;
+				GetVideoPlayer.Play();
+			}
+
 			thisItem.GetComponent<CanvasGroup>().DOFade(1, 1);
 			thisItem.transform.DOScale(.75f, 0);
 		}
@@ -926,6 +935,9 @@ public class MenuShop : UiParent
 		{
 			thisItem.GetComponent<CanvasGroup>().DOFade(0.5f, 1);
 			thisItem.transform.DOScale(.5f, 0);
+
+			GetVideoPlayer.gameObject.SetActive(false);
+			GetVideoPlayer.Stop();
 		}
 	}
 

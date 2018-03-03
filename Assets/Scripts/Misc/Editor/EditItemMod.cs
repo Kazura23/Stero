@@ -24,6 +24,7 @@ public class EditItemMod : Editor
 	SerializedProperty SpriteUnselected;
 	SerializedProperty BoughtSpriteSelected;
 	SerializedProperty BoughtSpriteUnselected;
+	SerializedProperty VideoShow;
 
 	SerializedProperty AddValueStat;
 
@@ -64,6 +65,8 @@ public class EditItemMod : Editor
 		SpriteSelected = serializedObject.FindProperty("SpriteSelected");
 		SpriteUnselected = serializedObject.FindProperty("SpriteUnselected");
 		BoughtSpriteSelected = serializedObject.FindProperty("BoughtSpriteSelected");
+		VideoShow = serializedObject.FindProperty("VideoShow");
+
 		BoughtSpriteUnselected = serializedObject.FindProperty("BoughtSpriteUnselected");
 
 		SpecAction = serializedObject.FindProperty("SpecAction");
@@ -86,6 +89,7 @@ public class EditItemMod : Editor
 		EditorGUILayout.PropertyField ( ItemName );
 		EditorGUILayout.PropertyField ( Price );
 		EditorGUILayout.PropertyField ( GetSprite );
+		EditorGUILayout.PropertyField ( VideoShow );
 
 		#region MainButton
 
