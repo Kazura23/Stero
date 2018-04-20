@@ -60,7 +60,10 @@ public class TitleScreen : UiParent
 	public override void CloseThis ( )
 	{
 		GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = false;
-		GlobalManager.Ui.GlobalBack.transform.Find("BackgroundColor").GetComponent<RainbowColor>().enabled = false;
+        GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = false;
+        GlobalManager.Ui.GlobalBack.transform.Find("BackgroundColor").GetComponent<RainbowColor>().enabled = false;
+
+        GlobalManager.Ui.InieUI();
 		base.CloseThis();
 	}
 	#endregion

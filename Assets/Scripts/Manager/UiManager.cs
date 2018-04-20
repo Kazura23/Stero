@@ -814,7 +814,7 @@ public class UiManager : ManagerParent
         DOVirtual.DelayedCall(.1f, () => {
 			getImage.DOFade(1f, .1f);
 			getImage.GetComponent<RainbowScale>().enabled = false;
-			getImgTrans.DOScale(4, 0f);
+            getImgTrans.DOScale(4, 0f);
 			getImgTrans.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
 				getImgTrans.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
 				getImage.DOFade(0, .05f);
@@ -877,7 +877,7 @@ public class UiManager : ManagerParent
         CircleFeel.transform.DOScale(1, 0);
         CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
 		
-        getCurrHeat.transform.DOLocalMove(new Vector2(960, -480), .05f);
+        getCurrHeat.transform.DOLocalMove(new Vector2(780, -480), .05f);
 		getCurrHeat.DOFade(0, .05f);
         DOVirtual.DelayedCall(.15f, () => {
 			getCurrHeat.DOFade(.75f, .1f);
@@ -949,7 +949,7 @@ public class UiManager : ManagerParent
 		//GlobalManager.GameCont.StartGame ( );
 	}
 
-	void InieUI ( )
+	public void InieUI ( )
 	{
         //	InvokeRepeating ( "checkCurosr", 0, 0.5f );
 
