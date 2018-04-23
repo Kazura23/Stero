@@ -126,9 +126,13 @@ public class Option :  UiParent
 	public void closeOptionMenu ( )
 	{
 		//Debug.Log(GetOptionObj[indexOption].ThisObj.transform.GetChild(0).gameObject);
-		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().DOFillAmount(0,.05f);
+		Transform getOpTrans = GetOptionObj[indexOption].ThisObj.transform.GetChild(0);
 
-		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0,.05f);
+		getOpTrans.GetChild(0).GetComponent<Image>().DOKill();
+		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(0,.05f);
+		
+		getOpTrans.GetComponent<CanvasGroup>().DOFade(0,.05f);
+		getOpTrans.GetComponent<CanvasGroup>().DOKill();
 
 
 		switch ( currMenu )
@@ -145,11 +149,7 @@ public class Option :  UiParent
 	public void openNewOption ( int newIndex )
 	{
 		closeOptionMenu ( );
-
-		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().DOFillAmount(1,.15f);
 		
-		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(1,.15f);
-
 		indexOption += newIndex;
 
 		if ( indexOption > GetOptionObj.Length - 1 )
@@ -160,6 +160,13 @@ public class Option :  UiParent
 		{
 			indexOption = GetOptionObj.Length - 1;
 		}
+
+		Transform getOpTrans = GetOptionObj[indexOption].ThisObj.transform.GetChild(0);
+		getOpTrans.GetChild(0).GetComponent<Image>().DOKill();
+		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(1,.15f);
+		
+		getOpTrans.GetComponent<CanvasGroup>().DOKill();
+		getOpTrans.GetComponent<CanvasGroup>().DOFade(1,.15f);
 
 		currMenu = GetOptionObj[indexOption].ThisOption;
 
