@@ -16,6 +16,15 @@ public class Option :  UiParent
 		}
 	}
 
+	[System.Serializable]
+	struct OptionObj
+	{
+		public OptionMenu ThisOption;
+		public GameObject ThisObj;
+	}
+	
+	[SerializeField] OptionObj[] GetOptionObj;
+
 	public Slider MusicSlider;
 	public Slider SonSlider;
 	public Slider VoiceSlider;
@@ -23,13 +32,16 @@ public class Option :  UiParent
 	public Text Credit;
 
 	Dictionary<AudioType, int> VolumeAudio;
-
+	
 	int currMusic;
 	int currSon;
 	int currVoice;
 
 	OptionMenu currMenu;
 	Player inputPlayer;
+
+	int indexOption = 0;
+	bool checkAxis = false;
 	#endregion
 
 	#region mono
@@ -45,6 +57,8 @@ public class Option :  UiParent
 			GlobalManager.Ui.CloseThisMenu ( );
 		}
 
+		float getV = inputPlayer.GetAxis ( "Vertical" );
+
 		if ( currMusic != MusicSlider.value )
 		{
 			currMusic = ( int ) MusicSlider.value;
@@ -57,6 +71,26 @@ public class Option :  UiParent
 		{
 			currVoice = ( int ) VoiceSlider.value;
 		}
+
+		if ( getV < 0.2f && getV > -0.2f )
+		{
+			checkAxis = false;
+		}
+
+		if ( !checkAxis )
+		{
+			if ( getV > 0.9f )
+			{
+				checkAxis = true;
+				openNewOption(-1);	
+			}
+			else if ( getV < -0.9f)
+			{
+				checkAxis = true;
+				openNewOption(1);	
+			}
+		}
+		
 	}
 	#endregion
 
@@ -76,8 +110,7 @@ public class Option :  UiParent
 		currSon = ( int ) SonSlider.value;
 		currVoice = ( int ) VoiceSlider.value;
 
-		Credit.enabled = false;
-		currMenu = OptionMenu.Son;
+		currMenu = GetOptionObj[indexOption].ThisOption;
 	}
 
 	#region public
@@ -85,7 +118,7 @@ public class Option :  UiParent
 	{
 		base.OpenThis ( GetTok );
 		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, .75f);
-		openNewOption ( currMenu );
+		openNewOption ( 0 );
 	}
 
 	public override void CloseThis ( )
@@ -94,38 +127,45 @@ public class Option :  UiParent
 	}
 
 	#region private
-	public void closeOptionMenu ( OptionMenu getOM )
+	public void closeOptionMenu ( )
 	{
-		switch ( getOM )
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).gameObject.SetActive(false);
+
+		switch ( currMenu )
 		{
 		case OptionMenu.Son:
-			MusicSlider.enabled = false;
-			SonSlider.enabled = false;
-			VoiceSlider.enabled = false;
 			break;
 		case OptionMenu.Credits:
 			Credit.DOFade ( 0, 0 );
-			Credit.enabled = false;
 			break;
 		}
 	}
 	#endregion
 
-	public void openNewOption ( OptionMenu newOM )
+	public void openNewOption ( int newIndex )
 	{
-		closeOptionMenu ( currMenu );
+		closeOptionMenu ( );
 
-		currMenu = newOM;
+		indexOption += newIndex;
 
-		switch ( newOM )
+		if ( indexOption > GetOptionObj.Length - 1 )
+		{
+			indexOption = 0;
+		}
+		else if ( indexOption < 0 )
+		{
+			indexOption = GetOptionObj.Length - 1;
+		}
+
+		currMenu = GetOptionObj[indexOption].ThisOption;
+
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).gameObject.SetActive(true);
+		
+		switch ( currMenu )
 		{
 		case OptionMenu.Son:
-			MusicSlider.enabled = true;
-			SonSlider.enabled = true;
-			VoiceSlider.enabled = true;
 			break;
 		case OptionMenu.Credits:
-			Credit.enabled = true;
 			Credit.DOFade ( 1, 0.2f ).OnComplete ( ( ) =>
 			{
 				Credit.transform.DOScale ( new Vector3 ( 5, 5, 5 ), 0 ).OnComplete ( ( ) =>
