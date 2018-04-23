@@ -30,8 +30,6 @@ public class Option :  UiParent
 	public Slider VoiceSlider;
 
 	public Text Credit;
-
-	Dictionary<AudioType, int> VolumeAudio;
 	
 	int currMusic;
 	int currSon;
@@ -96,8 +94,6 @@ public class Option :  UiParent
 
 	protected override void InitializeUi()
 	{
-		VolumeAudio = GlobalManager.AudioMa.VolumeAudio;
-
 		MusicSlider.maxValue = 100;
 		SonSlider.maxValue = 100;
 		VoiceSlider.maxValue = 100;
