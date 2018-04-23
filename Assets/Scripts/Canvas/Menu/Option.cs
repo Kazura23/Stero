@@ -129,7 +129,11 @@ public class Option :  UiParent
 	#region private
 	public void closeOptionMenu ( )
 	{
-		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).gameObject.SetActive(false);
+		//Debug.Log(GetOptionObj[indexOption].ThisObj.transform.GetChild(0).gameObject);
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().DOFillAmount(0,.05f);
+
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(0,.05f);
+
 
 		switch ( currMenu )
 		{
@@ -145,6 +149,10 @@ public class Option :  UiParent
 	public void openNewOption ( int newIndex )
 	{
 		closeOptionMenu ( );
+
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetChild(0).GetComponent<Image>().DOFillAmount(1,.15f);
+		
+		GetOptionObj[indexOption].ThisObj.transform.GetChild(0).GetComponent<CanvasGroup>().DOFade(1,.15f);
 
 		indexOption += newIndex;
 
