@@ -1390,8 +1390,15 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.ListScoreUI = ListScoresUi;
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
-        musicObject = GlobalManager.AudioMa.transform.Find("Music").gameObject;
+        musicObject = GlobalManager.AudioMa.GetSource(AudioType.MusicBackGround).gameObject;
 
+		AudioLowPassFilter getALPF = musicObject.AddComponent<AudioLowPassFilter>();
+		getALPF.lowpassResonanceQ = 2;
+		getALPF.cutoffFrequency = 480;
+		getALPF.enabled = false;
+		AudioDistortionFilter ADF = musicObject.AddComponent<AudioDistortionFilter>();
+		ADF.distortionLevel = 1;
+		ADF.enabled = false;
 		var behaviour = thisCam.GetComponent<PostProcessingBehaviour>();
 
 		postProfile = Instantiate(behaviour.profile, transform);
