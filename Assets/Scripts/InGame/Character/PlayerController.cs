@@ -210,12 +210,14 @@ public class PlayerController : MonoBehaviour
     #region Mono
     void Update ( )
 	{
+		#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.K))
         {
             MaxSpeed = 1f;
             acceleration = 1;
         }
-            
+            #endif
+			
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
 
