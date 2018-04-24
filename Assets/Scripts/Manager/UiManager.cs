@@ -31,6 +31,7 @@ public class UiManager : ManagerParent
 
     public Image ArrowTuto;
 
+	public string ScoreString;
 	public Text ScorePoints;
 	public Text MoneyPoints;
 	public Text RankText;
@@ -623,20 +624,50 @@ public class UiManager : ManagerParent
         RedScreen.DOColor(new Color32(0xff, 0xff, 0xff, 0x00), 0);
     }
 
+	string NbrString ( string getText )
+	{
+		string getNew = string.Empty;
+		int count = 0;
+		int a;
+		for  ( a = getText.Length - 1; a >= 0; a -- )
+		{
+			if ( count > 0 && count % 3 == 0 )
+			{
+				getNew += " ";
+			}
+			count++;
+			getNew += getText [ a ];
+		}
+
+		getText = string.Empty;
+
+		for  ( a = getNew.Length - 1; a >= 0; a -- )
+		{
+			getText += getNew [ a ];
+		}
+
+		return getText;
+	}
+
+    public void UpdateScore ( )
+    {
+        ScorePoints.text = NbrString(ScoreString);
+    }
+
     public void ScorePlus(int number, Color rankColor, int currIndex, string type)
     {
 
         float randomPos = UnityEngine.Random.Range(-600, 600);
         float randomRot = UnityEngine.Random.Range(200, 200);
         //Debug.Log("score");
-        var scoreInt = (int.Parse(ScorePoints.text) + number);
-        ScorePoints.text = "" + scoreInt;
+        
+        var scoreInt = (int.Parse(ScoreString) + number);
+        ScoreString = "" + scoreInt;
+        ScorePoints.text = NbrString(ScoreString);
+
         StaticRewardTarget.SScoreLV = scoreInt;
 		AllPlayerPrefs.finalScore += number;
         AllPlayerPrefs.scoreWhithoutDistance += number;
-
-
-
 
         Text scoretxt = GlobalManager.GameCont.FxInstanciate(new Vector2(randomPos, randomRot), "TextScore", InGame.transform, 4f).GetComponent<Text>();
         scoretxt.text = "+ " + number + "\n" + type;
@@ -926,6 +957,7 @@ public class UiManager : ManagerParent
 	protected override void InitializeManager ( )
 	{
 		InieUI ( );
+        ScoreString = "0";
 		inputPlayer = ReInput.players.GetPlayer(0);
 		thisCam = GlobalManager.GameCont.thisCam;
 		Object[] getAllMenu = Resources.LoadAll ( "Menu" );
