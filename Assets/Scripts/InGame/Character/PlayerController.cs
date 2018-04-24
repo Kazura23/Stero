@@ -216,10 +216,12 @@ public class PlayerController : MonoBehaviour
             MaxSpeed = 1f;
             acceleration = 1;
         }
-            #endif
-			
+
         if (Input.GetKeyDown(KeyCode.R))
             GlobalManager.GameCont.Restart();
+
+			
+        #endif
 
         float getTime = Time.deltaTime;
 

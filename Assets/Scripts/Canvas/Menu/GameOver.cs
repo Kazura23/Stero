@@ -60,6 +60,9 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
+		
+		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(true);
+
         AllPlayerPrefs.SendAnalytics();
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
         StaticRewardTarget.SaveReward();
@@ -85,7 +88,7 @@ public class GameOver : UiParent
 		GameOverTok thisTok = GetTok as GameOverTok;
         GetComponent<CanvasGroup>().DOFade(0, 0);
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
-		CoinWin.text = ((int)thisTok.totalDist / RatioScorePiece).ToString();
+		CoinWin.text = "+ " + ((int)thisTok.totalDist / RatioScorePiece).ToString();
 		CoinWin.transform.localScale = Vector3.zero;
 
 		AllPlayerPrefs.SetIntValue(Constants.Coin, (int)thisTok.totalDist / RatioScorePiece, true);
@@ -135,8 +138,8 @@ public class GameOver : UiParent
 						
                     });
 
-					CoinWin.transform.DOScale(1, .1f).OnComplete(() => {
-						CoinWin.transform.DOPunchScale((Vector3.one * .45f), .25f, 15, 1).OnComplete(() => {
+					CoinWin.transform.DOScale(1, .25f).OnComplete(() => {
+						CoinWin.transform.DOPunchScale((Vector3.one * .45f), .9f, 15, 1).OnComplete(() => {
 							CoinWin.transform.DOScale(0, .5f);
 							CoinWin.transform.DOMove(MoneyMut.gameObject.transform.position, .5f).OnComplete( () =>
 							{
