@@ -129,9 +129,9 @@ public class Option :  UiParent
 		Transform getOpTrans = GetOptionObj[indexOption].ThisObj.transform.GetChild(0);
 
 		getOpTrans.GetChild(0).GetComponent<Image>().DOKill();
-		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(0,.05f);
+		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(0,.25f);
 		
-		getOpTrans.GetComponent<CanvasGroup>().DOFade(0,.05f);
+		getOpTrans.GetComponent<CanvasGroup>().DOFade(0,.25f);
 		getOpTrans.GetComponent<CanvasGroup>().DOKill();
 
 
@@ -163,10 +163,10 @@ public class Option :  UiParent
 
 		Transform getOpTrans = GetOptionObj[indexOption].ThisObj.transform.GetChild(0);
 		getOpTrans.GetChild(0).GetComponent<Image>().DOKill();
-		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(1,.15f);
+		getOpTrans.GetChild(0).GetComponent<Image>().DOFillAmount(1,.4f);
 		
 		getOpTrans.GetComponent<CanvasGroup>().DOKill();
-		getOpTrans.GetComponent<CanvasGroup>().DOFade(1,.15f);
+		getOpTrans.GetComponent<CanvasGroup>().DOFade(1,.4f);
 
 		currMenu = GetOptionObj[indexOption].ThisOption;
 
