@@ -90,6 +90,7 @@ public class GameOver : UiParent
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
 		CoinWin.text = "+ " + ((int)thisTok.totalDist / RatioScorePiece).ToString();
 		CoinWin.transform.localScale = Vector3.zero;
+		CoinWin.transform.localPosition = new Vector3(560,250,0);
 
 		AllPlayerPrefs.SetIntValue(Constants.Coin, (int)thisTok.totalDist / RatioScorePiece, true);
 			
