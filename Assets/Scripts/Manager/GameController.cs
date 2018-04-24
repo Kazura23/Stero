@@ -345,9 +345,9 @@ public class GameController : ManagerParent
 					
 						UnityEditor.EditorApplication.isPlaying = false;
 					#endif
-					#if Application
+					
+					if(!Application.isEditor)
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
-					#endif
 				}
 				break;
 			}

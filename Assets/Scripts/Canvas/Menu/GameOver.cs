@@ -90,6 +90,7 @@ public class GameOver : UiParent
 		PointsGameOver.text = Mathf.RoundToInt( thisTok.totalDist ).ToString();
 		CoinWin.text = "+ " + ((int)thisTok.totalDist / RatioScorePiece).ToString();
 		CoinWin.transform.localScale = Vector3.zero;
+		CoinWin.transform.localPosition = new Vector3(0,290,0);
 
 		AllPlayerPrefs.SetIntValue(Constants.Coin, (int)thisTok.totalDist / RatioScorePiece, true);
 			
@@ -172,6 +173,9 @@ public class GameOver : UiParent
 
 	public override void CloseThis ( )
 	{
+		
+        newScore.GetComponent<CanvasGroup>().DOFade(0, 0.1f);
+
 		canUpdate = false;
 
 		GlobalManager.Ui.ScoreString = "0";

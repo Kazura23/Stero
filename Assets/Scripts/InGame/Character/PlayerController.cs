@@ -912,7 +912,7 @@ public class PlayerController : MonoBehaviour
 		else if ( !onTuto )
 		{
 			timerFight.value -= ( getTime / DelayTimerToDeath ) * 0.25f;
-			barMadSource.pitch = 2 - (getVol * (((timerFight.value * 100) / 0.25f) / 100)) * 0.5f;
+			barMadSource.pitch = 1.5f - (getVol * (((timerFight.value * 100) / 0.25f) / 100)) * 0.5f;
 			
 			if ( timerFight.value <= 0)
             {
