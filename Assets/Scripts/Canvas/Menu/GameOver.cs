@@ -178,8 +178,12 @@ public class GameOver : UiParent
 
 		canUpdate = false;
 
+		GlobalManager.Ui.ScoreString = "0";
+		GlobalManager.Ui.ScorePoints.text = "0";
+
 		gameObject.GetComponent<CanvasGroup> ( ).DOFade ( 0, TimeFade ).OnComplete ( ( ) =>
 		{
+			
 			TimeFade = 0.25f;
 			base.CloseThis ( );
 		} );
