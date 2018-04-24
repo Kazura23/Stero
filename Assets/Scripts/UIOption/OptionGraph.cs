@@ -8,7 +8,6 @@ using Rewired.UI.ControlMapper;
 public class OptionGraph : MonoBehaviour {
 
     public Vector2Int[] resolutionValue;
-    public ControlMapper mapper;
 
 	// Use this for initialization
 	void Start () {
@@ -23,20 +22,33 @@ public class OptionGraph : MonoBehaviour {
         var dropShadow = transform.GetChild(2).GetComponent<Dropdown>();
         dropShadow.ClearOptions();
         dropShadow.AddOptions(new List<string> { "Very High", "High", "Medium", "Low"});
-        dropShadow.onValueChanged.AddListener(delegate { ChangeOmbreQuality(dropShadow.value); });
+        dropShadow.onValueChanged.AddListener(delegate 
+        {
+            ChangeOmbreQuality(dropShadow.value);
+            PlayerPrefs.SetInt("QOmbre", dropShadow.value);
+        });
 
         var dropTexture = transform.GetChild(3).GetComponent<Dropdown>();
         dropTexture.ClearOptions();
         dropTexture.AddOptions(new List<string> { "Very High", "High", "Medium", "Low" });
-        dropTexture.onValueChanged.AddListener(delegate { ChangeTextureQuality(dropTexture.value); });
+        dropTexture.onValueChanged.AddListener(delegate 
+        {
+            ChangeTextureQuality(dropTexture.value);
+            PlayerPrefs.SetInt("QTexture", dropTexture.value);
+        });
 
         var dropVSync = transform.GetChild(4).GetComponent<Dropdown>();
         dropVSync.ClearOptions();
         dropVSync.AddOptions(new List<string> { "Don't Sync", "Every V Blank", "Every Second V Blank"});
         dropVSync.value = 1;
-        dropVSync.onValueChanged.AddListener(delegate { ChangeVSync(dropVSync.value); });
+        dropVSync.onValueChanged.AddListener(delegate 
+        {
+            ChangeVSync(dropVSync.value);
+            PlayerPrefs.SetInt("V-Sync", dropVSync.value);
+        });
 
         transform.GetChild(5).GetComponent<Button>().onClick.AddListener(delegate { Back(); });
+        LoadOptionGraph(dropShadow, dropTexture, dropVSync);
     }
 	
     private void ChangeResolution(int rang, bool fullSize)
@@ -48,7 +60,6 @@ public class OptionGraph : MonoBehaviour {
     {
         //QualitySettings.SetQualityLevel(); a voir
         QualitySettings.shadowResolution = (ShadowResolution)shadowResolution;
-        Debug.Log("ok ombre");
     }
 
     private void ChangeTextureQuality(int level)
@@ -77,12 +88,15 @@ public class OptionGraph : MonoBehaviour {
         return newList;
     }
 
-    private void Update()
+    private void LoadOptionGraph(Dropdown shadow, Dropdown texture, Dropdown vsync)
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //transform.GetChild(1).GetComponent<Dropdown>().Select();
-            transform.GetChild(1).GetComponent<Dropdown>().Show();
-        }
+        ChangeOmbreQuality(PlayerPrefs.GetInt("QOmbre", 0));
+        shadow.value = PlayerPrefs.GetInt("QOmbre", 0);
+
+        ChangeTextureQuality(PlayerPrefs.GetInt("QTexture", 0));
+        texture.value = PlayerPrefs.GetInt("QTexture", 0);
+
+        ChangeVSync(PlayerPrefs.GetInt("V-Sync", 0));
+        vsync.value = PlayerPrefs.GetInt("V-Sync", 0);
     }
 }

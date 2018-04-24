@@ -156,6 +156,8 @@ public class PlayerController : MonoBehaviour
 	Image backTF;
     Image handleTF;
 
+	AudioSource barMadSource;
+
 	float checkDistY = -100;
 	float maxSpeedCL = 0;
 	float maxSpeed = 0;
@@ -252,6 +254,7 @@ public class PlayerController : MonoBehaviour
 	#region Public Functions
 	public void IniPlayer ( )
 	{
+		barMadSource = GlobalManager.AudioMa.GetSource(AudioType.Madnesse);
 		pTrans = transform;
 		timerFight = GlobalManager.Ui.Madness;
 		timerFight.value = 0.5f;
@@ -273,6 +276,7 @@ public class PlayerController : MonoBehaviour
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
 
 		inputPlayer = ReInput.players.GetPlayer(0);
+
 
 
         //Rewired.ReInput.mapping.GetKeyboardMapInstance(0, 0).GetElementMaps()[0];
@@ -624,7 +628,7 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.75f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Green", true);
-
+				getVol = barMadSource.volume * 0.5f;
                 newStat( StatePlayer.Madness );
 
 
@@ -845,6 +849,7 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
+	float getVol = 0;
 	void TimerCheck ( float getTime )
 	{
 		if ( onBonusStart )
@@ -864,6 +869,7 @@ public class PlayerController : MonoBehaviour
             {
                 timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
 
+				barMadSource.volume = getVol + getVol * ((((timerFight.value - 0.75f) * 100) / 0.25f) / 100);
             }
 
 			if ( timerFight.value < 0.75f )
@@ -889,6 +895,8 @@ public class PlayerController : MonoBehaviour
 			if ( timerFight.value < 0.25f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Red", true);
+				
+				getVol = barMadSource.volume;
 
                 GlobalManager.Ui.MadnessRedStart();
 
@@ -902,6 +910,8 @@ public class PlayerController : MonoBehaviour
 		else if ( !onTuto )
 		{
 			timerFight.value -= ( getTime / DelayTimerToDeath ) * 0.25f;
+			barMadSource.volume = getVol - (getVol * (((timerFight.value * 100) / 0.25f) / 100)) * 0.5f;
+			
 			if ( timerFight.value <= 0)
             {
 				secureTimer = false;
