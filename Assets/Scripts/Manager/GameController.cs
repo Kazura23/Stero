@@ -125,6 +125,8 @@ public class GameController : ManagerParent
         posInitPlayer = Player.transform.position;
         AllPlayerPrefs.ANbRun = 0;
         inputPlayer = ReInput.players.GetPlayer(0);
+
+		Cursor.visible = false;
     }
 
     void Update ( )
@@ -334,6 +336,15 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
 
+				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl)
+				{
+					if (!Application.isEditor)
+                    {
+                        System.Diagnostics.Process.GetCurrentProcess().Kill();
+                    } else{
+						UnityEditor.EditorApplication.isPlaying = false;
+					}
+				}
 				break;
 			}
 	           
