@@ -470,9 +470,7 @@ public class UiManager : ManagerParent
 		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
         textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
 
-
         Destroy(textMadness, 3);
-
 
 		DOTween.Kill ( GlobalManager.GameCont.chromValue );
 		DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);
