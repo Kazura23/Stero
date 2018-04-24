@@ -188,7 +188,7 @@ public class GameController : ManagerParent
                     //Debug.Log("Leaderboards");
                     textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
                     textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
-                    textIntroObject.GetComponent<TextMesh>().text = textIntroText[0];
+                    textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[0];
                     if (inputPlayer.GetAxis("CoupSimple") == 1)
                     {
                         isStay = false;
@@ -210,7 +210,7 @@ public class GameController : ManagerParent
 				}
 				textIntroObject.transform.DOLocalMove(textIntroTransform[1].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[1].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[1];
+				textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[1];
 
 				//GameStartedUpdate();
 				break;
@@ -219,7 +219,7 @@ public class GameController : ManagerParent
 				//Debug.Log("Start");
 				textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[2];
+				textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[2];
 
 				
 
@@ -240,6 +240,9 @@ public class GameController : ManagerParent
 
 						getPlayer.PlayDirect.Play ( );
 						//AnimationStartGame();
+						DOVirtual.DelayedCall(1f,()=>{
+							textIntroObject.gameObject.SetActive(false);
+						});
 
 						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
 							Player.transform.DOLocalMoveX ( 0, 0.7f );
@@ -319,7 +322,7 @@ public class GameController : ManagerParent
 
 				textIntroObject.transform.DOLocalMove ( textIntroTransform [ 3 ].localPosition, 0 );
 				textIntroObject.transform.DOLocalRotate ( textIntroTransform [ 3 ].localEulerAngles, 0 );
-				textIntroObject.GetComponent<TextMesh> ( ).text = textIntroText [ 3 ];
+				textIntroObject.GetComponent<TextMeshPro> ( ).text = textIntroText [ 3 ];
 
 				ActiveTextIntro ( );
 				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && GlobalManager.GameCont.canOpenShop )
@@ -334,16 +337,17 @@ public class GameController : ManagerParent
 				//Debug.Log("Quit");
 				textIntroObject.transform.DOLocalMove(textIntroTransform[4].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[4].localEulerAngles, 0);
-				textIntroObject.GetComponent<TextMesh>().text = textIntroText[4];
+				textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[4];
 
 				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl)
 				{
-					if (!Application.isEditor)
-                    {
-                        System.Diagnostics.Process.GetCurrentProcess().Kill();
-                    } else{
+					#if UNITY_EDITOR
+					
 						UnityEditor.EditorApplication.isPlaying = false;
-					}
+					#endif
+					#if Application
+                        System.Diagnostics.Process.GetCurrentProcess().Kill();
+					#endif
 				}
 				break;
 			}
@@ -392,9 +396,9 @@ public class GameController : ManagerParent
     void ActiveTextIntro()
     {
         colorTw = DOVirtual.DelayedCall(.2f, () => {
-            Color alph = textIntroObject.GetComponent<TextMesh>().color;
+            Color alph = textIntroObject.GetComponent<TextMeshPro>().color;
             alph.a = 1;
-            textIntroObject.GetComponent<TextMesh>().color = alph;
+            textIntroObject.GetComponent<TextMeshPro>().color = alph;
         });
     }
 
@@ -937,19 +941,21 @@ public class GameController : ManagerParent
 
 		getRankSlid.fillAmount = 0;
 	}
-
+ /* 
     private void AnimationStartGame() // don't forget freeze keyboard when animation time
     {
         Player.transform.DORotate(new Vector3(0, 90, 0), 2).OnComplete(()=> 
         {
             //animation seringue + son
+
+
             Player.transform.DORotate(new Vector3(-65, 0, 0), 2).OnComplete(()=> 
             {
                 // activation shader + son
                 /*for(int i = 0; i < textMeshs.childCount; i++) // voir si active la liste des text mesh ou un par un
                 {
                     textMeshs.GetChild(i).gameObject.SetActive(true);
-                }*/
+                }*/ /* 
                 //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
                 Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
                 {
@@ -979,7 +985,7 @@ public class GameController : ManagerParent
                 });
             });
         });
-    }
+    }*/
 
     private IEnumerator TimerRotate()
     {
@@ -1283,9 +1289,9 @@ public class GameController : ManagerParent
 		}
         //colorTw.Kill(true);
 
-        Color alphachg = textIntroObject.GetComponent<TextMesh>().color;
+        Color alphachg = textIntroObject.GetComponent<TextMeshPro>().color;
         alphachg.a = 0;
-        textIntroObject.GetComponent<TextMesh>().color = alphachg;
+        textIntroObject.GetComponent<TextMeshPro>().color = alphachg;
 
         if (p_add && GlobalManager.Ui.menuOpen == MenuType.Nothing)
         {
