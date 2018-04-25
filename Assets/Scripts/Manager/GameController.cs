@@ -1408,7 +1408,7 @@ public class GameController : ManagerParent
 		AllPlayerPrefs.ListScoreUI = ListScoresUi;
 		Player = GameObject.FindGameObjectWithTag("Player");
 		thisCam = Player.GetComponentInChildren<Camera> ( );
-        musicObject = GlobalManager.AudioMa.GetSource(AudioType.MusicBackGround).gameObject;
+        musicObject = GlobalManager.AudioMa.GetSource(AudioType.Menu).gameObject;
 
 		AudioLowPassFilter getALPF = musicObject.AddComponent<AudioLowPassFilter>();
 		getALPF.lowpassResonanceQ = 2;
