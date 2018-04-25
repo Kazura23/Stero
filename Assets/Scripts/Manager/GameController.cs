@@ -220,6 +220,7 @@ public class GameController : ManagerParent
 				textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
 				textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 				textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[2];
+				//textIntroObject.gameObject.SetActive(true);
 
 				
 
