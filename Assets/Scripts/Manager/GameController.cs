@@ -131,6 +131,9 @@ public class GameController : ManagerParent
 
     void Update ( )
 	{
+
+		Debug.Log(textIntroObject.gameObject);
+
 		if ( GlobalManager.Ui.OnMenu )
 		{
 			return;
@@ -584,6 +587,8 @@ public class GameController : ManagerParent
 				thisPcontr.StopPlayer = false;
 				restartGame = false;
 				GlobalManager.Ui.IntroRestart ( );
+				
+				textIntroObject.gameObject.SetActive(true);
 			} );
 		}
 		else
@@ -679,7 +684,7 @@ public class GameController : ManagerParent
 		StartGame ( );
         //GameStarted = false;
     }   
-    
+
 	public void UnLockChunk ( ChunksScriptable thisScript, GameObject ThisChunk ) 
 	{ 
 		thisScript.TheseChunks.Add ( ThisChunk ); 

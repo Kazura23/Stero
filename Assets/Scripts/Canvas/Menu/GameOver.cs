@@ -61,9 +61,6 @@ public class GameOver : UiParent
 		base.OpenThis ( GetTok );
 
 		
-		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(true);
-		GlobalManager.GameCont.textIntroObject.transform.DOLocalMove(GlobalManager.GameCont.textIntroTransform[1].localPosition, 0);
-		GlobalManager.GameCont.textIntroObject.transform.DOLocalRotate(GlobalManager.GameCont.textIntroTransform[1].localEulerAngles, 0);
 
         AllPlayerPrefs.SendAnalytics();
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
