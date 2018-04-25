@@ -92,5 +92,6 @@ public enum DeathType
 	Acceleration,
 	Madness,
 	Punch,
-	Enemy
+	Enemy,
+	Walk
 }

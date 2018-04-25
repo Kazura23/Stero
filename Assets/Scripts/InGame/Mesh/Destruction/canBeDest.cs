@@ -19,14 +19,14 @@ public class canBeDest : MonoBehaviour
 		}
 
 		string getTag = collision.collider.tag;
-		if ( !onColl && getTag == Constants._PlayerTag && DeadByPlayer && ( gameObject.tag != Constants._ElemDash || GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash ) || getTag == Constants._ObjDeadTag )
+		if ( !onColl && getTag == Constants._PlayerTag && !GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).Dash && DeadByPlayer && gameObject.tag != Constants._ElemDash || getTag == Constants._ObjDeadTag )
 		{
 			AbstractObject getAbs = GetComponent <AbstractObject> ( );
 			if ( getAbs != null )
 			{
 				if ( getTag == Constants._PlayerTag )
 				{
-					getAbs.ForceProp ( Vector2.zero, DeathType.Punch );
+					getAbs.ForceProp ( Vector2.zero, DeathType.Walk );
 				}
 				else
 				{

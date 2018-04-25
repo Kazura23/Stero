@@ -243,7 +243,7 @@ public class AudioManager : ManagerParent
 
 			currAudInfo.audioParent = getObj.AddComponent<AudioSource>( );
 			currAudInfo.audioChild = new List<AudioSource>();
-
+			
 			if(OrderAllAudio.TryGetValue(getAudType, out SetAllAudio))
 			{
 				currAudInfo.AllAudScript = SetAllAudio.ToArray();
