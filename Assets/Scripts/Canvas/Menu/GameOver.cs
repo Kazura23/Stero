@@ -60,7 +60,8 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
-		
+		GlobalManager.AudioMa.CloseUnLoopAudio(AudioType.Madnesse);
+		GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
         AllPlayerPrefs.SendAnalytics();
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());

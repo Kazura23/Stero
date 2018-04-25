@@ -56,7 +56,8 @@ public enum AudioType
 	SteroKill,
 	PunchVoice,
 	MusicTrash,
-    Madnesse
+    Madnesse,
+    Menu
 }
 
 public enum ResearcheType 

@@ -130,8 +130,6 @@ public class PlayerController : MonoBehaviour
 	Vector3 dirLine = Vector3.zero;
 	Vector3 lastPos;
 
-	string textDist;
-
 	IEnumerator currWF;
 	IEnumerator thisEnum;
 	IEnumerator getCouldown;
@@ -270,7 +268,6 @@ public class PlayerController : MonoBehaviour
 		getPunch = GetComponentInChildren<Punch> ( );
 		SliderSlow = GlobalManager.Ui.MotionSlider;
 		lastPos = pTrans.position;
-		textDist = GlobalManager.Ui.ScoreString;
 	
 		camMad = GetComponentInChildren<CameraFilterPack_Color_YUV>();
 		saveCamMad = new Vector3(camMad._Y, camMad._U, camMad._V);
@@ -307,7 +304,7 @@ public class PlayerController : MonoBehaviour
 
         GlobalManager.Ui.MadnessGreenEnd();
 
-        textDist = "0";
+        GlobalManager.Ui.ScoreString = "0";
 		GlobalManager.Ui.UpdateScore();
 		SliderSlow.value = SliderSlow.maxValue;
 		onTuto = GlobalManager.GameCont.LaunchTuto;
@@ -407,7 +404,7 @@ public class PlayerController : MonoBehaviour
 
 			pTrans.DOLocalMove ( pTrans.localPosition - pTrans.forward * 10, 1 ).OnComplete ( ( ) =>
 			{
-				textDist = "" + ( int.Parse ( textDist ) - 10 );
+				GlobalManager.Ui.ScoreString = "" + ( int.Parse ( GlobalManager.Ui.ScoreString ) - 10 );
 				totalDis -= 10;
 				calDist = (int)totalDis;
 				lastPos = pTrans.position;
@@ -630,7 +627,6 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.75f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Green", true);
-				getVol = barMadSource.pitch;
                 newStat( StatePlayer.Madness );
 
 
@@ -870,8 +866,6 @@ public class PlayerController : MonoBehaviour
 			else
             {
                 timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
-
-				barMadSource.pitch = getVol + 1 * ((((timerFight.value - 0.75f) * 100) / 0.25f) / 100);
             }
 
 			if ( timerFight.value < 0.75f )
@@ -954,7 +948,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 		lastPos = pTrans.position;
-		textDist = "" + ( int.Parse ( textDist ) + currDist );
+		GlobalManager.Ui.ScoreString = "" + ( int.Parse ( GlobalManager.Ui.ScoreString ) + currDist );
+		//GlobalManager.Ui.ScoreString + 
 		GlobalManager.Ui.UpdateScore();
 		
 		if ( totalDis > nextIncrease )

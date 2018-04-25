@@ -596,7 +596,7 @@ public class GameController : ManagerParent
 			onHub = true;
 			GlobalManager.AudioMa.CloseAllAudio ( );
 			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
-			GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "Menu", true, null );
+			GlobalManager.AudioMa.OpenAudio ( AudioType.Menu, "", true, null );
 		}
 
 		GameStarted = true;
