@@ -8,6 +8,10 @@ public class TutoTrigger : MonoBehaviour {
     //public int numTrigger;
     public GameObject[] textMesh;
 
+    public static TutoTrigger Singleton;
+
+    public bool used;
+
     public enum TutoType
     {
         None,
@@ -22,6 +26,7 @@ public class TutoTrigger : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+        
         GameObject TutoObject = GameObject.Find("TextObject");
 
         foreach (Transform trans in TutoObject.transform)
@@ -39,8 +44,9 @@ public class TutoTrigger : MonoBehaviour {
                 textMesh[i].GetComponent<MeshRenderer>().enabled = true;
             }
             //Debug.Log("pro");
-            if (typeTuto == TutoType.Reset)
+            if (!used && typeTuto == TutoType.Reset)
             {
+                used = true;
                 //GlobalManager.Ui.GameParent.GetComponent<CanvasGroup>().DOFade(0, .1f);
                 GlobalManager.Ui.Madness.GetComponent<CanvasGroup>().DOFade(0, .1f);
                 GlobalManager.Ui.MoneyPoints.transform.parent.GetComponent<CanvasGroup>().DOFade(0, .1f);
@@ -72,6 +78,7 @@ public class TutoTrigger : MonoBehaviour {
             if (typeTuto == TutoType.Madness)
             {
                 GlobalManager.Ui.ArrowTuto.enabled = false;
+                
             }
 
         }

@@ -46,6 +46,7 @@ public class GameController : ManagerParent
 	public GameObject[] tabGameObject = new GameObject[5];
 	public float delayRotate = 5;
 	public GameObject textIntroObject;
+	public GameObject textIntroInputs;
 	public Transform[] textIntroTransform;
 	public string[] textIntroText;
 	public Tween colorTw;
@@ -132,7 +133,7 @@ public class GameController : ManagerParent
     void Update ( )
 	{
 
-		Debug.Log(textIntroObject.gameObject);
+		//Debug.Log(textIntroObject.gameObject);
 
 		if ( GlobalManager.Ui.OnMenu )
 		{
@@ -246,6 +247,7 @@ public class GameController : ManagerParent
 						//AnimationStartGame();
 						DOVirtual.DelayedCall(1f,()=>{
 							textIntroObject.gameObject.SetActive(false);
+							textIntroInputs.gameObject.SetActive(false);
 						});
 
 						DOVirtual.DelayedCall((float)getPlayer.PlayDirect.duration, () => {
@@ -280,8 +282,15 @@ public class GameController : ManagerParent
 					}
 					else
 					{
+						GlobalManager.AudioMa.CloseAudio ( AudioType.Menu );
 						AllPlayerPrefs.SetStringValue ( Constants.TutoName );
 						Instantiate ( Tutoriel );
+
+						DOVirtual.DelayedCall(6,()=>{
+
+								TutoTrigger.Singleton.used = false;
+
+						});
 
 						DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, .3f, .25f).OnComplete(() => {
 							DOTween.To(() => GlobalManager.GameCont.currentValue, x => GlobalManager.GameCont.currentValue = x, 0, .12f);
@@ -309,6 +318,7 @@ public class GameController : ManagerParent
 								isReady = true;
 								isStay = true;
 								ActiveGame ( );
+								
 								//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
 
 								//Player.GetComponent<PlayerController>().StopPlayer = false;
@@ -589,13 +599,15 @@ public class GameController : ManagerParent
 				GlobalManager.Ui.IntroRestart ( );
 				
 				textIntroObject.gameObject.SetActive(true);
+				textIntroInputs.gameObject.SetActive(true);
 			} );
 		}
 		else
 		{
-			Debug.Log("Set");
+			//Debug.Log("Hub");
 			onHub = true;
 			textIntroObject.gameObject.SetActive(true);
+			textIntroInputs.gameObject.SetActive(true);
 			textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
 			textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 			GlobalManager.AudioMa.CloseAllAudio ( );
@@ -897,7 +909,7 @@ public class GameController : ManagerParent
 	{ 
 		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
 		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
-		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+		//GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
 
 	private IEnumerator TrashFunction()
