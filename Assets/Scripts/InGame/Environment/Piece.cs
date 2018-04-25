@@ -7,6 +7,11 @@ public class Piece : MonoBehaviour
 {
     public int point = 100;
 
+    void Start ()
+    {
+        GetComponent<Collider>().isTrigger = true;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == Constants._PlayerTag)

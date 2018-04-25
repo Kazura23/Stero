@@ -630,7 +630,6 @@ public class PlayerController : MonoBehaviour
 			if ( getCal > 0.75f )
 			{
                 GlobalManager.AudioMa.OpenAudio(AudioType.Madnesse, "Green", true);
-				getVol = barMadSource.pitch;
                 newStat( StatePlayer.Madness );
 
 
@@ -870,8 +869,6 @@ public class PlayerController : MonoBehaviour
 			else
             {
                 timerFight.value -= ( getTime / DelayTimerToMad ) * 0.25f;
-
-				barMadSource.pitch = getVol + 1 * ((((timerFight.value - 0.75f) * 100) / 0.25f) / 100);
             }
 
 			if ( timerFight.value < 0.75f )
