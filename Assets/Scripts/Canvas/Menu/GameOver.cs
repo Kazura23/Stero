@@ -58,6 +58,8 @@ public class GameOver : UiParent
 	#region Public Methods
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
+		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(false);
+		GlobalManager.GameCont.textIntroObject.transform.DOLocalMoveY(-1000,0);
 		base.OpenThis ( GetTok );
 
 		GlobalManager.AudioMa.CloseUnLoopAudio(AudioType.Madnesse);

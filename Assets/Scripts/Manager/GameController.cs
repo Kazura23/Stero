@@ -593,7 +593,11 @@ public class GameController : ManagerParent
 		}
 		else
 		{
+			Debug.Log("Set");
 			onHub = true;
+			textIntroObject.gameObject.SetActive(true);
+			textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+			textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 			GlobalManager.AudioMa.CloseAllAudio ( );
 			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.Menu, "", true, null );
