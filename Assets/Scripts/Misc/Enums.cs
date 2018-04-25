@@ -74,7 +74,8 @@ public enum ResearcheType
 public enum TypeRotate
 {
 	Clockwise,
-	CounterClockwise
+	CounterClockwise,
+	Direct
 }
 
 public enum OptionMenu 

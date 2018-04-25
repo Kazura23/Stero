@@ -178,7 +178,8 @@ public class MenuShop : UiParent
 	{
         if (GlobalManager.GameCont.canOpenShop)
         {
-			GetVideoPlayer.gameObject.SetActive(false);
+			if(GetVideoPlayer != null)
+				GetVideoPlayer.gameObject.SetActive(false);
             GlobalManager.GameCont.canOpenShop = false;
             base.OpenThis(GetTok);
 

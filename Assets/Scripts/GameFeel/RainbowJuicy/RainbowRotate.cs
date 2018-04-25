@@ -36,6 +36,11 @@ public class RainbowRotate : MonoBehaviour
 		{
 			currT.DOLocalRotate ( moves [ index ], time, RotateMode.LocalAxisAdd ).SetEase ( easeType ).OnComplete ( ( ) => Next ( ) );
 		}
+
+        if ( movesType == TypeRotate.Direct)
+		{
+			currT.DOLocalRotate ( moves [ index ], time ).SetEase ( easeType ).OnComplete ( ( ) => Next ( ) );
+		}
     }
 
     void OnDisable()
