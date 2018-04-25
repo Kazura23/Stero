@@ -60,7 +60,8 @@ public class GameOver : UiParent
 	{
 		base.OpenThis ( GetTok );
 
-		
+		GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
+		GlobalManager.AudioMa.CloseUnLoopAudio(AudioType.Madnesse);
 		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(true);
 		GlobalManager.GameCont.textIntroObject.transform.DOLocalMove(GlobalManager.GameCont.textIntroTransform[1].localPosition, 0);
 		GlobalManager.GameCont.textIntroObject.transform.DOLocalRotate(GlobalManager.GameCont.textIntroTransform[1].localEulerAngles, 0);
