@@ -50,6 +50,9 @@ public class Option :  UiParent
 
 	void Update ()
 	{
+
+
+
 		if ( Input.GetKeyDown ( KeyCode.Escape ) )
 		{
 			GlobalManager.Ui.CloseThisMenu ( );

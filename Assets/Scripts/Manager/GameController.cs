@@ -131,6 +131,9 @@ public class GameController : ManagerParent
 
     void Update ( )
 	{
+
+		Debug.Log(textIntroObject.gameObject);
+
 		if ( GlobalManager.Ui.OnMenu )
 		{
 			return;
@@ -584,11 +587,17 @@ public class GameController : ManagerParent
 				thisPcontr.StopPlayer = false;
 				restartGame = false;
 				GlobalManager.Ui.IntroRestart ( );
+				
+				textIntroObject.gameObject.SetActive(true);
 			} );
 		}
 		else
 		{
+			Debug.Log("Set");
 			onHub = true;
+			textIntroObject.gameObject.SetActive(true);
+			textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);
+			textIntroObject.transform.DOLocalRotate(textIntroTransform[2].localEulerAngles, 0);
 			GlobalManager.AudioMa.CloseAllAudio ( );
 			GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash, true );
 			GlobalManager.AudioMa.OpenAudio ( AudioType.Menu, "", true, null );
@@ -679,7 +688,7 @@ public class GameController : ManagerParent
 		StartGame ( );
         //GameStarted = false;
     }   
-    
+
 	public void UnLockChunk ( ChunksScriptable thisScript, GameObject ThisChunk ) 
 	{ 
 		thisScript.TheseChunks.Add ( ThisChunk ); 

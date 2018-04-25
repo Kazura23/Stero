@@ -58,13 +58,12 @@ public class GameOver : UiParent
 	#region Public Methods
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
+		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(false);
+		GlobalManager.GameCont.textIntroObject.transform.DOLocalMoveY(-1000,0);
 		base.OpenThis ( GetTok );
 
-		GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 		GlobalManager.AudioMa.CloseUnLoopAudio(AudioType.Madnesse);
-		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(true);
-		GlobalManager.GameCont.textIntroObject.transform.DOLocalMove(GlobalManager.GameCont.textIntroTransform[1].localPosition, 0);
-		GlobalManager.GameCont.textIntroObject.transform.DOLocalRotate(GlobalManager.GameCont.textIntroTransform[1].localEulerAngles, 0);
+		GlobalManager.AudioMa.CloseAudio(AudioType.Madnesse);
 
         AllPlayerPrefs.SendAnalytics();
         AllPlayerPrefs.saveData.Add(AllPlayerPrefs.NewData());
