@@ -26,7 +26,7 @@ public class AudioManager : ManagerParent
 		{
 			getAllAudio = thisInfo.AllAudScript;
 
-			if (getAllAudio.Length == 0)
+			if (getAllAudio == null || getAllAudio.Length == 0)
 			{
 				return null;
 			}	
