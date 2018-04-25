@@ -556,7 +556,6 @@ public class PlayerController : MonoBehaviour
 		if ( !InMadness || thisDeath == DeathType.Enemy )
 		{
 			GlobalManager.GameCont.NewScore ( thisDeath, nbrPoint );
-
         }
 		else
 		{
@@ -1762,7 +1761,7 @@ public class PlayerController : MonoBehaviour
             {
                 GlobalManager.Ui.BloodHitDash();
             }
-            if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash )
+            if ( getObj.tag == Constants._EnnemisTag || getObj.tag == Constants._ElemDash || getObj.tag == Constants._ObsPropSafe )
 			{
 				int rdmValue = UnityEngine.Random.Range(0, 3);
 

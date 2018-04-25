@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+
+using UnityEngine;
 using UnityEngine.UI;
 
 public static class StaticRewardTarget {
@@ -36,7 +37,6 @@ public static class StaticRewardTarget {
 
     public static int SRankSteroidal;
 
-
     //private var
     private static int nbKillCharlotteLv1;
     private static int nbKillCharlotteLv2;
@@ -56,8 +56,7 @@ public static class StaticRewardTarget {
     private static int nbDansLeRougeMadness;
     private static int nbRangSteroidal;
 
-    public static void SetObjectifReward(int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, float p12, int p13, float p14, int p15, int p16, int p17)
-    {
+    public static void SetObjectifReward (int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, float p12, int p13, float p14, int p15, int p16, int p17) {
         nbKillCharlotteLv1 = p1;
         nbKillCharlotteLv2 = p2;
         nbKillCharlotteLv3 = p3;
@@ -75,10 +74,9 @@ public static class StaticRewardTarget {
         nbPropSafeDetruitEnMadness = p15;
         nbDansLeRougeMadness = p16;
         nbRangSteroidal = p17;
-}
+    }
 
-    public static void ResetVar()
-    {
+    public static void ResetVar ( ) {
         SCharlotteLV = 0;
         SDanielLV = 0;
         SVinoLV = 0;
@@ -92,149 +90,125 @@ public static class StaticRewardTarget {
         SRankSteroidal = 0;
     }
 
-    public static void SaveReward()
-    {
-        List<RewardObject> saveRewar = new List<RewardObject>();
-        for(int i = 0; i < listRewardTrans.childCount; i++)
-        {
-            saveRewar.Add(listRewardTrans.GetChild(i).GetComponent<RewardObject>());
+    public static void SaveReward ( ) {
+        List<RewardObject> saveRewar = new List<RewardObject> ( );
+        for (int i = 0; i < listRewardTrans.childCount; i++) {
+            saveRewar.Add (listRewardTrans.GetChild (i).GetComponent<RewardObject> ( ));
         }
-        SaveDataReward.Save(saveRewar);
+        SaveDataReward.Save (saveRewar);
     }
 
-    public static void LoadReward()
-    {
-        for(int i = 0; i < listRewardTrans.childCount; i++)
-        {
-            var tempReward = listRewardTrans.GetChild(i).GetComponent<RewardObject>();
-            LoadRewardId(tempReward);
+    public static void LoadReward ( ) {
+        for (int i = 0; i < listRewardTrans.childCount; i++) {
+            var tempReward = listRewardTrans.GetChild (i).GetComponent<RewardObject> ( );
+            LoadRewardId (tempReward);
         }
     }
 
-    private static void LoadUnlockReward(RewardObject p_reward)
-    {
-        p_reward.Unlock();
+    private static void LoadUnlockReward (RewardObject p_reward) {
+        p_reward.Unlock ( );
         p_reward.icon.sprite = icon_sucess;
-        ListRewardEnAttente.Add(GameObject.Instantiate(p_reward.afficheReward.gameObject, p_reward.afficheReward.parent.parent));
+        ListRewardEnAttente.Add (GameObject.Instantiate (p_reward.afficheReward.gameObject, p_reward.afficheReward.parent.parent));
 
     }
 
-    private static void LoadRewardId(RewardObject p_reward)
-    {
+    private static void LoadRewardId (RewardObject p_reward) {
         if (!p_reward.isUnlock) {
-            switch (p_reward.idReward)
-            {
+            switch (p_reward.idReward) {
                 //lier au kill charlotte
                 case 0:
-                    if (SCharlotteLV >= nbKillCharlotteLv1)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SCharlotteLV >= nbKillCharlotteLv1) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 1:
-                    if (SCharlotteLV >= nbKillCharlotteLv2)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SCharlotteLV >= nbKillCharlotteLv2) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 2:
-                    if (SCharlotteLV >= nbKillCharlotteLv3)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SCharlotteLV >= nbKillCharlotteLv3) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au kill daniel
+                    //lier au kill daniel
                 case 3:
-                    if (SDanielLV >= nbKillDanielLv1)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SDanielLV >= nbKillDanielLv1) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 4:
-                    if (SDanielLV >= nbKillDanielLv2)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SDanielLV >= nbKillDanielLv2) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au kill vino
+                    //lier au kill vino
                 case 5:
-                    if (SVinoLV >= nbKillVinoLv1)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SVinoLV >= nbKillVinoLv1) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 6:
-                    if (SVinoLV >= nbKillVinoLv2)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SVinoLV >= nbKillVinoLv2) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au score
+                    //lier au score
                 case 7:
-                    if (SScoreLV >= scoreObjectifLv1)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SScoreLV >= scoreObjectifLv1) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 8:
-                    if (SScoreLV >= scoreObjectifLv2)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SScoreLV >= scoreObjectifLv2) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
                 case 9:
-                    if (SScoreLV >= scoreObjectifLv3)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SScoreLV >= scoreObjectifLv3) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au score hardcore
+                    //lier au score hardcore
                 case 10:
-                    if (SScoreWithoutPunchAndTechSpec >= scoreSansPoingNiTechSpe)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SScoreWithoutPunchAndTechSpec >= scoreSansPoingNiTechSpe) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au temps slow motion
+                    //lier au temps slow motion
                 case 11:
-                    if (STimerSlowMo >= TempsObjectifSlowMtion)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (STimerSlowMo >= TempsObjectifSlowMtion) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier a la size de la boule magic
+                    //lier a la size de la boule magic
                 case 12:
-                    if (SSizeMagicSphere >= TailleBouleHumaine)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SSizeMagicSphere >= TailleBouleHumaine) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au temps passer en madness
+                    //lier au temps passer en madness
                 case 13:
-                    if (STimerMadness >= TempsPasserEnMadness)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (STimerMadness >= TempsPasserEnMadness) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au obstacle detruit en madness
+                    //lier au obstacle detruit en madness
                 case 14:
-                    if (SNbObstacleDestoyInMadness >= nbPropSafeDetruitEnMadness)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SNbObstacleDestoyInMadness >= nbPropSafeDetruitEnMadness) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier a la jauge de madness (dans le rouge)
+                    //lier a la jauge de madness (dans le rouge)
                 case 15:
-                    if (SRedMadness >= nbDansLeRougeMadness)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SRedMadness >= nbDansLeRougeMadness) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
-                //lier au rang S steroidal
+                    //lier au rang S steroidal
                 case 16:
-                    if (SRankSteroidal >= nbRangSteroidal)
-                    {
-                        LoadUnlockReward(p_reward);
+                    if (SRankSteroidal >= nbRangSteroidal) {
+                        LoadUnlockReward (p_reward);
                     }
                     break;
             }
@@ -243,42 +217,35 @@ public static class StaticRewardTarget {
 }
 
 #region Save_Reward
-public static class SaveDataReward
-{
-    public static void Save(List<RewardObject> p_dataSave)
-    {
-        if (!Directory.Exists(Application.dataPath + "/Save"))
-        {
-            Directory.CreateDirectory(Application.dataPath + "/Save");
+public static class SaveDataReward {
+    public static void Save (List<RewardObject> p_dataSave) {
+        if (!Directory.Exists (Application.dataPath + "/Save")) {
+            Directory.CreateDirectory (Application.dataPath + "/Save");
         }
 
-        List<RewardSaveAttribut> listSave = new List<RewardSaveAttribut>();
-        for(int i = 0; i < p_dataSave.Count; i++)
-        {
-            var temp = p_dataSave[i];
-            listSave.Add(new RewardSaveAttribut(temp.idReward, temp.isUnlock));
+        List<RewardSaveAttribut> listSave = new List<RewardSaveAttribut> ( );
+        for (int i = 0; i < p_dataSave.Count; i++) {
+            var temp = p_dataSave [i];
+            listSave.Add (new RewardSaveAttribut (temp.idReward, temp.isUnlock));
         }
 
         string path1 = Application.dataPath + "/Save/saveReward.bin";
-        FileStream fSave = File.Create(path1);
-        listSave.SerializeTo(fSave);
-        fSave.Close();
+        FileStream fSave = File.Create (path1);
+        listSave.SerializeTo (fSave);
+        fSave.Close ( );
         //GameObject.Find("Trash_text").GetComponent<Text>().text = "save";
     }
 
-    public static List<RewardSaveAttribut> Load()
-    {
-        if (!Directory.Exists(Application.dataPath + "/Save"))
-        {
-            Directory.CreateDirectory(Application.dataPath + "/Save");
+    public static List<RewardSaveAttribut> Load ( ) {
+        if (!Directory.Exists (Application.dataPath + "/Save")) {
+            Directory.CreateDirectory (Application.dataPath + "/Save");
         }
         string path1 = Application.dataPath + "/Save/saveReward.bin";
-        List<RewardSaveAttribut> l;// = new List<RewardSaveAttribut>();
-        if (File.Exists(path1))
-        {
-            FileStream fSave = File.Open(path1, FileMode.Open, FileAccess.ReadWrite);
-            l = fSave.Deserialize<List<RewardSaveAttribut>>();
-            fSave.Close();
+        List<RewardSaveAttribut> l; // = new List<RewardSaveAttribut>();
+        if (File.Exists (path1)) {
+            FileStream fSave = File.Open (path1, FileMode.Open, FileAccess.ReadWrite);
+            l = fSave.Deserialize<List<RewardSaveAttribut>> ( );
+            fSave.Close ( );
             return l;
             //GameObject.Find("Trash_text").GetComponent<Text>().text = l.listScore.Count > 0 ? "score = "+l.listScore[0].finalScore : "no save";
         }
@@ -287,12 +254,10 @@ public static class SaveDataReward
 }
 
 [System.Serializable]
-public class RewardSaveAttribut
-{
+public class RewardSaveAttribut {
     public int id;
     public bool unlock;
-    public RewardSaveAttribut(int p_id, bool p_u)
-    {
+    public RewardSaveAttribut (int p_id, bool p_u) {
         id = p_id;
         unlock = p_u;
     }

@@ -206,6 +206,7 @@ public class AbstractObject : MonoBehaviour
 
 	public virtual void ForceProp ( Vector3 forceProp, DeathType thisDeath, bool checkConst = true, bool forceDead = false )
 	{
+		
 		onEnemyDead ( forceProp, thisDeath, checkConst );
 		if ( gameObject.activeSelf )
 		{
@@ -344,6 +345,7 @@ public class AbstractObject : MonoBehaviour
 		{
             if (playerCont.InMadness && tag == Constants._ObsPropSafe)
                 StaticRewardTarget.SNbObstacleDestoyInMadness++;
+
 			playerCont.RecoverTimer ( thisDeath, point, BonusMultTimer );
 		}
 
