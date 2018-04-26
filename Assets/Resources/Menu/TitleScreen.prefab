@@ -98,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1852533494864354
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +112,23 @@ GameObject:
   - component: {fileID: 114980252932270914}
   m_Layer: 5
   m_Name: PressTitleKey
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1877452534956562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224500201481063474}
+  - component: {fileID: 222665314739649222}
+  - component: {fileID: 114720431788976090}
+  m_Layer: 5
+  m_Name: Copyright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +183,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: PRESS ANY KEY TO PLAY
+  m_Text: PRESS ANY KEY TO HURT ME BAD
 --- !u!114 &114254502620334620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,6 +198,7 @@ MonoBehaviour:
   BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   ready: 0
   delayBeforeReady: 4
+  hurtSound: {fileID: 0}
 --- !u!114 &114622316823925194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -200,6 +218,39 @@ MonoBehaviour:
   - {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
   - {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
   ComponentType: 4
+--- !u!114 &114720431788976090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877452534956562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: d3c20a1d32471984ea18afad69c276b8, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 53
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "\xA9All Rights Reserved.\n2017-2018 SteroTeam"
 --- !u!114 &114729845822457548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,6 +391,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1773371667717694}
+--- !u!222 &222665314739649222
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877452534956562}
 --- !u!222 &222677104811908214
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -412,6 +469,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224500201481063474
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877452534956562}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224612516496546364}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -423}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224612516496546364
 RectTransform:
   m_ObjectHideFlags: 1
@@ -427,6 +502,7 @@ RectTransform:
   - {fileID: 224404409256959418}
   - {fileID: 224752248020813414}
   - {fileID: 224210529479062824}
+  - {fileID: 224500201481063474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
