@@ -1011,6 +1011,7 @@ public class PlayerController : MonoBehaviour
 				{
 					animeSlo = true;
 					GlobalManager.Ui.StartSpecialAction ( "SlowMot" );
+
 				}
 				StaticRewardTarget.STimerSlowMo += getTime;
 
@@ -1099,6 +1100,10 @@ public class PlayerController : MonoBehaviour
             pRig.constraints = RigidbodyConstraints.FreezeAll;
 			StopPlayer = true;
             GlobalManager.Ui.StartSpecialAction("DeadBall");
+			
+            int rdmValue = UnityEngine.Random.Range(0, 4);
+			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_FleshBall_" + rdmValue, false, null, true );
+
 			canSpe = false;
 			var e = new DeadBallEvent ( );
 			e.CheckDist = DistDBTake;

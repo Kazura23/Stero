@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 1279103}
   - component: {fileID: 1279102}
   - component: {fileID: 1279101}
+  - component: {fileID: 1279104}
   m_Layer: 5
   m_Name: Life (1)
   m_TagString: Untagged
@@ -204,6 +205,20 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1279099}
+--- !u!114 &1279104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1279099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
+  m_EffectDistance: {x: 0.91, y: -1.36}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3942595
 GameObject:
   m_ObjectHideFlags: 0
@@ -11081,6 +11096,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0871c1910f4cbd4cae9ffcba656e2cf, type: 2}
   - {fileID: 11400000, guid: 07d060f30c17ff74d902f2518248e57c, type: 2}
   - {fileID: 11400000, guid: ce58a3e8cb137aa4ab6fba6c52037f1e, type: 2}
+  - {fileID: 11400000, guid: 1743c03a481f1c941bbc43b75415246a, type: 2}
 --- !u!1 &378556872
 GameObject:
   m_ObjectHideFlags: 0
@@ -21102,6 +21118,7 @@ GameObject:
   - component: {fileID: 712426345}
   - component: {fileID: 712426344}
   - component: {fileID: 712426343}
+  - component: {fileID: 712426346}
   m_Layer: 5
   m_Name: Life (2)
   m_TagString: Untagged
@@ -21142,8 +21159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0.3
   scales:
-  - {x: 1, y: 1, z: 1}
   - {x: 1.3, y: 1.3, z: 1.3}
+  - {x: 1, y: 1, z: 1}
   easeType: 29
 --- !u!114 &712426344
 MonoBehaviour:
@@ -21180,6 +21197,20 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 712426341}
+--- !u!114 &712426346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 712426341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
+  m_EffectDistance: {x: 0.91, y: -1.36}
+  m_UseGraphicAlpha: 1
 --- !u!1 &713568703
 GameObject:
   m_ObjectHideFlags: 0
@@ -24998,7 +25029,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1fa4dbcb92e7ad547b0fac51bff83131, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.799
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -32383,7 +32414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.4, y: -17}
+  m_AnchoredPosition: {x: 15.4, y: -10.1}
   m_SizeDelta: {x: 100, y: 60.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1065289809
@@ -63102,6 +63133,7 @@ GameObject:
   - component: {fileID: 2062409457}
   - component: {fileID: 2062409456}
   - component: {fileID: 2062409455}
+  - component: {fileID: 2062409458}
   m_Layer: 5
   m_Name: Life
   m_TagString: Untagged
@@ -63125,7 +63157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: -50}
+  m_AnchoredPosition: {x: 15, y: -45}
   m_SizeDelta: {x: 100, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2062409455
@@ -63180,6 +63212,20 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2062409453}
+--- !u!114 &2062409458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2062409453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
+  m_EffectDistance: {x: 0.91, y: -1.36}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2062669319
 GameObject:
   m_ObjectHideFlags: 0

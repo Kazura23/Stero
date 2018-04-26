@@ -30,19 +30,20 @@ public class TitleScreen : UiParent
 	{
 		if(Input.anyKeyDown && ready)
 		{
-
 			if(hurtSound != null){
+
+				ready = false;
 				hurtSound.Play();
 				punch.Play();
 				GlobalManager.AudioMa.OpenAudio ( AudioType.Other, "PunchSuccess", false );
 				introAudio.DOFade(0,1f);
 				ScreenShake.Singleton.ShakeFall();
+				GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 1f).OnComplete( () =>
+				{
+					GlobalManager.Ui.CloseThisMenu ( );
+				});
 			}
 
-			GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 1f).OnComplete( () =>
-			{
-				GlobalManager.Ui.CloseThisMenu ( );
-			});
 		}
 	}
 	#endregion
@@ -56,6 +57,9 @@ public class TitleScreen : UiParent
 	#region Private
 	protected override void InitializeUi()
 	{
+		introAudio.DOFade(0,0);
+		introAudio.DOFade(1,3f);
+
         DOVirtual.DelayedCall(delayBeforeReady, () => {
             ready = true;
             GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = true;
