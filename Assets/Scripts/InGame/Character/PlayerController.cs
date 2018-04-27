@@ -1106,7 +1106,7 @@ public class PlayerController : MonoBehaviour
             GlobalManager.Ui.StartSpecialAction("DeadBall");
 			
             int rdmValue = UnityEngine.Random.Range(0, 4);
-			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_FleshBall_" + rdmValue, false, null, true );
+			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_FleshBall_" + rdmValue );
 
 			canSpe = false;
 			var e = new DeadBallEvent ( );
