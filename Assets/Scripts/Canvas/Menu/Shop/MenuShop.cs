@@ -548,7 +548,7 @@ public class MenuShop : UiParent
 			else if ( currCatSeled.NameCat == "UPGRADES" )
 			{
 				List<Text> getGameT = GlobalManager.GameCont.GetBonusText;
-				Text currText = currItemSeled.transform.Find ( "Description" ).GetComponent<Text> ( );
+				Text currText = currItemSeled.transform.Find ( "Level" ).GetComponent<Text> ( );
 
 				if ( !getGameT.Contains ( currText ) )
 				{
