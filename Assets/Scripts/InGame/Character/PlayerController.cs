@@ -1015,6 +1015,8 @@ public class PlayerController : MonoBehaviour
 				{
 					animeSlo = true;
 					GlobalManager.Ui.StartSpecialAction ( "SlowMot" );
+					
+			
 
 				}
 				StaticRewardTarget.STimerSlowMo += getTime;
@@ -1033,6 +1035,8 @@ public class PlayerController : MonoBehaviour
             GameObject target = GlobalManager.GameCont.FxInstanciate(GlobalManager.GameCont.Player.transform.position, "Target", transform, 4f);
             target.transform.DOScale(Vector3.one, 0);
 			target.transform.localPosition = Vector3.zero;
+
+
 
 			RaycastHit[] allHit;
 			bool checkGround = true;
@@ -1062,6 +1066,9 @@ public class PlayerController : MonoBehaviour
 			StopPlayer = true;
 
 			GlobalManager.Ui.StartSpecialAction("OndeChoc");
+			
+			int rdmValue = UnityEngine.Random.Range(1, 4);
+			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_ShockWaves_" + rdmValue );
 
             target.GetComponent<Rigidbody>().AddForce(Vector3.down * 20, ForceMode.VelocityChange);
             
@@ -1105,7 +1112,7 @@ public class PlayerController : MonoBehaviour
 			StopPlayer = true;
             GlobalManager.Ui.StartSpecialAction("DeadBall");
 			
-            int rdmValue = UnityEngine.Random.Range(0, 4);
+            int rdmValue = UnityEngine.Random.Range(1, 5);
 			GlobalManager.AudioMa.OpenAudio(AudioType.PunchVoice, "MrStero_FleshBall_" + rdmValue );
 
 			canSpe = false;

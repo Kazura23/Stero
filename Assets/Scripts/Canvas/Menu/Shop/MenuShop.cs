@@ -467,7 +467,7 @@ public class MenuShop : UiParent
 				checkProg = true;	
 			}
 
-			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.ThisItem.Price )
+			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) >= currIT.ThisItem.Price )
 			{
 				buy = true;
 
@@ -829,7 +829,7 @@ public class MenuShop : UiParent
 
                 barCategory.transform.GetChild(0).GetComponent<Image>().DOColor(thisShop.ColorSelected, 0);
 
-                if (textCategory.text == "ABILITIES")
+                if (textCategory.text == "POWERS")
                 {
                     textCategory.transform.DOMoveX(thisShop.GetComponent<Image>().transform.position.x - 55, 0);
                     barCategory.transform.DOMoveX(thisShop.GetComponent<Image>().transform.position.x - 55, 0);

@@ -1600,7 +1600,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: ABILITIES
+  m_Text: POWERS
 --- !u!222 &56553820
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10952,7 +10952,7 @@ GameObject:
   - component: {fileID: 389579748}
   - component: {fileID: 389579747}
   m_Layer: 5
-  m_Name: MoneyNumber
+  m_Name: MoneyNumber SteroTv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12943,6 +12943,26 @@ Prefab:
     - target: {fileID: 4879791243897248, guid: 4a0655d4a0986cc4f83fe3a91d7e6050, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114727349582597536, guid: 4a0655d4a0986cc4f83fe3a91d7e6050,
+        type: 2}
+      propertyPath: NameCat
+      value: POWERS
+      objectReference: {fileID: 0}
+    - target: {fileID: 114669287890068998, guid: 4a0655d4a0986cc4f83fe3a91d7e6050,
+        type: 2}
+      propertyPath: BuyForLife
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689453398147686, guid: 4a0655d4a0986cc4f83fe3a91d7e6050,
+        type: 2}
+      propertyPath: BuyForLife
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689453398147686, guid: 4a0655d4a0986cc4f83fe3a91d7e6050,
+        type: 2}
+      propertyPath: NameCat
+      value: EXTRAS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a0655d4a0986cc4f83fe3a91d7e6050, type: 2}
@@ -23614,7 +23634,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1274703427634444, guid: 1da7ac30a5d39b54eb06b50d8146feac, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1da7ac30a5d39b54eb06b50d8146feac, type: 2}
@@ -48492,7 +48512,7 @@ MonoBehaviour:
   NameCat: UPGRADES
   Selected: 0
   UseColor: 1
-  BuyForLife: 0
+  BuyForLife: 1
   Progression: 0
   ColorSelected: {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
   ColorUnSelected: {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
@@ -50853,10 +50873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c05e9886e606948816b8d5703ee400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameCat: COSMETICS
+  NameCat: EXTRAS
   Selected: 0
   UseColor: 1
-  BuyForLife: 0
+  BuyForLife: 1
   Progression: 0
   ColorSelected: {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
   ColorUnSelected: {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
@@ -57740,7 +57760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c05e9886e606948816b8d5703ee400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameCat: ABILITIES
+  NameCat: 'POWERS   '
   Selected: 0
   UseColor: 1
   BuyForLife: 1
