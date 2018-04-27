@@ -257,7 +257,7 @@ public class GameController : ManagerParent
 							thisCam.transform.DOLocalMoveY(0.312f, 0.2f).OnComplete(() =>
 							{
 								//Player.GetComponentInChildren<RainbowMove>().enabled = true;
-								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
+								Player.transform.DOMoveZ(3.5f, 0.5f).OnComplete(() =>
                                 {
                                     GlobalManager.Ui.IntroWord();
 									ScreenShake.Singleton.ShakeStero();

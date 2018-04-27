@@ -563,15 +563,20 @@ public class MenuShop : UiParent
 					{
 						SelectObject ( );
 						GlobalManager.Ui.NewLife ( 2 );
+						//GlobalManager.Ui.HeartShop(2);
 					}
 					else
 					{
 						SelectObject ( );
+						
 						GlobalManager.Ui.NewLife ( 1 );
+						//GlobalManager.Ui.HeartShop(1);
 					}
 				}
 				else
 				{
+					Debug.Log("Extrastart");
+					GlobalManager.Ui.ExtraStartShop();
 					SelectObject ( );
 				}
 			}

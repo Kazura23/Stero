@@ -126,7 +126,6 @@ GameObject:
   - component: {fileID: 1279103}
   - component: {fileID: 1279102}
   - component: {fileID: 1279101}
-  - component: {fileID: 1279104}
   m_Layer: 5
   m_Name: Life (1)
   m_TagString: Untagged
@@ -205,20 +204,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1279099}
---- !u!114 &1279104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1279099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
-  m_EffectDistance: {x: 0.91, y: -1.36}
-  m_UseGraphicAlpha: 1
 --- !u!1 &3942595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8194,6 +8179,96 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 284759135}
+--- !u!1 &291548527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1531130212785416, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 291548528}
+  - component: {fileID: 291548531}
+  - component: {fileID: 291548530}
+  - component: {fileID: 291548529}
+  m_Layer: 5
+  m_Name: ExtraStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &291548528
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 224794373183676328, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291548527}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2995441, y: 1.2995441, z: 1.2995441}
+  m_Children: []
+  m_Father: {fileID: 596544177}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 15, y: -127.5}
+  m_SizeDelta: {x: 100, y: 55}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &291548529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114211721765434502, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291548527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649fefe4a2e17314d90106d1b4e9fb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0.3
+  scales:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1.3, y: 1.3, z: 1.3}
+  easeType: 29
+--- !u!114 &291548530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114455779888263090, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291548527}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 62e50b1b253c8f449ad32f63132876f4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &291548531
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 222569755949010858, guid: 3a452aaa15d36a945901cfd1a2e2af46,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291548527}
 --- !u!1 &300101468
 GameObject:
   m_ObjectHideFlags: 0
@@ -8786,32 +8861,32 @@ MonoBehaviour:
     MultiPli: 2
     Time: 5
     Color: {r: 0.77254903, g: 0.8117647, b: 0.39607844, a: 1}
-    NeededScore: 1000
+    NeededScore: 2500
   - NameRank: Demoniac
     MultiPli: 3
     Time: 4.5
     Color: {r: 0.9843137, g: 0.8, b: 0.35686275, a: 1}
-    NeededScore: 4000
+    NeededScore: 10000
   - NameRank: Cabbaged
     MultiPli: 4
     Time: 4
     Color: {r: 0.47058824, g: 0.6784314, b: 0.7529412, a: 1}
-    NeededScore: 8000
+    NeededScore: 20000
   - NameRank: Bangable!
     MultiPli: 5
     Time: 3.5
     Color: {r: 0.7647059, g: 0.56078434, b: 0.7019608, a: 1}
-    NeededScore: 15000
+    NeededScore: 40000
   - NameRank: Acidly!!
     MultiPli: 6
     Time: 3
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
-    NeededScore: 25000
+    NeededScore: 60000
   - NameRank: Steroidal!!!
     MultiPli: 10
     Time: 2.5
     Color: {r: 0.95686275, g: 0.42352942, b: 0.43137255, a: 1}
-    NeededScore: 50000
+    NeededScore: 100000
   InfScore:
   - TypeDeath: 1
     Multiplicateur: 1
@@ -17241,6 +17316,7 @@ RectTransform:
   - {fileID: 1279100}
   - {fileID: 712426342}
   - {fileID: 2030453641}
+  - {fileID: 291548528}
   m_Father: {fileID: 909525767}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20513,7 +20589,6 @@ GameObject:
   - component: {fileID: 712426345}
   - component: {fileID: 712426344}
   - component: {fileID: 712426343}
-  - component: {fileID: 712426346}
   m_Layer: 5
   m_Name: Life (2)
   m_TagString: Untagged
@@ -20592,20 +20667,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 712426341}
---- !u!114 &712426346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 712426341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
-  m_EffectDistance: {x: 0.91, y: -1.36}
-  m_UseGraphicAlpha: 1
 --- !u!1 &713568703
 GameObject:
   m_ObjectHideFlags: 0
@@ -47536,7 +47597,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChunksInfo:
+  - {fileID: 11400000, guid: 1ba8dc8158d10c64c89c3c8d55d62f19, type: 2}
   - {fileID: 11400000, guid: 7b2a2ce8cacc32442acc2d826122ee8a, type: 2}
+  - {fileID: 11400000, guid: 5a64dd27a194fb44a9a95320203245be, type: 2}
   AllLevelReplay: []
   ChunkOnScene: []
   DefaultPos: {x: 0, y: 0, z: 30}
@@ -55202,6 +55265,7 @@ MonoBehaviour:
   ExtraHearts:
   - {fileID: 1279102}
   - {fileID: 712426344}
+  ExtraStart: {fileID: 291548530}
   AbilitiesSprite:
   - {fileID: 21300000, guid: 8188e055f6da5b84d815468b788f8b1e, type: 3}
   - {fileID: 21300000, guid: 01a54b66c546b9045a921514155394a7, type: 3}
@@ -61012,7 +61076,6 @@ GameObject:
   - component: {fileID: 2062409457}
   - component: {fileID: 2062409456}
   - component: {fileID: 2062409455}
-  - component: {fileID: 2062409458}
   m_Layer: 5
   m_Name: Life
   m_TagString: Untagged
@@ -61091,20 +61154,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2062409453}
---- !u!114 &2062409458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2062409453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.659}
-  m_EffectDistance: {x: 0.91, y: -1.36}
-  m_UseGraphicAlpha: 1
 --- !u!1 &2062669319
 GameObject:
   m_ObjectHideFlags: 0

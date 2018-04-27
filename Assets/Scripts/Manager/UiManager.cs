@@ -47,6 +47,7 @@ public class UiManager : ManagerParent
     public Image SlowMotion;
     public Image BonusLife;
 	public List<Image> ExtraHearts;
+    public Image ExtraStart;
     public Sprite[] AbilitiesSprite;
 
     [Header("MISC GAMEFEEL")]
@@ -227,7 +228,7 @@ public class UiManager : ManagerParent
                 GlobalManager.GameCont.Intro = false;
 
                 thisCam.DOFieldOfView(4, .25f); 
-			    thisCam.DOFieldOfView(100, .15f);
+			    thisCam.DOFieldOfView(65, .15f);
 
                 DOVirtual.DelayedCall(1f, () =>
                 {
@@ -834,27 +835,38 @@ public class UiManager : ManagerParent
         thisCam.DOFieldOfView(60, .3f);
     }
 
-    public void HeartShop(int number)
-    {
-		Image getImage = ExtraHearts [ number ];
-		Transform getImgTrans = getImage.transform;
+    public void ExtraStartShop(){
 
-		getImgTrans.DOLocalMove(new Vector2(930, -510), .05f);
-        DOVirtual.DelayedCall(.1f, () => {
-			getImage.DOFade(1f, .1f);
-			getImage.GetComponent<RainbowScale>().enabled = false;
-            getImgTrans.DOScale(4, 0f);
-			getImgTrans.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
-				getImgTrans.DOLocalMove(new Vector2(75 * (number + 1), 0), .2f);
-				getImage.DOFade(0, .05f);
-                DOVirtual.DelayedCall(.15f, () =>
+        Image getCurrHeat = ExtraStart;
+		getCurrHeat.transform.localPosition = new Vector3 (15, -127.5f,0);
+		
+		getCurrHeat.enabled = true;
+		getCurrHeat.DOKill ( );
+		getCurrHeat.transform.localScale = new Vector3 ( 1, 1, 1 );
+		CircleFeel.DOFade ( 0, 0 );
+		getCurrHeat.DOFade(1, .5f);
+
+
+        shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(930, -510), 0f);
+        shopTw2 = DOVirtual.DelayedCall(.1f, () => {
+			shopTw1 = getCurrHeat.DOFade(1f, .1f);
+			getCurrHeat.transform.GetComponent<RainbowScale>().enabled = false;
+            shopTw2 = getCurrHeat.transform.DOScale(4, 0f);
+			shopTw3 = getCurrHeat.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                
+				shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(15, -127.5f), .2f);
+				shopTw2 = getCurrHeat.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
                 {
-					getImage.DOFade(1, .1f);
-					getImgTrans.DOScale(1, 0f);
-					getImage.GetComponent<RainbowScale>().enabled = true;
+					shopTw1 = getCurrHeat.DOFade(1, .1f);
+					shopTw2 = getCurrHeat.transform.DOScale(1, 0f);
+					getCurrHeat.transform.GetComponent<RainbowScale>().enabled = true;
                 });
             });
         });
+
+        return;
+
     }
 
 	public void NewLife ( int currLife )
@@ -880,8 +892,58 @@ public class UiManager : ManagerParent
 		getCurrHeat.transform.localScale = new Vector3 ( 1, 1, 1 );
 		CircleFeel.DOFade ( 0, 0 );
 		getCurrHeat.DOFade(1, .5f);
-		getCurrHeat.GetComponent<RainbowScale>().enabled = true;
+
+
+        shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(930, -510), 0f);
+        shopTw2 = DOVirtual.DelayedCall(.1f, () => {
+			shopTw1 = getCurrHeat.DOFade(1f, .1f);
+			getCurrHeat.transform.GetComponent<RainbowScale>().enabled = false;
+            shopTw2 = getCurrHeat.transform.DOScale(4, 0f);
+			shopTw3 = getCurrHeat.transform.DOPunchPosition(Vector3.one * 30f, .6f, 18, 1).OnComplete(() => {
+                if(currLife == 1)
+				    shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(105, -45), .2f);
+                else
+				    shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(195,-45f), .2f);
+				shopTw2 = getCurrHeat.DOFade(0, .05f);
+                shopTw3 = DOVirtual.DelayedCall(.15f, () =>
+                {
+					shopTw1 = getCurrHeat.DOFade(1, .1f);
+					shopTw2 = getCurrHeat.transform.DOScale(1, 0f);
+					getCurrHeat.transform.GetComponent<RainbowScale>().enabled = true;
+                });
+            });
+        });
+
 	}
+    
+    public void StartExtraStart ()
+    {
+		Image getCurrHeat;
+		getCurrHeat = ExtraStart;
+
+		getCurrHeat.DOKill ( );
+        getCurrHeat.GetComponent<RainbowScale>().enabled = false;
+
+        CircleFeel.transform.DOScale(1, 0);
+        CircleFeel.DOColor(new Color32(0xf4,0x6c,0x6e,0xff),0);
+		
+        getCurrHeat.transform.DOLocalMove(new Vector2(780, -480), .05f);
+		getCurrHeat.DOFade(0, .05f);
+        DOVirtual.DelayedCall(.15f, () => {
+			getCurrHeat.DOFade(.75f, .1f);
+			getCurrHeat.transform.DOScale(10, 0f);
+			getCurrHeat.transform.DOPunchPosition(Vector3.one * 20f, .7f, 18, 1).OnComplete(() => {
+				CircleFeel.transform.DOScale(28, .8f).OnComplete(() => {
+					getCurrHeat.enabled = false;
+				});
+                CircleFeel.DOFade(1, .2f).OnComplete(() => {
+                    CircleFeel.DOFade(0, .4f);
+                });
+				getCurrHeat.transform.DOScale(40f, .5f);
+				getCurrHeat.DOFade(0, .5f);
+            });
+        });
+    }
 
     public void StartBonusLife ( int currLife )
     {
