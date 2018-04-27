@@ -10,6 +10,8 @@ public class TitleScreen : UiParent
     public bool ready;
     public float delayBeforeReady;
 
+    AudioSource introAudio;
+
 	public override MenuType ThisMenu
 	{
 		get
@@ -52,6 +54,9 @@ public class TitleScreen : UiParent
 
 	public override void OpenThis(MenuTokenAbstract GetTok = null)
 	{
+		GlobalManager.AudioMa.CloseAudio ( AudioType.Menu );
+		introAudio = GameObject.Find("Intro Audio").GetComponent<AudioSource>();
+
 		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOKill ( );
 		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 0);
 
@@ -59,6 +64,8 @@ public class TitleScreen : UiParent
 	}
 	public override void CloseThis ( )
 	{
+		introAudio.DOFade(0,.4f);
+		GlobalManager.AudioMa.OpenAudio ( AudioType.Menu, "", true, null );
 		GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = false;
         GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = false;
         GlobalManager.Ui.GlobalBack.transform.Find("BackgroundColor").GetComponent<RainbowColor>().enabled = false;
