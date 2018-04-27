@@ -467,7 +467,7 @@ public class MenuShop : UiParent
 				checkProg = true;	
 			}
 
-			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) > currIT.ThisItem.Price )
+			if ( checkProg && AllPlayerPrefs.GetIntValue ( Constants.Coin ) >= currIT.ThisItem.Price )
 			{
 				buy = true;
 
@@ -563,22 +563,27 @@ public class MenuShop : UiParent
 					{
 						SelectObject ( );
 						GlobalManager.Ui.NewLife ( 2 );
+						//GlobalManager.Ui.HeartShop(2);
 					}
 					else
 					{
 						SelectObject ( );
+						
 						GlobalManager.Ui.NewLife ( 1 );
+						//GlobalManager.Ui.HeartShop(1);
 					}
 				}
 				else
 				{
+					Debug.Log("Extrastart");
+					GlobalManager.Ui.ExtraStartShop();
 					SelectObject ( );
 				}
 			}
 			else if ( currCatSeled.NameCat == "UPGRADES" )
 			{
 				List<Text> getGameT = GlobalManager.GameCont.GetBonusText;
-				Text currText = currItemSeled.transform.Find ( "Description" ).GetComponent<Text> ( );
+				Text currText = currItemSeled.transform.Find ( "Level" ).GetComponent<Text> ( );
 
 				if ( !getGameT.Contains ( currText ) )
 				{
@@ -829,7 +834,7 @@ public class MenuShop : UiParent
 
                 barCategory.transform.GetChild(0).GetComponent<Image>().DOColor(thisShop.ColorSelected, 0);
 
-                if (textCategory.text == "ABILITIES")
+                if (textCategory.text == "POWERS")
                 {
                     textCategory.transform.DOMoveX(thisShop.GetComponent<Image>().transform.position.x - 55, 0);
                     barCategory.transform.DOMoveX(thisShop.GetComponent<Image>().transform.position.x - 55, 0);
