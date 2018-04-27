@@ -11,6 +11,8 @@ public class ScreenShake : MonoBehaviour
     Tween shakePos;
     Tween shakeFall;
 
+    Tween shakeStero;
+
     float dir = 1;
 
 	void Awake ()
@@ -26,11 +28,13 @@ public class ScreenShake : MonoBehaviour
 
 	void Update ( )
 	{
+        #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.H))
         {
             AllPlayerPrefs.SetIntValue(Constants.Coin,100000);
-            ShakeFall();
+            ShakeStero();
         }
+        #endif
 	}
 
     public void ShakeFall()
@@ -48,7 +52,7 @@ public class ScreenShake : MonoBehaviour
         dir *= -1; 
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
-        punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
+        punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.25f), .5f, 2, 1);
     }
 
     public void ShakeHitDouble()
@@ -69,8 +73,21 @@ public class ScreenShake : MonoBehaviour
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
 
-        shakePos = transform.DOShakePosition(.15f, .15f, 12, 180);
+        shakeStero = transform.DOShakePosition(.15f, .15f, 12, 180);
         //transform.DOPunchPosition(new Vector3(1*1.5f, 0, 1*.5f), .25f, 4, 1);
+    }
+
+    public void ShakeStero()
+    {
+        punchPos.Kill(true);
+        shakePos.Kill(true);
+        shakeStero.Kill(true);
+        Camera.main.transform.DOKill();
+
+        float dir = UnityEngine.Random.Range(-1,1);
+        shakeStero = transform.DOShakePosition(.35f, .05f, 15, 220).SetLoops(-1,LoopType.Restart);
+        
+        //shakeStero = transform.DOPunchPosition(new Vector3(1 * 2.5f * dir, 1 * 2.5f, 0), .5f, 2, 1).SetLoops(-1,LoopType.Restart);
     }
 
     public void ShakeIntro()
@@ -99,6 +116,7 @@ public class ScreenShake : MonoBehaviour
 		shakePos.Kill ( true );
 		punchPos.Kill(true);
 		shakeFall.Kill(true);
+        shakeStero.Kill(true);
 	}
 
     public void ShakeGameOver()

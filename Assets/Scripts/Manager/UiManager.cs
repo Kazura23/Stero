@@ -380,7 +380,7 @@ public class UiManager : ManagerParent
         });
 
         float saveFov = thisCam.fieldOfView;
-        thisCam.DOFieldOfView(27f, .1f);//.SetEase(Ease.InBounce);
+        thisCam.DOFieldOfView(35f, .08f);//.SetEase(Ease.InBounce);
         RedScreen.DOFade(.4f, .1f).OnComplete(() => {
             RedScreen.DOFade(0, .08f);
             thisCam.DOFieldOfView(saveFov, .08f);//.SetEase(Ease.InBounce);
