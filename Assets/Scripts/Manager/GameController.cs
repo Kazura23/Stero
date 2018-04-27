@@ -260,6 +260,7 @@ public class GameController : ManagerParent
 								Player.transform.DOMoveZ(3, 0.5f).OnComplete(() =>
                                 {
                                     GlobalManager.Ui.IntroWord();
+									ScreenShake.Singleton.ShakeStero();
                                     isReady = true;
 									isStay = true;
 									//getPlayer.playAnimator.SetBool ( "WaitDoor", true );
