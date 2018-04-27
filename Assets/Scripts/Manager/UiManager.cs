@@ -800,10 +800,10 @@ public class UiManager : ManagerParent
     public void SelectShop()
     {
 
-        shopTw1.Kill(true);
-        shopTw2.Kill(true);
-        shopTw3.Kill(true);
-        shopTw4.Kill(true);
+        shopTw1.Kill();
+        shopTw2.Kill();
+        shopTw3.Kill();
+        shopTw4.Kill();
 
 
         shopTw1 = SlowMotion.transform.DOLocalMove(new Vector2(930, -510), .05f);

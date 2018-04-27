@@ -58,6 +58,8 @@ public class GameOver : UiParent
 	#region Public Methods
 	public override void OpenThis ( MenuTokenAbstract GetTok = null )
 	{
+		Time.timeScale = 1;
+
 		GlobalManager.GameCont.textIntroObject.gameObject.SetActive(false);
 		GlobalManager.GameCont.textIntroInputs.gameObject.SetActive(false);
 		GlobalManager.GameCont.textIntroObject.transform.DOLocalMoveY(-1000,0);

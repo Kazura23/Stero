@@ -10,6 +10,9 @@ public class TitleScreen : UiParent
     public bool ready;
     public float delayBeforeReady;
 
+	public AudioSource hurtSound;
+	AudioSource punch;
+
     AudioSource introAudio;
 
 	public override MenuType ThisMenu
@@ -27,10 +30,20 @@ public class TitleScreen : UiParent
 	{
 		if(Input.anyKeyDown && ready)
 		{
-			GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, .3f).OnComplete( () =>
-			{
-				GlobalManager.Ui.CloseThisMenu ( );
-			});
+			if(hurtSound != null){
+
+				ready = false;
+				hurtSound.Play();
+				punch.Play();
+				GlobalManager.AudioMa.OpenAudio ( AudioType.Other, "PunchSuccess", false );
+				introAudio.DOFade(0,1f);
+				ScreenShake.Singleton.ShakeFall();
+				GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(0, 1f).OnComplete( () =>
+				{
+					GlobalManager.Ui.CloseThisMenu ( );
+				});
+			}
+
 		}
 	}
 	#endregion
@@ -44,6 +57,9 @@ public class TitleScreen : UiParent
 	#region Private
 	protected override void InitializeUi()
 	{
+		introAudio.DOFade(0,0);
+		introAudio.DOFade(1,3f);
+
         DOVirtual.DelayedCall(delayBeforeReady, () => {
             ready = true;
             GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = true;
@@ -57,6 +73,9 @@ public class TitleScreen : UiParent
 		GlobalManager.AudioMa.CloseAudio ( AudioType.Menu );
 		introAudio = GameObject.Find("Intro Audio").GetComponent<AudioSource>();
 
+		hurtSound = GameObject.Find("Intro Audio").GetComponentsInChildren<AudioSource>()[2];
+		punch = GameObject.Find("Intro Audio").GetComponentsInChildren<AudioSource>()[3];
+
 		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOKill ( );
 		GlobalManager.Ui.MenuParent.GetComponent<CanvasGroup>().DOFade(1, 0);
 
@@ -64,7 +83,7 @@ public class TitleScreen : UiParent
 	}
 	public override void CloseThis ( )
 	{
-		introAudio.DOFade(0,.4f);
+
 		GlobalManager.AudioMa.OpenAudio ( AudioType.Menu, "", true, null );
 		GlobalManager.Ui.PatternBackground.GetComponent<RainbowScale>().enabled = false;
         GlobalManager.Ui.PatternBackground.GetComponent<RainbowMove>().enabled = false;

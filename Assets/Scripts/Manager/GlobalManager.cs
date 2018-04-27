@@ -138,9 +138,10 @@ public class GlobalManager : MonoBehaviour
 
     void Update()
     {
-
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.O))
             PlayerPrefs.DeleteAll();
+#endif
     }
 	#endregion
 }
