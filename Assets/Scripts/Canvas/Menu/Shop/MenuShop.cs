@@ -286,6 +286,20 @@ public class MenuShop : UiParent
         
         currItemSeled.GetComponentsInChildren<Text>()[2].text = "EQUIPPED!";
 
+		ItemModif thisItem = currItemSeled;
+
+		thisItem = thisItem.RightItem;
+
+		while ( thisItem != currItemSeled )
+		{
+			if ( thisItem.GetComponentsInChildren<Text>()[2].text == "EQUIPPED!" )
+			{
+				thisItem.GetComponentsInChildren<Text>()[2].text = "BOUGHT";
+				break;
+			}
+			thisItem = thisItem.RightItem;
+		}
+
         CanInput = false;
 
         Image bg = UnlockObject.GetComponentsInChildren<Image>()[0];
@@ -524,6 +538,22 @@ public class MenuShop : UiParent
 				GlobalManager.Ui.GameParent.gameObject.SetActive ( true );
 				GlobalManager.Ui.SlowMotion.enabled = true;
 				GlobalManager.Ui.SlowMotion.sprite = currItemSeled.transform.Find ( "Icon" ).GetComponent<Image> ( ).sprite;
+
+				
+				ItemModif thisItem = currItemSeled;
+				thisItem.GetComponentsInChildren<Text>()[2].text = "EQUIPPED!";
+
+				thisItem = thisItem.RightItem;
+				
+				while ( thisItem != currItemSeled )
+				{
+					if ( thisItem.GetComponentsInChildren<Text>()[2].text == "EQUIPPED!" )
+					{
+						thisItem.GetComponentsInChildren<Text>()[2].text = "BOUGHT";
+						break;
+					}
+					thisItem = thisItem.RightItem;
+				}
 			}
 			else if ( currCatSeled.NameCat == "BONUS" )
 			{
