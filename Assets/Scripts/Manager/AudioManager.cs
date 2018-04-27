@@ -154,7 +154,10 @@ public class AudioManager : ManagerParent
 				getLengthB = getIE.Count;
 				for ( b = 0; b < getLengthB; b++)
 				{
-					StopCoroutine(getIE[b]);
+					if ( getIE[b] != null )
+					{
+						StopCoroutine(getIE[b]);
+					}
 				}
 				getIE.Clear();
 
@@ -180,7 +183,10 @@ public class AudioManager : ManagerParent
 			getLengthB = getIE.Count;
 			for ( b = 0; b < getLengthB; b++)
 			{
-				StopCoroutine(getIE[b]);
+				if ( getIE[b] != null )
+				{
+					StopCoroutine(getIE[b]);
+				}
 			}
 			
 			getIE.Clear();
