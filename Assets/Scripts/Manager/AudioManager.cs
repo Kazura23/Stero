@@ -88,7 +88,10 @@ public class AudioManager : ManagerParent
 					getAC.Add (getAud);
 
 					IEnumerator thisEnum = waitEndAudio (getAud.clip.length - 0.1f, getAud, getAC, thisAct);
-					thisInfo.getAllAct.Add(thisEnum);
+					if (thisAct!=null )
+					{
+						thisInfo.getAllAct.Add(thisEnum);
+					}  
 					StartCoroutine (thisEnum);
 					return getAud;
 				}
@@ -148,12 +151,12 @@ public class AudioManager : ManagerParent
 				getAC = thisInfo.audioChild;
 				getIE = thisInfo.getAllAct;
 
-				
 				getLengthB = getIE.Count;
 				for ( b = 0; b < getLengthB; b++)
 				{
 					StopCoroutine(getIE[b]);
 				}
+				getIE.Clear();
 
 				getLengthB = getAC.Count;
 				for ( b = 0; b < getLengthB; b++)
@@ -172,6 +175,15 @@ public class AudioManager : ManagerParent
 			}
 
 			getAC = thisInfo.audioChild;
+			getIE = thisInfo.getAllAct;
+
+			getLengthB = getIE.Count;
+			for ( b = 0; b < getLengthB; b++)
+			{
+				StopCoroutine(getIE[b]);
+			}
+			
+			getIE.Clear();
 
 			getLengthB = getAC.Count;
 			for ( b = 0; b < getLengthB; b++)
