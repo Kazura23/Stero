@@ -907,9 +907,9 @@ public class GameController : ManagerParent
 
 	void setMusic () 
 	{ 
-		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
-		GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
-		//GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
+		//GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicTrash );
+		//GlobalManager.AudioMa.CloseUnLoopAudio ( AudioType.MusicBackGround );
+		GlobalManager.AudioMa.OpenAudio ( AudioType.MusicBackGround, "", false, setMusic ); 
     } 
 
 	private IEnumerator TrashFunction()

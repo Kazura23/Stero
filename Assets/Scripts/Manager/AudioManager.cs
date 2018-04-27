@@ -87,7 +87,9 @@ public class AudioManager : ManagerParent
 
 					getAC.Add (getAud);
 
-					StartCoroutine (waitEndAudio (getAud.clip.length - 0.1f, getAud, getAC, thisAct));
+					IEnumerator thisEnum = waitEndAudio (getAud.clip.length - 0.1f, getAud, getAC, thisAct);
+					thisInfo.getAllAct.Add(thisEnum);
+					StartCoroutine (thisEnum);
 					return getAud;
 				}
 			}
@@ -122,6 +124,7 @@ public class AudioManager : ManagerParent
 	public void CloseUnLoopAudio (AudioType thisType, bool allUnloop = false)
 	{
 		List<AudioSource> getAC;
+		List<IEnumerator> getIE;
 		AudioInfo thisInfo;
 		
 		System.Array getArray = System.Enum.GetValues(typeof(AudioType));
@@ -143,6 +146,14 @@ public class AudioManager : ManagerParent
 				}
 
 				getAC = thisInfo.audioChild;
+				getIE = thisInfo.getAllAct;
+
+				
+				getLengthB = getIE.Count;
+				for ( b = 0; b < getLengthB; b++)
+				{
+					StopCoroutine(getIE[b]);
+				}
 
 				getLengthB = getAC.Count;
 				for ( b = 0; b < getLengthB; b++)
@@ -243,7 +254,7 @@ public class AudioManager : ManagerParent
 
 			currAudInfo.audioParent = getObj.AddComponent<AudioSource>( );
 			currAudInfo.audioChild = new List<AudioSource>();
-			
+			currAudInfo.getAllAct = new List<IEnumerator>();
 			if(OrderAllAudio.TryGetValue(getAudType, out SetAllAudio))
 			{
 				currAudInfo.AllAudScript = SetAllAudio.ToArray();
@@ -281,4 +292,5 @@ public class AudioInfo
 	public AudioSource audioParent;
 	public List<AudioSource> audioChild;
 	public AllAudio[] AllAudScript;
+	public List<IEnumerator> getAllAct;
 }
