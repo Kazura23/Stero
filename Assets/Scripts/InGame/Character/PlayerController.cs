@@ -75,8 +75,8 @@ public class PlayerController : MonoBehaviour
 	public float TimeInvincible = 2;
 
 	[HideInInspector]
-	public float SlowMotion, MadnessUse, MadnessMult, MadNeed;
-
+	public float MadnessUse, MadnessMult, MadNeed;
+	public float SlowMotion = 0.5f;
 	[Header ("Caractérique punchs")]
 	//public float FOVIncrease = 20;
 	public float TimeToDoublePunch = 0.25f;
@@ -208,6 +208,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Mono
+	void Awake ( )
+	{
+		SlowMotion = 0.5f;
+	}
     void Update ( )
 	{
 		#if UNITY_EDITOR
@@ -365,12 +369,11 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPosDo ( )
 	{
+		StopPlayer = true;
+
 		GlobalManager.Ui.DashSpeedEffect ( false );
 		GlobalManager.Ui.MadnessRedEnd();
 		GlobalManager.Ui.MadnessGreenEnd();
-
-
-		StopPlayer = true;
 
 		GlobalManager.GameCont.LaunchTuto = false;
 		AllPlayerPrefs.relance = false;
@@ -378,6 +381,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.GetComponent<RainbowMove> ( ).enabled = false;
 		thisCam.GetComponent<RainbowRotate> ( ).enabled = false;
 		thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = false;
+		thisCam.GetComponent<CameraFilterPack_Vision_Aura> ( ).enabled = false;
 
 		thisCam.transform.DOLocalRotateQuaternion ( startRotRR, 0.5f );
 		thisCam.transform.DOLocalMove ( startPosRM, 0.5f );
@@ -388,6 +392,7 @@ public class PlayerController : MonoBehaviour
 			playAnimator.Play("Start");
 			GlobalManager.GameCont.Restart ( );
 		} );
+
 	}
 
     public void GameOver ( bool forceDead = false )
@@ -430,7 +435,6 @@ public class PlayerController : MonoBehaviour
 
 			return;
 		}
-
 		thisCam.clearFlags = otherCam.clearFlags;
 		thisCam.cullingMask = otherCam.cullingMask;
 		thisCam.DOColor ( otherCam.backgroundColor, 0.3f );
