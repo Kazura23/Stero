@@ -55,6 +55,7 @@ public class UiManager : ManagerParent
     public GameObject TextFeelMadness;
 	[HideInInspector]
     public Camera thisCam;
+    public Image GetMoney;
 
 
     [Header("REWARDS")]
@@ -148,6 +149,11 @@ public class UiManager : ManagerParent
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
             });*/
 
+
+            TakeCoin();
+
+            /* 
+
             DOTween.To(() => GlobalManager.GameCont.weightValue, x => GlobalManager.GameCont.weightValue = x, 1f, .6f).OnComplete(() => {
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
             });
@@ -164,6 +170,7 @@ public class UiManager : ManagerParent
 					RuntimeUtilities.DestroyVolume(volume, true);
 					Destroy(this);
 				});
+                */
         }
     }
 
@@ -338,6 +345,7 @@ public class UiManager : ManagerParent
         rewardsKeys.DOFade(0, .1f);
         rewardsArrows.DOFade(0, .1f);
     }
+
 
     public void DoubleCoup()
     {
@@ -568,10 +576,32 @@ public class UiManager : ManagerParent
 
     public void TakeCoin()
     {
-        MoneyPoints.transform.DOScale(1.5f, .1f).SetEase(Ease.InBounce).OnComplete(() => {
-            MoneyPoints.transform.DOScale(1f, .05f).SetEase(Ease.InBounce);
-        });
+        // Animation Pièce au centre de l'écran
 
+        Image coin = GlobalManager.GameCont.FxInstanciate(new Vector2(0,0), "GetMoney",InGame.transform, 1f).GetComponent<Image>();
+        coin.transform.DOLocalMove(Vector3.zero,0);
+        coin.transform.DOShakeScale(.15f,1,10,90);
+        coin.GetComponent<CanvasGroup>().DOFade(1,.05f).OnComplete(()=>{
+
+            coin.GetComponent<CanvasGroup>().DOFade(.7f,.35f);
+        });
+        coin.transform.GetChild(0).DOLocalMoveX(180,.5f);
+        coin.transform.DOLocalMoveY(100,.4f).SetEase(Ease.Linear).OnComplete(()=>{
+
+            coin.transform.DOLocalMove(new Vector2(906,488),.25f);
+            coin.transform.DOScale(0,.25f).OnComplete(()=>{
+                    
+                
+                // Animation HUD en haut à droite
+
+                MoneyPoints.transform.DOScale(1.5f, .1f).SetEase(Ease.InBounce).OnComplete(() => {
+                    MoneyPoints.transform.DOScale(1f, .05f).SetEase(Ease.InBounce);
+                });
+
+            });
+            Destroy(coin,.25f);
+
+        });
 
         int rdmValue = UnityEngine.Random.Range(0, 4);
         GlobalManager.AudioMa.OpenAudio(AudioType.Other, "MrStero_Money_" + rdmValue, false, null, true);
