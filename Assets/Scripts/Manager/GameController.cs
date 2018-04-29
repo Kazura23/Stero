@@ -187,9 +187,8 @@ public class GameController : ManagerParent
 			switch (chooseOption)
 			{
 
-			case 0: // Options
+			case 0: // Rewards
 
-                    //Debug.Log("Leaderboards");
                     textIntroObject.transform.DOLocalMove(textIntroTransform[0].localPosition, 0);
                     textIntroObject.transform.DOLocalRotate(textIntroTransform[0].localEulerAngles, 0);
                     textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[0];
@@ -203,7 +202,7 @@ public class GameController : ManagerParent
                     }
                     break;
 
-                case 1: // Leaderboards
+                case 1: // Options
 				
 
                     
@@ -363,6 +362,19 @@ public class GameController : ManagerParent
 					
 					if(!Application.isEditor)
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
+				}
+				break;
+			
+
+			case 5:  // Leaderboards
+
+				textIntroObject.transform.DOLocalMove(textIntroTransform[5].localPosition, 0);
+				textIntroObject.transform.DOLocalRotate(textIntroTransform[5].localEulerAngles, 0);
+				textIntroObject.GetComponent<TextMeshPro>().text = textIntroText[5];
+
+				if ( ( inputPlayer.GetAxis ( "CoupSimple" ) == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl)
+				{
+					//GlobalManager.Ui.OpenThisMenu ( MenuType.Leaderboards );
 				}
 				break;
 			}

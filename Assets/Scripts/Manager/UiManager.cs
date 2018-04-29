@@ -579,14 +579,14 @@ public class UiManager : ManagerParent
         // Animation Pièce au centre de l'écran
 
         Image coin = GlobalManager.GameCont.FxInstanciate(new Vector2(0,0), "GetMoney",InGame.transform, 1f).GetComponent<Image>();
-        coin.transform.DOLocalMove(Vector3.zero,0);
+        coin.transform.DOLocalMove(new Vector2(0,-300),0);
         coin.transform.DOShakeScale(.15f,1,10,90);
         coin.GetComponent<CanvasGroup>().DOFade(1,.05f).OnComplete(()=>{
 
             coin.GetComponent<CanvasGroup>().DOFade(.7f,.35f);
         });
         coin.transform.GetChild(0).DOLocalMoveX(180,.5f);
-        coin.transform.DOLocalMoveY(100,.4f).SetEase(Ease.Linear).OnComplete(()=>{
+        coin.transform.DOLocalMoveY(-200,.4f).SetEase(Ease.Linear).OnComplete(()=>{
 
             coin.transform.DOLocalMove(new Vector2(906,488),.25f);
             coin.transform.DOScale(0,.25f).OnComplete(()=>{
@@ -901,6 +901,8 @@ public class UiManager : ManagerParent
 
 	public void NewLife ( int currLife )
 	{
+        Debug.Log("Newlife");
+
 		Image getCurrHeat;
 		if ( ExtraHearts [ 0 ].enabled == false )
 		{
@@ -924,7 +926,7 @@ public class UiManager : ManagerParent
 		getCurrHeat.DOFade(1, .5f);
 
 
-        shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(930, -510), 0f);
+        shopTw1 = getCurrHeat.transform.DOLocalMove(new Vector2(775, -478), 0f);
         shopTw2 = DOVirtual.DelayedCall(.1f, () => {
 			shopTw1 = getCurrHeat.DOFade(1f, .1f);
 			getCurrHeat.transform.GetComponent<RainbowScale>().enabled = false;

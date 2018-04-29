@@ -15,7 +15,7 @@ public class Heart : MonoBehaviour {
 			if ( getP.Life < 3 )
 			{
 				getP.Life++;
-				GlobalManager.Ui.NewLife ( getP.Life );
+				GlobalManager.Ui.NewLife ( getP.Life - 1 );
 			}
 
 			Destroy (this.gameObject);

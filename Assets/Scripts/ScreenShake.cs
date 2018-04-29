@@ -32,7 +32,7 @@ public class ScreenShake : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             AllPlayerPrefs.SetIntValue(Constants.Coin,100000);
-            ShakeStero();
+            ShakeIntro();
         }
         #endif
 	}
@@ -73,7 +73,9 @@ public class ScreenShake : MonoBehaviour
         //side = UnityEngine.Random.RandomRange(-2, 2);
         //transform.DOPunchRotation (Vector3.one * .5f, .3f, 3, 1);
 
-        shakeStero = transform.DOShakePosition(.15f, .15f, 12, 180);
+        //shakeStero = transform.DOShakePosition(.15f, .15f, 12, 180);
+        
+        shakePos = transform.DOPunchPosition(new Vector3(1 * .25f * dir, 0, 1 * 1.25f), .15f, 2, 1);
         //transform.DOPunchPosition(new Vector3(1*1.5f, 0, 1*.5f), .25f, 4, 1);
     }
 
