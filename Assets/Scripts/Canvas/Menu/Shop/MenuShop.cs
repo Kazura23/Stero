@@ -30,6 +30,7 @@ public class MenuShop : UiParent
     public GameObject moleculeContainer;
     public Image backgroundColor;
     public string[] quoteShop;
+	public CanvasGroup DLCPopup;
     
 	public VideoPlayer GetVideoPlayer;
     public GameObject UnlockObject;
@@ -81,6 +82,13 @@ public class MenuShop : UiParent
 		{
 			coupSimpl = true;
 		}
+		
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            DLCPop();
+		}
+		#endif
 			
         if (CanInput)
         {
@@ -275,6 +283,50 @@ public class MenuShop : UiParent
 		
 		CheckSelectItem ( true );
 	}
+
+	public void DLCPop(){
+
+        DLCPopup.DOFade(1,.25f);
+        CanvasGroup DLCStar = DLCPopup.transform.GetChild(0).GetComponent<CanvasGroup>();
+        DLCStar.DOFade(0,0);
+		DLCPopup.transform.DOScale(1,0);
+        DLCStar.DOFade(1,.4f);
+		DLCStar.transform.DOScale(3f,0);
+		DLCStar.transform.DOScale(1f,.4f);
+        DLCStar.transform.DORotate(Vector3.zero,0, RotateMode.LocalAxisAdd);
+        DLCStar.transform.DORotate(new Vector3(0,0,360),.4f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).OnComplete(()=>{
+
+			CanvasGroup DLCGetText = DLCPopup.transform.GetComponentsInChildren<CanvasGroup>()[2];
+			DLCGetText.transform.DOLocalMoveX(-50,0);
+			DLCGetText.transform.DOLocalMoveX(0,.25f);
+			DLCGetText.DOFade(1,.25f).OnComplete(()=>{
+
+				CanvasGroup DLCGetIcon = DLCPopup.transform.GetComponentsInChildren<CanvasGroup>()[3];
+				DLCGetIcon.transform.DOLocalMoveX(-50,0);
+				DLCGetIcon.transform.DOLocalMoveX(0,.25f);
+				DLCGetIcon.DOFade(1,.25f).OnComplete(()=>{
+
+					CanvasGroup DLCGetPress = DLCPopup.transform.GetComponentsInChildren<CanvasGroup>()[4];
+					DLCGetPress.transform.DOLocalMoveX(-50,0);
+					DLCGetPress.transform.DOLocalMoveX(0,.25f);
+					DLCGetPress.DOFade(1,.25f);
+
+					DOVirtual.DelayedCall(2f,()=>{
+
+						DLCGetText.transform.GetComponent<Text>().text = "IT'S ONLY 1$!!";
+
+						DOVirtual.DelayedCall(2f,()=>{
+							
+							DLCPopup.DOFade(0,.25f);
+							DLCPopup.transform.DOScale(4,.25f);
+						
+						});
+					});
+
+				});
+			});
+		});
+    }
 
     public void ShopUnlock()
     {

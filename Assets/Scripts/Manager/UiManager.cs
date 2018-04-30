@@ -88,6 +88,8 @@ public class UiManager : ManagerParent
 		UiParent thisUi;
 		//Debug.Log ( "open " + thisType );
 
+
+
 		if ( AllMenu.TryGetValue ( thisType, out thisUi ) )
 		{
 			if ( menuOpen == thisType )
@@ -138,6 +140,7 @@ public class UiManager : ManagerParent
 
     public void Update()
     {
+        #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.O))
         {
             /*
@@ -148,9 +151,6 @@ public class UiManager : ManagerParent
             DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f).OnComplete(() => {
                 //DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .12f);
             });*/
-
-
-            TakeCoin();
 
             /* 
 
@@ -172,6 +172,7 @@ public class UiManager : ManagerParent
 				});
                 */
         }
+            #endif
     }
 
     public void SetCam ( Camera newCame )
@@ -1017,6 +1018,8 @@ public class UiManager : ManagerParent
             });
         });
     }
+
+    
 
 
 	public void CheckContr ( )
