@@ -127,6 +127,8 @@ public class PlayerController : MonoBehaviour
 	Rigidbody pRig;
 	RigidbodyConstraints thisConst;
 
+	bool extraStartBool = true;
+
 	Vector3 dirLine = Vector3.zero;
 	Vector3 lastPos;
 
@@ -299,6 +301,7 @@ public class PlayerController : MonoBehaviour
 
 	public void ResetPlayer ( )
 	{
+		extraStartBool = true;
 		onBonusStart = false;
 		if ( getCouldown != null )
 		{
@@ -621,6 +624,7 @@ public class PlayerController : MonoBehaviour
 				GlobalManager.Ui.OpenMadness ( );
 				Dash = false;
 				GlobalManager.Ui.DashSpeedEffect ( false );
+				Debug.Log("DashFalse");
 			}
 		}
 		else if ( !lastTimer )
@@ -1317,6 +1321,8 @@ public class PlayerController : MonoBehaviour
 		{
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
+			GlobalManager.Ui.DashSpeedEffect ( true );
+				Debug.Log("DashTrue");
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if ( InMadness )
@@ -1331,7 +1337,13 @@ public class PlayerController : MonoBehaviour
 		}
 		else if ( onBonusStart )
 		{
-			speed *= DashSpeed * 2;
+			if(extraStartBool){
+				extraStartBool = false;
+				DOVirtual.DelayedCall(1f,()=>{
+					GlobalManager.Ui.StartExtraStart();
+				});
+			}
+			speed *= DashSpeed * 3;
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else
