@@ -25,6 +25,8 @@ public class GameOver : UiParent
 	float TimeFade = 0;
 	bool canUpdate = false;
 	Player inputPlayer;
+
+	Tween gameOverTw;
 	#endregion
 
 	#region Mono
@@ -118,7 +120,7 @@ public class GameOver : UiParent
 		PointsGameOver.text = NbrString ( PointsGameOver.text );
 		Highscore.text = NbrString ( Highscore.text );
 
-		gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
+		gameOverTw = gameObject.GetComponent<CanvasGroup>().DOFade(1f, 1.5f).OnComplete(() =>
 		{
 
 			YouGameOver.DOFade(1, .25f);
@@ -178,7 +180,7 @@ public class GameOver : UiParent
 
 	public override void CloseThis ( )
 	{
-		
+		gameOverTw.Kill();
         newScore.GetComponent<CanvasGroup>().DOFade(0, 0.1f);
 
 		canUpdate = false;
