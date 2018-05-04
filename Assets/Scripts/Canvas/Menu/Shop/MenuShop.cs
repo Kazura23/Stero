@@ -80,15 +80,16 @@ public class MenuShop : UiParent
 
 	void RandomTime(){
 
-		rdmTime = UnityEngine.Random.Range(3,8);
+		rdmTime = UnityEngine.Random.Range(7,15);
 	}
 
 	void DLCStart(){
-		Debug.Log("DLCStart");
+		DLCAppear();
 		DLCTw = DOVirtual.DelayedCall(3,()=>{
 			DLCPop();
 			RandomTime();
-		}).SetDelay(rdmTime).SetLoops(-1,LoopType.Restart);
+			Debug.Log("DLCStart");
+		}).SetDelay(5).SetLoops(-1,LoopType.Restart);
 	}
 
 	void Update ( )
@@ -116,7 +117,7 @@ public class MenuShop : UiParent
 			if ( ( inputPlayer.GetAxis("CoupSimple") == 1 || Input.GetKeyDown ( KeyCode.Return ) ) && coupSimpl && !waitImpSub && !transition)
             {
 				
-				DLCUnpop();
+				DLCDisappear();
 				GlobalManager.Ui.CheckContr ( );
                 transition = true;
                 waitImpSub = true;
@@ -138,7 +139,7 @@ public class MenuShop : UiParent
             // Touche pour sortir des items
 			if ( ( inputPlayer.GetAxis("CoupDouble") == 1 || Input.GetKeyDown ( KeyCode.Escape ) ) && !waitImpCan && !transition)
             {
-				DLCPopup.transform.parent.GetComponent<CanvasGroup>().DOFade(1,0);
+				DLCAppear();
 				GlobalManager.Ui.CheckContr ( );
                 waitImpCan = true;
                 transition = true;
@@ -246,7 +247,7 @@ public class MenuShop : UiParent
 
 	public override void CloseThis ( )
 	{
-		DLCUnpop();
+		DLCDisappear();
 		GlobalManager.AudioMa.transform.Find("Menu").GetComponent<AudioLowPassFilter>().enabled = false;
 		GlobalManager.Ui.SlowMotion.transform.parent.SetParent ( saveParentAb );
 		GlobalManager.Ui.BonusLife.transform.parent.SetParent ( saveParentBo );
@@ -314,8 +315,13 @@ public class MenuShop : UiParent
 	public void DLCPop(){
 
 		int rdm = UnityEngine.Random.Range(0,3);
-		DLCPopup.transform.SetParent(DLCPopupPlace.GetChild(rdm));
-		DLCPopup.transform.DOLocalMove(Vector3.zero,0);
+		DLCPopup.transform.parent.SetParent(DLCPopupPlace.GetChild(rdm));
+		DLCPopup.transform.parent.DOLocalMove(Vector3.zero,0);
+
+		CanvasGroup DLCGet = DLCPopup.transform.GetComponentsInChildren<CanvasGroup>()[2];
+		DLCGet.transform.GetComponent<Text>().text = "GET MORE";
+		Debug.Log("More");
+
 
         DLCPopup.DOFade(1,.25f);
         CanvasGroup DLCStar = DLCPopup.transform.GetChild(0).GetComponent<CanvasGroup>();
@@ -351,7 +357,7 @@ public class MenuShop : UiParent
 							DLCGetText.DOFade(1,.08f);
 						});
 
-						DOVirtual.DelayedCall(2f,()=>{
+						DOVirtual.DelayedCall(4f,()=>{
 							
 							DLCPopup.DOFade(0,.25f);
 							DLCPopup.transform.DOScale(4,.25f);
@@ -360,6 +366,7 @@ public class MenuShop : UiParent
 							DLCGetIcon.DOFade(0,0.1f);
 							DLCGetPress.DOFade(0,0.1f).OnComplete(()=>{
 								DLCGetText.transform.GetComponent<Text>().text = "GET MORE";
+								Debug.Log("Get more");
 							});
 						});
 					});
@@ -368,10 +375,16 @@ public class MenuShop : UiParent
 		});
     }
 
-	public void DLCUnpop(){
+	public void DLCDisappear(){
+		Debug.Log("Unpop");
 		
         DLCPopup.transform.parent.GetComponent<CanvasGroup>().DOFade(0,.1f);
 	}
+
+	public void DLCAppear(){
+        DLCPopup.transform.parent.GetComponent<CanvasGroup>().DOFade(1,.1f);
+	}
+
 
     public void ShopUnlock()
     {

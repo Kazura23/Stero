@@ -1785,6 +1785,7 @@ public class PlayerController : MonoBehaviour
             AllPlayerPrefs.ATypeObstacle = "Mur / Plafond / Sol";
             AllPlayerPrefs.ANameObstacle = thisColl.gameObject.name;
             AllPlayerPrefs.ANameChunk = AnalyticsChunk(getObj.transform);
+			thisCam.fieldOfView = 55;
             GameOver ( true );
 		}
 
