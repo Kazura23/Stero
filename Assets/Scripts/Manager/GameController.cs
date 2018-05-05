@@ -619,6 +619,8 @@ public class GameController : ManagerParent
 		{
 			//Debug.Log("Hub");
 			onHub = true;
+			Player.GetComponent<PlayerController>().handTrailLeft.SetActive(false);
+			Player.GetComponent<PlayerController>().handTrailRight.SetActive(false);
 			textIntroObject.gameObject.SetActive(true);
 			textIntroInputs.gameObject.SetActive(true);
 			textIntroObject.transform.DOLocalMove(textIntroTransform[2].localPosition, 0);

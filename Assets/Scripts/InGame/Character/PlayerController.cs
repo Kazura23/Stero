@@ -113,6 +113,9 @@ public class PlayerController : MonoBehaviour
     public GameObject leftHand;
     public GameObject rightHand;
 
+	public GameObject handTrailLeft;
+	public GameObject handTrailRight;
+
 	[HideInInspector]
 	public int currLine = 0;
 	[HideInInspector]
@@ -267,6 +270,8 @@ public class PlayerController : MonoBehaviour
 		pRig = gameObject.GetComponent<Rigidbody> ( );
 		thisConst =	pRig.constraints;
 		sphereChocWave = pTrans.Find("ChocWave").GetComponent<SphereCollider>();
+		handTrailRight = rightHand.transform.Find("HandTrail").gameObject;
+		handTrailLeft = leftHand.transform.Find("HandTrail").gameObject;
 		punch = pTrans.GetChild(0).GetComponent<Punch>();
 		canPunch = true; 
 		punchRight = true;
