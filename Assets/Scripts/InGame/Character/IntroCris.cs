@@ -13,9 +13,11 @@ public class IntroCris : MonoBehaviour
 
 		// Démarrage de la musique du Hub amplifiée après Stéro
 		musicObject.GetComponent<AudioSource>().DOFade(0,.05f).OnComplete(()=>{
-			musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
-			musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
-			musicObject.GetComponent<AudioSource>().DOFade(0.0004f,0.6f);
+			DOVirtual.DelayedCall(0.1f,()=>{
+				musicObject.GetComponent<AudioLowPassFilter>().enabled = true;
+				musicObject.GetComponent<AudioDistortionFilter>().enabled = true;
+				musicObject.GetComponent<AudioSource>().DOFade(0.0004f,0.6f);
+			});
 		});
 
 		
