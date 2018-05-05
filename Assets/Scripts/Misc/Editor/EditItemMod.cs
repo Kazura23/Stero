@@ -16,6 +16,9 @@ public class EditItemMod : Editor
 	SerializedProperty GetSprite;
 	SerializedProperty SavePrice;
 
+	SerializedProperty AllAudio;
+	SerializedProperty TargetAS;
+
 	SerializedProperty ColorConfirm;
 	SerializedProperty ColorSelected;
 	SerializedProperty ColorUnSelected;
@@ -58,6 +61,9 @@ public class EditItemMod : Editor
 		Price = serializedObject.FindProperty ("Price");
 		GetSprite = serializedObject.FindProperty ("GetSprite");
 		SavePrice = serializedObject.FindProperty ("SavePrice");
+
+		AllAudio = serializedObject.FindProperty ("AllAudio");
+		TargetAS = serializedObject.FindProperty ("TargetAS");
 
 		ColorConfirm = serializedObject.FindProperty ("ColorConfirm");
 		ColorSelected = serializedObject.FindProperty ("ColorSelected");
@@ -380,6 +386,26 @@ public class EditItemMod : Editor
 			}
 		}*/
 		EditorGUILayout.EndHorizontal ( );
+		buttonStyle = new GUIStyle (EditorStyles.miniButton);
+		if (myTarget.AddMusic)
+		{
+			buttonStyle.normal.textColor = Color.green;
+		}
+		else
+		{
+			buttonStyle.normal.textColor = Color.red;
+		}
+
+		if (GUILayout.Button ("AddMusic", buttonStyle))
+		{
+			myTarget.AddMusic = !myTarget.AddMusic;
+		}
+
+		if (myTarget.AddMusic)
+		{
+			EditorGUILayout.PropertyField (AllAudio, true);
+			EditorGUILayout.PropertyField (TargetAS);
+		}
 
 		buttonStyle = new GUIStyle (EditorStyles.miniButton);
 		if (myTarget.ModifSpecial)
@@ -390,6 +416,7 @@ public class EditItemMod : Editor
 		{
 			buttonStyle.normal.textColor = Color.red;
 		}
+
 		EditorGUILayout.BeginHorizontal ( );
 		#endregion
 

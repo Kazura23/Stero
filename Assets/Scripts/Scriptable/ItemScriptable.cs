@@ -43,9 +43,12 @@ public class ItemScriptable : ScriptableObject
 	public bool ModifVie;
 	public bool StartBonus;
 	public bool ModifSpecial;
+	public bool AddMusic;
 
 	public int NombreVie;
 	public SpecialAction SpecAction;
+	public MusicFX AllAudio;
+	public AudioScriptable TargetAS;
 
 	public bool Selected;
 	public bool BonusItem;

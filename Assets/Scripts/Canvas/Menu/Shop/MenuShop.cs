@@ -584,6 +584,10 @@ public class MenuShop : UiParent
 				//moneyNumberPlayer.transform.DOScale(3, .25f);
 				if (currCatSeled.BuyForLife)
 				{
+					if (currItemSeled.ThisItem.AddMusic)
+					{
+						currItemSeled.ThisItem.TargetAS.AllMF.Add (currItemSeled.ThisItem.AllAudio);
+					}
 					getThis = currItemSeled;
 					//Debug.Log(getThis.GetComponentsInChildren<Text>()[0].text);
 					itemName = getThis.GetComponentsInChildren<Text> ( )[0].text;
