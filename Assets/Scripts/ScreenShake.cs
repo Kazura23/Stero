@@ -126,9 +126,7 @@ public class ScreenShake : MonoBehaviour
 
 
         //transform.DOKill(false);
-
-        //transform.DOShakeRotation(1f, 2f, 22, 90);
-        shakePos = transform.DOShakePosition(1f, 2f, 22, 90);
+        //shakePos = transform.DOShakePosition(1f, 2f, 22, 90);
     }
 
 }
