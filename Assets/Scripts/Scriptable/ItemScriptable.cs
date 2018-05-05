@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-[CreateAssetMenu(fileName = "ItemScript", menuName = "Scriptable/ItemScript", order = 4)]
+[CreateAssetMenu (fileName = "ItemScript", menuName = "Scriptable/ItemScript", order = 4)]
 public class ItemScriptable : ScriptableObject
 {
 	#region Variables
@@ -13,6 +14,8 @@ public class ItemScriptable : ScriptableObject
 	public bool ItemBought;
 	public string ItemName;
 	public int Price;
+	public int SavePrice;
+	public int NbrBought = 0;
 
 	public VideoClip VideoShow;
 	public bool UseSprite;
@@ -48,7 +51,7 @@ public class ItemScriptable : ScriptableObject
 	public bool BonusItem;
 
 	#region SpecialSlowMot 
-	[Range(0.1f,1)]
+	[Range (0.1f, 1)]
 	public float SlowTime = 1;
 	#endregion
 
@@ -56,11 +59,11 @@ public class ItemScriptable : ScriptableObject
 	public float DistTakeDB = 10;
 	#endregion
 	#endregion
-	[Range(-1,1)]
+	[Range (-1, 1)]
 	public float MadnessMulti = 0.5f;
-	[Range ( -100,100)]
+	[Range (-100, 100)]
 	public float MinMadNeedPourc = 25;
-	[Range ( -100,100)]
+	[Range (-100, 100)]
 	public float MadnessUsePourc = 1;
 	#region updateValue
 	public Vector3 CurrPos;

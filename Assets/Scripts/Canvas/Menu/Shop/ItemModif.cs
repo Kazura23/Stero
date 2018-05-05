@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+
 using DG.Tweening;
 
-public class ItemModif : MonoBehaviour 
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ItemModif : MonoBehaviour
 {
 	public ItemScriptable ThisItem;
 	public ItemModif RightItem;
@@ -17,14 +19,20 @@ public class ItemModif : MonoBehaviour
 	int savePrice;
 	bool canText = true;
 
-	void Start ()
+	void Start ( )
 	{
-		if ( RightItem == null )
+
+#if UNITY_EDITOR
+		ThisItem.Price = ThisItem.SavePrice;
+		ThisItem.NbrBought = 0;
+#endif
+
+		if (RightItem == null)
 		{
 			RightItem = GetComponent<ItemModif> ( );
 		}
 
-		if ( LeftItem == null )
+		if (LeftItem == null)
 		{
 			LeftItem = GetComponent<ItemModif> ( );
 		}
@@ -33,12 +41,12 @@ public class ItemModif : MonoBehaviour
 		getCurr = GetComponent<Image> ( );
 		savePrice = ThisItem.Price;
 
-		if ( transform.Find ( "Cost Number" ) != null )
+		if (transform.Find ("Cost Number")!= null)
 		{
-			getText = transform.Find ( "Cost Number" ).GetComponent<Text> ( );
+			getText = transform.Find ("Cost Number").GetComponent<Text> ( );
 		}
 
-		if ( getText == null )
+		if (getText == null)
 		{
 			canText = false;
 		}
@@ -47,22 +55,22 @@ public class ItemModif : MonoBehaviour
 		ThisItem.CurrPos = saveStartPos;
 	}
 
-	void Update ()
+	void Update ( )
 	{
-		if ( !canText )
+		if (!canText)
 		{
 			return;
 		}
 
-		if ( ThisItem.ModifVie )
+		if (ThisItem.ModifVie)
 		{
-			if ( getExtraH [ 1 ].enabled )
+			if (getExtraH [1].enabled)
 			{
 				getText.text = "Empty";
 			}
 			else
 			{
-				if ( getExtraH [ 0 ].enabled )
+				if (getExtraH [0].enabled)
 				{
 					ThisItem.Price = savePrice * 2;
 				}
@@ -75,7 +83,7 @@ public class ItemModif : MonoBehaviour
 			}
 		}
 
-		if ( ThisItem.GetSprite != null )
+		if (ThisItem.GetSprite != null)
 		{
 			getCurr.sprite = ThisItem.GetSprite.sprite;
 			getCurr.color = ThisItem.GetSprite.color;
@@ -89,8 +97,8 @@ public class ItemModif : MonoBehaviour
 
 	public void ResetPos ( )
 	{
-		transform.DOKill ( false );
-		transform.DOMove ( saveStartPos, 0, true );
+		transform.DOKill (false);
+		transform.DOMove (saveStartPos, 0, true);
 		ThisItem.CurrPos = saveStartPos;
 	}
 }

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
-using UnityEngine.UI;
+
+using UnityEngine;
 using UnityEngine.Analytics;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 public static class AllPlayerPrefs
 {
@@ -12,7 +13,7 @@ public static class AllPlayerPrefs
     public static float distance;
     public static ListData saveData;
     public static bool relance;
-	public static Transform ListScoreUI;
+    public static Transform ListScoreUI;
 
     //var and function analytics
     public static bool canSendAnalytics;
@@ -22,7 +23,7 @@ public static class AllPlayerPrefs
     public static float ATimerRun;
     public static int AHeartUse;
     public static int AExtraStart;
-    
+
     public static float ATimeDash;
     public static int ANbCoupSimple;
     public static int ANbCoupDouble;
@@ -40,7 +41,7 @@ public static class AllPlayerPrefs
     public static string ANameChunk;
     //public static int
 
-    private static string AnalyticsTimeGame(float deltatime)
+    private static string AnalyticsTimeGame (float deltatime)
     {
         int seconde = 0, minute = 0, heure = 0;
         seconde = (int)deltatime;
@@ -51,48 +52,48 @@ public static class AllPlayerPrefs
         return heure + " h " + minute + " min " + seconde + " s";
     }
 
-    public static void SendAnalytics()
+    public static void SendAnalytics ( )
     {
         if (canSendAnalytics)
         {
-            Dictionary<string, object> gameoverAttribut = new Dictionary<string, object>();
-            Dictionary<string, object> enemyAttribut = new Dictionary<string, object>();
+            Dictionary<string, object> gameoverAttribut = new Dictionary<string, object> ( );
+            Dictionary<string, object> enemyAttribut = new Dictionary<string, object> ( );
 
-            gameoverAttribut.Add("Durée d'une run", AnalyticsTimeGame(ATimerRun));
-            gameoverAttribut.Add("Nombre de vie utilisé", AHeartUse);
-            gameoverAttribut.Add("Nombre extra start utilisé", AExtraStart);
+            gameoverAttribut.Add ("Durée d'une run", AnalyticsTimeGame (ATimerRun));
+            gameoverAttribut.Add ("Nombre de vie utilisé", AHeartUse);
+            gameoverAttribut.Add ("Nombre extra start utilisé", AExtraStart);
 
-            gameoverAttribut.Add("Durée total du dash", ATimeDash);
-            gameoverAttribut.Add("Nombre de coups simple", ANbCoupSimple);
-            gameoverAttribut.Add("Nombre de coups double", ANbCoupDouble);
-            gameoverAttribut.Add("Nombre de passage en madness", ANbPassageMadness);
-            gameoverAttribut.Add("Nombre de "+ANameTechSpe+" utilisé", ANbTechSpe);
+            gameoverAttribut.Add ("Durée total du dash", ATimeDash);
+            gameoverAttribut.Add ("Nombre de coups simple", ANbCoupSimple);
+            gameoverAttribut.Add ("Nombre de coups double", ANbCoupDouble);
+            gameoverAttribut.Add ("Nombre de passage en madness", ANbPassageMadness);
+            gameoverAttribut.Add ("Nombre de " + ANameTechSpe + " utilisé", ANbTechSpe);
 
-            gameoverAttribut.Add("Nom de la chunk du gameover", ANameChunk);
+            gameoverAttribut.Add ("Nom de la chunk du gameover", ANameChunk);
             //gameoverAttribut.Add(" de l'ennemi du gameover", ATypeObstacle);
-            gameoverAttribut.Add("Nom et Type de l'ennemi du gameover", ANameObstacle+" / "+ATypeObstacle);
+            gameoverAttribut.Add ("Nom et Type de l'ennemi du gameover", ANameObstacle + " / " + ATypeObstacle);
 
-            enemyAttribut.Add("Nombre total ennemi tuer", ANbTotalEnemyKill);
-            enemyAttribut.Add("Nombre total charlotte tuer", ANbCharlotte);
-            enemyAttribut.Add("Nombre total vino tuer", ANbVino);
-            enemyAttribut.Add("Nombre total knighty tuer", ANbKnighty);
+            enemyAttribut.Add ("Nombre total ennemi tuer", ANbTotalEnemyKill);
+            enemyAttribut.Add ("Nombre total charlotte tuer", ANbCharlotte);
+            enemyAttribut.Add ("Nombre total vino tuer", ANbVino);
+            enemyAttribut.Add ("Nombre total knighty tuer", ANbKnighty);
 
-            var result = Analytics.CustomEvent("Stats Run", gameoverAttribut);
-            var result2 = Analytics.CustomEvent("Stats Ennemies", enemyAttribut);
-            if (result.Equals(AnalyticsResult.Ok))
+            var result = Analytics.CustomEvent ("Stats Run", gameoverAttribut);
+            var result2 = Analytics.CustomEvent ("Stats Ennemies", enemyAttribut);
+            if (result.Equals (AnalyticsResult.Ok))
             {
-                Debug.Log("envoit = " + result);
-                Debug.Log("envoit 2 = " + result2);
+                Debug.Log ("envoit = " + result);
+                Debug.Log ("envoit 2 = " + result2);
             }
             else
             {
-                Debug.LogWarning("envoit = " + result);
-                Debug.LogWarning("envoit 2 = " + result2);
+                Debug.LogWarning ("envoit = " + result);
+                Debug.LogWarning ("envoit 2 = " + result2);
             }
         }
     }
 
-    public static void ResetStaticVar()
+    public static void ResetStaticVar ( )
     {
         piece = 0;
         finalScore = 0;
@@ -114,9 +115,9 @@ public static class AllPlayerPrefs
         ANbKnighty = 0;
     }
 
-    public static DataSave NewData()
+    public static DataSave NewData ( )
     {
-        return new DataSave(finalScore, scoreWhithoutDistance, piece, distance);
+        return new DataSave (finalScore, scoreWhithoutDistance, piece, distance);
     }
 
     /*public static void testSave()
@@ -134,47 +135,48 @@ public static class AllPlayerPrefs
     }*/
 
     #region Get Methods
-	public static int GetIntValue ( string thisString )
-	{
-		return PlayerPrefs.GetInt ( thisString, 10000 );
-	}
+    public static int GetIntValue (string thisString, int defValue = 10000)
+    {
+        return PlayerPrefs.GetInt (thisString, defValue);
+    }
 
-	public static int GetIntValueForSong ( string thisString )
-	{
-		return PlayerPrefs.GetInt ( thisString, 100 );
-	}
+    public static int GetIntValueForSong (string thisString)
+    {
+        return PlayerPrefs.GetInt (thisString, 100);
+    }
 
-	public static bool GetBoolValue ( string thisString )
-	{
-		string getVal = PlayerPrefs.GetString ( thisString, "Nope" );
+    public static bool GetBoolValue (string thisString)
+    {
+        string getVal = PlayerPrefs.GetString (thisString, "Nope");
 
-		if ( getVal == "Nope" )
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
+        if (getVal == "Nope")
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     #endregion
 
-	#region Set Methods
-	public static void SetIntValue ( string thisString, int thisValue, bool addition = true )
-	{
-		if ( addition )
-		{
-			PlayerPrefs.SetInt ( thisString, GetIntValue ( thisString ) + thisValue );
-		}
-		else
-		{
-			PlayerPrefs.SetInt ( thisString, thisValue );
-		}
-	}
+    #region Set Methods
+    public static void SetIntValue (string thisString, int thisValue, bool addition = true, int defVal = 10000)
+    {
+        if (addition)
+        {
+            PlayerPrefs.SetInt (thisString, GetIntValue (thisString, defVal)+ thisValue);
+            Debug.Log (thisString + " / " + GetIntValue (thisString));
+        }
+        else
+        {
+            PlayerPrefs.SetInt (thisString, thisValue);
+        }
+    }
 
-	public static void SetStringValue ( string thisName, string value = "ok" )
-	{
-		PlayerPrefs.SetString ( thisName, value );
-	}
-	#endregion
+    public static void SetStringValue (string thisName, string value = "ok")
+    {
+        PlayerPrefs.SetString (thisName, value);
+    }
+    #endregion
 }
