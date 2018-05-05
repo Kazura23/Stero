@@ -77,6 +77,11 @@ public class Punch : MonoBehaviour {
                 if ( RightPunch )
 				{
 					getProj -= getPlayer.right;
+					Debug.Log("Right");
+					GameObject right = GlobalManager.GameCont.Player.GetComponent<PlayerController>().handTrailRight.transform.GetChild(0).gameObject;
+					GameObject fx = GlobalManager.GameCont.FxInstanciate(right.transform.position, "PunchImpact", right.transform, 4f);
+            		//fx.transform.DOScale(Vector3.one, 0);
+					fx.transform.localPosition = Vector3.zero;
 				}
 				else
 				{

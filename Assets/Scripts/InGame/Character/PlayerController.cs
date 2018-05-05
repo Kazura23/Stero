@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
     [Header("GRAPH")]
     public GameObject leftHand;
     public GameObject rightHand;
+	public GameObject FxPunchImpact;
 
 	public GameObject handTrailLeft;
 	public GameObject handTrailRight;
