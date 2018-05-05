@@ -166,7 +166,6 @@ public static class AllPlayerPrefs
         if (addition)
         {
             PlayerPrefs.SetInt (thisString, GetIntValue (thisString, defVal)+ thisValue);
-            Debug.Log (thisString + " / " + GetIntValue (thisString));
         }
         else
         {

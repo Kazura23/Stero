@@ -621,8 +621,7 @@ public class MenuShop : UiParent
 							count++;
 						}
 					}
-
-					if (count > 3 || count > 2 && currCatSeled.NameCat == "BONUS")
+					if (count > 3 || count > 2 && currCatSeled.NameCat == "BONUS" || currItemSeled.ThisItem.name == "BonusStart" && count >= 1)
 					{
 						return;
 					}
@@ -692,7 +691,6 @@ public class MenuShop : UiParent
 				}
 				else
 				{
-					Debug.Log ("Extrastart");
 					GlobalManager.Ui.ExtraStartShop ( );
 					SelectObject ( );
 				}
