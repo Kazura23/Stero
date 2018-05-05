@@ -1323,7 +1323,7 @@ public class PlayerController : MonoBehaviour
 			speed *= DashSpeed;
 			AllPlayerPrefs.ATimeDash += delTime;
 			GlobalManager.Ui.DashSpeedEffect (true);
-			Debug.Log ("DashTrue");
+			//			Debug.Log ("DashTrue");
 			thisCam.GetComponent<CameraFilterPack_Blur_BlurHole> ( ).enabled = true;
 		}
 		else if (InMadness)
