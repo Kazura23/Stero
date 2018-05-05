@@ -1532,9 +1532,8 @@ public class GameController : ManagerParent
 				currPlayer.MadNeed = thisItem.ThisItem.MinMadNeedPourc;
 				currPlayer.MadnessMult = thisItem.ThisItem.MadnessMulti;
 			}
-			else
+			else if (thisItem.ThisItem.SpecAction == currPlayer.ThisAct)
 			{
-				Debug.Log (thisItem.ThisItem.NbrBought);
 				currPlayer.MadnessUse += thisItem.ThisItem.MadnessUsePourc * thisItem.ThisItem.NbrBought;
 				//currPlayer.MadNeed += thisItem.ThisItem.MinMadNeedPourc; 
 				currPlayer.MadnessMult += thisItem.ThisItem.MadnessMulti * thisItem.ThisItem.NbrBought;
@@ -1548,15 +1547,18 @@ public class GameController : ManagerParent
 				}
 				else
 				{
-					currPlayer.SlowMotion += thisItem.ThisItem.SlowTime;
+					currPlayer.SlowMotion += thisItem.ThisItem.SlowTime * thisItem.ThisItem.NbrBought;
 				}
 			}
 			else if (thisItem.ThisItem.SpecAction == SpecialAction.DeadBall)
 			{
-				currPlayer.DistDBTake = thisItem.ThisItem.DistTakeDB;
 				if (!thisItem.ThisItem.BonusItem)
 				{
-					currPlayer.MadnessMult = thisItem.ThisItem.MadnessMulti;
+					currPlayer.DistDBTake = thisItem.ThisItem.DistTakeDB;
+				}
+				else
+				{
+					currPlayer.DistDBTake += thisItem.ThisItem.DistTakeDB * thisItem.ThisItem.NbrBought;;
 				}
 			}
 		}
