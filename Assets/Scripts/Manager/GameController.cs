@@ -1387,6 +1387,7 @@ public class GameController : ManagerParent
 			checkStart = true;
 			//Debug.Log("player = " + Player);
 			Player.GetComponent<PlayerController> ( ).StopPlayer = false;
+			Player.transform.localRotation = Quaternion.identity;
 			//Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
 
 			//thisCam.GetComponent<RainbowRotate>().time = .4f;
@@ -1453,7 +1454,7 @@ public class GameController : ManagerParent
 
 		AudioLowPassFilter getALPF = musicObject.AddComponent<AudioLowPassFilter> ( );
 		getALPF.lowpassResonanceQ = 2;
-	    getALPF.cutoffFrequency = 480;
+		getALPF.cutoffFrequency = 480;
 		getALPF.enabled = false;
 		AudioDistortionFilter ADF = musicObject.AddComponent<AudioDistortionFilter> ( );
 		ADF.distortionLevel = 1;
