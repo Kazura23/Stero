@@ -1766,6 +1766,9 @@ public class PlayerController : MonoBehaviour
 
 		pTrans.DOLocalRotate (getThisC, RotationSpeed, RotateMode.LocalAxisAdd).OnComplete (( )=>
 		{
+			currSpLine = 0;
+			newH = 0;
+			LastImp = 0;
 			useFord = true;
 			StopPlayer = false;
 			blockChangeLine = false;
