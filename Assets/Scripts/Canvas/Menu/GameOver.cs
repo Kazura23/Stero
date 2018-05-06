@@ -26,6 +26,7 @@ public class GameOver : UiParent
 	bool canUpdate = false;
 	Player inputPlayer;
 
+	Tween patternTw;
 	Tween gameOverTw;
 	#endregion
 
@@ -112,7 +113,11 @@ public class GameOver : UiParent
 		PointsGameOver.transform.DOScale(5, 0);
 		BarGameOver.transform.DOScaleY(0, 0);
 
-		PatternGameOver.transform.DOLocalMoveY(-60, 5f).SetEase(Ease.Linear).OnComplete(() => {
+		patternTw.Kill(true);
+
+		PatternGameOver.transform.DOLocalMoveY(1092, 0);
+
+		patternTw = PatternGameOver.transform.DOLocalMoveY(-60, 6f).SetEase(Ease.Linear).OnComplete(() => {
 			PatternGameOver.transform.DOLocalMoveY(1092, 0);
 		}).SetLoops(-1, LoopType.Restart);
 

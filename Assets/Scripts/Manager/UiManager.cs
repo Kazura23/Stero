@@ -410,7 +410,7 @@ public class UiManager : ManagerParent
         //DOVirtual.DelayedCall(.4f, () => {
         Time.timeScale = 1;
             Time.fixedDeltaTime = .02F;
-            ScreenShake.Singleton.ShakeGameOver();
+            //ScreenShake.Singleton.ShakeGameOver();
         //});
         RedScreen.DOKill ( );
         RedScreen.DOFade(.7f, .25f).OnComplete(() => {
@@ -477,10 +477,10 @@ public class UiManager : ManagerParent
         PostProcessMadness.GetComponent<PostProcessVolume>().enabled = true;
 
         Transform getPlayer = GlobalManager.GameCont.Player.transform;
-		GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
-        textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
+		//GameObject textMadness = GlobalManager.GameCont.FxInstanciate ( getPlayer.position + getPlayer.forward * 10, "TextMadness", transform, 10f );
+        //textMadness.transform.DORotate(new Vector3(0, GlobalManager.GameCont.Player.transform.rotation.y, 0), 0, RotateMode.WorldAxisAdd);
 
-        Destroy(textMadness, 3);
+        //Destroy(textMadness, 3);
 
 		DOTween.Kill ( GlobalManager.GameCont.chromValue );
 		DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .6f);

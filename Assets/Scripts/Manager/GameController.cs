@@ -1453,7 +1453,7 @@ public class GameController : ManagerParent
 
 		AudioLowPassFilter getALPF = musicObject.AddComponent<AudioLowPassFilter> ( );
 		getALPF.lowpassResonanceQ = 2;
-		getALPF.cutoffFrequency = 480;
+	    getALPF.cutoffFrequency = 480;
 		getALPF.enabled = false;
 		AudioDistortionFilter ADF = musicObject.AddComponent<AudioDistortionFilter> ( );
 		ADF.distortionLevel = 1;

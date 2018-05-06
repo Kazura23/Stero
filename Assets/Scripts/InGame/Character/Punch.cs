@@ -15,6 +15,9 @@ public class Punch : MonoBehaviour {
 	public float projection_double = 100;
 	public float projection_dash = 150;
 
+	public GameObject rightHandTrail;
+	public GameObject leftHandTrail;
+
     public float facteurVitesseRenvoie = 1.5f;
 	public bool RightPunch = false;
 
@@ -24,6 +27,7 @@ public class Punch : MonoBehaviour {
     {
 		getPlayer = GlobalManager.GameCont.Player.transform;
 		control = getPlayer.GetComponent<PlayerController>();
+		
     }
 
     void OnTriggerEnter(Collider other)
@@ -77,10 +81,15 @@ public class Punch : MonoBehaviour {
                 if ( RightPunch )
 				{
 					getProj -= getPlayer.right;
+					GameObject fx = GlobalManager.GameCont.FxInstanciate(rightHandTrail.transform.position, "PunchImpact", rightHandTrail.transform, 1f);
+            		//fx.transform.DOScale(Vector3.one, 0);
+					fx.transform.localPosition = Vector3.zero;
 				}
 				else
 				{
 					getProj += getPlayer.right;
+					GameObject left = GlobalManager.GameCont.Player.GetComponent<PlayerController>().handTrailLeft.gameObject;
+					GameObject fx = GlobalManager.GameCont.FxInstanciate(leftHandTrail.transform.position, "PunchImpact", leftHandTrail.transform, 1f);
 				}
 
 				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)

@@ -37,6 +37,7 @@ public class canBeDest : MonoBehaviour
 			onColl = true;
 			if ( gameObject.activeSelf )
 			{
+				Debug.Log("Destroy");
 				StartCoroutine ( GlobalManager.GameCont.MeshDest.SplitMesh ( gameObject, collision.transform, ForcePropulse, DelayDestruc ) );
 				int randomSong = UnityEngine.Random.Range ( 0, 5 );
 				GlobalManager.AudioMa.OpenAudio ( AudioType.FxSound, "Wood_" + ( randomSong + 1 ), false );

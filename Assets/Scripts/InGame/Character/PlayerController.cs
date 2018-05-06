@@ -479,6 +479,7 @@ public class PlayerController : MonoBehaviour
 			thisCam.backgroundColor = thisColor;
 		});
 		GlobalManager.Ui.GameOver ( );
+		Debug.Log("UIOVer");
 	}
 
 	public void AddSmoothCurve (float p_value)
@@ -1890,13 +1891,10 @@ public class PlayerController : MonoBehaviour
 				GlobalManager.GameCont.PlayerCollider = true;
 				pTrans.localPosition -= pTrans.forward;
 
-				thisCam.transform.DOShakePosition (0.5f, 5, 2, 5).OnComplete (( )=>
-				{
-					pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 0.5f).OnComplete (( )=>
+					pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 1).OnComplete (( )=>
 					{
 						StopPlayer = false;
 					});
-				});
 			}
 
 			GameOver ( );
