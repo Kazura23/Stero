@@ -82,13 +82,11 @@ public class Punch : MonoBehaviour {
 				{
 					getProj -= getPlayer.right;
 					GameObject fx = GlobalManager.GameCont.FxInstanciate(rightHandTrail.transform.position, "PunchImpact", rightHandTrail.transform, 1f);
-            		//fx.transform.DOScale(Vector3.one, 0);
 					fx.transform.localPosition = Vector3.zero;
 				}
 				else
 				{
 					getProj += getPlayer.right;
-					GameObject left = GlobalManager.GameCont.Player.GetComponent<PlayerController>().handTrailLeft.gameObject;
 					GameObject fx = GlobalManager.GameCont.FxInstanciate(leftHandTrail.transform.position, "PunchImpact", leftHandTrail.transform, 1f);
 				}
 
@@ -108,6 +106,12 @@ public class Punch : MonoBehaviour {
 			case (int)Technic.double_punch:
                 //MadnessMgetProj = getPlayer.forward;ana("Double");
                 getProj = getPlayer.forward;
+
+				GameObject fx2 = GlobalManager.GameCont.FxInstanciate(rightHandTrail.transform.position, "PunchImpact", rightHandTrail.transform, 1f);
+				fx2.transform.localPosition = Vector3.zero;
+
+				GameObject fx3 = GlobalManager.GameCont.FxInstanciate(leftHandTrail.transform.position, "PunchImpact", leftHandTrail.transform, 1f);
+				fx3.transform.localPosition = Vector3.zero;
 
 				//Debug.Log ( pourcPunch );
 				if ( other.gameObject.tag != Constants._ObjDeadTag && tryGet)

@@ -94,7 +94,6 @@ public class ScreenShake : MonoBehaviour
 
     public void ShakeIntro()
     {
-        //transform.GetComponent<RainbowRotate>().enabled = false;
         punchPos.Kill(true);
         shakePos.Kill(true);
 
@@ -103,13 +102,18 @@ public class ScreenShake : MonoBehaviour
 
         dir *= -1;
         punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
-        shakePos = transform.DOShakeRotation(.5f, 35f, 25, 120);
+        shakePos = transform.DOShakeRotation(.5f, .25f, 25, 30);
         //punchPos = transform.DOPunchPosition(new Vector3(1 * .85f * dir, 0, 1 * 1.5f), .5f, 2, 1);
         //punchPos = transform.DOShakePosition(.5f, 1.5f, 15, 150);
     }
 
     public void ShakeMad()
     {
+        shakePos.Kill ( true );
+		punchPos.Kill(true);
+		shakeFall.Kill(true);
+        shakeStero.Kill(true);
+
         transform.DOShakePosition(.4f, .65f, 22, 90);
     }
 

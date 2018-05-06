@@ -122,14 +122,14 @@ public class EnnemisLane : AbstractObject
 		base.OnCollisionEnter ( thisColl );
 		if ( isDead )
 		{
-			GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+			//GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 		}
 	}
 
 	protected override void CollDetect ( )
 	{
 		base.CollDetect ( );
-		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+		//GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 	IEnumerator changeLane ( bool rightLine ) 
 	{

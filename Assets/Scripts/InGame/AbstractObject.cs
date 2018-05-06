@@ -188,7 +188,7 @@ public class AbstractObject : MonoBehaviour
 		else
 		{
 			onEnemyDead ( projection, thisDeath );
-            GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+            //GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
         }
 	}
 

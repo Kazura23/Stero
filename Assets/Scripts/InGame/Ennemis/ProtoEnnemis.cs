@@ -148,7 +148,7 @@ public class ProtoEnnemis : AbstractObject
         if ( isDead )
 		{
 
-            GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y, transform.localPosition.z + 5f), "EnemyNormalDeath", transform.parent, .35f);
+            //GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y, transform.localPosition.z + 5f), "EnemyNormalDeath", transform.parent, .35f);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class ProtoEnnemis : AbstractObject
 	{
 		base.CollDetect ( );
 
-        GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+        //GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 	#endregion
 }
