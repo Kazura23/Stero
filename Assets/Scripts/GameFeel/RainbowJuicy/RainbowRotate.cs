@@ -16,6 +16,7 @@ public class RainbowRotate : MonoBehaviour
 
 	public void reStart()
 	{
+        transform.DOLocalRotate(new Vector3(0,0,-3.5f),0);
 		index = - 1;
 	}
 

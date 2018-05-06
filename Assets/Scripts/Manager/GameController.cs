@@ -1000,7 +1000,6 @@ public class GameController : ManagerParent
 	                   textMeshs.GetChild(i).gameObject.SetActive(true);
 	               }*/
 	/* 
-	               //Player.GetComponentInChildren<RainbowRotate>().enabled = true;
 	               Player.transform.DORotate(Vector3.zero, 1).OnComplete(()=> 
 	               {
 	                   // Cri de Mr S après avoir pris sa dose
@@ -1395,7 +1394,6 @@ public class GameController : ManagerParent
 			Player.GetComponent<PlayerController> ( ).StopPlayer = false;
 			//Player.GetComponent<PlayerController>().playAnimator.SetBool ( "WaitDoor", false );
 
-			//thisCam.GetComponent<RainbowRotate>().time = .4f;
 			//thisCam.GetComponent<RainbowMove>().time = .2f;
 
 			soundFootSteps = DOVirtual.DelayedCall (GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).MaxSpeed / GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).MaxSpeed - GlobalManager.GameCont.Player.GetComponent<PlayerController> ( ).MaxSpeed / 25, ( )=>

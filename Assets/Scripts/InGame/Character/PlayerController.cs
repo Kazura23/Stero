@@ -358,6 +358,7 @@ public class PlayerController : MonoBehaviour
 		currLine = 0;
 		canChange = false;
 		InMadness = false;
+		playAnimator.SetBool("InMadness",false);
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
 		playAnimator.Play ("Start");
 		totalDis = 0;
@@ -605,6 +606,9 @@ public class PlayerController : MonoBehaviour
 			{
 				getCal = 1;
 				InMadness = true;
+
+				playAnimator.SetTrigger("Mad");
+				playAnimator.SetBool("InMadness",true);
 
 				DOTween.To (( )=> GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete (( )=>
 				{
@@ -1907,6 +1911,7 @@ public class PlayerController : MonoBehaviour
 		DOVirtual.DelayedCall (0.25f, ( )=>
 		{
 			InMadness = false;
+			playAnimator.SetBool("InMadness",false);
 		});
 
 		StartCoroutine (camColor (false));

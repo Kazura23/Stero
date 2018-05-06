@@ -238,7 +238,7 @@ public class UiManager : ManagerParent
                 thisCam.DOFieldOfView(4, .25f); 
 			    thisCam.DOFieldOfView(65, .15f);
 
-                DOVirtual.DelayedCall(1f, () =>
+                DOVirtual.DelayedCall(.5f, () =>
                 {
                     GlobalManager.GameCont.introFinished = true;
                 });
@@ -255,7 +255,7 @@ public class UiManager : ManagerParent
                     thisCam.GetComponent<RainbowMove>().time = .2f;
                     thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
 
-                    DOVirtual.DelayedCall(.75f,()=>{
+                    DOVirtual.DelayedCall(.25f,()=>{
 
                         thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
                         thisCam.GetComponent<RainbowRotate>().enabled = true; thisCam.GetComponent<RainbowMove>().enabled = true;
@@ -545,14 +545,12 @@ public class UiManager : ManagerParent
 	
         //thisCam.GetComponent<CameraFilterPack_Color_YUV>().enabled = false;
 
-        //thisCam.GetComponent<RainbowRotate>().enabled = false;
 
 
 
         //thisCam.DOKill(true);
 
        // Debug.Log("CloseMad");
-        //thisCam.GetComponent<RainbowRotate>().enabled = true;
 
        //thisCam.transform.GetComponent<RainbowMove>().enabled = true;
     }

@@ -52,7 +52,7 @@ public class ShieldMan : AbstractObject {
 		base.OnCollisionEnter ( thisColl );
 		if ( isDead )
 		{
-			GlobalManager.GameCont.FxInstanciate ( new Vector3 ( transform.position.x, transform.position.y + .5f, transform.position.z ), "EnemyNormalDeath", transform.parent );
+			//GlobalManager.GameCont.FxInstanciate ( new Vector3 ( transform.position.x, transform.position.y + .5f, transform.position.z ), "EnemyNormalDeath", transform.parent );
 		}
 		else if ( thisColl.gameObject.tag == Constants._ObsTag && !shieldActive )
 		{
@@ -175,7 +175,7 @@ public class ShieldMan : AbstractObject {
 			base.CollDetect ( );
 		}
 
-		GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
+		//GlobalManager.GameCont.FxInstanciate(new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), "EnemyNormalDeath", transform.parent);
 	}
 }
 
