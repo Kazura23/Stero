@@ -154,6 +154,7 @@ public class SpawnChunks : MonoBehaviour
 				}
 				else
 				{
+					currLevel = chunkOrder.Count - 1;
 					return;
 				}
 			}
@@ -391,6 +392,7 @@ public class SpawnChunks : MonoBehaviour
 
 				if (currLevel > chunkOrder.Count)
 				{
+					currLevel = chunkOrder.Count - 1;
 					return;
 				}
 			}
