@@ -247,9 +247,14 @@ public class GameController : ManagerParent
 								textIntroInputs.gameObject.SetActive (false);
 							});
 
+							DOVirtual.DelayedCall (2.6f, ( )=>
+							{
+								Player.GetComponent<PlayerController>().seringue.SetActive(false);
+							});
+
 							DOVirtual.DelayedCall ((float)getPlayer.PlayDirect.duration, ( )=>
 							{
-								Player.transform.DOLocalMoveX (0, 0.7f);
+								Player.transform.DOLocalMoveX (0, 0.2f);
 
 								getAnimator.enabled = false;
 								thisCam.transform.DOLocalMoveY (0.312f, 0.2f).OnComplete (( )=>
@@ -257,6 +262,7 @@ public class GameController : ManagerParent
 									//Player.GetComponentInChildren<RainbowMove>().enabled = true;
 									Player.transform.DOMoveZ (3.5f, 0.5f).OnComplete (( )=>
 									{
+										Player.GetComponent<PlayerController>().seringue.SetActive(true);
 										GlobalManager.Ui.IntroWord ( );
 										ScreenShake.Singleton.ShakeStero ( );
 										isReady = true;
