@@ -215,7 +215,7 @@ public class UiManager : ManagerParent
 
 		if ( GlobalManager.GameCont.LaunchTuto )
 		{
-			thisCam.transform.DOLocalRotate(new Vector3(0, 0, -3.5f), 0);
+			thisCam.transform.DOLocalRotate(new Vector3(0, 0, 0), 0);
 			thisCam.GetComponent<RainbowRotate>().time = .4f;
 			thisCam.GetComponent<RainbowMove>().time = .2f;
 
@@ -615,7 +615,11 @@ public class UiManager : ManagerParent
             RedScreen.DOFade(0, .2f);
         }).SetLoops(-1,LoopType.Restart);*/
 
-        RedScreen.GetComponents<RainbowColor>()[0].enabled = true;
+        var volume = PostProcessManager.instance.QuickVolume(PostProcessMadness.layer, 100f, GlobalManager.GameCont.postMadnessProfile.profile.settings.ToArray());
+        volume.weight = 0f;
+
+        DOTween.To(() => volume.weight, x => volume.weight = x, 1f, .6f).SetLoops(-1,LoopType.Restart);
+
 
     }
 
@@ -685,8 +689,8 @@ public class UiManager : ManagerParent
     public void ScorePlus(int number, Color rankColor, int currIndex, string type)
     {
 
-        float randomPos = UnityEngine.Random.Range(-600, 600);
-        float randomRot = UnityEngine.Random.Range(200, 200);
+        float randomPos = UnityEngine.Random.Range(-450, 450);
+        float randomRot = 350;
         //Debug.Log("score");
         
         var scoreInt = (int.Parse(ScoreString) + number);
@@ -712,9 +716,9 @@ public class UiManager : ManagerParent
         }
 
 
-        scoretxt.transform.DOScale(1.4f, 0);
-        scoretxt.transform.DOScale(.55f, .1f).OnComplete(() => {
-            scoretxt.transform.DOPunchScale((Vector3.one * .45f), .25f, 15, 1).OnComplete(() => {
+        scoretxt.transform.DOScale(.7f, 0);
+        scoretxt.transform.DOScale(.2f, .1f).OnComplete(() => {
+            scoretxt.transform.DOPunchScale((Vector3.one * .12f), .25f, 15, 1).OnComplete(() => {
                 scoretxt.transform.DOScale(0, .5f);
                 scoretxt.transform.DOLocalMove(ScorePoints.transform.gameObject.transform.localPosition, .5f);
             });
