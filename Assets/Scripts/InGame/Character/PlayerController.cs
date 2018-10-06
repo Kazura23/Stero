@@ -1896,7 +1896,7 @@ public class PlayerController : MonoBehaviour
 				GlobalManager.GameCont.PlayerCollider = true;
 				pTrans.localPosition -= pTrans.forward;
 
-					pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 1).OnComplete (( )=>
+					pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 2).OnComplete (( )=>
 					{
 						StopPlayer = false;
 					});
