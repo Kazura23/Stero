@@ -1,91 +1,54 @@
-Shader "Hidden/PostProcessing/ScreenSpaceReflections"
-{
-    // We need to use internal Unity lighting structures and functions for this effect so we have to
-    // stick to CGPROGRAM instead of HLSLPROGRAM
+// Shader created with Shader Forge v1.37 
+// Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
+// Note: Manually altering this data may prevent you from opening it in Shader Forge
+/*SF_DATA;ver:1.37;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5808823,fgcg:0.1238646,fgcb:0.1238646,fgca:1,fgde:0.03,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:3340,x:32719,y:32712,varname:node_3340,prsc:2;pass:END;sub:END;*/
 
-    CGINCLUDE
-
-        #include "UnityCG.cginc"
-        #pragma target 5.0
-
-        // Ported from StdLib, we can't include it as it'll conflict with internal Unity includes
-        struct AttributesDefault
-        {
-            float3 vertex : POSITION;
-        };
-
-        struct VaryingsDefault
-        {
-            float4 vertex : SV_POSITION;
-            float2 texcoord : TEXCOORD0;
-            float2 texcoordStereo : TEXCOORD1;
-        };
-
-        VaryingsDefault VertDefault(AttributesDefault v)
-        {
-            VaryingsDefault o;
-            o.vertex = float4(v.vertex.xy, 0.0, 1.0);
-            o.texcoord = (v.vertex.xy + 1.0) * 0.5;
-
-        #if UNITY_UV_STARTS_AT_TOP
-            o.texcoord = o.texcoord * float2(1.0, -1.0) + float2(0.0, 1.0);
-        #endif
-
-            o.texcoordStereo = TransformStereoScreenSpaceTex(o.texcoord, 1.0);
-
-            return o;
+Shader "Hidden/PostProcessing/ScreenSpaceReflections" {
+    Properties {
+    }
+    SubShader {
+        Tags {
+            "RenderType"="Opaque"
         }
-
-        #include "ScreenSpaceReflections.hlsl"
-
-    ENDCG
-
-    SubShader
-    {
-        Cull Off ZWrite Off ZTest Always
-
-        // 0 - Test
-        Pass
-        {
+        Pass {
+            Name "FORWARD"
+            Tags {
+                "LightMode"="ForwardBase"
+            }
+            
+            
             CGPROGRAM
-
-                #pragma vertex VertDefault
-                #pragma fragment FragTest
-
-            ENDCG
-        }
-
-        // 1 - Resolve
-        Pass
-        {
-            CGPROGRAM
-
-                #pragma vertex VertDefault
-                #pragma fragment FragResolve
-
-            ENDCG
-        }
-
-        // 2 - Reproject
-        Pass
-        {
-            CGPROGRAM
-
-                #pragma vertex VertDefault
-                #pragma fragment FragReproject
-
-            ENDCG
-        }
-
-        // 3 - Composite
-        Pass
-        {
-            CGPROGRAM
-
-                #pragma vertex VertDefault
-                #pragma fragment FragComposite
-
+            #pragma vertex vert
+            #pragma fragment frag
+            #define UNITY_PASS_FORWARDBASE
+            #include "UnityCG.cginc"
+            #pragma multi_compile_fwdbase_fullshadows
+            #pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma target 3.0
+            struct VertexInput {
+                float4 vertex : POSITION;
+            };
+            struct VertexOutput {
+                float4 pos : SV_POSITION;
+                UNITY_FOG_COORDS(0)
+            };
+            VertexOutput vert (VertexInput v) {
+                VertexOutput o = (VertexOutput)0;
+                o.pos = UnityObjectToClipPos( v.vertex );
+                UNITY_TRANSFER_FOG(o,o.pos);
+                return o;
+            }
+            float4 frag(VertexOutput i) : COLOR {
+////// Lighting:
+                float3 finalColor = 0;
+                fixed4 finalRGBA = fixed4(finalColor,1);
+                UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
+                return finalRGBA;
+            }
             ENDCG
         }
     }
+    FallBack "Diffuse"
+    CustomEditor "ShaderForgeMaterialInspector"
 }

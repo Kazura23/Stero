@@ -1,93 +1,55 @@
-﻿// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
+// Shader created with Shader Forge v1.37 
+// Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
+// Note: Manually altering this data may prevent you from opening it in Shader Forge
+/*SF_DATA;ver:1.37;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5808823,fgcg:0.1238646,fgcb:0.1238646,fgca:1,fgde:0.03,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:5613,x:32719,y:32712,varname:node_5613,prsc:2;pass:END;sub:END;*/
 
 Shader "Custom/CercleMask" {
-	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_BumpMap ("BumpMap", 2D) = "bump" {}
-		_LessGray ("LessGray", Range (0,2)) = 1
-
-		_EmissionColor ("EmissionColor", Color) = (1,1,1,1)
-		_EmissionMainTex ("EmissionAlbedo (RGB)", 2D) = "white" {}
-		
-		_ColorStrength ("ColorStrength", Range(1,10)) = 1
-		_EmissionColorStrength ("EmissionColorStrength", Range(1,10)) = 1
-		
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
-		//_Position ("WorldPos", Vector) = (0,0,0,0)
-		//_Radius ("SphereRadius", Range(0,100)) = 0
-		//_SoftNess("SphereSoftness", Range(0,100)) = 0
-	}
-	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
-		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
-
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
-
-		sampler2D _MainTex, _EmissionMainTex, _BumpMap;
-
-		struct Input 
-		{
-			float2 uv_MainTex;
-			float2 uv_EmissionTex;
-			float3 worldPos;
-			float2 uv_BumpMap;
-		};
-
-		fixed4 _Color, _EmissionColor;
-		half _Glossiness;
-		half _Metallic;
-		half _ColorStrength, _EmissionColorStrength;
-		half _LessGray;
-
-		//Spherical mask
-		uniform float4 GlobaleMask_Position;
-		uniform half GlobaleMask_Radius;
-		uniform half GlobaleMask_SoftNess;
-
-		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-		// #pragma instancing_options assumeuniformscaling
-		UNITY_INSTANCING_BUFFER_START(Props)
-			// put more per-instance properties here
-		UNITY_INSTANCING_BUFFER_END(Props)
-
-		void surf (Input IN, inout SurfaceOutputStandard o) 
-		{
-			// default color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			
-			//récupère seulement le gris de la texture
-			half grayscale = (c.r+c.g+c.b)*.333; 
-			half satG = saturate (grayscale * _LessGray);
-			fixed3 c_g = fixed3(satG,satG,satG);
-
-			//Emission
-			fixed4 e = tex2D(_EmissionMainTex, IN.uv_EmissionTex) * _EmissionColor * _EmissionColorStrength;
-
-			//Radius d'application de la couleur
-			half d = distance (GlobaleMask_Position, IN.worldPos);
-			half sum = saturate((d - GlobaleMask_Radius) / -GlobaleMask_SoftNess);
-			fixed4 lerpColor = lerp(fixed4(c_g,1),c * _ColorStrength,sum);
-			fixed4 lerpEmiision = lerp(fixed4(0,0,0,0),e,sum);
-
-			o.Albedo = lerpColor.rgb;
-			o.Normal = UnpackNormal (tex2D (_BumpMap, IN.uv_BumpMap));
-			
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Emission = lerpEmiision.rgb;
-			o.Smoothness = _Glossiness;
-			o.Alpha = c.a;
-			
-		}
-		ENDCG
-	}
-	FallBack "Diffuse"
+    Properties {
+    }
+    SubShader {
+        Tags {
+            "RenderType"="Opaque"
+        }
+        LOD 200
+        Pass {
+            Name "FORWARD"
+            Tags {
+                "LightMode"="ForwardBase"
+            }
+            
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #define UNITY_PASS_FORWARDBASE
+            #include "UnityCG.cginc"
+            #pragma multi_compile_fwdbase_fullshadows
+            #pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma target 3.0
+            struct VertexInput {
+                float4 vertex : POSITION;
+            };
+            struct VertexOutput {
+                float4 pos : SV_POSITION;
+                UNITY_FOG_COORDS(0)
+            };
+            VertexOutput vert (VertexInput v) {
+                VertexOutput o = (VertexOutput)0;
+                o.pos = UnityObjectToClipPos( v.vertex );
+                UNITY_TRANSFER_FOG(o,o.pos);
+                return o;
+            }
+            float4 frag(VertexOutput i) : COLOR {
+////// Lighting:
+                float3 finalColor = 0;
+                fixed4 finalRGBA = fixed4(finalColor,1);
+                UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
+                return finalRGBA;
+            }
+            ENDCG
+        }
+    }
+    FallBack "Diffuse"
+    CustomEditor "ShaderForgeMaterialInspector"
 }

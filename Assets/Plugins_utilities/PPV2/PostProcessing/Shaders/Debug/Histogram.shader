@@ -1,96 +1,54 @@
-Shader "Hidden/PostProcessing/Debug/Histogram"
-{
-    HLSLINCLUDE
+// Shader created with Shader Forge v1.37 
+// Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
+// Note: Manually altering this data may prevent you from opening it in Shader Forge
+/*SF_DATA;ver:1.37;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5808823,fgcg:0.1238646,fgcb:0.1238646,fgca:1,fgde:0.03,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:4604,x:32719,y:32712,varname:node_4604,prsc:2;pass:END;sub:END;*/
 
-        #pragma target 4.5
-        #include "../StdLib.hlsl"
-
-        #if SHADER_API_GLES3
-            #define HISTOGRAM_BINS 128
-        #else
-            #define HISTOGRAM_BINS 256
-        #endif
-
-        struct VaryingsHistogram
-        {
-            float4 vertex : SV_POSITION;
-            float2 texcoord : TEXCOORD0;
-            float maxValue : TEXCOORD1;
-        };
-
-        StructuredBuffer<uint> _HistogramBuffer;
-        float2 _Params; // x: width, y: height
-
-        float FindMaxHistogramValue()
-        {
-            uint maxValue = 0u;
-
-            UNITY_UNROLL
-            for (uint i = 0; i < HISTOGRAM_BINS; i++)
-            {
-                uint h = _HistogramBuffer[i];
-                maxValue = max(maxValue, h);
+Shader "Hidden/PostProcessing/Debug/Histogram" {
+    Properties {
+    }
+    SubShader {
+        Tags {
+            "RenderType"="Opaque"
+        }
+        Pass {
+            Name "FORWARD"
+            Tags {
+                "LightMode"="ForwardBase"
             }
-
-            return float(maxValue);
-        }
-
-        VaryingsHistogram Vert(AttributesDefault v)
-        {
-            VaryingsHistogram o;
-            o.vertex = float4(v.vertex.xy, 0.0, 1.0);
-            o.texcoord = TransformTriangleVertexToUV(v.vertex.xy);
-
-        #if UNITY_UV_STARTS_AT_TOP
-            o.texcoord = o.texcoord * float2(1.0, -1.0) + float2(0.0, 1.0);
-        #endif
-
-        #if SHADER_API_GLES3 // No texture loopup in VS on GLES3/Android
-            o.maxValue = 0;
-        #else
-            o.maxValue = _Params.y / FindMaxHistogramValue();
-        #endif
-        
-            return o;
-        }
-
-        float4 Frag(VaryingsHistogram i) : SV_Target
-        {
-        #if SHADER_API_GLES3
-            float maxValue = _Params.y / FindMaxHistogramValue();
-        #else
-            float maxValue = i.maxValue;
-        #endif
-
-            const float kBinsMinusOne = HISTOGRAM_BINS - 1.0;
-            float remapI = i.texcoord.x * kBinsMinusOne;
-            uint index = floor(remapI);
-            float delta = frac(remapI);
-            float v1 = float(_HistogramBuffer[index]) * maxValue;
-            float v2 = float(_HistogramBuffer[min(index + 1, kBinsMinusOne)]) * maxValue;
-            float h = v1 * (1.0 - delta) + v2 * delta;
-            uint y = (uint)round(i.texcoord.y * _Params.y);
-
-            float3 color = (0.0).xxx;
-            float fill = step(y, h);
-            color = lerp(color, (1.0).xxx, fill);
-            return float4(color, 1.0);
-        }
-
-    ENDHLSL
-
-    SubShader
-    {
-        Cull Off ZWrite Off ZTest Always
-
-        Pass
-        {
-            HLSLPROGRAM
-
-                #pragma vertex Vert
-                #pragma fragment Frag
-
-            ENDHLSL
+            
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #define UNITY_PASS_FORWARDBASE
+            #include "UnityCG.cginc"
+            #pragma multi_compile_fwdbase_fullshadows
+            #pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma target 3.0
+            struct VertexInput {
+                float4 vertex : POSITION;
+            };
+            struct VertexOutput {
+                float4 pos : SV_POSITION;
+                UNITY_FOG_COORDS(0)
+            };
+            VertexOutput vert (VertexInput v) {
+                VertexOutput o = (VertexOutput)0;
+                o.pos = UnityObjectToClipPos( v.vertex );
+                UNITY_TRANSFER_FOG(o,o.pos);
+                return o;
+            }
+            float4 frag(VertexOutput i) : COLOR {
+////// Lighting:
+                float3 finalColor = 0;
+                fixed4 finalRGBA = fixed4(finalColor,1);
+                UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
+                return finalRGBA;
+            }
+            ENDCG
         }
     }
+    FallBack "Diffuse"
+    CustomEditor "ShaderForgeMaterialInspector"
 }

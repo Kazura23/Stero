@@ -109,7 +109,6 @@ SubShader {
 		ZTest LEqual
 		Cull Off
 
-		CGPROGRAM
 		#pragma vertex vert
 		#pragma fragment frag
 		#pragma multi_compile_shadowcaster
