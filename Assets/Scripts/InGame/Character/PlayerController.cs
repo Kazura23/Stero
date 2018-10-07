@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
 		currLine = 0;
 		canChange = false;
 		InMadness = false;
-		playAnimator.SetBool("InMadness",false);
+		playAnimator.SetBool ("InMadness", false);
 		pRig.constraints = RigidbodyConstraints.FreezeAll;
 		playAnimator.Play ("Start");
 		totalDis = 0;
@@ -396,7 +396,7 @@ public class PlayerController : MonoBehaviour
 		thisCam.transform.DOLocalMove (startPosRM, 0.5f);
 
 		pTrans.DOLocalRotateQuaternion (startRotPlayer, 0.5f);
-		pTrans.DOLocalMove (startPlayer, 0.6f).OnComplete (( )=>
+		pTrans.DOLocalMove (startPlayer, 0.6f).OnComplete (( ) =>
 		{
 			playAnimator.Play ("Start");
 			GlobalManager.GameCont.Restart ( );
@@ -416,9 +416,9 @@ public class PlayerController : MonoBehaviour
 			currSpeed = 0;
 			StopPlayer = true;
 
-			pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * 10, 1).OnComplete (( )=>
+			pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * 10, 1).OnComplete (( ) =>
 			{
-				GlobalManager.Ui.ScoreString = "" + (int.Parse (GlobalManager.Ui.ScoreString)- 10);
+				GlobalManager.Ui.ScoreString = "" + (int.Parse (GlobalManager.Ui.ScoreString) - 10);
 				totalDis -= 10;
 				calDist = (int)totalDis;
 				lastPos = pTrans.position;
@@ -457,7 +457,7 @@ public class PlayerController : MonoBehaviour
 
 		stopMadness ( );
 
-		DOVirtual.DelayedCall (.2f, ( )=>
+		DOVirtual.DelayedCall (.2f, ( ) =>
 		{
 			thisCam.transform.DORotate (new Vector3 (-220, 0, 0), 1.8f, RotateMode.LocalAxisAdd);
 			thisCam.transform.DOLocalMoveZ (-50f, .4f);
@@ -472,7 +472,7 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.GameCont.soundFootSteps.Kill ( );
 
-		DOVirtual.DelayedCall (1f, ( )=>
+		DOVirtual.DelayedCall (1f, ( ) =>
 		{
 			GlobalManager.Ui.OpenThisMenu (MenuType.GameOver, thisTok);
 
@@ -481,7 +481,7 @@ public class PlayerController : MonoBehaviour
 			thisCam.backgroundColor = thisColor;
 		});
 		GlobalManager.Ui.GameOver ( );
-		Debug.Log("UIOVer");
+		Debug.Log ("UIOVer");
 	}
 
 	public void AddSmoothCurve (float p_value)
@@ -607,10 +607,10 @@ public class PlayerController : MonoBehaviour
 				getCal = 1;
 				InMadness = true;
 
-				playAnimator.SetTrigger("Mad");
-				playAnimator.SetBool("InMadness",true);
+				playAnimator.SetTrigger ("Mad");
+				playAnimator.SetBool ("InMadness", true);
 
-				DOTween.To (( )=> GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete (( )=>
+				DOTween.To (( ) => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 1f, .9f).OnComplete (( ) =>
 				{
 					//DOTween.To(() => GlobalManager.GameCont.chromValue, x => GlobalManager.GameCont.chromValue = x, 0, .1f);
 				});
@@ -621,7 +621,7 @@ public class PlayerController : MonoBehaviour
 				float getAcc = acceleration;
 				acceleration = 0;
 
-				DOTween.To (( )=> 0, x => currSpeed = x, currSpeed, 0.5f).SetEase (Ease.InBack).OnComplete (( )=>
+				DOTween.To (( ) => 0, x => currSpeed = x, currSpeed, 0.5f).SetEase (Ease.InBack).OnComplete (( ) =>
 				{
 					acceleration = getAcc;
 				});
@@ -635,7 +635,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (!lastTimer)
 		{
-			getCal = ((TimerRecover * 0.01f)* bonus)* 0.5f + timerFight.value;
+			getCal = ((TimerRecover * 0.01f) * bonus) * 0.5f + timerFight.value;
 
 			if (getCal > 0.75f)
 			{
@@ -649,7 +649,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			getCal = timerFight.value + ((TimerLastRecover * 0.01f)* bonus)* 0.25f;
+			getCal = timerFight.value + ((TimerLastRecover * 0.01f) * bonus) * 0.25f;
 
 			if (getCal > 0.25f)
 			{
@@ -759,12 +759,12 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if (inputPlayer.GetAxis ("CoupSimple")== 0)
+		if (inputPlayer.GetAxis ("CoupSimple") == 0)
 		{
 			resetAxeS = true;
 		}
 
-		if (inputPlayer.GetAxis ("CoupDouble")== 0)
+		if (inputPlayer.GetAxis ("CoupDouble") == 0)
 		{
 			resetAxeD = true;
 			/*getFOVDP = FOVIncrease;
@@ -790,14 +790,14 @@ public class PlayerController : MonoBehaviour
 		{
 			playerFight (getTime);
 
-			if (inputPlayer.GetAxis ("Dash")!= 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash)
+			if (inputPlayer.GetAxis ("Dash") != 0 && !InMadness && !playerDead && canPunch && !chargeDp && canUseDash)
 			{
 				GlobalManager.AudioMa.OpenAudio (AudioType.Acceleration, "", false, null, true);
 				Time.timeScale = 1;
 				Dash = true;
 				canUseDash = false;
 			}
-			else if (inputPlayer.GetAxis ("Dash")== 0)
+			else if (inputPlayer.GetAxis ("Dash") == 0)
 			{
 				canUseDash = true;
 				Dash = false;
@@ -821,44 +821,44 @@ public class PlayerController : MonoBehaviour
 	{
 		if (currStat == StatePlayer.Danger)
 		{
-			timerFight.GetComponents<RainbowScale> ( )[0].enabled = true;
-			timerFight.GetComponents<RainbowScale> ( )[1].enabled = false;
+			timerFight.GetComponents<RainbowScale> ( ) [0].enabled = true;
+			timerFight.GetComponents<RainbowScale> ( ) [1].enabled = false;
 
-			backTF.GetComponents<RainbowColor> ( )[1].enabled = false;
+			backTF.GetComponents<RainbowColor> ( ) [1].enabled = false;
 			backTF.DOKill (true);
-			backTF.GetComponents<RainbowColor> ( )[0].enabled = true;
+			backTF.GetComponents<RainbowColor> ( ) [0].enabled = true;
 
-			handleTF.GetComponents<RainbowColor> ( )[1].enabled = false;
+			handleTF.GetComponents<RainbowColor> ( ) [1].enabled = false;
 			handleTF.DOKill (true);
-			handleTF.GetComponents<RainbowColor> ( )[0].enabled = true;
+			handleTF.GetComponents<RainbowColor> ( ) [0].enabled = true;
 		}
 		else if (currStat == StatePlayer.Madness)
 		{
-			timerFight.GetComponents<RainbowScale> ( )[0].enabled = false;
-			timerFight.GetComponents<RainbowScale> ( )[1].enabled = true;
+			timerFight.GetComponents<RainbowScale> ( ) [0].enabled = false;
+			timerFight.GetComponents<RainbowScale> ( ) [1].enabled = true;
 
-			backTF.GetComponents<RainbowColor> ( )[0].enabled = false;
+			backTF.GetComponents<RainbowColor> ( ) [0].enabled = false;
 			backTF.DOKill (true);
-			backTF.GetComponents<RainbowColor> ( )[1].enabled = true;
+			backTF.GetComponents<RainbowColor> ( ) [1].enabled = true;
 
-			handleTF.GetComponents<RainbowColor> ( )[0].enabled = false;
+			handleTF.GetComponents<RainbowColor> ( ) [0].enabled = false;
 			handleTF.DOKill (true);
-			handleTF.GetComponents<RainbowColor> ( )[1].enabled = true;
+			handleTF.GetComponents<RainbowColor> ( ) [1].enabled = true;
 		}
 		else // normal
 		{
-			timerFight.GetComponents<RainbowScale> ( )[0].enabled = false;
-			timerFight.GetComponents<RainbowScale> ( )[1].enabled = false;
+			timerFight.GetComponents<RainbowScale> ( ) [0].enabled = false;
+			timerFight.GetComponents<RainbowScale> ( ) [1].enabled = false;
 			timerFight.transform.DOKill ( );
 			timerFight.transform.DOScale (1, 0f).SetEase (Ease.InSine);
 
-			backTF.GetComponents<RainbowColor> ( )[0].enabled = false;
-			backTF.GetComponents<RainbowColor> ( )[1].enabled = false;
+			backTF.GetComponents<RainbowColor> ( ) [0].enabled = false;
+			backTF.GetComponents<RainbowColor> ( ) [1].enabled = false;
 			backTF.DOKill ( );
 			backTF.DOColor (Color.white, 0);
 
-			handleTF.GetComponents<RainbowColor> ( )[0].enabled = false;
-			handleTF.GetComponents<RainbowColor> ( )[1].enabled = false;
+			handleTF.GetComponents<RainbowColor> ( ) [0].enabled = false;
+			handleTF.GetComponents<RainbowColor> ( ) [1].enabled = false;
 			handleTF.DOKill ( );
 			handleTF.DOColor (new Color32 (0x4B, 0xA0, 0xCC, 0xFF), 0);
 		}
@@ -878,11 +878,11 @@ public class PlayerController : MonoBehaviour
 			{
 				GlobalManager.AudioMa.CloseAudio (AudioType.Madnesse);
 
-				timerFight.value -= (getTime / DelayTimerOnMadness)* 0.25f;
+				timerFight.value -= (getTime / DelayTimerOnMadness) * 0.25f;
 			}
 			else
 			{
-				timerFight.value -= (getTime / DelayTimerToMad)* 0.25f;
+				timerFight.value -= (getTime / DelayTimerToMad) * 0.25f;
 			}
 
 			if (timerFight.value < 0.75f)
@@ -903,7 +903,7 @@ public class PlayerController : MonoBehaviour
 		else if (!lastTimer)
 		{
 			GlobalManager.AudioMa.CloseAudio (AudioType.Madnesse);
-			timerFight.value -= (getTime / DelayTimerStandard)* 0.5f;
+			timerFight.value -= (getTime / DelayTimerStandard) * 0.5f;
 
 			if (timerFight.value < 0.25f)
 			{
@@ -922,8 +922,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (!onTuto)
 		{
-			timerFight.value -= (getTime / DelayTimerToDeath)* 0.25f;
-			barMadSource.pitch = 1.5f - (getVol * (((timerFight.value * 100)/ 0.25f)/ 100))* 0.5f;
+			timerFight.value -= (getTime / DelayTimerToDeath) * 0.25f;
+			barMadSource.pitch = 1.5f - (getVol * (((timerFight.value * 100) / 0.25f) / 100)) * 0.5f;
 
 			if (timerFight.value <= 0)
 			{
@@ -965,7 +965,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		lastPos = pTrans.position;
-		GlobalManager.Ui.ScoreString = "" + (int.Parse (GlobalManager.Ui.ScoreString)+ currDist);
+		GlobalManager.Ui.ScoreString = "" + (int.Parse (GlobalManager.Ui.ScoreString) + currDist);
 		//GlobalManager.Ui.ScoreString + 
 		GlobalManager.Ui.UpdateScore ( );
 
@@ -973,7 +973,7 @@ public class PlayerController : MonoBehaviour
 		{
 			nextIncrease += DistIncMaxSpeed;
 
-			if (MaxSpeedInc > (maxSpeed + SpeedIncrease)- MaxSpeed)
+			if (MaxSpeedInc > (maxSpeed + SpeedIncrease) - MaxSpeed)
 			{
 				maxSpeed += SpeedIncrease;
 				acceleration += AcceleraInc;
@@ -983,7 +983,7 @@ public class PlayerController : MonoBehaviour
 				maxSpeed = MaxSpeed + MaxSpeedInc;
 			}
 
-			if (MaxCLInc > (maxSpeedCL + CLSpeedIncrease)- MaxSpeedCL)
+			if (MaxCLInc > (maxSpeedCL + CLSpeedIncrease) - MaxSpeedCL)
 			{
 				maxSpeedCL += CLSpeedIncrease;
 				accelerationCL += AcceleraCLInc;
@@ -1000,7 +1000,7 @@ public class PlayerController : MonoBehaviour
 
 	void speAction (float getTime)
 	{
-		if (inputPlayer.GetAxis ("SpecialAction")== 0 || !canSpe)
+		if (inputPlayer.GetAxis ("SpecialAction") == 0 || !canSpe)
 		{
 			if ((ThisAct == SpecialAction.SlowMot || onTuto))
 			{
@@ -1017,8 +1017,8 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 		Dash = false;
-		float getPourc = (timerFight.maxValue * 0.01f)* MadnessUse;
-		float getCurrPourc = (timerFight.value / timerFight.maxValue)* 100;
+		float getPourc = (timerFight.maxValue * 0.01f) * MadnessUse;
+		float getCurrPourc = (timerFight.value / timerFight.maxValue) * 100;
 		if (ThisAct == SpecialAction.SlowMot || onTuto)
 		{
 			if (getCurrPourc > MadNeed)
@@ -1083,10 +1083,10 @@ public class PlayerController : MonoBehaviour
 
 			//MR S S'ABAISSE
 			pTrans.DOLocalMoveY (pTrans.localPosition.y - .8f, .35f);
-			pTrans.DOLocalRotate ((new Vector3 (17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase (Ease.InSine).OnComplete (( )=>
+			pTrans.DOLocalRotate ((new Vector3 (17, 0, 0)), .35f, RotateMode.LocalAxisAdd).SetEase (Ease.InSine).OnComplete (( ) =>
 			{
 
-				DOVirtual.DelayedCall (.1f, ( )=>
+				DOVirtual.DelayedCall (.1f, ( ) =>
 				{
 					onAnimeAir = true;
 				});
@@ -1094,14 +1094,14 @@ public class PlayerController : MonoBehaviour
 				//MR S SAUTE
 				pTrans.DOLocalRotate ((new Vector3 (-25, 0, 0)), .25f, RotateMode.LocalAxisAdd).SetEase (Ease.InSine);
 
-				pTrans.DOLocalMove (pTrans.localPosition + pTrans.up * 7, .25f).SetEase (Ease.Linear).OnComplete (( )=>
+				pTrans.DOLocalMove (pTrans.localPosition + pTrans.up * 7, .25f).SetEase (Ease.Linear).OnComplete (( ) =>
 				{
 					onAnimeAir = false;
 
 					//MR S RETOMBE
-					pTrans.DOLocalMove (pTrans.localPosition - pTrans.up * 2, .1f).SetEase (Ease.Linear).OnComplete (( )=>
+					pTrans.DOLocalMove (pTrans.localPosition - pTrans.up * 2, .1f).SetEase (Ease.Linear).OnComplete (( ) =>
 					{
-						pTrans.DOLocalRotate ((new Vector3 (35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase (Ease.OutSine).OnComplete (( )=>
+						pTrans.DOLocalRotate ((new Vector3 (35, 0, 0)), .13f, RotateMode.LocalAxisAdd).SetEase (Ease.OutSine).OnComplete (( ) =>
 						{
 							pTrans.DOLocalRotate ((new Vector3 (0, 0, 0)), .15f, RotateMode.LocalAxisAdd).SetEase (Ease.InBounce);
 						});
@@ -1158,7 +1158,7 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine (getCouldown);
 		StartCoroutine (waitInvPlayer ( ));
 
-		DOVirtual.DelayedCall (0.25f, ( )=>
+		DOVirtual.DelayedCall (0.25f, ( ) =>
 		{
 			sphereChocWave.enabled = false;
 		});
@@ -1180,7 +1180,7 @@ public class PlayerController : MonoBehaviour
 
 		GlobalManager.Ui.BallTransition.enabled = false;
 
-		if (DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( )!= null)
+		if (DeadBallPref != null && DeadBallPref.GetComponent<Rigidbody> ( ) != null)
 		{
 			GameObject currObj = (GameObject)Instantiate (DeadBallPref);
 			currObj.transform.position = pTrans.position + pTrans.forward * 12;
@@ -1347,7 +1347,7 @@ public class PlayerController : MonoBehaviour
 			if (extraStartBool)
 			{
 				extraStartBool = false;
-				DOVirtual.DelayedCall (1f, ( )=>
+				DOVirtual.DelayedCall (1f, ( ) =>
 				{
 					GlobalManager.Ui.StartExtraStart ( );
 				});
@@ -1439,7 +1439,7 @@ public class PlayerController : MonoBehaviour
 
 		if (NbrLineRight != 0 || NbrLineLeft != 0)
 		{
-			if ((canChange || newH == 0)&& !inAir)
+			if ((canChange || newH == 0) && !inAir)
 			{
 				RaycastHit [ ] allHit;
 				bool checkWall = false;
@@ -1509,7 +1509,7 @@ public class PlayerController : MonoBehaviour
 				}
 				else if (currSpLine < maxSpeedCL)
 				{
-					accLine = (currSpLine * impulsionCL)/ maxSpeedCL;
+					accLine = (currSpLine * impulsionCL) / maxSpeedCL;
 
 					if (accLine > 1 || accLine == 0)
 					{
@@ -1597,7 +1597,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}*/
 
-		if (inputPlayer.GetAxis ("CoupSimple")!= 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished)
+		if (inputPlayer.GetAxis ("CoupSimple") != 0 && canPunch && resetAxeS && GlobalManager.GameCont.introFinished)
 		{
 			AllPlayerPrefs.ANbCoupSimple++;
 			Dash = false;
@@ -1635,7 +1635,7 @@ public class PlayerController : MonoBehaviour
 			punchBoxSimple.enabled = true;
 			startPunch (0);
 		}
-		else if (inputPlayer.GetAxis ("CoupDouble")!= 0 && canPunch && dpunch && resetAxeD)
+		else if (inputPlayer.GetAxis ("CoupDouble") != 0 && canPunch && dpunch && resetAxeD)
 		{
 			playAnimator.SetBool ("DoublePunchEnd", false);
 
@@ -1648,7 +1648,7 @@ public class PlayerController : MonoBehaviour
 			playAnimator.SetTrigger ("Double");
 			dpunch = false;
 
-			DOVirtual.DelayedCall (DelayDoublePunch, ( )=>
+			DOVirtual.DelayedCall (DelayDoublePunch, ( ) =>
 			{
 				ScreenShake.Singleton.ShakeHitDouble ( );
 				punchBoxSimple.enabled = true;
@@ -1659,7 +1659,7 @@ public class PlayerController : MonoBehaviour
 				dpunch = true;
 				startPunch (1);
 
-				DOVirtual.DelayedCall (0.1f, ( )=>
+				DOVirtual.DelayedCall (0.1f, ( ) =>
 				{
 					playAnimator.SetBool ("ChargingPunch_verif", false);
 					playAnimator.SetBool ("ChargingPunch", false);
@@ -1768,7 +1768,7 @@ public class PlayerController : MonoBehaviour
 			getThisC = new Vector3 (0, -90, 0);
 		}
 
-		pTrans.DOLocalRotate (getThisC, RotationSpeed, RotateMode.LocalAxisAdd).OnComplete (( )=>
+		pTrans.DOLocalRotate (getThisC, RotationSpeed, RotateMode.LocalAxisAdd).OnComplete (( ) =>
 		{
 			currSpLine = 0;
 			newH = 0;
@@ -1896,10 +1896,10 @@ public class PlayerController : MonoBehaviour
 				GlobalManager.GameCont.PlayerCollider = true;
 				pTrans.localPosition -= pTrans.forward;
 
-					pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 2).OnComplete (( )=>
-					{
-						StopPlayer = false;
-					});
+				pTrans.DOLocalMove (pTrans.localPosition - pTrans.forward * getDist, 2).OnComplete (( ) =>
+				{
+					StopPlayer = false;
+				});
 			}
 
 			GameOver ( );
@@ -1908,10 +1908,10 @@ public class PlayerController : MonoBehaviour
 
 	void stopMadness ( )
 	{
-		DOVirtual.DelayedCall (0.25f, ( )=>
+		DOVirtual.DelayedCall (0.25f, ( ) =>
 		{
 			InMadness = false;
-			playAnimator.SetBool("InMadness",false);
+			playAnimator.SetBool ("InMadness", false);
 		});
 
 		StartCoroutine (camColor (false));
@@ -1938,7 +1938,7 @@ public class PlayerController : MonoBehaviour
 		{
 			return "Chunk non identifier";
 		}
-		string nameChunk = currentTrans.name.Split ('(')[0];
+		string nameChunk = currentTrans.name.Split ('(') [0];
 		return nameChunk;
 	}
 
